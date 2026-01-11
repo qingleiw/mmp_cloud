@@ -79,6 +79,9 @@
             <template v-else-if="field.prop === 'createTime' || field.prop === 'updateTime'">
               <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}</span>
             </template>
+            <template v-else-if="field.prop === 'doctorId'">
+              <span>{{ getDoctorName(scope.row.doctorId) }}</span>
+            </template>
             <!-- 默认显示 -->
             <template v-else>
               {{ scope.row[field.prop] }}
@@ -174,6 +177,8 @@ import {
   addDoctorElectronicRegistration,
   updateDoctorElectronicRegistration
 } from '@/api/doctor/doctorElectronicRegistration';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import {
   DoctorElectronicRegistrationVO,
   DoctorElectronicRegistrationQuery,
@@ -206,6 +211,9 @@ const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
+
+// 医生选项
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 const queryFormRef = ref<ElFormInstance>();
 const doctorElectronicRegistrationFormRef = ref<ElFormInstance>();
@@ -277,6 +285,23 @@ const getList = async () => {
   doctorElectronicRegistrationList.value = res.rows;
   total.value = res.total;
   loading.value = false;
+};
+
+/** 加载医生选项 */
+const loadDoctorOptions = async () => {
+  try {
+    const res = await listDoctorBasicInfo({ pageSize: 1000 });
+    doctorOptions.value = res.rows;
+  } catch (error) {
+    console.error('获取医生列表失败:', error);
+    doctorOptions.value = [];
+  }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: string | number) => {
+  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
 /** 取消按钮 */
@@ -382,5 +407,6 @@ const handleSearchConfigConfirm = (config?: any) => {
 
 onMounted(() => {
   getList();
+  loadDoctorOptions();
 });
 </script>

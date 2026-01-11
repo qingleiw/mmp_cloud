@@ -73,6 +73,9 @@
             <el-link v-if="scope.row[field.prop]" :href="scope.row[field.prop]" target="_blank" type="primary">查看附件</el-link>
             <span v-else>无</span>
           </template>
+          <template #default="scope" v-else-if="field.prop === 'doctorId'">
+            <span>{{ getDoctorName(scope.row.doctorId) }}</span>
+          </template>
           <template #default="scope" v-else>
             {{ scope.row[field.prop] }}
           </template>
@@ -173,6 +176,8 @@
 
 <script setup name="DoctorEducation" lang="ts">
 import { listDoctorEducation, getDoctorEducation, delDoctorEducation, addDoctorEducation, updateDoctorEducation } from '@/api/doctor/doctorEducation';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorEducationVO, DoctorEducationQuery, DoctorEducationForm } from '@/api/doctor/doctorEducation/types';
 import { createDoctorEducationFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -193,6 +198,9 @@ const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
+
+// 医生选项
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 const queryFormRef = ref<ElFormInstance>();
 const doctorEducationFormRef = ref<ElFormInstance>();
@@ -263,6 +271,23 @@ const getList = async () => {
   doctorEducationList.value = res.rows;
   total.value = res.total;
   loading.value = false;
+};
+
+/** 加载医生选项 */
+const loadDoctorOptions = async () => {
+  try {
+    const res = await listDoctorBasicInfo({ pageSize: 1000 });
+    doctorOptions.value = res.rows;
+  } catch (error) {
+    console.error('获取医生列表失败:', error);
+    doctorOptions.value = [];
+  }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: string | number) => {
+  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
 /** 取消按钮 */
@@ -378,5 +403,6 @@ const handleFieldConfigReset = () => {
 
 onMounted(() => {
   getList();
+  loadDoctorOptions();
 });
 </script>

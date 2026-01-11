@@ -77,6 +77,9 @@
               {{ scope.row[field.prop] === 1 ? '是' : '否' }}
             </el-tag>
           </template>
+          <template #default="scope" v-else-if="field.prop === 'doctorId'">
+            <span>{{ getDoctorName(scope.row.doctorId) }}</span>
+          </template>
           <template #default="scope" v-else>
             {{ scope.row[field.prop] }}
           </template>
@@ -162,6 +165,8 @@ import {
   addDoctorAcademicPosition,
   updateDoctorAcademicPosition
 } from '@/api/doctor/doctorAcademicPosition';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorAcademicPositionVO, DoctorAcademicPositionQuery, DoctorAcademicPositionForm } from '@/api/doctor/doctorAcademicPosition/types';
 import { createDoctorAcademicPositionFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -183,6 +188,9 @@ const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
+
+// 医生选项
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 const queryFormRef = ref<ElFormInstance>();
 const doctorAcademicPositionFormRef = ref<ElFormInstance>();
@@ -246,6 +254,23 @@ const getList = async () => {
   doctorAcademicPositionList.value = res.rows;
   total.value = res.total;
   loading.value = false;
+};
+
+/** 加载医生选项 */
+const loadDoctorOptions = async () => {
+  try {
+    const res = await listDoctorBasicInfo({ pageSize: 1000 });
+    doctorOptions.value = res.rows;
+  } catch (error) {
+    console.error('获取医生列表失败:', error);
+    doctorOptions.value = [];
+  }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: string | number) => {
+  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
 /** 取消按钮 */
@@ -350,5 +375,6 @@ const handleSearchConfig = () => {
 
 onMounted(() => {
   getList();
+  loadDoctorOptions();
 });
 </script>

@@ -63,6 +63,9 @@
             <span v-if="field.prop === 'validDate' || field.prop === 'applyDate' || field.prop === 'approveDate'">
               {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
             </span>
+            <template v-else-if="field.prop === 'doctorId'">
+              <span>{{ getDoctorName(scope.row.doctorId) }}</span>
+            </template>
             <span v-else>
               {{ scope.row[field.prop] }}
             </span>
@@ -144,6 +147,8 @@ import {
   addDoctorInsuranceCode,
   updateDoctorInsuranceCode
 } from '@/api/doctor/doctorInsuranceCode';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorInsuranceCodeVO, DoctorInsuranceCodeQuery, DoctorInsuranceCodeForm } from '@/api/doctor/doctorInsuranceCode/types';
 import { createDoctorInsuranceCodeFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -162,6 +167,9 @@ const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
+
+// 医生选项
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 const queryFormRef = ref<ElFormInstance>();
 const doctorInsuranceCodeFormRef = ref<ElFormInstance>();
@@ -220,6 +228,23 @@ const getList = async () => {
   doctorInsuranceCodeList.value = res.rows;
   total.value = res.total;
   loading.value = false;
+};
+
+/** 加载医生选项 */
+const loadDoctorOptions = async () => {
+  try {
+    const res = await listDoctorBasicInfo({ pageSize: 1000 });
+    doctorOptions.value = res.rows;
+  } catch (error) {
+    console.error('获取医生列表失败:', error);
+    doctorOptions.value = [];
+  }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: string | number) => {
+  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
 /** 取消按钮 */
@@ -322,5 +347,6 @@ const handleSearchConfigConfirm = () => {
 
 onMounted(() => {
   getList();
+  loadDoctorOptions();
 });
 </script>

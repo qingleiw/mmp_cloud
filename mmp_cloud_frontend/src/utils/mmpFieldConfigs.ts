@@ -337,7 +337,8 @@ export function createDoctorEthicsEvaluationFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户编号', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: false, group: 'basic' },
+        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'evaluationYear', label: '考评年度', visible: true, group: 'basic' },
         { prop: 'evaluationCycle', label: '考评周期', visible: true, group: 'basic' }
       ]
@@ -557,7 +558,8 @@ export function createDoctorTrainingFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: false, group: 'basic' },
+        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'trainingType', label: '培训类型', visible: true, group: 'basic' },
         { prop: 'trainingName', label: '培训名称', visible: true, group: 'basic' },
         { prop: 'trainingUnit', label: '培训单位', visible: true, group: 'basic' }
@@ -1843,7 +1845,7 @@ export function createDoctorAdverseRecordFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户编号', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, required: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: false, group: 'basic' },
         { prop: 'doctorName', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'recordType', label: '记录类型', visible: true, group: 'basic' },
         { prop: 'recordTitle', label: '记录标题', visible: true, required: true, group: 'basic' }
@@ -1892,7 +1894,7 @@ export function createDoctorCertificateFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户编号', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: false, group: 'basic' },
         { prop: 'doctorName', label: '医生姓名', visible: true, required: true, group: 'basic' },
         { prop: 'certificateName', label: '证书名称', visible: true, required: true, group: 'basic' },
         { prop: 'certificateNo', label: '证书号', visible: true, required: true, group: 'basic' }

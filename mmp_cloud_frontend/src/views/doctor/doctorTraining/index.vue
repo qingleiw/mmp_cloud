@@ -89,6 +89,9 @@
                 {{ scope.row[field.prop] === 0 ? '否' : '是' }}
               </el-tag>
             </template>
+            <template v-else-if="field.prop === 'doctorId'">
+              <span>{{ getDoctorName(scope.row.doctorId) }}</span>
+            </template>
             <span v-else>
               {{ scope.row[field.prop] }}
             </span>
@@ -169,8 +172,8 @@
 <script setup name="DoctorTraining" lang="ts">
 import { listDoctorTraining, getDoctorTraining, delDoctorTraining, addDoctorTraining, updateDoctorTraining } from '@/api/doctor/doctorTraining';
 import { DoctorTrainingVO, DoctorTrainingQuery, DoctorTrainingForm } from '@/api/doctor/doctorTraining/types';
-import { listDoctorInfo } from '@/api/doctor/doctorInfo';
-import { DoctorInfoVO } from '@/api/doctor/doctorInfo/types';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { createDoctorTrainingFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
@@ -247,7 +250,7 @@ const data = reactive<PageData<DoctorTrainingForm, DoctorTrainingQuery>>({
 const { queryParams, form, rules } = toRefs(data);
 
 // 医生选项
-const doctorOptions = ref<DoctorInfoVO[]>([]);
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 /** 查询培训记录列表 */
 const getList = async () => {
@@ -261,12 +264,18 @@ const getList = async () => {
 /** 加载医生选项 */
 const loadDoctorOptions = async () => {
   try {
-    const res = await listDoctorInfo({ pageSize: 1000 });
+    const res = await listDoctorBasicInfo({ pageSize: 1000 });
     doctorOptions.value = res.rows;
   } catch (error) {
     console.error('获取医生列表失败:', error);
     doctorOptions.value = [];
   }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: string | number) => {
+  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
 /** 取消按钮 */

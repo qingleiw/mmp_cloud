@@ -88,6 +88,9 @@
             <span v-if="field.prop === 'startDate' || field.prop === 'endDate'">
               {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
             </span>
+            <template v-else-if="field.prop === 'doctorId'">
+              <span>{{ getDoctorName(scope.row.doctorId) }}</span>
+            </template>
             <span v-else>
               {{ scope.row[field.prop] }}
             </span>
@@ -219,7 +222,7 @@ import {
   addDoctorResearchProject,
   updateDoctorResearchProject
 } from '@/api/doctor/doctorResearchProject';
-import { listDoctorInfo } from '@/api/doctor/doctorInfo';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorResearchProjectVO, DoctorResearchProjectQuery, DoctorResearchProjectForm } from '@/api/doctor/doctorResearchProject/types';
 import { createDoctorResearchProjectFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -301,11 +304,17 @@ const { queryParams, form, rules } = toRefs(data);
 /** 加载医生选项 */
 const loadDoctorOptions = async () => {
   try {
-    const res = await listDoctorInfo({});
+    const res = await listDoctorBasicInfo({ pageSize: 1000 });
     doctorOptions.value = res.rows || [];
   } catch (error) {
     console.error('加载医生选项失败:', error);
   }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: string | number) => {
+  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
 /** 查询科研项目列表 */

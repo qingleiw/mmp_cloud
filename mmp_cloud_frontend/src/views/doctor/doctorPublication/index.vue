@@ -112,6 +112,9 @@
                 {{ scope.row[field.prop] === 0 ? '否' : '是' }}
               </el-tag>
             </template>
+            <span v-else-if="field.prop === 'doctorId'">
+              {{ getDoctorName(scope.row[field.prop]) }}
+            </span>
             <span v-else>
               {{ scope.row[field.prop] }}
             </span>
@@ -208,6 +211,8 @@ import {
   addDoctorPublication,
   updateDoctorPublication
 } from '@/api/doctor/doctorPublication';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorPublicationVO, DoctorPublicationQuery, DoctorPublicationForm } from '@/api/doctor/doctorPublication/types';
 import { createDoctorPublicationFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -226,6 +231,7 @@ const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 const queryFormRef = ref<ElFormInstance>();
 const doctorPublicationFormRef = ref<ElFormInstance>();
@@ -289,6 +295,23 @@ const data = reactive<PageData<DoctorPublicationForm, DoctorPublicationQuery>>({
 });
 
 const { queryParams, form, rules } = toRefs(data);
+
+/** 加载医生选项 */
+const loadDoctorOptions = async () => {
+  try {
+    const res = await listDoctorBasicInfo({});
+    doctorOptions.value = res.rows;
+  } catch (error) {
+    console.error('加载医生选项失败:', error);
+  }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: number | string | undefined): string => {
+  if (!doctorId) return '';
+  const doctor = doctorOptions.value.find((d) => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
+};
 
 /** 查询论文论著列表 */
 const getList = async () => {
@@ -398,6 +421,7 @@ const handleSearchConfigConfirm = () => {
 };
 
 onMounted(() => {
+  loadDoctorOptions();
   getList();
 });
 </script>

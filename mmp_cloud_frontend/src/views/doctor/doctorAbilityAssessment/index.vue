@@ -75,6 +75,9 @@
               {{ scope.row[field.prop] === 0 ? '否' : '是' }}
             </el-tag>
           </template>
+          <template #default="scope" v-else-if="field.prop === 'doctorId'">
+            <span>{{ getDoctorName(scope.row.doctorId) }}</span>
+          </template>
           <template #default="scope" v-else>
             {{ scope.row[field.prop] }}
           </template>
@@ -168,6 +171,8 @@ import {
   addDoctorAbilityAssessment,
   updateDoctorAbilityAssessment
 } from '@/api/doctor/doctorAbilityAssessment';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorAbilityAssessmentVO, DoctorAbilityAssessmentQuery, DoctorAbilityAssessmentForm } from '@/api/doctor/doctorAbilityAssessment/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createDoctorAbilityAssessmentFieldConfig } from '@/utils/mmpFieldConfigs';
@@ -240,6 +245,9 @@ const data = reactive<PageData<DoctorAbilityAssessmentForm, DoctorAbilityAssessm
 
 const { queryParams, form, rules } = toRefs(data);
 
+// 医生选项
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
+
 // 字段配置管理器
 const fieldConfigManager = createDoctorAbilityAssessmentFieldConfig();
 
@@ -262,6 +270,23 @@ const getList = async () => {
   doctorAbilityAssessmentList.value = res.rows;
   total.value = res.total;
   loading.value = false;
+};
+
+/** 加载医生选项 */
+const loadDoctorOptions = async () => {
+  try {
+    const res = await listDoctorBasicInfo({ pageSize: 1000 });
+    doctorOptions.value = res.rows;
+  } catch (error) {
+    console.error('获取医生列表失败:', error);
+    doctorOptions.value = [];
+  }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: string | number) => {
+  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
 /** 取消按钮 */
@@ -373,5 +398,6 @@ const handleFieldConfigReset = () => {
 
 onMounted(() => {
   getList();
+  loadDoctorOptions();
 });
 </script>
