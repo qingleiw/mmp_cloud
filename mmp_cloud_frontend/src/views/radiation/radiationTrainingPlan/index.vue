@@ -182,8 +182,8 @@ import {
   delRadiationTrainingPlan,
   addRadiationTrainingPlan,
   updateRadiationTrainingPlan
-} from '@/api/system/radiationTrainingPlan';
-import { RadiationTrainingPlanVO, RadiationTrainingPlanQuery, RadiationTrainingPlanForm } from '@/api/system/radiationTrainingPlan/types';
+} from '@/api/radiation/radiationTrainingPlan';
+import { RadiationTrainingPlanVO, RadiationTrainingPlanQuery, RadiationTrainingPlanForm } from '@/api/radiation/radiationTrainingPlan/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

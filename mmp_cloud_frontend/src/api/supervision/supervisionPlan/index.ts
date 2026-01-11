@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionPlanVO, SupervisionPlanForm, SupervisionPlanQuery } from '@/api/system/supervisionPlan/types';
+import { SupervisionPlanVO, SupervisionPlanForm, SupervisionPlanQuery } from '@/api/supervision/supervisionPlan/types';
 
 /**
  * 查询督查计划列表
@@ -10,7 +10,7 @@ import { SupervisionPlanVO, SupervisionPlanForm, SupervisionPlanQuery } from '@/
 
 export const listSupervisionPlan = (query?: SupervisionPlanQuery): AxiosPromise<SupervisionPlanVO[]> => {
   return request({
-    url: '/system/supervisionPlan/list',
+    url: '/supervision/supervisionPlan/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionPlan = (query?: SupervisionPlanQuery): AxiosPromise<
  */
 export const getSupervisionPlan = (id: string | number): AxiosPromise<SupervisionPlanVO> => {
   return request({
-    url: '/system/supervisionPlan/' + id,
+    url: '/supervision/supervisionPlan/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionPlan = (id: string | number): AxiosPromise<Supervisio
  */
 export const addSupervisionPlan = (data: SupervisionPlanForm) => {
   return request({
-    url: '/system/supervisionPlan',
+    url: '/supervision/supervisionPlan',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionPlan = (data: SupervisionPlanForm) => {
  */
 export const updateSupervisionPlan = (data: SupervisionPlanForm) => {
   return request({
-    url: '/system/supervisionPlan',
+    url: '/supervision/supervisionPlan',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionPlan = (data: SupervisionPlanForm) => {
  */
 export const delSupervisionPlan = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionPlan/' + id,
+    url: '/supervision/supervisionPlan/' + id,
     method: 'delete'
   });
 };

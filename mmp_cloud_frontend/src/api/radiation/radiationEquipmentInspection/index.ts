@@ -4,7 +4,7 @@ import {
   RadiationEquipmentInspectionVO,
   RadiationEquipmentInspectionForm,
   RadiationEquipmentInspectionQuery
-} from '@/api/system/radiationEquipmentInspection/types';
+} from '@/api/radiation/radiationEquipmentInspection/types';
 
 /**
  * 查询放射设备检测记录列表
@@ -14,7 +14,7 @@ import {
 
 export const listRadiationEquipmentInspection = (query?: RadiationEquipmentInspectionQuery): AxiosPromise<RadiationEquipmentInspectionVO[]> => {
   return request({
-    url: '/system/radiationEquipmentInspection/list',
+    url: '/radiation/radiationEquipmentInspection/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listRadiationEquipmentInspection = (query?: RadiationEquipmentInspe
  */
 export const getRadiationEquipmentInspection = (id: string | number): AxiosPromise<RadiationEquipmentInspectionVO> => {
   return request({
-    url: '/system/radiationEquipmentInspection/' + id,
+    url: '/radiation/radiationEquipmentInspection/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getRadiationEquipmentInspection = (id: string | number): AxiosPromi
  */
 export const addRadiationEquipmentInspection = (data: RadiationEquipmentInspectionForm) => {
   return request({
-    url: '/system/radiationEquipmentInspection',
+    url: '/radiation/radiationEquipmentInspection',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addRadiationEquipmentInspection = (data: RadiationEquipmentInspecti
  */
 export const updateRadiationEquipmentInspection = (data: RadiationEquipmentInspectionForm) => {
   return request({
-    url: '/system/radiationEquipmentInspection',
+    url: '/radiation/radiationEquipmentInspection',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateRadiationEquipmentInspection = (data: RadiationEquipmentInspe
  */
 export const delRadiationEquipmentInspection = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationEquipmentInspection/' + id,
+    url: '/radiation/radiationEquipmentInspection/' + id,
     method: 'delete'
   });
 };

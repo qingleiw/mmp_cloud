@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyPlanApprovalVO, EmergencyPlanApprovalForm, EmergencyPlanApprovalQuery } from '@/api/system/emergencyPlanApproval/types';
+import { EmergencyPlanApprovalVO, EmergencyPlanApprovalForm, EmergencyPlanApprovalQuery } from '@/api/emergency/emergencyPlanApproval/types';
 
 /**
  * 查询应急预案审批列表
@@ -10,7 +10,7 @@ import { EmergencyPlanApprovalVO, EmergencyPlanApprovalForm, EmergencyPlanApprov
 
 export const listEmergencyPlanApproval = (query?: EmergencyPlanApprovalQuery): AxiosPromise<EmergencyPlanApprovalVO[]> => {
   return request({
-    url: '/system/emergencyPlanApproval/list',
+    url: '/emergency/emergencyPlanApproval/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyPlanApproval = (query?: EmergencyPlanApprovalQuery): A
  */
 export const getEmergencyPlanApproval = (id: string | number): AxiosPromise<EmergencyPlanApprovalVO> => {
   return request({
-    url: '/system/emergencyPlanApproval/' + id,
+    url: '/emergency/emergencyPlanApproval/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyPlanApproval = (id: string | number): AxiosPromise<Emer
  */
 export const addEmergencyPlanApproval = (data: EmergencyPlanApprovalForm) => {
   return request({
-    url: '/system/emergencyPlanApproval',
+    url: '/emergency/emergencyPlanApproval',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyPlanApproval = (data: EmergencyPlanApprovalForm) => {
  */
 export const updateEmergencyPlanApproval = (data: EmergencyPlanApprovalForm) => {
   return request({
-    url: '/system/emergencyPlanApproval',
+    url: '/emergency/emergencyPlanApproval',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyPlanApproval = (data: EmergencyPlanApprovalForm) => 
  */
 export const delEmergencyPlanApproval = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyPlanApproval/' + id,
+    url: '/emergency/emergencyPlanApproval/' + id,
     method: 'delete'
   });
 };

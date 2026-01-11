@@ -228,12 +228,12 @@ import {
   delCoreSystemExecutionRecord,
   addCoreSystemExecutionRecord,
   updateCoreSystemExecutionRecord
-} from '@/api/system/coreSystemExecutionRecord';
+} from '@/api/coresystem/coreSystemExecutionRecord';
 import {
   CoreSystemExecutionRecordVO,
   CoreSystemExecutionRecordQuery,
   CoreSystemExecutionRecordForm
-} from '@/api/system/coreSystemExecutionRecord/types';
+} from '@/api/coresystem/coreSystemExecutionRecord/types';
 import { createCoreSystemExecutionRecordFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

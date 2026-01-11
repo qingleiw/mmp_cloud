@@ -165,8 +165,8 @@ import {
   delRadiationDoseRecord,
   addRadiationDoseRecord,
   updateRadiationDoseRecord
-} from '@/api/system/radiationDoseRecord';
-import { RadiationDoseRecordVO, RadiationDoseRecordQuery, RadiationDoseRecordForm } from '@/api/system/radiationDoseRecord/types';
+} from '@/api/radiation/radiationDoseRecord';
+import { RadiationDoseRecordVO, RadiationDoseRecordQuery, RadiationDoseRecordForm } from '@/api/radiation/radiationDoseRecord/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

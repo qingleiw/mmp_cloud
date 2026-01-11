@@ -4,7 +4,7 @@ import {
   QualificationAuthorizationApplyVO,
   QualificationAuthorizationApplyForm,
   QualificationAuthorizationApplyQuery
-} from '@/api/system/qualificationAuthorizationApply/types';
+} from '@/api/qualification/qualificationAuthorizationApply/types';
 
 /**
  * 查询资质授权申请列表
@@ -16,7 +16,7 @@ export const listQualificationAuthorizationApply = (
   query?: QualificationAuthorizationApplyQuery
 ): AxiosPromise<QualificationAuthorizationApplyVO[]> => {
   return request({
-    url: '/system/qualificationAuthorizationApply/list',
+    url: '/qualification/qualificationAuthorizationApply/list',
     method: 'get',
     params: query
   });
@@ -28,7 +28,7 @@ export const listQualificationAuthorizationApply = (
  */
 export const getQualificationAuthorizationApply = (id: string | number): AxiosPromise<QualificationAuthorizationApplyVO> => {
   return request({
-    url: '/system/qualificationAuthorizationApply/' + id,
+    url: '/qualification/qualificationAuthorizationApply/' + id,
     method: 'get'
   });
 };
@@ -39,7 +39,7 @@ export const getQualificationAuthorizationApply = (id: string | number): AxiosPr
  */
 export const addQualificationAuthorizationApply = (data: QualificationAuthorizationApplyForm) => {
   return request({
-    url: '/system/qualificationAuthorizationApply',
+    url: '/qualification/qualificationAuthorizationApply',
     method: 'post',
     data: data
   });
@@ -51,7 +51,7 @@ export const addQualificationAuthorizationApply = (data: QualificationAuthorizat
  */
 export const updateQualificationAuthorizationApply = (data: QualificationAuthorizationApplyForm) => {
   return request({
-    url: '/system/qualificationAuthorizationApply',
+    url: '/qualification/qualificationAuthorizationApply',
     method: 'put',
     data: data
   });
@@ -63,7 +63,7 @@ export const updateQualificationAuthorizationApply = (data: QualificationAuthori
  */
 export const delQualificationAuthorizationApply = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationAuthorizationApply/' + id,
+    url: '/qualification/qualificationAuthorizationApply/' + id,
     method: 'delete'
   });
 };

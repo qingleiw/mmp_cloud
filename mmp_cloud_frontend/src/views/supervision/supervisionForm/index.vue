@@ -110,8 +110,8 @@
 </template>
 
 <script setup name="SupervisionForm" lang="ts">
-import { listSupervisionForm, getSupervisionForm, delSupervisionForm, addSupervisionForm, updateSupervisionForm } from '@/api/system/supervisionForm';
-import { SupervisionFormVO, SupervisionFormQuery, SupervisionFormForm } from '@/api/system/supervisionForm/types';
+import { listSupervisionForm, getSupervisionForm, delSupervisionForm, addSupervisionForm, updateSupervisionForm } from '@/api/supervision/supervisionForm';
+import { SupervisionFormVO, SupervisionFormQuery, SupervisionFormForm } from '@/api/supervision/supervisionForm/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationTrainingPlanVO, RadiationTrainingPlanForm, RadiationTrainingPlanQuery } from '@/api/system/radiationTrainingPlan/types';
+import { RadiationTrainingPlanVO, RadiationTrainingPlanForm, RadiationTrainingPlanQuery } from '@/api/radiation/radiationTrainingPlan/types';
 
 /**
  * 查询职业健康培训计划列表
@@ -10,7 +10,7 @@ import { RadiationTrainingPlanVO, RadiationTrainingPlanForm, RadiationTrainingPl
 
 export const listRadiationTrainingPlan = (query?: RadiationTrainingPlanQuery): AxiosPromise<RadiationTrainingPlanVO[]> => {
   return request({
-    url: '/system/radiationTrainingPlan/list',
+    url: '/radiation/radiationTrainingPlan/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listRadiationTrainingPlan = (query?: RadiationTrainingPlanQuery): A
  */
 export const getRadiationTrainingPlan = (id: string | number): AxiosPromise<RadiationTrainingPlanVO> => {
   return request({
-    url: '/system/radiationTrainingPlan/' + id,
+    url: '/radiation/radiationTrainingPlan/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getRadiationTrainingPlan = (id: string | number): AxiosPromise<Radi
  */
 export const addRadiationTrainingPlan = (data: RadiationTrainingPlanForm) => {
   return request({
-    url: '/system/radiationTrainingPlan',
+    url: '/radiation/radiationTrainingPlan',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addRadiationTrainingPlan = (data: RadiationTrainingPlanForm) => {
  */
 export const updateRadiationTrainingPlan = (data: RadiationTrainingPlanForm) => {
   return request({
-    url: '/system/radiationTrainingPlan',
+    url: '/radiation/radiationTrainingPlan',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateRadiationTrainingPlan = (data: RadiationTrainingPlanForm) => 
  */
 export const delRadiationTrainingPlan = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationTrainingPlan/' + id,
+    url: '/radiation/radiationTrainingPlan/' + id,
     method: 'delete'
   });
 };

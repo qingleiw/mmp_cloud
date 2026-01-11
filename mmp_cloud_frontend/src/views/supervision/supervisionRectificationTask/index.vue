@@ -141,12 +141,12 @@ import {
   delSupervisionRectificationTask,
   addSupervisionRectificationTask,
   updateSupervisionRectificationTask
-} from '@/api/system/supervisionRectificationTask';
+} from '@/api/supervision/supervisionRectificationTask';
 import {
   SupervisionRectificationTaskVO,
   SupervisionRectificationTaskQuery,
   SupervisionRectificationTaskForm
-} from '@/api/system/supervisionRectificationTask/types';
+} from '@/api/supervision/supervisionRectificationTask/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

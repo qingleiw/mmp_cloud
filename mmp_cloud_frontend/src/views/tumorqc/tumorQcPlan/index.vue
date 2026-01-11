@@ -128,8 +128,8 @@
 </template>
 
 <script setup name="TumorQcPlan" lang="ts">
-import { listTumorQcPlan, getTumorQcPlan, delTumorQcPlan, addTumorQcPlan, updateTumorQcPlan } from '@/api/system/tumorQcPlan';
-import { TumorQcPlanVO, TumorQcPlanQuery, TumorQcPlanForm } from '@/api/system/tumorQcPlan/types';
+import { listTumorQcPlan, getTumorQcPlan, delTumorQcPlan, addTumorQcPlan, updateTumorQcPlan } from '@/api/tumorqc/tumorQcPlan';
+import { TumorQcPlanVO, TumorQcPlanQuery, TumorQcPlanForm } from '@/api/tumorqc/tumorQcPlan/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createTumorQcPlanFieldConfig } from '@/utils/mmpFieldConfigs';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

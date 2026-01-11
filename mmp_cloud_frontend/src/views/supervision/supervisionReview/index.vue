@@ -138,8 +138,8 @@ import {
   delSupervisionReview,
   addSupervisionReview,
   updateSupervisionReview
-} from '@/api/system/supervisionReview';
-import { SupervisionReviewVO, SupervisionReviewQuery, SupervisionReviewForm } from '@/api/system/supervisionReview/types';
+} from '@/api/supervision/supervisionReview';
+import { SupervisionReviewVO, SupervisionReviewQuery, SupervisionReviewForm } from '@/api/supervision/supervisionReview/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

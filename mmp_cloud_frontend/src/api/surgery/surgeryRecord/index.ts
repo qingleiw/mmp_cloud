@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SurgeryRecordVO, SurgeryRecordForm, SurgeryRecordQuery } from '@/api/system/surgeryRecord/types';
+import { SurgeryRecordVO, SurgeryRecordForm, SurgeryRecordQuery } from '@/api/surgery/surgeryRecord/types';
 
 /**
  * 查询手术记录列表
@@ -10,7 +10,7 @@ import { SurgeryRecordVO, SurgeryRecordForm, SurgeryRecordQuery } from '@/api/sy
 
 export const listSurgeryRecord = (query?: SurgeryRecordQuery): AxiosPromise<SurgeryRecordVO[]> => {
   return request({
-    url: '/system/surgeryRecord/list',
+    url: '/surgery/surgeryRecord/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSurgeryRecord = (query?: SurgeryRecordQuery): AxiosPromise<Surg
  */
 export const getSurgeryRecord = (id: string | number): AxiosPromise<SurgeryRecordVO> => {
   return request({
-    url: '/system/surgeryRecord/' + id,
+    url: '/surgery/surgeryRecord/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSurgeryRecord = (id: string | number): AxiosPromise<SurgeryRecor
  */
 export const addSurgeryRecord = (data: SurgeryRecordForm) => {
   return request({
-    url: '/system/surgeryRecord',
+    url: '/surgery/surgeryRecord',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSurgeryRecord = (data: SurgeryRecordForm) => {
  */
 export const updateSurgeryRecord = (data: SurgeryRecordForm) => {
   return request({
-    url: '/system/surgeryRecord',
+    url: '/surgery/surgeryRecord',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSurgeryRecord = (data: SurgeryRecordForm) => {
  */
 export const delSurgeryRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/surgeryRecord/' + id,
+    url: '/surgery/surgeryRecord/' + id,
     method: 'delete'
   });
 };

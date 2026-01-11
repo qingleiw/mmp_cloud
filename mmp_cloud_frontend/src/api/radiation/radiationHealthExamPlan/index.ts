@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationHealthExamPlanVO, RadiationHealthExamPlanForm, RadiationHealthExamPlanQuery } from '@/api/system/radiationHealthExamPlan/types';
+import { RadiationHealthExamPlanVO, RadiationHealthExamPlanForm, RadiationHealthExamPlanQuery } from '@/api/radiation/radiationHealthExamPlan/types';
 
 /**
  * 查询职业健康体检计划列表
@@ -10,7 +10,7 @@ import { RadiationHealthExamPlanVO, RadiationHealthExamPlanForm, RadiationHealth
 
 export const listRadiationHealthExamPlan = (query?: RadiationHealthExamPlanQuery): AxiosPromise<RadiationHealthExamPlanVO[]> => {
   return request({
-    url: '/system/radiationHealthExamPlan/list',
+    url: '/radiation/radiationHealthExamPlan/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listRadiationHealthExamPlan = (query?: RadiationHealthExamPlanQuery
  */
 export const getRadiationHealthExamPlan = (id: string | number): AxiosPromise<RadiationHealthExamPlanVO> => {
   return request({
-    url: '/system/radiationHealthExamPlan/' + id,
+    url: '/radiation/radiationHealthExamPlan/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getRadiationHealthExamPlan = (id: string | number): AxiosPromise<Ra
  */
 export const addRadiationHealthExamPlan = (data: RadiationHealthExamPlanForm) => {
   return request({
-    url: '/system/radiationHealthExamPlan',
+    url: '/radiation/radiationHealthExamPlan',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addRadiationHealthExamPlan = (data: RadiationHealthExamPlanForm) =>
  */
 export const updateRadiationHealthExamPlan = (data: RadiationHealthExamPlanForm) => {
   return request({
-    url: '/system/radiationHealthExamPlan',
+    url: '/radiation/radiationHealthExamPlan',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateRadiationHealthExamPlan = (data: RadiationHealthExamPlanForm)
  */
 export const delRadiationHealthExamPlan = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationHealthExamPlan/' + id,
+    url: '/radiation/radiationHealthExamPlan/' + id,
     method: 'delete'
   });
 };

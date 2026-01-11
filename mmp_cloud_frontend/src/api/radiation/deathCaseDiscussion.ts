@@ -3,7 +3,7 @@ import request from '@/utils/request';
 // 查询死亡病例讨论列表
 export function listDeathCase(query: any) {
   return request({
-    url: '/system/death-case-discussion/list',
+    url: '/radiation/death-case-discussion/list',
     method: 'get',
     params: query
   });
@@ -12,7 +12,7 @@ export function listDeathCase(query: any) {
 // 查询死亡病例讨论详细
 export function getDeathCase(id: any) {
   return request({
-    url: '/system/death-case-discussion/' + id,
+    url: '/radiation/death-case-discussion/' + id,
     method: 'get'
   });
 }
@@ -20,7 +20,7 @@ export function getDeathCase(id: any) {
 // 新增死亡病例讨论
 export function addDeathCase(data: any) {
   return request({
-    url: '/system/death-case-discussion',
+    url: '/radiation/death-case-discussion',
     method: 'post',
     data: data
   });
@@ -29,7 +29,7 @@ export function addDeathCase(data: any) {
 // 修改死亡病例讨论
 export function updateDeathCase(data: any) {
   return request({
-    url: '/system/death-case-discussion',
+    url: '/radiation/death-case-discussion',
     method: 'put',
     data: data
   });
@@ -38,7 +38,7 @@ export function updateDeathCase(data: any) {
 // 删除死亡病例讨论
 export function delDeathCase(id: any) {
   return request({
-    url: '/system/death-case-discussion/' + id,
+    url: '/radiation/death-case-discussion/' + id,
     method: 'delete'
   });
 }
@@ -46,7 +46,7 @@ export function delDeathCase(id: any) {
 // 导出死亡病例讨论
 export function exportDeathCase(query: any) {
   return request({
-    url: '/system/death-case-discussion/export',
+    url: '/radiation/death-case-discussion/export',
     method: 'post',
     params: query
   });

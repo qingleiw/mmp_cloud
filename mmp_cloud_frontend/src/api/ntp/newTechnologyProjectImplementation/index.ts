@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectImplementationVO, NewTechnologyProjectImplementationForm, NewTechnologyProjectImplementationQuery } from '@/api/system/newTechnologyProjectImplementation/types';
+import { NewTechnologyProjectImplementationVO, NewTechnologyProjectImplementationForm, NewTechnologyProjectImplementationQuery } from '@/api/ntp/newTechnologyProjectImplementation/types';
 
 /**
  * 查询新技术实施列表
@@ -10,7 +10,7 @@ import { NewTechnologyProjectImplementationVO, NewTechnologyProjectImplementatio
 
 export const listNewTechnologyProjectImplementation = (query?: NewTechnologyProjectImplementationQuery): AxiosPromise<NewTechnologyProjectImplementationVO[]> => {
   return request({
-    url: '/system/newTechnologyProjectImplementation/list',
+    url: '/ntp/newTechnologyProjectImplementation/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listNewTechnologyProjectImplementation = (query?: NewTechnologyProj
  */
 export const getNewTechnologyProjectImplementation = (id: string | number): AxiosPromise<NewTechnologyProjectImplementationVO> => {
   return request({
-    url: '/system/newTechnologyProjectImplementation/' + id,
+    url: '/ntp/newTechnologyProjectImplementation/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getNewTechnologyProjectImplementation = (id: string | number): Axio
  */
 export const addNewTechnologyProjectImplementation = (data: NewTechnologyProjectImplementationForm) => {
   return request({
-    url: '/system/newTechnologyProjectImplementation',
+    url: '/ntp/newTechnologyProjectImplementation',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addNewTechnologyProjectImplementation = (data: NewTechnologyProject
  */
 export const updateNewTechnologyProjectImplementation = (data: NewTechnologyProjectImplementationForm) => {
   return request({
-    url: '/system/newTechnologyProjectImplementation',
+    url: '/ntp/newTechnologyProjectImplementation',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateNewTechnologyProjectImplementation = (data: NewTechnologyProj
  */
 export const delNewTechnologyProjectImplementation = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/newTechnologyProjectImplementation/' + id,
+    url: '/ntp/newTechnologyProjectImplementation/' + id,
     method: 'delete'
   });
 };

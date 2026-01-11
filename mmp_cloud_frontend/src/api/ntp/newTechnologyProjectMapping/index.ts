@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectMappingVO, NewTechnologyProjectMappingForm, NewTechnologyProjectMappingQuery } from '@/api/system/newTechnologyProjectMapping/types';
+import { NewTechnologyProjectMappingVO, NewTechnologyProjectMappingForm, NewTechnologyProjectMappingQuery } from '@/api/ntp/newTechnologyProjectMapping/types';
 
 /**
  * 查询新技术项目对码列表
@@ -10,7 +10,7 @@ import { NewTechnologyProjectMappingVO, NewTechnologyProjectMappingForm, NewTech
 
 export const listNewTechnologyProjectMapping = (query?: NewTechnologyProjectMappingQuery): AxiosPromise<NewTechnologyProjectMappingVO[]> => {
   return request({
-    url: '/system/newTechnologyProjectMapping/list',
+    url: '/ntp/newTechnologyProjectMapping/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listNewTechnologyProjectMapping = (query?: NewTechnologyProjectMapp
  */
 export const getNewTechnologyProjectMapping = (id: string | number): AxiosPromise<NewTechnologyProjectMappingVO> => {
   return request({
-    url: '/system/newTechnologyProjectMapping/' + id,
+    url: '/ntp/newTechnologyProjectMapping/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getNewTechnologyProjectMapping = (id: string | number): AxiosPromis
  */
 export const addNewTechnologyProjectMapping = (data: NewTechnologyProjectMappingForm) => {
   return request({
-    url: '/system/newTechnologyProjectMapping',
+    url: '/ntp/newTechnologyProjectMapping',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addNewTechnologyProjectMapping = (data: NewTechnologyProjectMapping
  */
 export const updateNewTechnologyProjectMapping = (data: NewTechnologyProjectMappingForm) => {
   return request({
-    url: '/system/newTechnologyProjectMapping',
+    url: '/ntp/newTechnologyProjectMapping',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateNewTechnologyProjectMapping = (data: NewTechnologyProjectMapp
  */
 export const delNewTechnologyProjectMapping = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/newTechnologyProjectMapping/' + id,
+    url: '/ntp/newTechnologyProjectMapping/' + id,
     method: 'delete'
   });
 };

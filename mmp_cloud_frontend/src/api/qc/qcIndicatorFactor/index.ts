@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QcIndicatorFactorVO, QcIndicatorFactorForm, QcIndicatorFactorQuery } from '@/api/system/qcIndicatorFactor/types';
+import { QcIndicatorFactorVO, QcIndicatorFactorForm, QcIndicatorFactorQuery } from '@/api/qc/qcIndicatorFactor/types';
 
 /**
  * 查询指标计算因子列表
@@ -10,7 +10,7 @@ import { QcIndicatorFactorVO, QcIndicatorFactorForm, QcIndicatorFactorQuery } fr
 
 export const listQcIndicatorFactor = (query?: QcIndicatorFactorQuery): AxiosPromise<QcIndicatorFactorVO[]> => {
   return request({
-    url: '/system/qcIndicatorFactor/list',
+    url: '/qc/qcIndicatorFactor/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQcIndicatorFactor = (query?: QcIndicatorFactorQuery): AxiosProm
  */
 export const getQcIndicatorFactor = (id: string | number): AxiosPromise<QcIndicatorFactorVO> => {
   return request({
-    url: '/system/qcIndicatorFactor/' + id,
+    url: '/qc/qcIndicatorFactor/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQcIndicatorFactor = (id: string | number): AxiosPromise<QcIndica
  */
 export const addQcIndicatorFactor = (data: QcIndicatorFactorForm) => {
   return request({
-    url: '/system/qcIndicatorFactor',
+    url: '/qc/qcIndicatorFactor',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQcIndicatorFactor = (data: QcIndicatorFactorForm) => {
  */
 export const updateQcIndicatorFactor = (data: QcIndicatorFactorForm) => {
   return request({
-    url: '/system/qcIndicatorFactor',
+    url: '/qc/qcIndicatorFactor',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQcIndicatorFactor = (data: QcIndicatorFactorForm) => {
  */
 export const delQcIndicatorFactor = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qcIndicatorFactor/' + id,
+    url: '/qc/qcIndicatorFactor/' + id,
     method: 'delete'
   });
 };

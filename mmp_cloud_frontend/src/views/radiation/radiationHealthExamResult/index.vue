@@ -185,12 +185,12 @@ import {
   delRadiationHealthExamResult,
   addRadiationHealthExamResult,
   updateRadiationHealthExamResult
-} from '@/api/system/radiationHealthExamResult';
+} from '@/api/radiation/radiationHealthExamResult';
 import {
   RadiationHealthExamResultVO,
   RadiationHealthExamResultQuery,
   RadiationHealthExamResultForm
-} from '@/api/system/radiationHealthExamResult/types';
+} from '@/api/radiation/radiationHealthExamResult/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

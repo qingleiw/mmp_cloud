@@ -141,8 +141,8 @@ import {
   delSupervisionProject,
   addSupervisionProject,
   updateSupervisionProject
-} from '@/api/system/supervisionProject';
-import { SupervisionProjectVO, SupervisionProjectQuery, SupervisionProjectForm } from '@/api/system/supervisionProject/types';
+} from '@/api/supervision/supervisionProject';
+import { SupervisionProjectVO, SupervisionProjectQuery, SupervisionProjectForm } from '@/api/supervision/supervisionProject/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

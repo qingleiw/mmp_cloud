@@ -4,7 +4,7 @@ import {
   QualificationAdmissionConditionVO,
   QualificationAdmissionConditionForm,
   QualificationAdmissionConditionQuery
-} from '@/api/system/qualificationAdmissionCondition/types';
+} from '@/api/qualification/qualificationAdmissionCondition/types';
 
 /**
  * 查询资质准入条件列表
@@ -16,7 +16,7 @@ export const listQualificationAdmissionCondition = (
   query?: QualificationAdmissionConditionQuery
 ): AxiosPromise<QualificationAdmissionConditionVO[]> => {
   return request({
-    url: '/system/qualificationAdmissionCondition/list',
+    url: '/qualification/qualificationAdmissionCondition/list',
     method: 'get',
     params: query
   });
@@ -28,7 +28,7 @@ export const listQualificationAdmissionCondition = (
  */
 export const getQualificationAdmissionCondition = (id: string | number): AxiosPromise<QualificationAdmissionConditionVO> => {
   return request({
-    url: '/system/qualificationAdmissionCondition/' + id,
+    url: '/qualification/qualificationAdmissionCondition/' + id,
     method: 'get'
   });
 };
@@ -39,7 +39,7 @@ export const getQualificationAdmissionCondition = (id: string | number): AxiosPr
  */
 export const addQualificationAdmissionCondition = (data: QualificationAdmissionConditionForm) => {
   return request({
-    url: '/system/qualificationAdmissionCondition',
+    url: '/qualification/qualificationAdmissionCondition',
     method: 'post',
     data: data
   });
@@ -51,7 +51,7 @@ export const addQualificationAdmissionCondition = (data: QualificationAdmissionC
  */
 export const updateQualificationAdmissionCondition = (data: QualificationAdmissionConditionForm) => {
   return request({
-    url: '/system/qualificationAdmissionCondition',
+    url: '/qualification/qualificationAdmissionCondition',
     method: 'put',
     data: data
   });
@@ -63,7 +63,7 @@ export const updateQualificationAdmissionCondition = (data: QualificationAdmissi
  */
 export const delQualificationAdmissionCondition = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationAdmissionCondition/' + id,
+    url: '/qualification/qualificationAdmissionCondition/' + id,
     method: 'delete'
   });
 };

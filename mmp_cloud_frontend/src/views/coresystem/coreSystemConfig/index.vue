@@ -212,9 +212,9 @@ import {
   delCoreSystemConfig,
   addCoreSystemConfig,
   updateCoreSystemConfig
-} from '@/api/system/coreSystemConfig';
-import { listCoreSystemIndicator, getCoreSystemIndicator } from '@/api/system/coreSystemIndicator';
-import { CoreSystemConfigVO, CoreSystemConfigQuery, CoreSystemConfigForm } from '@/api/system/coreSystemConfig/types';
+} from '@/api/coresystem/coreSystemConfig';
+import { listCoreSystemIndicator, getCoreSystemIndicator } from '@/api/coresystem/coreSystemIndicator';
+import { CoreSystemConfigVO, CoreSystemConfigQuery, CoreSystemConfigForm } from '@/api/coresystem/coreSystemConfig/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

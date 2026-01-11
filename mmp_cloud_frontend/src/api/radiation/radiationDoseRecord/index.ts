@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationDoseRecordVO, RadiationDoseRecordForm, RadiationDoseRecordQuery } from '@/api/system/radiationDoseRecord/types';
+import { RadiationDoseRecordVO, RadiationDoseRecordForm, RadiationDoseRecordQuery } from '@/api/radiation/radiationDoseRecord/types';
 
 /**
  * 查询个人剂量监测记录列表
@@ -10,7 +10,7 @@ import { RadiationDoseRecordVO, RadiationDoseRecordForm, RadiationDoseRecordQuer
 
 export const listRadiationDoseRecord = (query?: RadiationDoseRecordQuery): AxiosPromise<RadiationDoseRecordVO[]> => {
   return request({
-    url: '/system/radiationDoseRecord/list',
+    url: '/radiation/radiationDoseRecord/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listRadiationDoseRecord = (query?: RadiationDoseRecordQuery): Axios
  */
 export const getRadiationDoseRecord = (id: string | number): AxiosPromise<RadiationDoseRecordVO> => {
   return request({
-    url: '/system/radiationDoseRecord/' + id,
+    url: '/radiation/radiationDoseRecord/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getRadiationDoseRecord = (id: string | number): AxiosPromise<Radiat
  */
 export const addRadiationDoseRecord = (data: RadiationDoseRecordForm) => {
   return request({
-    url: '/system/radiationDoseRecord',
+    url: '/radiation/radiationDoseRecord',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addRadiationDoseRecord = (data: RadiationDoseRecordForm) => {
  */
 export const updateRadiationDoseRecord = (data: RadiationDoseRecordForm) => {
   return request({
-    url: '/system/radiationDoseRecord',
+    url: '/radiation/radiationDoseRecord',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateRadiationDoseRecord = (data: RadiationDoseRecordForm) => {
  */
 export const delRadiationDoseRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationDoseRecord/' + id,
+    url: '/radiation/radiationDoseRecord/' + id,
     method: 'delete'
   });
 };

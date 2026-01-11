@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionPlanDeptVO, SupervisionPlanDeptForm, SupervisionPlanDeptQuery } from '@/api/system/supervisionPlanDept/types';
+import { SupervisionPlanDeptVO, SupervisionPlanDeptForm, SupervisionPlanDeptQuery } from '@/api/supervision/supervisionPlanDept/types';
 
 /**
  * 查询督查计划科室关联列表
@@ -10,7 +10,7 @@ import { SupervisionPlanDeptVO, SupervisionPlanDeptForm, SupervisionPlanDeptQuer
 
 export const listSupervisionPlanDept = (query?: SupervisionPlanDeptQuery): AxiosPromise<SupervisionPlanDeptVO[]> => {
   return request({
-    url: '/system/supervisionPlanDept/list',
+    url: '/supervision/supervisionPlanDept/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionPlanDept = (query?: SupervisionPlanDeptQuery): Axios
  */
 export const getSupervisionPlanDept = (id: string | number): AxiosPromise<SupervisionPlanDeptVO> => {
   return request({
-    url: '/system/supervisionPlanDept/' + id,
+    url: '/supervision/supervisionPlanDept/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionPlanDept = (id: string | number): AxiosPromise<Superv
  */
 export const addSupervisionPlanDept = (data: SupervisionPlanDeptForm) => {
   return request({
-    url: '/system/supervisionPlanDept',
+    url: '/supervision/supervisionPlanDept',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionPlanDept = (data: SupervisionPlanDeptForm) => {
  */
 export const updateSupervisionPlanDept = (data: SupervisionPlanDeptForm) => {
   return request({
-    url: '/system/supervisionPlanDept',
+    url: '/supervision/supervisionPlanDept',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionPlanDept = (data: SupervisionPlanDeptForm) => {
  */
 export const delSupervisionPlanDept = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionPlanDept/' + id,
+    url: '/supervision/supervisionPlanDept/' + id,
     method: 'delete'
   });
 };

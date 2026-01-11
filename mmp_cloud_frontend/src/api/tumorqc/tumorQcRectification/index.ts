@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { TumorQcRectificationVO, TumorQcRectificationForm, TumorQcRectificationQuery } from '@/api/system/tumorQcRectification/types';
+import { TumorQcRectificationVO, TumorQcRectificationForm, TumorQcRectificationQuery } from '@/api/tumorqc/tumorQcRectification/types';
 
 /**
  * 查询肿瘤质控整改列表
@@ -10,7 +10,7 @@ import { TumorQcRectificationVO, TumorQcRectificationForm, TumorQcRectificationQ
 
 export const listTumorQcRectification = (query?: TumorQcRectificationQuery): AxiosPromise<TumorQcRectificationVO[]> => {
   return request({
-    url: '/system/tumorQcRectification/list',
+    url: '/tumorqc/tumorQcRectification/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listTumorQcRectification = (query?: TumorQcRectificationQuery): Axi
  */
 export const getTumorQcRectification = (id: string | number): AxiosPromise<TumorQcRectificationVO> => {
   return request({
-    url: '/system/tumorQcRectification/' + id,
+    url: '/tumorqc/tumorQcRectification/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getTumorQcRectification = (id: string | number): AxiosPromise<Tumor
  */
 export const addTumorQcRectification = (data: TumorQcRectificationForm) => {
   return request({
-    url: '/system/tumorQcRectification',
+    url: '/tumorqc/tumorQcRectification',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addTumorQcRectification = (data: TumorQcRectificationForm) => {
  */
 export const updateTumorQcRectification = (data: TumorQcRectificationForm) => {
   return request({
-    url: '/system/tumorQcRectification',
+    url: '/tumorqc/tumorQcRectification',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateTumorQcRectification = (data: TumorQcRectificationForm) => {
  */
 export const delTumorQcRectification = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/tumorQcRectification/' + id,
+    url: '/tumorqc/tumorQcRectification/' + id,
     method: 'delete'
   });
 };

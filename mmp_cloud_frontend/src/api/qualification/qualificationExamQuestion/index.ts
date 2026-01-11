@@ -4,7 +4,7 @@ import {
   QualificationExamQuestionVO,
   QualificationExamQuestionForm,
   QualificationExamQuestionQuery
-} from '@/api/system/qualificationExamQuestion/types';
+} from '@/api/qualification/qualificationExamQuestion/types';
 
 /**
  * 查询资质考核题库列表
@@ -14,7 +14,7 @@ import {
 
 export const listQualificationExamQuestion = (query?: QualificationExamQuestionQuery): AxiosPromise<QualificationExamQuestionVO[]> => {
   return request({
-    url: '/system/qualificationExamQuestion/list',
+    url: '/qualification/qualificationExamQuestion/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listQualificationExamQuestion = (query?: QualificationExamQuestionQ
  */
 export const getQualificationExamQuestion = (id: string | number): AxiosPromise<QualificationExamQuestionVO> => {
   return request({
-    url: '/system/qualificationExamQuestion/' + id,
+    url: '/qualification/qualificationExamQuestion/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getQualificationExamQuestion = (id: string | number): AxiosPromise<
  */
 export const addQualificationExamQuestion = (data: QualificationExamQuestionForm) => {
   return request({
-    url: '/system/qualificationExamQuestion',
+    url: '/qualification/qualificationExamQuestion',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addQualificationExamQuestion = (data: QualificationExamQuestionForm
  */
 export const updateQualificationExamQuestion = (data: QualificationExamQuestionForm) => {
   return request({
-    url: '/system/qualificationExamQuestion',
+    url: '/qualification/qualificationExamQuestion',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateQualificationExamQuestion = (data: QualificationExamQuestionF
  */
 export const delQualificationExamQuestion = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationExamQuestion/' + id,
+    url: '/qualification/qualificationExamQuestion/' + id,
     method: 'delete'
   });
 };

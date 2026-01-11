@@ -4,7 +4,7 @@ import {
   CoreSystemRectificationRecordVO,
   CoreSystemRectificationRecordForm,
   CoreSystemRectificationRecordQuery
-} from '@/api/system/coreSystemRectificationRecord/types';
+} from '@/api/coresystem/coreSystemRectificationRecord/types';
 
 /**
  * 查询制度整改记录列表
@@ -14,7 +14,7 @@ import {
 
 export const listCoreSystemRectificationRecord = (query?: CoreSystemRectificationRecordQuery): AxiosPromise<CoreSystemRectificationRecordVO[]> => {
   return request({
-    url: '/system/coreSystemRectificationRecord/list',
+    url: '/coresystem/coreSystemRectificationRecord/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listCoreSystemRectificationRecord = (query?: CoreSystemRectificatio
  */
 export const getCoreSystemRectificationRecord = (id: string | number): AxiosPromise<CoreSystemRectificationRecordVO> => {
   return request({
-    url: '/system/coreSystemRectificationRecord/' + id,
+    url: '/coresystem/coreSystemRectificationRecord/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getCoreSystemRectificationRecord = (id: string | number): AxiosProm
  */
 export const addCoreSystemRectificationRecord = (data: CoreSystemRectificationRecordForm) => {
   return request({
-    url: '/system/coreSystemRectificationRecord',
+    url: '/coresystem/coreSystemRectificationRecord',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addCoreSystemRectificationRecord = (data: CoreSystemRectificationRe
  */
 export const updateCoreSystemRectificationRecord = (data: CoreSystemRectificationRecordForm) => {
   return request({
-    url: '/system/coreSystemRectificationRecord',
+    url: '/coresystem/coreSystemRectificationRecord',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateCoreSystemRectificationRecord = (data: CoreSystemRectificatio
  */
 export const delCoreSystemRectificationRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/coreSystemRectificationRecord/' + id,
+    url: '/coresystem/coreSystemRectificationRecord/' + id,
     method: 'delete'
   });
 };

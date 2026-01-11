@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { TumorQcIndicatorRecordVO, TumorQcIndicatorRecordForm, TumorQcIndicatorRecordQuery } from '@/api/system/tumorQcIndicatorRecord/types';
+import { TumorQcIndicatorRecordVO, TumorQcIndicatorRecordForm, TumorQcIndicatorRecordQuery } from '@/api/tumorqc/tumorQcIndicatorRecord/types';
 
 /**
  * 查询质控指标监测记录列表
@@ -10,7 +10,7 @@ import { TumorQcIndicatorRecordVO, TumorQcIndicatorRecordForm, TumorQcIndicatorR
 
 export const listTumorQcIndicatorRecord = (query?: TumorQcIndicatorRecordQuery): AxiosPromise<TumorQcIndicatorRecordVO[]> => {
   return request({
-    url: '/system/tumorQcIndicatorRecord/list',
+    url: '/tumorqc/tumorQcIndicatorRecord/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listTumorQcIndicatorRecord = (query?: TumorQcIndicatorRecordQuery):
  */
 export const getTumorQcIndicatorRecord = (id: string | number): AxiosPromise<TumorQcIndicatorRecordVO> => {
   return request({
-    url: '/system/tumorQcIndicatorRecord/' + id,
+    url: '/tumorqc/tumorQcIndicatorRecord/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getTumorQcIndicatorRecord = (id: string | number): AxiosPromise<Tum
  */
 export const addTumorQcIndicatorRecord = (data: TumorQcIndicatorRecordForm) => {
   return request({
-    url: '/system/tumorQcIndicatorRecord',
+    url: '/tumorqc/tumorQcIndicatorRecord',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addTumorQcIndicatorRecord = (data: TumorQcIndicatorRecordForm) => {
  */
 export const updateTumorQcIndicatorRecord = (data: TumorQcIndicatorRecordForm) => {
   return request({
-    url: '/system/tumorQcIndicatorRecord',
+    url: '/tumorqc/tumorQcIndicatorRecord',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateTumorQcIndicatorRecord = (data: TumorQcIndicatorRecordForm) =
  */
 export const delTumorQcIndicatorRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/tumorQcIndicatorRecord/' + id,
+    url: '/tumorqc/tumorQcIndicatorRecord/' + id,
     method: 'delete'
   });
 };

@@ -131,12 +131,12 @@ import {
   delSupervisionRectificationProgress,
   addSupervisionRectificationProgress,
   updateSupervisionRectificationProgress
-} from '@/api/system/supervisionRectificationProgress';
+} from '@/api/supervision/supervisionRectificationProgress';
 import {
   SupervisionRectificationProgressVO,
   SupervisionRectificationProgressQuery,
   SupervisionRectificationProgressForm
-} from '@/api/system/supervisionRectificationProgress/types';
+} from '@/api/supervision/supervisionRectificationProgress/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

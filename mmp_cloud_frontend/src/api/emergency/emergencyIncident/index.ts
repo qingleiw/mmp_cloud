@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyIncidentVO, EmergencyIncidentForm, EmergencyIncidentQuery } from '@/api/system/emergencyIncident/types';
+import { EmergencyIncidentVO, EmergencyIncidentForm, EmergencyIncidentQuery } from '@/api/emergency/emergencyIncident/types';
 
 /**
  * 查询突发事件记录列表
@@ -10,7 +10,7 @@ import { EmergencyIncidentVO, EmergencyIncidentForm, EmergencyIncidentQuery } fr
 
 export const listEmergencyIncident = (query?: EmergencyIncidentQuery): AxiosPromise<EmergencyIncidentVO[]> => {
   return request({
-    url: '/system/emergencyIncident/list',
+    url: '/emergency/emergencyIncident/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyIncident = (query?: EmergencyIncidentQuery): AxiosProm
  */
 export const getEmergencyIncident = (id: string | number): AxiosPromise<EmergencyIncidentVO> => {
   return request({
-    url: '/system/emergencyIncident/' + id,
+    url: '/emergency/emergencyIncident/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyIncident = (id: string | number): AxiosPromise<Emergenc
  */
 export const addEmergencyIncident = (data: EmergencyIncidentForm) => {
   return request({
-    url: '/system/emergencyIncident',
+    url: '/emergency/emergencyIncident',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyIncident = (data: EmergencyIncidentForm) => {
  */
 export const updateEmergencyIncident = (data: EmergencyIncidentForm) => {
   return request({
-    url: '/system/emergencyIncident',
+    url: '/emergency/emergencyIncident',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyIncident = (data: EmergencyIncidentForm) => {
  */
 export const delEmergencyIncident = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyIncident/' + id,
+    url: '/emergency/emergencyIncident/' + id,
     method: 'delete'
   });
 };

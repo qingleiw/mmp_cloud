@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionFormVO, SupervisionFormForm, SupervisionFormQuery } from '@/api/system/supervisionForm/types';
+import { SupervisionFormVO, SupervisionFormForm, SupervisionFormQuery } from '@/api/supervision/supervisionForm/types';
 
 /**
  * 查询督查单列表
@@ -10,7 +10,7 @@ import { SupervisionFormVO, SupervisionFormForm, SupervisionFormQuery } from '@/
 
 export const listSupervisionForm = (query?: SupervisionFormQuery): AxiosPromise<SupervisionFormVO[]> => {
   return request({
-    url: '/system/supervisionForm/list',
+    url: '/supervision/supervisionForm/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionForm = (query?: SupervisionFormQuery): AxiosPromise<
  */
 export const getSupervisionForm = (id: string | number): AxiosPromise<SupervisionFormVO> => {
   return request({
-    url: '/system/supervisionForm/' + id,
+    url: '/supervision/supervisionForm/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionForm = (id: string | number): AxiosPromise<Supervisio
  */
 export const addSupervisionForm = (data: SupervisionFormForm) => {
   return request({
-    url: '/system/supervisionForm',
+    url: '/supervision/supervisionForm',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionForm = (data: SupervisionFormForm) => {
  */
 export const updateSupervisionForm = (data: SupervisionFormForm) => {
   return request({
-    url: '/system/supervisionForm',
+    url: '/supervision/supervisionForm',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionForm = (data: SupervisionFormForm) => {
  */
 export const delSupervisionForm = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionForm/' + id,
+    url: '/supervision/supervisionForm/' + id,
     method: 'delete'
   });
 };

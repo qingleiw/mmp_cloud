@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationHealthExamVO, RadiationHealthExamForm, RadiationHealthExamQuery } from '@/api/system/radiationHealthExam/types';
+import { RadiationHealthExamVO, RadiationHealthExamForm, RadiationHealthExamQuery } from '@/api/radiation/radiationHealthExam/types';
 
 /**
  * 查询职业健康体检列表
@@ -10,7 +10,7 @@ import { RadiationHealthExamVO, RadiationHealthExamForm, RadiationHealthExamQuer
 
 export const listRadiationHealthExam = (query?: RadiationHealthExamQuery): AxiosPromise<RadiationHealthExamVO[]> => {
   return request({
-    url: '/system/radiationHealthExam/list',
+    url: '/radiation/radiationHealthExam/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listRadiationHealthExam = (query?: RadiationHealthExamQuery): Axios
  */
 export const getRadiationHealthExam = (id: string | number): AxiosPromise<RadiationHealthExamVO> => {
   return request({
-    url: '/system/radiationHealthExam/' + id,
+    url: '/radiation/radiationHealthExam/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getRadiationHealthExam = (id: string | number): AxiosPromise<Radiat
  */
 export const addRadiationHealthExam = (data: RadiationHealthExamForm) => {
   return request({
-    url: '/system/radiationHealthExam',
+    url: '/radiation/radiationHealthExam',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addRadiationHealthExam = (data: RadiationHealthExamForm) => {
  */
 export const updateRadiationHealthExam = (data: RadiationHealthExamForm) => {
   return request({
-    url: '/system/radiationHealthExam',
+    url: '/radiation/radiationHealthExam',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateRadiationHealthExam = (data: RadiationHealthExamForm) => {
  */
 export const delRadiationHealthExam = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationHealthExam/' + id,
+    url: '/radiation/radiationHealthExam/' + id,
     method: 'delete'
   });
 };

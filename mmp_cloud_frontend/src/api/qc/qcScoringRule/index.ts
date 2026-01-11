@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QcScoringRuleVO, QcScoringRuleForm, QcScoringRuleQuery } from '@/api/system/qcScoringRule/types';
+import { QcScoringRuleVO, QcScoringRuleForm, QcScoringRuleQuery } from '@/api/qc/qcScoringRule/types';
 
 /**
  * 查询评分规则列表
@@ -10,7 +10,7 @@ import { QcScoringRuleVO, QcScoringRuleForm, QcScoringRuleQuery } from '@/api/sy
 
 export const listQcScoringRule = (query?: QcScoringRuleQuery): AxiosPromise<QcScoringRuleVO[]> => {
   return request({
-    url: '/system/qcScoringRule/list',
+    url: '/qc/qcScoringRule/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQcScoringRule = (query?: QcScoringRuleQuery): AxiosPromise<QcSc
  */
 export const getQcScoringRule = (id: string | number): AxiosPromise<QcScoringRuleVO> => {
   return request({
-    url: '/system/qcScoringRule/' + id,
+    url: '/qc/qcScoringRule/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQcScoringRule = (id: string | number): AxiosPromise<QcScoringRul
  */
 export const addQcScoringRule = (data: QcScoringRuleForm) => {
   return request({
-    url: '/system/qcScoringRule',
+    url: '/qc/qcScoringRule',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQcScoringRule = (data: QcScoringRuleForm) => {
  */
 export const updateQcScoringRule = (data: QcScoringRuleForm) => {
   return request({
-    url: '/system/qcScoringRule',
+    url: '/qc/qcScoringRule',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQcScoringRule = (data: QcScoringRuleForm) => {
  */
 export const delQcScoringRule = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qcScoringRule/' + id,
+    url: '/qc/qcScoringRule/' + id,
     method: 'delete'
   });
 };

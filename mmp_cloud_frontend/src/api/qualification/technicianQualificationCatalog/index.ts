@@ -4,7 +4,7 @@ import {
   TechnicianQualificationCatalogVO,
   TechnicianQualificationCatalogForm,
   TechnicianQualificationCatalogQuery
-} from '@/api/system/technicianQualificationCatalog/types';
+} from '@/api/qualification/technicianQualificationCatalog/types';
 
 /**
  * 查询医技资质目录列表
@@ -14,7 +14,7 @@ import {
 
 export const listTechnicianQualificationCatalog = (query?: TechnicianQualificationCatalogQuery): AxiosPromise<TechnicianQualificationCatalogVO[]> => {
   return request({
-    url: '/system/technicianQualificationCatalog/list',
+    url: '/qualification/technicianQualificationCatalog/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listTechnicianQualificationCatalog = (query?: TechnicianQualificati
  */
 export const getTechnicianQualificationCatalog = (id: string | number): AxiosPromise<TechnicianQualificationCatalogVO> => {
   return request({
-    url: '/system/technicianQualificationCatalog/' + id,
+    url: '/qualification/technicianQualificationCatalog/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getTechnicianQualificationCatalog = (id: string | number): AxiosPro
  */
 export const addTechnicianQualificationCatalog = (data: TechnicianQualificationCatalogForm) => {
   return request({
-    url: '/system/technicianQualificationCatalog',
+    url: '/qualification/technicianQualificationCatalog',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addTechnicianQualificationCatalog = (data: TechnicianQualificationC
  */
 export const updateTechnicianQualificationCatalog = (data: TechnicianQualificationCatalogForm) => {
   return request({
-    url: '/system/technicianQualificationCatalog',
+    url: '/qualification/technicianQualificationCatalog',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateTechnicianQualificationCatalog = (data: TechnicianQualificati
  */
 export const delTechnicianQualificationCatalog = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/technicianQualificationCatalog/' + id,
+    url: '/qualification/technicianQualificationCatalog/' + id,
     method: 'delete'
   });
 };

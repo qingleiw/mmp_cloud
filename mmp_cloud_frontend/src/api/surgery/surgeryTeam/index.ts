@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SurgeryTeamVO, SurgeryTeamForm, SurgeryTeamQuery } from '@/api/system/surgeryTeam/types';
+import { SurgeryTeamVO, SurgeryTeamForm, SurgeryTeamQuery } from '@/api/surgery/surgeryTeam/types';
 
 /**
  * 查询手术团队列表
@@ -10,7 +10,7 @@ import { SurgeryTeamVO, SurgeryTeamForm, SurgeryTeamQuery } from '@/api/system/s
 
 export const listSurgeryTeam = (query?: SurgeryTeamQuery): AxiosPromise<SurgeryTeamVO[]> => {
   return request({
-    url: '/system/surgeryTeam/list',
+    url: '/surgery/surgeryTeam/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSurgeryTeam = (query?: SurgeryTeamQuery): AxiosPromise<SurgeryT
  */
 export const getSurgeryTeam = (id: string | number): AxiosPromise<SurgeryTeamVO> => {
   return request({
-    url: '/system/surgeryTeam/' + id,
+    url: '/surgery/surgeryTeam/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSurgeryTeam = (id: string | number): AxiosPromise<SurgeryTeamVO>
  */
 export const addSurgeryTeam = (data: SurgeryTeamForm) => {
   return request({
-    url: '/system/surgeryTeam',
+    url: '/surgery/surgeryTeam',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSurgeryTeam = (data: SurgeryTeamForm) => {
  */
 export const updateSurgeryTeam = (data: SurgeryTeamForm) => {
   return request({
-    url: '/system/surgeryTeam',
+    url: '/surgery/surgeryTeam',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSurgeryTeam = (data: SurgeryTeamForm) => {
  */
 export const delSurgeryTeam = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/surgeryTeam/' + id,
+    url: '/surgery/surgeryTeam/' + id,
     method: 'delete'
   });
 };

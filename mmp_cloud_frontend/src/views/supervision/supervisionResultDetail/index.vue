@@ -124,8 +124,8 @@ import {
   delSupervisionResultDetail,
   addSupervisionResultDetail,
   updateSupervisionResultDetail
-} from '@/api/system/supervisionResultDetail';
-import { SupervisionResultDetailVO, SupervisionResultDetailQuery, SupervisionResultDetailForm } from '@/api/system/supervisionResultDetail/types';
+} from '@/api/supervision/supervisionResultDetail';
+import { SupervisionResultDetailVO, SupervisionResultDetailQuery, SupervisionResultDetailForm } from '@/api/supervision/supervisionResultDetail/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

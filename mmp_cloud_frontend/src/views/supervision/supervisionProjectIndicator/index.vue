@@ -158,12 +158,12 @@ import {
   delSupervisionProjectIndicator,
   addSupervisionProjectIndicator,
   updateSupervisionProjectIndicator
-} from '@/api/system/supervisionProjectIndicator';
+} from '@/api/supervision/supervisionProjectIndicator';
 import {
   SupervisionProjectIndicatorVO,
   SupervisionProjectIndicatorQuery,
   SupervisionProjectIndicatorForm
-} from '@/api/system/supervisionProjectIndicator/types';
+} from '@/api/supervision/supervisionProjectIndicator/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectCaseVO, NewTechnologyProjectCaseForm, NewTechnologyProjectCaseQuery } from '@/api/system/newTechnologyProjectCase/types';
+import { NewTechnologyProjectCaseVO, NewTechnologyProjectCaseForm, NewTechnologyProjectCaseQuery } from '@/api/ntp/newTechnologyProjectCase/types';
 
 /**
  * 查询新技术病例登记列表
@@ -10,7 +10,7 @@ import { NewTechnologyProjectCaseVO, NewTechnologyProjectCaseForm, NewTechnology
 
 export const listNewTechnologyProjectCase = (query?: NewTechnologyProjectCaseQuery): AxiosPromise<NewTechnologyProjectCaseVO[]> => {
   return request({
-    url: '/system/newTechnologyProjectCase/list',
+    url: '/ntp/newTechnologyProjectCase/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listNewTechnologyProjectCase = (query?: NewTechnologyProjectCaseQue
  */
 export const getNewTechnologyProjectCase = (id: string | number): AxiosPromise<NewTechnologyProjectCaseVO> => {
   return request({
-    url: '/system/newTechnologyProjectCase/' + id,
+    url: '/ntp/newTechnologyProjectCase/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getNewTechnologyProjectCase = (id: string | number): AxiosPromise<N
  */
 export const addNewTechnologyProjectCase = (data: NewTechnologyProjectCaseForm) => {
   return request({
-    url: '/system/newTechnologyProjectCase',
+    url: '/ntp/newTechnologyProjectCase',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addNewTechnologyProjectCase = (data: NewTechnologyProjectCaseForm) 
  */
 export const updateNewTechnologyProjectCase = (data: NewTechnologyProjectCaseForm) => {
   return request({
-    url: '/system/newTechnologyProjectCase',
+    url: '/ntp/newTechnologyProjectCase',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateNewTechnologyProjectCase = (data: NewTechnologyProjectCaseFor
  */
 export const delNewTechnologyProjectCase = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/newTechnologyProjectCase/' + id,
+    url: '/ntp/newTechnologyProjectCase/' + id,
     method: 'delete'
   });
 };

@@ -140,8 +140,8 @@
 </template>
 
 <script setup name="TumorQcRectification" lang="ts">
-import { listTumorQcRectification, getTumorQcRectification, delTumorQcRectification, addTumorQcRectification, updateTumorQcRectification } from '@/api/system/tumorQcRectification';
-import { TumorQcRectificationVO, TumorQcRectificationQuery, TumorQcRectificationForm } from '@/api/system/tumorQcRectification/types';
+import { listTumorQcRectification, getTumorQcRectification, delTumorQcRectification, addTumorQcRectification, updateTumorQcRectification } from '@/api/tumorqc/tumorQcRectification';
+import { TumorQcRectificationVO, TumorQcRectificationQuery, TumorQcRectificationForm } from '@/api/tumorqc/tumorQcRectification/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createTumorQcRectificationFieldConfig } from '@/utils/mmpFieldConfigs';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

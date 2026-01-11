@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SurgeryCatalogVO, SurgeryCatalogForm, SurgeryCatalogQuery } from '@/api/system/surgeryCatalog/types';
+import { SurgeryCatalogVO, SurgeryCatalogForm, SurgeryCatalogQuery } from '@/api/surgery/surgeryCatalog/types';
 
 /**
  * 查询手术目录列表
@@ -10,7 +10,7 @@ import { SurgeryCatalogVO, SurgeryCatalogForm, SurgeryCatalogQuery } from '@/api
 
 export const listSurgeryCatalog = (query?: SurgeryCatalogQuery): AxiosPromise<SurgeryCatalogVO[]> => {
   return request({
-    url: '/system/surgeryCatalog/list',
+    url: '/surgery/surgeryCatalog/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSurgeryCatalog = (query?: SurgeryCatalogQuery): AxiosPromise<Su
  */
 export const getSurgeryCatalog = (id: string | number): AxiosPromise<SurgeryCatalogVO> => {
   return request({
-    url: '/system/surgeryCatalog/' + id,
+    url: '/surgery/surgeryCatalog/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSurgeryCatalog = (id: string | number): AxiosPromise<SurgeryCata
  */
 export const addSurgeryCatalog = (data: SurgeryCatalogForm) => {
   return request({
-    url: '/system/surgeryCatalog',
+    url: '/surgery/surgeryCatalog',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSurgeryCatalog = (data: SurgeryCatalogForm) => {
  */
 export const updateSurgeryCatalog = (data: SurgeryCatalogForm) => {
   return request({
-    url: '/system/surgeryCatalog',
+    url: '/surgery/surgeryCatalog',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSurgeryCatalog = (data: SurgeryCatalogForm) => {
  */
 export const delSurgeryCatalog = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/surgeryCatalog/' + id,
+    url: '/surgery/surgeryCatalog/' + id,
     method: 'delete'
   });
 };

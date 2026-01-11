@@ -40,7 +40,8 @@ const sidebarRouters = computed<RouteRecordRaw[]>(() => permissionStore.getSideb
 const showLogo = computed(() => settingsStore.sidebarLogo);
 const sideTheme = computed(() => settingsStore.sideTheme);
 const theme = computed(() => settingsStore.theme);
-const isCollapse = computed(() => !appStore.sidebar.opened);
+// 修改：让侧边栏始终展开，不再收缩
+const isCollapse = computed(() => false);
 
 const activeMenu = computed(() => {
   const { meta, path } = route;

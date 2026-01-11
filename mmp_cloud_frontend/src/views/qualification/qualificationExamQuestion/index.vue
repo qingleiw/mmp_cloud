@@ -233,12 +233,12 @@ import {
   delQualificationExamQuestion,
   addQualificationExamQuestion,
   updateQualificationExamQuestion
-} from '@/api/system/qualificationExamQuestion';
+} from '@/api/qualification/qualificationExamQuestion';
 import {
   QualificationExamQuestionVO,
   QualificationExamQuestionQuery,
   QualificationExamQuestionForm
-} from '@/api/system/qualificationExamQuestion/types';
+} from '@/api/qualification/qualificationExamQuestion/types';
 import { createQualificationExamQuestionFieldConfig } from '@/utils/mmpFieldConfigs';
 import { createQualificationExamQuestionSearchConfig } from '@/utils/mmpSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

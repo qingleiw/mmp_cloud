@@ -172,8 +172,8 @@ import {
   delRadiationHealthExamPlan,
   addRadiationHealthExamPlan,
   updateRadiationHealthExamPlan
-} from '@/api/system/radiationHealthExamPlan';
-import { RadiationHealthExamPlanVO, RadiationHealthExamPlanQuery, RadiationHealthExamPlanForm } from '@/api/system/radiationHealthExamPlan/types';
+} from '@/api/radiation/radiationHealthExamPlan';
+import { RadiationHealthExamPlanVO, RadiationHealthExamPlanQuery, RadiationHealthExamPlanForm } from '@/api/radiation/radiationHealthExamPlan/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

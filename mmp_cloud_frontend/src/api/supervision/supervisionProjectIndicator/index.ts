@@ -4,7 +4,7 @@ import {
   SupervisionProjectIndicatorVO,
   SupervisionProjectIndicatorForm,
   SupervisionProjectIndicatorQuery
-} from '@/api/system/supervisionProjectIndicator/types';
+} from '@/api/supervision/supervisionProjectIndicator/types';
 
 /**
  * 查询督查项目指标列表
@@ -14,7 +14,7 @@ import {
 
 export const listSupervisionProjectIndicator = (query?: SupervisionProjectIndicatorQuery): AxiosPromise<SupervisionProjectIndicatorVO[]> => {
   return request({
-    url: '/system/supervisionProjectIndicator/list',
+    url: '/supervision/supervisionProjectIndicator/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listSupervisionProjectIndicator = (query?: SupervisionProjectIndica
  */
 export const getSupervisionProjectIndicator = (id: string | number): AxiosPromise<SupervisionProjectIndicatorVO> => {
   return request({
-    url: '/system/supervisionProjectIndicator/' + id,
+    url: '/supervision/supervisionProjectIndicator/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getSupervisionProjectIndicator = (id: string | number): AxiosPromis
  */
 export const addSupervisionProjectIndicator = (data: SupervisionProjectIndicatorForm) => {
   return request({
-    url: '/system/supervisionProjectIndicator',
+    url: '/supervision/supervisionProjectIndicator',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addSupervisionProjectIndicator = (data: SupervisionProjectIndicator
  */
 export const updateSupervisionProjectIndicator = (data: SupervisionProjectIndicatorForm) => {
   return request({
-    url: '/system/supervisionProjectIndicator',
+    url: '/supervision/supervisionProjectIndicator',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateSupervisionProjectIndicator = (data: SupervisionProjectIndica
  */
 export const delSupervisionProjectIndicator = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionProjectIndicator/' + id,
+    url: '/supervision/supervisionProjectIndicator/' + id,
     method: 'delete'
   });
 };

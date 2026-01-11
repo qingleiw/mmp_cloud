@@ -143,8 +143,8 @@ import {
   delSupervisionExpertMember,
   addSupervisionExpertMember,
   updateSupervisionExpertMember
-} from '@/api/system/supervisionExpertMember';
-import { SupervisionExpertMemberVO, SupervisionExpertMemberQuery, SupervisionExpertMemberForm } from '@/api/system/supervisionExpertMember/types';
+} from '@/api/supervision/supervisionExpertMember';
+import { SupervisionExpertMemberVO, SupervisionExpertMemberQuery, SupervisionExpertMemberForm } from '@/api/supervision/supervisionExpertMember/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

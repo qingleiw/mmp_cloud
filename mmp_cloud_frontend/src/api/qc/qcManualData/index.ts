@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QcManualDataVO, QcManualDataForm, QcManualDataQuery } from '@/api/system/qcManualData/types';
+import { QcManualDataVO, QcManualDataForm, QcManualDataQuery } from '@/api/qc/qcManualData/types';
 
 /**
  * 查询人工补录数据列表
@@ -10,7 +10,7 @@ import { QcManualDataVO, QcManualDataForm, QcManualDataQuery } from '@/api/syste
 
 export const listQcManualData = (query?: QcManualDataQuery): AxiosPromise<QcManualDataVO[]> => {
   return request({
-    url: '/system/qcManualData/list',
+    url: '/qc/qcManualData/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQcManualData = (query?: QcManualDataQuery): AxiosPromise<QcManu
  */
 export const getQcManualData = (id: string | number): AxiosPromise<QcManualDataVO> => {
   return request({
-    url: '/system/qcManualData/' + id,
+    url: '/qc/qcManualData/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQcManualData = (id: string | number): AxiosPromise<QcManualDataV
  */
 export const addQcManualData = (data: QcManualDataForm) => {
   return request({
-    url: '/system/qcManualData',
+    url: '/qc/qcManualData',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQcManualData = (data: QcManualDataForm) => {
  */
 export const updateQcManualData = (data: QcManualDataForm) => {
   return request({
-    url: '/system/qcManualData',
+    url: '/qc/qcManualData',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQcManualData = (data: QcManualDataForm) => {
  */
 export const delQcManualData = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qcManualData/' + id,
+    url: '/qc/qcManualData/' + id,
     method: 'delete'
   });
 };

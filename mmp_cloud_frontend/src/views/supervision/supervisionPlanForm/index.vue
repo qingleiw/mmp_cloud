@@ -109,8 +109,8 @@ import {
   delSupervisionPlanForm,
   addSupervisionPlanForm,
   updateSupervisionPlanForm
-} from '@/api/system/supervisionPlanForm';
-import { SupervisionPlanFormVO, SupervisionPlanFormQuery, SupervisionPlanFormForm } from '@/api/system/supervisionPlanForm/types';
+} from '@/api/supervision/supervisionPlanForm';
+import { SupervisionPlanFormVO, SupervisionPlanFormQuery, SupervisionPlanFormForm } from '@/api/supervision/supervisionPlanForm/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -254,8 +254,8 @@ import {
   delQualificationRiskMonitor,
   addQualificationRiskMonitor,
   updateQualificationRiskMonitor
-} from '@/api/system/qualificationRiskMonitor';
-import { QualificationRiskMonitorVO, QualificationRiskMonitorQuery, QualificationRiskMonitorForm } from '@/api/system/qualificationRiskMonitor/types';
+} from '@/api/qualification/qualificationRiskMonitor';
+import { QualificationRiskMonitorVO, QualificationRiskMonitorQuery, QualificationRiskMonitorForm } from '@/api/qualification/qualificationRiskMonitor/types';
 import { FieldConfigManager } from '@/utils/fieldConfigManager';
 import { createQualificationRiskMonitorFieldConfig } from '@/utils/mmpFieldConfigs';
 import { SearchConfigManager } from '@/utils/searchConfig';
@@ -475,7 +475,7 @@ const handleDelete = async (row?: QualificationRiskMonitorVO) => {
 /** 导入按钮操作 */
 const handleImport = () => {
   (proxy.$modal as any).upload({
-    url: '/dev-api/system/qualificationRiskMonitor/importData',
+    url: '/dev-api/qualification/qualificationRiskMonitor/importData',
     success: () => {
       proxy.$modal.msgSuccess('导入成功');
       getList();

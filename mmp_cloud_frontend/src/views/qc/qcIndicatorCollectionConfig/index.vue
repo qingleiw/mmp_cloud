@@ -155,12 +155,12 @@ import {
   delQcIndicatorCollectionConfig,
   addQcIndicatorCollectionConfig,
   updateQcIndicatorCollectionConfig
-} from '@/api/system/qcIndicatorCollectionConfig';
+} from '@/api/qc/qcIndicatorCollectionConfig';
 import {
   QcIndicatorCollectionConfigVO,
   QcIndicatorCollectionConfigQuery,
   QcIndicatorCollectionConfigForm
-} from '@/api/system/qcIndicatorCollectionConfig/types';
+} from '@/api/qc/qcIndicatorCollectionConfig/types';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createQcIndicatorCollectionConfigSearchConfig } from '@/utils/mmpSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';

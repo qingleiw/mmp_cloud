@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyDrillPlanVO, EmergencyDrillPlanForm, EmergencyDrillPlanQuery } from '@/api/system/emergencyDrillPlan/types';
+import { EmergencyDrillPlanVO, EmergencyDrillPlanForm, EmergencyDrillPlanQuery } from '@/api/emergency/emergencyDrillPlan/types';
 
 /**
  * 查询应急演练计划列表
@@ -10,7 +10,7 @@ import { EmergencyDrillPlanVO, EmergencyDrillPlanForm, EmergencyDrillPlanQuery }
 
 export const listEmergencyDrillPlan = (query?: EmergencyDrillPlanQuery): AxiosPromise<EmergencyDrillPlanVO[]> => {
   return request({
-    url: '/system/emergencyDrillPlan/list',
+    url: '/emergency/emergencyDrillPlan/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyDrillPlan = (query?: EmergencyDrillPlanQuery): AxiosPr
  */
 export const getEmergencyDrillPlan = (id: string | number): AxiosPromise<EmergencyDrillPlanVO> => {
   return request({
-    url: '/system/emergencyDrillPlan/' + id,
+    url: '/emergency/emergencyDrillPlan/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyDrillPlan = (id: string | number): AxiosPromise<Emergen
  */
 export const addEmergencyDrillPlan = (data: EmergencyDrillPlanForm) => {
   return request({
-    url: '/system/emergencyDrillPlan',
+    url: '/emergency/emergencyDrillPlan',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyDrillPlan = (data: EmergencyDrillPlanForm) => {
  */
 export const updateEmergencyDrillPlan = (data: EmergencyDrillPlanForm) => {
   return request({
-    url: '/system/emergencyDrillPlan',
+    url: '/emergency/emergencyDrillPlan',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyDrillPlan = (data: EmergencyDrillPlanForm) => {
  */
 export const delEmergencyDrillPlan = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyDrillPlan/' + id,
+    url: '/emergency/emergencyDrillPlan/' + id,
     method: 'delete'
   });
 };

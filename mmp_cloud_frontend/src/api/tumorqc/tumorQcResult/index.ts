@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { TumorQcResultVO, TumorQcResultForm, TumorQcResultQuery } from '@/api/system/tumorQcResult/types';
+import { TumorQcResultVO, TumorQcResultForm, TumorQcResultQuery } from '@/api/tumorqc/tumorQcResult/types';
 
 /**
  * 查询肿瘤质控结果列表
@@ -10,7 +10,7 @@ import { TumorQcResultVO, TumorQcResultForm, TumorQcResultQuery } from '@/api/sy
 
 export const listTumorQcResult = (query?: TumorQcResultQuery): AxiosPromise<TumorQcResultVO[]> => {
   return request({
-    url: '/system/tumorQcResult/list',
+    url: '/tumorqc/tumorQcResult/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listTumorQcResult = (query?: TumorQcResultQuery): AxiosPromise<Tumo
  */
 export const getTumorQcResult = (id: string | number): AxiosPromise<TumorQcResultVO> => {
   return request({
-    url: '/system/tumorQcResult/' + id,
+    url: '/tumorqc/tumorQcResult/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getTumorQcResult = (id: string | number): AxiosPromise<TumorQcResul
  */
 export const addTumorQcResult = (data: TumorQcResultForm) => {
   return request({
-    url: '/system/tumorQcResult',
+    url: '/tumorqc/tumorQcResult',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addTumorQcResult = (data: TumorQcResultForm) => {
  */
 export const updateTumorQcResult = (data: TumorQcResultForm) => {
   return request({
-    url: '/system/tumorQcResult',
+    url: '/tumorqc/tumorQcResult',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateTumorQcResult = (data: TumorQcResultForm) => {
  */
 export const delTumorQcResult = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/tumorQcResult/' + id,
+    url: '/tumorqc/tumorQcResult/' + id,
     method: 'delete'
   });
 };

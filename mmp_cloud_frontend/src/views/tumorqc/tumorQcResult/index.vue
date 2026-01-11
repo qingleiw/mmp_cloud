@@ -143,8 +143,8 @@
 </template>
 
 <script setup name="TumorQcResult" lang="ts">
-import { listTumorQcResult, getTumorQcResult, delTumorQcResult, addTumorQcResult, updateTumorQcResult } from '@/api/system/tumorQcResult';
-import { TumorQcResultVO, TumorQcResultQuery, TumorQcResultForm } from '@/api/system/tumorQcResult/types';
+import { listTumorQcResult, getTumorQcResult, delTumorQcResult, addTumorQcResult, updateTumorQcResult } from '@/api/tumorqc/tumorQcResult';
+import { TumorQcResultVO, TumorQcResultQuery, TumorQcResultForm } from '@/api/tumorqc/tumorQcResult/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createTumorQcResultFieldConfig } from '@/utils/mmpFieldConfigs';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

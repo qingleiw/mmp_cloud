@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { MajorSurgeryApplicationVO, MajorSurgeryApplicationForm, MajorSurgeryApplicationQuery } from '@/api/system/majorSurgeryApplication/types';
+import { MajorSurgeryApplicationVO, MajorSurgeryApplicationForm, MajorSurgeryApplicationQuery } from '@/api/surgery/majorSurgeryApplication/types';
 
 /**
  * 查询重大手术申请列表
@@ -10,7 +10,7 @@ import { MajorSurgeryApplicationVO, MajorSurgeryApplicationForm, MajorSurgeryApp
 
 export const listMajorSurgeryApplication = (query?: MajorSurgeryApplicationQuery): AxiosPromise<MajorSurgeryApplicationVO[]> => {
   return request({
-    url: '/system/majorSurgeryApplication/list',
+    url: '/surgery/majorSurgeryApplication/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listMajorSurgeryApplication = (query?: MajorSurgeryApplicationQuery
  */
 export const getMajorSurgeryApplication = (id: string | number): AxiosPromise<MajorSurgeryApplicationVO> => {
   return request({
-    url: '/system/majorSurgeryApplication/' + id,
+    url: '/surgery/majorSurgeryApplication/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getMajorSurgeryApplication = (id: string | number): AxiosPromise<Ma
  */
 export const addMajorSurgeryApplication = (data: MajorSurgeryApplicationForm) => {
   return request({
-    url: '/system/majorSurgeryApplication',
+    url: '/surgery/majorSurgeryApplication',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addMajorSurgeryApplication = (data: MajorSurgeryApplicationForm) =>
  */
 export const updateMajorSurgeryApplication = (data: MajorSurgeryApplicationForm) => {
   return request({
-    url: '/system/majorSurgeryApplication',
+    url: '/surgery/majorSurgeryApplication',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateMajorSurgeryApplication = (data: MajorSurgeryApplicationForm)
  */
 export const delMajorSurgeryApplication = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/majorSurgeryApplication/' + id,
+    url: '/surgery/majorSurgeryApplication/' + id,
     method: 'delete'
   });
 };

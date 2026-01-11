@@ -4,7 +4,7 @@ import {
   QcIndicatorCollectionConfigVO,
   QcIndicatorCollectionConfigForm,
   QcIndicatorCollectionConfigQuery
-} from '@/api/system/qcIndicatorCollectionConfig/types';
+} from '@/api/qc/qcIndicatorCollectionConfig/types';
 
 /**
  * 查询质控指标数据采集配置列表
@@ -14,7 +14,7 @@ import {
 
 export const listQcIndicatorCollectionConfig = (query?: QcIndicatorCollectionConfigQuery): AxiosPromise<QcIndicatorCollectionConfigVO[]> => {
   return request({
-    url: '/system/qcIndicatorCollectionConfig/list',
+    url: '/qc/qcIndicatorCollectionConfig/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listQcIndicatorCollectionConfig = (query?: QcIndicatorCollectionCon
  */
 export const getQcIndicatorCollectionConfig = (id: string | number): AxiosPromise<QcIndicatorCollectionConfigVO> => {
   return request({
-    url: '/system/qcIndicatorCollectionConfig/' + id,
+    url: '/qc/qcIndicatorCollectionConfig/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getQcIndicatorCollectionConfig = (id: string | number): AxiosPromis
  */
 export const addQcIndicatorCollectionConfig = (data: QcIndicatorCollectionConfigForm) => {
   return request({
-    url: '/system/qcIndicatorCollectionConfig',
+    url: '/qc/qcIndicatorCollectionConfig',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addQcIndicatorCollectionConfig = (data: QcIndicatorCollectionConfig
  */
 export const updateQcIndicatorCollectionConfig = (data: QcIndicatorCollectionConfigForm) => {
   return request({
-    url: '/system/qcIndicatorCollectionConfig',
+    url: '/qc/qcIndicatorCollectionConfig',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateQcIndicatorCollectionConfig = (data: QcIndicatorCollectionCon
  */
 export const delQcIndicatorCollectionConfig = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qcIndicatorCollectionConfig/' + id,
+    url: '/qc/qcIndicatorCollectionConfig/' + id,
     method: 'delete'
   });
 };

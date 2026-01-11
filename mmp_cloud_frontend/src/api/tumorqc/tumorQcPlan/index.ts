@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { TumorQcPlanVO, TumorQcPlanForm, TumorQcPlanQuery } from '@/api/system/tumorQcPlan/types';
+import { TumorQcPlanVO, TumorQcPlanForm, TumorQcPlanQuery } from '@/api/tumorqc/tumorQcPlan/types';
 
 /**
  * 查询肿瘤质控方案列表
@@ -10,7 +10,7 @@ import { TumorQcPlanVO, TumorQcPlanForm, TumorQcPlanQuery } from '@/api/system/t
 
 export const listTumorQcPlan = (query?: TumorQcPlanQuery): AxiosPromise<TumorQcPlanVO[]> => {
   return request({
-    url: '/system/tumorQcPlan/list',
+    url: '/tumorqc/tumorQcPlan/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listTumorQcPlan = (query?: TumorQcPlanQuery): AxiosPromise<TumorQcP
  */
 export const getTumorQcPlan = (id: string | number): AxiosPromise<TumorQcPlanVO> => {
   return request({
-    url: '/system/tumorQcPlan/' + id,
+    url: '/tumorqc/tumorQcPlan/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getTumorQcPlan = (id: string | number): AxiosPromise<TumorQcPlanVO>
  */
 export const addTumorQcPlan = (data: TumorQcPlanForm) => {
   return request({
-    url: '/system/tumorQcPlan',
+    url: '/tumorqc/tumorQcPlan',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addTumorQcPlan = (data: TumorQcPlanForm) => {
  */
 export const updateTumorQcPlan = (data: TumorQcPlanForm) => {
   return request({
-    url: '/system/tumorQcPlan',
+    url: '/tumorqc/tumorQcPlan',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateTumorQcPlan = (data: TumorQcPlanForm) => {
  */
 export const delTumorQcPlan = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/tumorQcPlan/' + id,
+    url: '/tumorqc/tumorQcPlan/' + id,
     method: 'delete'
   });
 };

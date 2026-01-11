@@ -128,8 +128,8 @@ import {
   delQcSpecialtyCategory,
   addQcSpecialtyCategory,
   updateQcSpecialtyCategory
-} from '@/api/system/qcSpecialtyCategory';
-import { QcSpecialtyCategoryVO, QcSpecialtyCategoryQuery, QcSpecialtyCategoryForm } from '@/api/system/qcSpecialtyCategory/types';
+} from '@/api/qc/qcSpecialtyCategory';
+import { QcSpecialtyCategoryVO, QcSpecialtyCategoryQuery, QcSpecialtyCategoryForm } from '@/api/qc/qcSpecialtyCategory/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

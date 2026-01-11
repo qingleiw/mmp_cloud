@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QualificationExamPaperVO, QualificationExamPaperForm, QualificationExamPaperQuery } from '@/api/system/qualificationExamPaper/types';
+import { QualificationExamPaperVO, QualificationExamPaperForm, QualificationExamPaperQuery } from '@/api/qualification/qualificationExamPaper/types';
 
 /**
  * 查询资质考核试卷列表
@@ -10,7 +10,7 @@ import { QualificationExamPaperVO, QualificationExamPaperForm, QualificationExam
 
 export const listQualificationExamPaper = (query?: QualificationExamPaperQuery): AxiosPromise<QualificationExamPaperVO[]> => {
   return request({
-    url: '/system/qualificationExamPaper/list',
+    url: '/qualification/qualificationExamPaper/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQualificationExamPaper = (query?: QualificationExamPaperQuery):
  */
 export const getQualificationExamPaper = (id: string | number): AxiosPromise<QualificationExamPaperVO> => {
   return request({
-    url: '/system/qualificationExamPaper/' + id,
+    url: '/qualification/qualificationExamPaper/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQualificationExamPaper = (id: string | number): AxiosPromise<Qua
  */
 export const addQualificationExamPaper = (data: QualificationExamPaperForm) => {
   return request({
-    url: '/system/qualificationExamPaper',
+    url: '/qualification/qualificationExamPaper',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQualificationExamPaper = (data: QualificationExamPaperForm) => {
  */
 export const updateQualificationExamPaper = (data: QualificationExamPaperForm) => {
   return request({
-    url: '/system/qualificationExamPaper',
+    url: '/qualification/qualificationExamPaper',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQualificationExamPaper = (data: QualificationExamPaperForm) =
  */
 export const delQualificationExamPaper = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationExamPaper/' + id,
+    url: '/qualification/qualificationExamPaper/' + id,
     method: 'delete'
   });
 };

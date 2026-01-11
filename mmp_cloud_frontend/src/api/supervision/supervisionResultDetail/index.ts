@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionResultDetailVO, SupervisionResultDetailForm, SupervisionResultDetailQuery } from '@/api/system/supervisionResultDetail/types';
+import { SupervisionResultDetailVO, SupervisionResultDetailForm, SupervisionResultDetailQuery } from '@/api/supervision/supervisionResultDetail/types';
 
 /**
  * 查询督查结果明细列表
@@ -10,7 +10,7 @@ import { SupervisionResultDetailVO, SupervisionResultDetailForm, SupervisionResu
 
 export const listSupervisionResultDetail = (query?: SupervisionResultDetailQuery): AxiosPromise<SupervisionResultDetailVO[]> => {
   return request({
-    url: '/system/supervisionResultDetail/list',
+    url: '/supervision/supervisionResultDetail/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionResultDetail = (query?: SupervisionResultDetailQuery
  */
 export const getSupervisionResultDetail = (id: string | number): AxiosPromise<SupervisionResultDetailVO> => {
   return request({
-    url: '/system/supervisionResultDetail/' + id,
+    url: '/supervision/supervisionResultDetail/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionResultDetail = (id: string | number): AxiosPromise<Su
  */
 export const addSupervisionResultDetail = (data: SupervisionResultDetailForm) => {
   return request({
-    url: '/system/supervisionResultDetail',
+    url: '/supervision/supervisionResultDetail',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionResultDetail = (data: SupervisionResultDetailForm) =>
  */
 export const updateSupervisionResultDetail = (data: SupervisionResultDetailForm) => {
   return request({
-    url: '/system/supervisionResultDetail',
+    url: '/supervision/supervisionResultDetail',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionResultDetail = (data: SupervisionResultDetailForm)
  */
 export const delSupervisionResultDetail = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionResultDetail/' + id,
+    url: '/supervision/supervisionResultDetail/' + id,
     method: 'delete'
   });
 };

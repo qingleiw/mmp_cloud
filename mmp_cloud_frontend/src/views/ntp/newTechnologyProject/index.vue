@@ -305,8 +305,8 @@
 </template>
 
 <script setup name="NewTechnologyProject" lang="ts">
-import { listNewTechnologyProject, getNewTechnologyProject, delNewTechnologyProject, addNewTechnologyProject, updateNewTechnologyProject } from '@/api/system/newTechnologyProject';
-import { NewTechnologyProjectVO, NewTechnologyProjectQuery, NewTechnologyProjectForm } from '@/api/system/newTechnologyProject/types';
+import { listNewTechnologyProject, getNewTechnologyProject, delNewTechnologyProject, addNewTechnologyProject, updateNewTechnologyProject } from '@/api/ntp/newTechnologyProject';
+import { NewTechnologyProjectVO, NewTechnologyProjectQuery, NewTechnologyProjectForm } from '@/api/ntp/newTechnologyProject/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

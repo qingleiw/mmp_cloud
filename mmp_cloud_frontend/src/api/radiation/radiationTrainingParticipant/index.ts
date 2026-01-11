@@ -4,7 +4,7 @@ import {
   RadiationTrainingParticipantVO,
   RadiationTrainingParticipantForm,
   RadiationTrainingParticipantQuery
-} from '@/api/system/radiationTrainingParticipant/types';
+} from '@/api/radiation/radiationTrainingParticipant/types';
 
 /**
  * 查询培训参与记录列表
@@ -14,7 +14,7 @@ import {
 
 export const listRadiationTrainingParticipant = (query?: RadiationTrainingParticipantQuery): AxiosPromise<RadiationTrainingParticipantVO[]> => {
   return request({
-    url: '/system/radiationTrainingParticipant/list',
+    url: '/radiation/radiationTrainingParticipant/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listRadiationTrainingParticipant = (query?: RadiationTrainingPartic
  */
 export const getRadiationTrainingParticipant = (id: string | number): AxiosPromise<RadiationTrainingParticipantVO> => {
   return request({
-    url: '/system/radiationTrainingParticipant/' + id,
+    url: '/radiation/radiationTrainingParticipant/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getRadiationTrainingParticipant = (id: string | number): AxiosPromi
  */
 export const addRadiationTrainingParticipant = (data: RadiationTrainingParticipantForm) => {
   return request({
-    url: '/system/radiationTrainingParticipant',
+    url: '/radiation/radiationTrainingParticipant',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addRadiationTrainingParticipant = (data: RadiationTrainingParticipa
  */
 export const updateRadiationTrainingParticipant = (data: RadiationTrainingParticipantForm) => {
   return request({
-    url: '/system/radiationTrainingParticipant',
+    url: '/radiation/radiationTrainingParticipant',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateRadiationTrainingParticipant = (data: RadiationTrainingPartic
  */
 export const delRadiationTrainingParticipant = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationTrainingParticipant/' + id,
+    url: '/radiation/radiationTrainingParticipant/' + id,
     method: 'delete'
   });
 };

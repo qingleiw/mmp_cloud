@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationWorkerVO, RadiationWorkerForm, RadiationWorkerQuery } from '@/api/system/radiationWorker/types';
+import { RadiationWorkerVO, RadiationWorkerForm, RadiationWorkerQuery } from '@/api/radiation/radiationWorker/types';
 
 /**
  * 查询放射工作人员列表
@@ -10,7 +10,7 @@ import { RadiationWorkerVO, RadiationWorkerForm, RadiationWorkerQuery } from '@/
 
 export const listRadiationWorker = (query?: RadiationWorkerQuery): AxiosPromise<RadiationWorkerVO[]> => {
   return request({
-    url: '/system/radiationWorker/list',
+    url: '/radiation/radiationWorker/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listRadiationWorker = (query?: RadiationWorkerQuery): AxiosPromise<
  */
 export const getRadiationWorker = (id: string | number): AxiosPromise<RadiationWorkerVO> => {
   return request({
-    url: '/system/radiationWorker/' + id,
+    url: '/radiation/radiationWorker/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getRadiationWorker = (id: string | number): AxiosPromise<RadiationW
  */
 export const addRadiationWorker = (data: RadiationWorkerForm) => {
   return request({
-    url: '/system/radiationWorker',
+    url: '/radiation/radiationWorker',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addRadiationWorker = (data: RadiationWorkerForm) => {
  */
 export const updateRadiationWorker = (data: RadiationWorkerForm) => {
   return request({
-    url: '/system/radiationWorker',
+    url: '/radiation/radiationWorker',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateRadiationWorker = (data: RadiationWorkerForm) => {
  */
 export const delRadiationWorker = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationWorker/' + id,
+    url: '/radiation/radiationWorker/' + id,
     method: 'delete'
   });
 };

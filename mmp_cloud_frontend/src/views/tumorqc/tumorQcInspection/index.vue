@@ -138,8 +138,8 @@
 </template>
 
 <script setup name="TumorQcInspection" lang="ts">
-import { listTumorQcInspection, getTumorQcInspection, delTumorQcInspection, addTumorQcInspection, updateTumorQcInspection } from '@/api/system/tumorQcInspection';
-import { TumorQcInspectionVO, TumorQcInspectionQuery, TumorQcInspectionForm } from '@/api/system/tumorQcInspection/types';
+import { listTumorQcInspection, getTumorQcInspection, delTumorQcInspection, addTumorQcInspection, updateTumorQcInspection } from '@/api/tumorqc/tumorQcInspection';
+import { TumorQcInspectionVO, TumorQcInspectionQuery, TumorQcInspectionForm } from '@/api/tumorqc/tumorQcInspection/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createTumorQcInspectionFieldConfig } from '@/utils/mmpFieldConfigs';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

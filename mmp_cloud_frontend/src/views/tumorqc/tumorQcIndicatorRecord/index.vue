@@ -174,8 +174,8 @@ import {
   delTumorQcIndicatorRecord,
   addTumorQcIndicatorRecord,
   updateTumorQcIndicatorRecord
-} from '@/api/system/tumorQcIndicatorRecord';
-import { TumorQcIndicatorRecordVO, TumorQcIndicatorRecordQuery, TumorQcIndicatorRecordForm } from '@/api/system/tumorQcIndicatorRecord/types';
+} from '@/api/tumorqc/tumorQcIndicatorRecord';
+import { TumorQcIndicatorRecordVO, TumorQcIndicatorRecordQuery, TumorQcIndicatorRecordForm } from '@/api/tumorqc/tumorQcIndicatorRecord/types';
 import { createTumorQcIndicatorRecordFieldConfig } from '@/utils/mmpFieldConfigs';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createTumorQcIndicatorRecordSearchConfig } from '@/utils/mmpSearchConfigs';

@@ -138,8 +138,8 @@
 </template>
 
 <script setup name="QcManualData" lang="ts">
-import { listQcManualData, getQcManualData, delQcManualData, addQcManualData, updateQcManualData } from '@/api/system/qcManualData';
-import { QcManualDataVO, QcManualDataQuery, QcManualDataForm } from '@/api/system/qcManualData/types';
+import { listQcManualData, getQcManualData, delQcManualData, addQcManualData, updateQcManualData } from '@/api/qc/qcManualData';
+import { QcManualDataVO, QcManualDataQuery, QcManualDataForm } from '@/api/qc/qcManualData/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

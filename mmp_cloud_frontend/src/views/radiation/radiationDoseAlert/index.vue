@@ -117,8 +117,8 @@ import {
   delRadiationDoseAlert,
   addRadiationDoseAlert,
   updateRadiationDoseAlert
-} from '@/api/system/radiationDoseAlert';
-import { RadiationDoseAlertVO, RadiationDoseAlertQuery, RadiationDoseAlertForm } from '@/api/system/radiationDoseAlert/types';
+} from '@/api/radiation/radiationDoseAlert';
+import { RadiationDoseAlertVO, RadiationDoseAlertQuery, RadiationDoseAlertForm } from '@/api/radiation/radiationDoseAlert/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

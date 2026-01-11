@@ -229,12 +229,12 @@ import {
   delQualificationPermissionAdjustment,
   addQualificationPermissionAdjustment,
   updateQualificationPermissionAdjustment
-} from '@/api/system/qualificationPermissionAdjustment';
+} from '@/api/qualification/qualificationPermissionAdjustment';
 import {
   QualificationPermissionAdjustmentVO,
   QualificationPermissionAdjustmentQuery,
   QualificationPermissionAdjustmentForm
-} from '@/api/system/qualificationPermissionAdjustment/types';
+} from '@/api/qualification/qualificationPermissionAdjustment/types';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createQualificationPermissionAdjustmentSearchConfig } from '@/utils/mmpSearchConfigs';

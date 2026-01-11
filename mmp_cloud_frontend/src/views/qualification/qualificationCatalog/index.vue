@@ -219,8 +219,8 @@ import {
   delQualificationCatalog,
   addQualificationCatalog,
   updateQualificationCatalog
-} from '@/api/system/qualificationCatalog';
-import { QualificationCatalogVO, QualificationCatalogQuery, QualificationCatalogForm } from '@/api/system/qualificationCatalog/types';
+} from '@/api/qualification/qualificationCatalog';
+import { QualificationCatalogVO, QualificationCatalogQuery, QualificationCatalogForm } from '@/api/qualification/qualificationCatalog/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

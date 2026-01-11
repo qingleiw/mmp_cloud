@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationStaffVO, RadiationStaffForm, RadiationStaffQuery } from '@/api/system/radiationStaff/types';
+import { RadiationStaffVO, RadiationStaffForm, RadiationStaffQuery } from '@/api/radiation/radiationStaff/types';
 
 /**
  * 查询放射工作人员列表
@@ -10,7 +10,7 @@ import { RadiationStaffVO, RadiationStaffForm, RadiationStaffQuery } from '@/api
 
 export const listRadiationStaff = (query?: RadiationStaffQuery): AxiosPromise<RadiationStaffVO[]> => {
   return request({
-    url: '/system/radiationStaff/list',
+    url: '/radiation/radiationStaff/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listRadiationStaff = (query?: RadiationStaffQuery): AxiosPromise<Ra
  */
 export const getRadiationStaff = (id: string | number): AxiosPromise<RadiationStaffVO> => {
   return request({
-    url: '/system/radiationStaff/' + id,
+    url: '/radiation/radiationStaff/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getRadiationStaff = (id: string | number): AxiosPromise<RadiationSt
  */
 export const addRadiationStaff = (data: RadiationStaffForm) => {
   return request({
-    url: '/system/radiationStaff',
+    url: '/radiation/radiationStaff',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addRadiationStaff = (data: RadiationStaffForm) => {
  */
 export const updateRadiationStaff = (data: RadiationStaffForm) => {
   return request({
-    url: '/system/radiationStaff',
+    url: '/radiation/radiationStaff',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateRadiationStaff = (data: RadiationStaffForm) => {
  */
 export const delRadiationStaff = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationStaff/' + id,
+    url: '/radiation/radiationStaff/' + id,
     method: 'delete'
   });
 };

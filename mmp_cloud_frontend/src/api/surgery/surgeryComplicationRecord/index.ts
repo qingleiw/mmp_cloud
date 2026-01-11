@@ -4,7 +4,7 @@ import {
   SurgeryComplicationRecordVO,
   SurgeryComplicationRecordForm,
   SurgeryComplicationRecordQuery
-} from '@/api/system/surgeryComplicationRecord/types';
+} from '@/api/surgery/surgeryComplicationRecord/types';
 
 /**
  * 查询手术并发症记录列表
@@ -14,7 +14,7 @@ import {
 
 export const listSurgeryComplicationRecord = (query?: SurgeryComplicationRecordQuery): AxiosPromise<SurgeryComplicationRecordVO[]> => {
   return request({
-    url: '/system/surgeryComplicationRecord/list',
+    url: '/surgery/surgeryComplicationRecord/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listSurgeryComplicationRecord = (query?: SurgeryComplicationRecordQ
  */
 export const getSurgeryComplicationRecord = (id: string | number): AxiosPromise<SurgeryComplicationRecordVO> => {
   return request({
-    url: '/system/surgeryComplicationRecord/' + id,
+    url: '/surgery/surgeryComplicationRecord/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getSurgeryComplicationRecord = (id: string | number): AxiosPromise<
  */
 export const addSurgeryComplicationRecord = (data: SurgeryComplicationRecordForm) => {
   return request({
-    url: '/system/surgeryComplicationRecord',
+    url: '/surgery/surgeryComplicationRecord',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addSurgeryComplicationRecord = (data: SurgeryComplicationRecordForm
  */
 export const updateSurgeryComplicationRecord = (data: SurgeryComplicationRecordForm) => {
   return request({
-    url: '/system/surgeryComplicationRecord',
+    url: '/surgery/surgeryComplicationRecord',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateSurgeryComplicationRecord = (data: SurgeryComplicationRecordF
  */
 export const delSurgeryComplicationRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/surgeryComplicationRecord/' + id,
+    url: '/surgery/surgeryComplicationRecord/' + id,
     method: 'delete'
   });
 };

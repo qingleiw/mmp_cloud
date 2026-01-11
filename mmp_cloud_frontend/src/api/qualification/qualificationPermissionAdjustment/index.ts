@@ -4,7 +4,7 @@ import {
   QualificationPermissionAdjustmentVO,
   QualificationPermissionAdjustmentForm,
   QualificationPermissionAdjustmentQuery
-} from '@/api/system/qualificationPermissionAdjustment/types';
+} from '@/api/qualification/qualificationPermissionAdjustment/types';
 
 /**
  * 查询资质权限调整历史列表
@@ -16,7 +16,7 @@ export const listQualificationPermissionAdjustment = (
   query?: QualificationPermissionAdjustmentQuery
 ): AxiosPromise<QualificationPermissionAdjustmentVO[]> => {
   return request({
-    url: '/system/qualificationPermissionAdjustment/list',
+    url: '/qualification/qualificationPermissionAdjustment/list',
     method: 'get',
     params: query
   });
@@ -28,7 +28,7 @@ export const listQualificationPermissionAdjustment = (
  */
 export const getQualificationPermissionAdjustment = (id: string | number): AxiosPromise<QualificationPermissionAdjustmentVO> => {
   return request({
-    url: '/system/qualificationPermissionAdjustment/' + id,
+    url: '/qualification/qualificationPermissionAdjustment/' + id,
     method: 'get'
   });
 };
@@ -39,7 +39,7 @@ export const getQualificationPermissionAdjustment = (id: string | number): Axios
  */
 export const addQualificationPermissionAdjustment = (data: QualificationPermissionAdjustmentForm) => {
   return request({
-    url: '/system/qualificationPermissionAdjustment',
+    url: '/qualification/qualificationPermissionAdjustment',
     method: 'post',
     data: data
   });
@@ -51,7 +51,7 @@ export const addQualificationPermissionAdjustment = (data: QualificationPermissi
  */
 export const updateQualificationPermissionAdjustment = (data: QualificationPermissionAdjustmentForm) => {
   return request({
-    url: '/system/qualificationPermissionAdjustment',
+    url: '/qualification/qualificationPermissionAdjustment',
     method: 'put',
     data: data
   });
@@ -63,7 +63,7 @@ export const updateQualificationPermissionAdjustment = (data: QualificationPermi
  */
 export const delQualificationPermissionAdjustment = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationPermissionAdjustment/' + id,
+    url: '/qualification/qualificationPermissionAdjustment/' + id,
     method: 'delete'
   });
 };

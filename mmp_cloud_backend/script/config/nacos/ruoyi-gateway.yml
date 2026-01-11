@@ -83,10 +83,73 @@ spring:
                 - Path=/test-mq/**
               filters:
                 - StripPrefix=1
-            # cdi-mmp-doctor服务
+            # cdi-mmp-doctor 服务
             - id: cdi-mmp-doctor
               uri: lb://cdi-mmp-doctor
               predicates:
                 - Path=/doctor/**
               filters:
-                - StripPrefix=0
+                - StripPrefix=1
+            # cdi-mmp-coresystem 服务
+            - id: cdi-mmp-coresystem
+              uri: lb://cdi-mmp-coresystem
+              predicates:
+                - Path=/coresystem/**
+              filters:
+                - StripPrefix=1
+            # cdi-mmp-emergency 服务
+            - id: cdi-mmp-emergency
+              uri: lb://cdi-mmp-emergency
+              predicates:
+                - Path=/emergency/**
+              filters:
+                - StripPrefix=1
+            # cdi-mmp-ntp 服务
+            - id: cdi-mmp-ntp
+              uri: lb://cdi-mmp-ntp
+              predicates:
+                - Path=/ntp/**
+              filters:
+                - StripPrefix=1
+            # cdi-mmp-qc 服务
+            - id: cdi-mmp-qc
+              uri: lb://cdi-mmp-qc
+              predicates:
+                - Path=/qc/**
+              filters:
+                - StripPrefix=1
+            # cdi-mmp-qualification 服务
+            - id: cdi-mmp-qualification
+              uri: lb://cdi-mmp-qualification
+              predicates:
+                - Path=/qualification/**
+              filters:
+                - StripPrefix=1
+            # cdi-mmp-radiation 服务
+            - id: cdi-mmp-radiation
+              uri: lb://cdi-mmp-radiation
+              predicates:
+                - Path=/radiation/**
+              filters:
+                - StripPrefix=1
+            # cdi-mmp-supervision 服务
+            - id: cdi-mmp-supervision
+              uri: lb://cdi-mmp-supervision
+              predicates:
+                - Path=/supervision/**
+              filters:
+                - StripPrefix=1
+            # cdi-mmp-tumorqc 服务
+            - id: cdi-mmp-tumorqc
+              uri: lb://cdi-mmp-tumorqc
+              predicates:
+                - Path=/tumorqc/**
+              filters:
+                - StripPrefix=1
+            # cdi-mmp-ledger 服务
+            - id: cdi-mmp-ledger
+              uri: lb://cdi-mmp-ledger
+              predicates:
+                - Path=/ledger/**
+              filters:
+                - StripPrefix=1

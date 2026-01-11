@@ -216,12 +216,12 @@ import {
   delCoreSystemAssessmentRecord,
   addCoreSystemAssessmentRecord,
   updateCoreSystemAssessmentRecord
-} from '@/api/system/coreSystemAssessmentRecord';
+} from '@/api/coresystem/coreSystemAssessmentRecord';
 import {
   CoreSystemAssessmentRecordVO,
   CoreSystemAssessmentRecordQuery,
   CoreSystemAssessmentRecordForm
-} from '@/api/system/coreSystemAssessmentRecord/types';
+} from '@/api/coresystem/coreSystemAssessmentRecord/types';
 import { createCoreSystemAssessmentRecordFieldConfig } from '@/utils/mmpFieldConfigs';
 import { createCoreSystemAssessmentRecordSearchConfig } from '@/utils/mmpSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

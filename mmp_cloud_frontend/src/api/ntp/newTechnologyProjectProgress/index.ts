@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectProgressVO, NewTechnologyProjectProgressForm, NewTechnologyProjectProgressQuery } from '@/api/system/newTechnologyProjectProgress/types';
+import { NewTechnologyProjectProgressVO, NewTechnologyProjectProgressForm, NewTechnologyProjectProgressQuery } from '@/api/ntp/newTechnologyProjectProgress/types';
 
 /**
  * 查询新技术进展报告列表
@@ -10,7 +10,7 @@ import { NewTechnologyProjectProgressVO, NewTechnologyProjectProgressForm, NewTe
 
 export const listNewTechnologyProjectProgress = (query?: NewTechnologyProjectProgressQuery): AxiosPromise<NewTechnologyProjectProgressVO[]> => {
   return request({
-    url: '/system/newTechnologyProjectProgress/list',
+    url: '/ntp/newTechnologyProjectProgress/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listNewTechnologyProjectProgress = (query?: NewTechnologyProjectPro
  */
 export const getNewTechnologyProjectProgress = (id: string | number): AxiosPromise<NewTechnologyProjectProgressVO> => {
   return request({
-    url: '/system/newTechnologyProjectProgress/' + id,
+    url: '/ntp/newTechnologyProjectProgress/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getNewTechnologyProjectProgress = (id: string | number): AxiosPromi
  */
 export const addNewTechnologyProjectProgress = (data: NewTechnologyProjectProgressForm) => {
   return request({
-    url: '/system/newTechnologyProjectProgress',
+    url: '/ntp/newTechnologyProjectProgress',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addNewTechnologyProjectProgress = (data: NewTechnologyProjectProgre
  */
 export const updateNewTechnologyProjectProgress = (data: NewTechnologyProjectProgressForm) => {
   return request({
-    url: '/system/newTechnologyProjectProgress',
+    url: '/ntp/newTechnologyProjectProgress',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateNewTechnologyProjectProgress = (data: NewTechnologyProjectPro
  */
 export const delNewTechnologyProjectProgress = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/newTechnologyProjectProgress/' + id,
+    url: '/ntp/newTechnologyProjectProgress/' + id,
     method: 'delete'
   });
 };

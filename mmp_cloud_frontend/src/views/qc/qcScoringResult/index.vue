@@ -146,8 +146,8 @@
 </template>
 
 <script setup name="QcScoringResult" lang="ts">
-import { listQcScoringResult, getQcScoringResult, delQcScoringResult, addQcScoringResult, updateQcScoringResult } from '@/api/system/qcScoringResult';
-import { QcScoringResultVO, QcScoringResultQuery, QcScoringResultForm } from '@/api/system/qcScoringResult/types';
+import { listQcScoringResult, getQcScoringResult, delQcScoringResult, addQcScoringResult, updateQcScoringResult } from '@/api/qc/qcScoringResult';
+import { QcScoringResultVO, QcScoringResultQuery, QcScoringResultForm } from '@/api/qc/qcScoringResult/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

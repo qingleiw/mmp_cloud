@@ -146,12 +146,12 @@ import {
   delRadiationTrainingParticipant,
   addRadiationTrainingParticipant,
   updateRadiationTrainingParticipant
-} from '@/api/system/radiationTrainingParticipant';
+} from '@/api/radiation/radiationTrainingParticipant';
 import {
   RadiationTrainingParticipantVO,
   RadiationTrainingParticipantQuery,
   RadiationTrainingParticipantForm
-} from '@/api/system/radiationTrainingParticipant/types';
+} from '@/api/radiation/radiationTrainingParticipant/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

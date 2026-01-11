@@ -591,8 +591,8 @@ import type { DialogOption, PageData } from '@/types/global';
 import type { ComponentInternalInstance } from 'vue';
 import * as echarts from 'echarts';
 import { Folder, FolderOpened, User } from '@element-plus/icons-vue';
-import { listDept } from '@/api/doctor/dept';
-import type { DeptVO } from '@/api/doctor/dept/types';
+import { listDept } from '@/api/system/dept';
+import type { DeptVO } from '@/api/system/dept/types';
 import { listDoctorWorkExperience } from '@/api/doctor/doctorWorkExperience';
 import { listDoctorEducation } from '@/api/doctor/doctorEducation';
 import { listDoctorTraining } from '@/api/doctor/doctorTraining';
@@ -847,7 +847,7 @@ const handleExport = () => {
 const handleViewArchive = (row: DoctorBasicInfoVO) => {
   const { $router } = proxy!;
   $router.push({
-    path: '/system/doctorInfo/archive',
+    path: '/docktor/doctorInfo/archive',
     query: { doctorId: row.id }
   });
 };

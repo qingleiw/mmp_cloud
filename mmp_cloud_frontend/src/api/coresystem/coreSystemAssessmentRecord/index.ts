@@ -4,7 +4,7 @@ import {
   CoreSystemAssessmentRecordVO,
   CoreSystemAssessmentRecordForm,
   CoreSystemAssessmentRecordQuery
-} from '@/api/system/coreSystemAssessmentRecord/types';
+} from '@/api/coresystem/coreSystemAssessmentRecord/types';
 
 /**
  * 查询制度考核记录列表
@@ -14,7 +14,7 @@ import {
 
 export const listCoreSystemAssessmentRecord = (query?: CoreSystemAssessmentRecordQuery): AxiosPromise<CoreSystemAssessmentRecordVO[]> => {
   return request({
-    url: '/system/coreSystemAssessmentRecord/list',
+    url: '/coresystem/coreSystemAssessmentRecord/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listCoreSystemAssessmentRecord = (query?: CoreSystemAssessmentRecor
  */
 export const getCoreSystemAssessmentRecord = (id: string | number): AxiosPromise<CoreSystemAssessmentRecordVO> => {
   return request({
-    url: '/system/coreSystemAssessmentRecord/' + id,
+    url: '/coresystem/coreSystemAssessmentRecord/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getCoreSystemAssessmentRecord = (id: string | number): AxiosPromise
  */
 export const addCoreSystemAssessmentRecord = (data: CoreSystemAssessmentRecordForm) => {
   return request({
-    url: '/system/coreSystemAssessmentRecord',
+    url: '/coresystem/coreSystemAssessmentRecord',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addCoreSystemAssessmentRecord = (data: CoreSystemAssessmentRecordFo
  */
 export const updateCoreSystemAssessmentRecord = (data: CoreSystemAssessmentRecordForm) => {
   return request({
-    url: '/system/coreSystemAssessmentRecord',
+    url: '/coresystem/coreSystemAssessmentRecord',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateCoreSystemAssessmentRecord = (data: CoreSystemAssessmentRecor
  */
 export const delCoreSystemAssessmentRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/coreSystemAssessmentRecord/' + id,
+    url: '/coresystem/coreSystemAssessmentRecord/' + id,
     method: 'delete'
   });
 };

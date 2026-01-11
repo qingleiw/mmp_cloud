@@ -175,8 +175,8 @@ import {
   delRadiationDoseMonitoring,
   addRadiationDoseMonitoring,
   updateRadiationDoseMonitoring
-} from '@/api/system/radiationDoseMonitoring';
-import { RadiationDoseMonitoringVO, RadiationDoseMonitoringQuery, RadiationDoseMonitoringForm } from '@/api/system/radiationDoseMonitoring/types';
+} from '@/api/radiation/radiationDoseMonitoring';
+import { RadiationDoseMonitoringVO, RadiationDoseMonitoringQuery, RadiationDoseMonitoringForm } from '@/api/radiation/radiationDoseMonitoring/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

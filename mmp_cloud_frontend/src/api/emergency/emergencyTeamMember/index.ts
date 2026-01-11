@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyTeamMemberVO, EmergencyTeamMemberForm, EmergencyTeamMemberQuery } from '@/api/system/emergencyTeamMember/types';
+import { EmergencyTeamMemberVO, EmergencyTeamMemberForm, EmergencyTeamMemberQuery } from '@/api/emergency/emergencyTeamMember/types';
 
 /**
  * 查询应急队伍成员列表
@@ -10,7 +10,7 @@ import { EmergencyTeamMemberVO, EmergencyTeamMemberForm, EmergencyTeamMemberQuer
 
 export const listEmergencyTeamMember = (query?: EmergencyTeamMemberQuery): AxiosPromise<EmergencyTeamMemberVO[]> => {
   return request({
-    url: '/system/emergencyTeamMember/list',
+    url: '/emergency/emergencyTeamMember/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyTeamMember = (query?: EmergencyTeamMemberQuery): Axios
  */
 export const getEmergencyTeamMember = (id: string | number): AxiosPromise<EmergencyTeamMemberVO> => {
   return request({
-    url: '/system/emergencyTeamMember/' + id,
+    url: '/emergency/emergencyTeamMember/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyTeamMember = (id: string | number): AxiosPromise<Emerge
  */
 export const addEmergencyTeamMember = (data: EmergencyTeamMemberForm) => {
   return request({
-    url: '/system/emergencyTeamMember',
+    url: '/emergency/emergencyTeamMember',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyTeamMember = (data: EmergencyTeamMemberForm) => {
  */
 export const updateEmergencyTeamMember = (data: EmergencyTeamMemberForm) => {
   return request({
-    url: '/system/emergencyTeamMember',
+    url: '/emergency/emergencyTeamMember',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyTeamMember = (data: EmergencyTeamMemberForm) => {
  */
 export const delEmergencyTeamMember = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyTeamMember/' + id,
+    url: '/emergency/emergencyTeamMember/' + id,
     method: 'delete'
   });
 };

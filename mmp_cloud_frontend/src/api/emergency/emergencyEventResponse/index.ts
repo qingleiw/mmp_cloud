@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyEventResponseVO, EmergencyEventResponseForm, EmergencyEventResponseQuery } from '@/api/system/emergencyEventResponse/types';
+import { EmergencyEventResponseVO, EmergencyEventResponseForm, EmergencyEventResponseQuery } from '@/api/emergency/emergencyEventResponse/types';
 
 /**
  * 查询突发事件响应列表
@@ -10,7 +10,7 @@ import { EmergencyEventResponseVO, EmergencyEventResponseForm, EmergencyEventRes
 
 export const listEmergencyEventResponse = (query?: EmergencyEventResponseQuery): AxiosPromise<EmergencyEventResponseVO[]> => {
   return request({
-    url: '/system/emergencyEventResponse/list',
+    url: '/emergency/emergencyEventResponse/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyEventResponse = (query?: EmergencyEventResponseQuery):
  */
 export const getEmergencyEventResponse = (id: string | number): AxiosPromise<EmergencyEventResponseVO> => {
   return request({
-    url: '/system/emergencyEventResponse/' + id,
+    url: '/emergency/emergencyEventResponse/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyEventResponse = (id: string | number): AxiosPromise<Eme
  */
 export const addEmergencyEventResponse = (data: EmergencyEventResponseForm) => {
   return request({
-    url: '/system/emergencyEventResponse',
+    url: '/emergency/emergencyEventResponse',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyEventResponse = (data: EmergencyEventResponseForm) => {
  */
 export const updateEmergencyEventResponse = (data: EmergencyEventResponseForm) => {
   return request({
-    url: '/system/emergencyEventResponse',
+    url: '/emergency/emergencyEventResponse',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyEventResponse = (data: EmergencyEventResponseForm) =
  */
 export const delEmergencyEventResponse = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyEventResponse/' + id,
+    url: '/emergency/emergencyEventResponse/' + id,
     method: 'delete'
   });
 };

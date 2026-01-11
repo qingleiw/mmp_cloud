@@ -212,8 +212,8 @@
 </template>
 
 <script setup name="NewTechnologyProjectCase" lang="ts">
-import { listNewTechnologyProjectCase, getNewTechnologyProjectCase, delNewTechnologyProjectCase, addNewTechnologyProjectCase, updateNewTechnologyProjectCase } from '@/api/system/newTechnologyProjectCase';
-import { NewTechnologyProjectCaseVO, NewTechnologyProjectCaseQuery, NewTechnologyProjectCaseForm } from '@/api/system/newTechnologyProjectCase/types';
+import { listNewTechnologyProjectCase, getNewTechnologyProjectCase, delNewTechnologyProjectCase, addNewTechnologyProjectCase, updateNewTechnologyProjectCase } from '@/api/ntp/newTechnologyProjectCase';
+import { NewTechnologyProjectCaseVO, NewTechnologyProjectCaseQuery, NewTechnologyProjectCaseForm } from '@/api/ntp/newTechnologyProjectCase/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

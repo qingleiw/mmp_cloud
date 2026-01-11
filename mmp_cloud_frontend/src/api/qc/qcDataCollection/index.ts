@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QcDataCollectionVO, QcDataCollectionForm, QcDataCollectionQuery } from '@/api/system/qcDataCollection/types';
+import { QcDataCollectionVO, QcDataCollectionForm, QcDataCollectionQuery } from '@/api/qc/qcDataCollection/types';
 
 /**
  * 查询数据采集记录列表
@@ -10,7 +10,7 @@ import { QcDataCollectionVO, QcDataCollectionForm, QcDataCollectionQuery } from 
 
 export const listQcDataCollection = (query?: QcDataCollectionQuery): AxiosPromise<QcDataCollectionVO[]> => {
   return request({
-    url: '/system/qcDataCollection/list',
+    url: '/qc/qcDataCollection/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQcDataCollection = (query?: QcDataCollectionQuery): AxiosPromis
  */
 export const getQcDataCollection = (id: string | number): AxiosPromise<QcDataCollectionVO> => {
   return request({
-    url: '/system/qcDataCollection/' + id,
+    url: '/qc/qcDataCollection/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQcDataCollection = (id: string | number): AxiosPromise<QcDataCol
  */
 export const addQcDataCollection = (data: QcDataCollectionForm) => {
   return request({
-    url: '/system/qcDataCollection',
+    url: '/qc/qcDataCollection',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQcDataCollection = (data: QcDataCollectionForm) => {
  */
 export const updateQcDataCollection = (data: QcDataCollectionForm) => {
   return request({
-    url: '/system/qcDataCollection',
+    url: '/qc/qcDataCollection',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQcDataCollection = (data: QcDataCollectionForm) => {
  */
 export const delQcDataCollection = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qcDataCollection/' + id,
+    url: '/qc/qcDataCollection/' + id,
     method: 'delete'
   });
 };

@@ -218,12 +218,12 @@ import {
   delQualificationAuthorizationApply,
   addQualificationAuthorizationApply,
   updateQualificationAuthorizationApply
-} from '@/api/system/qualificationAuthorizationApply';
+} from '@/api/qualification/qualificationAuthorizationApply';
 import {
   QualificationAuthorizationApplyVO,
   QualificationAuthorizationApplyQuery,
   QualificationAuthorizationApplyForm
-} from '@/api/system/qualificationAuthorizationApply/types';
+} from '@/api/qualification/qualificationAuthorizationApply/types';
 import { createQualificationAuthorizationApplyFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

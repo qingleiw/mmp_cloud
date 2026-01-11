@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QcSpecialtyCategoryVO, QcSpecialtyCategoryForm, QcSpecialtyCategoryQuery } from '@/api/system/qcSpecialtyCategory/types';
+import { QcSpecialtyCategoryVO, QcSpecialtyCategoryForm, QcSpecialtyCategoryQuery } from '@/api/qc/qcSpecialtyCategory/types';
 
 /**
  * 查询专业类别列表
@@ -10,7 +10,7 @@ import { QcSpecialtyCategoryVO, QcSpecialtyCategoryForm, QcSpecialtyCategoryQuer
 
 export const listQcSpecialtyCategory = (query?: QcSpecialtyCategoryQuery): AxiosPromise<QcSpecialtyCategoryVO[]> => {
   return request({
-    url: '/system/qcSpecialtyCategory/list',
+    url: '/qc/qcSpecialtyCategory/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQcSpecialtyCategory = (query?: QcSpecialtyCategoryQuery): Axios
  */
 export const getQcSpecialtyCategory = (id: string | number): AxiosPromise<QcSpecialtyCategoryVO> => {
   return request({
-    url: '/system/qcSpecialtyCategory/' + id,
+    url: '/qc/qcSpecialtyCategory/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQcSpecialtyCategory = (id: string | number): AxiosPromise<QcSpec
  */
 export const addQcSpecialtyCategory = (data: QcSpecialtyCategoryForm) => {
   return request({
-    url: '/system/qcSpecialtyCategory',
+    url: '/qc/qcSpecialtyCategory',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQcSpecialtyCategory = (data: QcSpecialtyCategoryForm) => {
  */
 export const updateQcSpecialtyCategory = (data: QcSpecialtyCategoryForm) => {
   return request({
-    url: '/system/qcSpecialtyCategory',
+    url: '/qc/qcSpecialtyCategory',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQcSpecialtyCategory = (data: QcSpecialtyCategoryForm) => {
  */
 export const delQcSpecialtyCategory = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qcSpecialtyCategory/' + id,
+    url: '/qc/qcSpecialtyCategory/' + id,
     method: 'delete'
   });
 };

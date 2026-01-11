@@ -4,7 +4,7 @@ import {
   SurgeryWorkloadStatisticsVO,
   SurgeryWorkloadStatisticsForm,
   SurgeryWorkloadStatisticsQuery
-} from '@/api/system/surgeryWorkloadStatistics/types';
+} from '@/api/surgery/surgeryWorkloadStatistics/types';
 
 /**
  * 查询手术工作量统计列表
@@ -14,7 +14,7 @@ import {
 
 export const listSurgeryWorkloadStatistics = (query?: SurgeryWorkloadStatisticsQuery): AxiosPromise<SurgeryWorkloadStatisticsVO[]> => {
   return request({
-    url: '/system/surgeryWorkloadStatistics/list',
+    url: '/surgery/surgeryWorkloadStatistics/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listSurgeryWorkloadStatistics = (query?: SurgeryWorkloadStatisticsQ
  */
 export const getSurgeryWorkloadStatistics = (id: string | number): AxiosPromise<SurgeryWorkloadStatisticsVO> => {
   return request({
-    url: '/system/surgeryWorkloadStatistics/' + id,
+    url: '/surgery/surgeryWorkloadStatistics/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getSurgeryWorkloadStatistics = (id: string | number): AxiosPromise<
  */
 export const addSurgeryWorkloadStatistics = (data: SurgeryWorkloadStatisticsForm) => {
   return request({
-    url: '/system/surgeryWorkloadStatistics',
+    url: '/surgery/surgeryWorkloadStatistics',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addSurgeryWorkloadStatistics = (data: SurgeryWorkloadStatisticsForm
  */
 export const updateSurgeryWorkloadStatistics = (data: SurgeryWorkloadStatisticsForm) => {
   return request({
-    url: '/system/surgeryWorkloadStatistics',
+    url: '/surgery/surgeryWorkloadStatistics',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateSurgeryWorkloadStatistics = (data: SurgeryWorkloadStatisticsF
  */
 export const delSurgeryWorkloadStatistics = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/surgeryWorkloadStatistics/' + id,
+    url: '/surgery/surgeryWorkloadStatistics/' + id,
     method: 'delete'
   });
 };

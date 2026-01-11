@@ -135,8 +135,8 @@
 </template>
 
 <script setup name="SupervisionPlan" lang="ts">
-import { listSupervisionPlan, getSupervisionPlan, delSupervisionPlan, addSupervisionPlan, updateSupervisionPlan } from '@/api/system/supervisionPlan';
-import { SupervisionPlanVO, SupervisionPlanQuery, SupervisionPlanForm } from '@/api/system/supervisionPlan/types';
+import { listSupervisionPlan, getSupervisionPlan, delSupervisionPlan, addSupervisionPlan, updateSupervisionPlan } from '@/api/supervision/supervisionPlan';
+import { SupervisionPlanVO, SupervisionPlanQuery, SupervisionPlanForm } from '@/api/supervision/supervisionPlan/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

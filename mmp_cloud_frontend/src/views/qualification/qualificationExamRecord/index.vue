@@ -248,8 +248,8 @@ import {
   delQualificationExamRecord,
   addQualificationExamRecord,
   updateQualificationExamRecord
-} from '@/api/system/qualificationExamRecord';
-import { QualificationExamRecordVO, QualificationExamRecordQuery, QualificationExamRecordForm } from '@/api/system/qualificationExamRecord/types';
+} from '@/api/qualification/qualificationExamRecord';
+import { QualificationExamRecordVO, QualificationExamRecordQuery, QualificationExamRecordForm } from '@/api/qualification/qualificationExamRecord/types';
 import { createQualificationExamRecordFieldConfig } from '@/utils/mmpFieldConfigs';
 import { createQualificationExamRecordSearchConfig } from '@/utils/mmpSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

@@ -189,8 +189,8 @@ import {
   delQualificationExamPaper,
   addQualificationExamPaper,
   updateQualificationExamPaper
-} from '@/api/system/qualificationExamPaper';
-import { QualificationExamPaperVO, QualificationExamPaperQuery, QualificationExamPaperForm } from '@/api/system/qualificationExamPaper/types';
+} from '@/api/qualification/qualificationExamPaper';
+import { QualificationExamPaperVO, QualificationExamPaperQuery, QualificationExamPaperForm } from '@/api/qualification/qualificationExamPaper/types';
 import { FieldConfigManager } from '@/utils/fieldConfigManager';
 import { createQualificationExamPaperFieldConfig } from '@/utils/mmpFieldConfigs';
 import { createQualificationExamPaperSearchConfig } from '@/utils/mmpSearchConfigs';

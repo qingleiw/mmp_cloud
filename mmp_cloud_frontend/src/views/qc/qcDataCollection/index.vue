@@ -197,8 +197,8 @@ import {
   delQcDataCollection,
   addQcDataCollection,
   updateQcDataCollection
-} from '@/api/system/qcDataCollection';
-import { QcDataCollectionVO, QcDataCollectionQuery, QcDataCollectionForm } from '@/api/system/qcDataCollection/types';
+} from '@/api/qc/qcDataCollection';
+import { QcDataCollectionVO, QcDataCollectionQuery, QcDataCollectionForm } from '@/api/qc/qcDataCollection/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

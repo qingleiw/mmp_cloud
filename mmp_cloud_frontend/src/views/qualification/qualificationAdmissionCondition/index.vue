@@ -251,12 +251,12 @@ import {
   delQualificationAdmissionCondition,
   addQualificationAdmissionCondition,
   updateQualificationAdmissionCondition
-} from '@/api/system/qualificationAdmissionCondition';
+} from '@/api/qualification/qualificationAdmissionCondition';
 import {
   QualificationAdmissionConditionVO,
   QualificationAdmissionConditionQuery,
   QualificationAdmissionConditionForm
-} from '@/api/system/qualificationAdmissionCondition/types';
+} from '@/api/qualification/qualificationAdmissionCondition/types';
 import { createQualificationAdmissionConditionFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
@@ -416,7 +416,7 @@ const handleDelete = async (row?: QualificationAdmissionConditionVO) => {
 /** 导入按钮操作 */
 const handleImport = () => {
   proxy.$modal.upload({
-    url: '/dev-api/system/qualificationAdmissionCondition/importData',
+    url: '/dev-api/qualification/qualificationAdmissionCondition/importData',
     success: () => {
       proxy.$modal.msgSuccess('导入成功');
       getList();

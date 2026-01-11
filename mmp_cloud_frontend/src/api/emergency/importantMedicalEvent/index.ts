@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { ImportantMedicalEventVO, ImportantMedicalEventForm, ImportantMedicalEventQuery } from '@/api/system/importantMedicalEvent/types';
+import { ImportantMedicalEventVO, ImportantMedicalEventForm, ImportantMedicalEventQuery } from '@/api/emergency/importantMedicalEvent/types';
 
 /**
  * 查询重要医疗事件列表
@@ -10,7 +10,7 @@ import { ImportantMedicalEventVO, ImportantMedicalEventForm, ImportantMedicalEve
 
 export const listImportantMedicalEvent = (query?: ImportantMedicalEventQuery): AxiosPromise<ImportantMedicalEventVO[]> => {
   return request({
-    url: '/system/importantMedicalEvent/list',
+    url: '/emergency/importantMedicalEvent/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listImportantMedicalEvent = (query?: ImportantMedicalEventQuery): A
  */
 export const getImportantMedicalEvent = (id: string | number): AxiosPromise<ImportantMedicalEventVO> => {
   return request({
-    url: '/system/importantMedicalEvent/' + id,
+    url: '/emergency/importantMedicalEvent/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getImportantMedicalEvent = (id: string | number): AxiosPromise<Impo
  */
 export const addImportantMedicalEvent = (data: ImportantMedicalEventForm) => {
   return request({
-    url: '/system/importantMedicalEvent',
+    url: '/emergency/importantMedicalEvent',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addImportantMedicalEvent = (data: ImportantMedicalEventForm) => {
  */
 export const updateImportantMedicalEvent = (data: ImportantMedicalEventForm) => {
   return request({
-    url: '/system/importantMedicalEvent',
+    url: '/emergency/importantMedicalEvent',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateImportantMedicalEvent = (data: ImportantMedicalEventForm) => 
  */
 export const delImportantMedicalEvent = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/importantMedicalEvent/' + id,
+    url: '/emergency/importantMedicalEvent/' + id,
     method: 'delete'
   });
 };

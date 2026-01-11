@@ -135,8 +135,8 @@
 </template>
 
 <script setup name="RadiationWorker" lang="ts">
-import { listRadiationWorker, getRadiationWorker, delRadiationWorker, addRadiationWorker, updateRadiationWorker } from '@/api/system/radiationWorker';
-import { RadiationWorkerVO, RadiationWorkerQuery, RadiationWorkerForm } from '@/api/system/radiationWorker/types';
+import { listRadiationWorker, getRadiationWorker, delRadiationWorker, addRadiationWorker, updateRadiationWorker } from '@/api/radiation/radiationWorker';
+import { RadiationWorkerVO, RadiationWorkerQuery, RadiationWorkerForm } from '@/api/radiation/radiationWorker/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

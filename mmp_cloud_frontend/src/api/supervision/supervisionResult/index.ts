@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionResultVO, SupervisionResultForm, SupervisionResultQuery } from '@/api/system/supervisionResult/types';
+import { SupervisionResultVO, SupervisionResultForm, SupervisionResultQuery } from '@/api/supervision/supervisionResult/types';
 
 /**
  * 查询督查结果列表
@@ -10,7 +10,7 @@ import { SupervisionResultVO, SupervisionResultForm, SupervisionResultQuery } fr
 
 export const listSupervisionResult = (query?: SupervisionResultQuery): AxiosPromise<SupervisionResultVO[]> => {
   return request({
-    url: '/system/supervisionResult/list',
+    url: '/supervision/supervisionResult/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionResult = (query?: SupervisionResultQuery): AxiosProm
  */
 export const getSupervisionResult = (id: string | number): AxiosPromise<SupervisionResultVO> => {
   return request({
-    url: '/system/supervisionResult/' + id,
+    url: '/supervision/supervisionResult/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionResult = (id: string | number): AxiosPromise<Supervis
  */
 export const addSupervisionResult = (data: SupervisionResultForm) => {
   return request({
-    url: '/system/supervisionResult',
+    url: '/supervision/supervisionResult',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionResult = (data: SupervisionResultForm) => {
  */
 export const updateSupervisionResult = (data: SupervisionResultForm) => {
   return request({
-    url: '/system/supervisionResult',
+    url: '/supervision/supervisionResult',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionResult = (data: SupervisionResultForm) => {
  */
 export const delSupervisionResult = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionResult/' + id,
+    url: '/supervision/supervisionResult/' + id,
     method: 'delete'
   });
 };

@@ -4,7 +4,7 @@ import {
   SupervisionRectificationProgressVO,
   SupervisionRectificationProgressForm,
   SupervisionRectificationProgressQuery
-} from '@/api/system/supervisionRectificationProgress/types';
+} from '@/api/supervision/supervisionRectificationProgress/types';
 
 /**
  * 查询整改进度列表
@@ -16,7 +16,7 @@ export const listSupervisionRectificationProgress = (
   query?: SupervisionRectificationProgressQuery
 ): AxiosPromise<SupervisionRectificationProgressVO[]> => {
   return request({
-    url: '/system/supervisionRectificationProgress/list',
+    url: '/supervision/supervisionRectificationProgress/list',
     method: 'get',
     params: query
   });
@@ -28,7 +28,7 @@ export const listSupervisionRectificationProgress = (
  */
 export const getSupervisionRectificationProgress = (id: string | number): AxiosPromise<SupervisionRectificationProgressVO> => {
   return request({
-    url: '/system/supervisionRectificationProgress/' + id,
+    url: '/supervision/supervisionRectificationProgress/' + id,
     method: 'get'
   });
 };
@@ -39,7 +39,7 @@ export const getSupervisionRectificationProgress = (id: string | number): AxiosP
  */
 export const addSupervisionRectificationProgress = (data: SupervisionRectificationProgressForm) => {
   return request({
-    url: '/system/supervisionRectificationProgress',
+    url: '/supervision/supervisionRectificationProgress',
     method: 'post',
     data: data
   });
@@ -51,7 +51,7 @@ export const addSupervisionRectificationProgress = (data: SupervisionRectificati
  */
 export const updateSupervisionRectificationProgress = (data: SupervisionRectificationProgressForm) => {
   return request({
-    url: '/system/supervisionRectificationProgress',
+    url: '/supervision/supervisionRectificationProgress',
     method: 'put',
     data: data
   });
@@ -63,7 +63,7 @@ export const updateSupervisionRectificationProgress = (data: SupervisionRectific
  */
 export const delSupervisionRectificationProgress = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionRectificationProgress/' + id,
+    url: '/supervision/supervisionRectificationProgress/' + id,
     method: 'delete'
   });
 };

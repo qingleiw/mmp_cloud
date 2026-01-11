@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QualificationCatalogVO, QualificationCatalogForm, QualificationCatalogQuery } from '@/api/system/qualificationCatalog/types';
+import { QualificationCatalogVO, QualificationCatalogForm, QualificationCatalogQuery } from '@/api/qualification/qualificationCatalog/types';
 
 /**
  * 查询医生手术授权目录列表
@@ -10,7 +10,7 @@ import { QualificationCatalogVO, QualificationCatalogForm, QualificationCatalogQ
 
 export const listQualificationCatalog = (query?: QualificationCatalogQuery): AxiosPromise<QualificationCatalogVO[]> => {
   return request({
-    url: '/system/qualificationCatalog/list',
+    url: '/qualification/qualificationCatalog/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQualificationCatalog = (query?: QualificationCatalogQuery): Axi
  */
 export const getQualificationCatalog = (id: string | number): AxiosPromise<QualificationCatalogVO> => {
   return request({
-    url: '/system/qualificationCatalog/' + id,
+    url: '/qualification/qualificationCatalog/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQualificationCatalog = (id: string | number): AxiosPromise<Quali
  */
 export const addQualificationCatalog = (data: QualificationCatalogForm) => {
   return request({
-    url: '/system/qualificationCatalog',
+    url: '/qualification/qualificationCatalog',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQualificationCatalog = (data: QualificationCatalogForm) => {
  */
 export const updateQualificationCatalog = (data: QualificationCatalogForm) => {
   return request({
-    url: '/system/qualificationCatalog',
+    url: '/qualification/qualificationCatalog',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQualificationCatalog = (data: QualificationCatalogForm) => {
  */
 export const delQualificationCatalog = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationCatalog/' + id,
+    url: '/qualification/qualificationCatalog/' + id,
     method: 'delete'
   });
 };

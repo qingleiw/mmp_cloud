@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionExpertMemberVO, SupervisionExpertMemberForm, SupervisionExpertMemberQuery } from '@/api/system/supervisionExpertMember/types';
+import { SupervisionExpertMemberVO, SupervisionExpertMemberForm, SupervisionExpertMemberQuery } from '@/api/supervision/supervisionExpertMember/types';
 
 /**
  * 查询专家组成员列表
@@ -10,7 +10,7 @@ import { SupervisionExpertMemberVO, SupervisionExpertMemberForm, SupervisionExpe
 
 export const listSupervisionExpertMember = (query?: SupervisionExpertMemberQuery): AxiosPromise<SupervisionExpertMemberVO[]> => {
   return request({
-    url: '/system/supervisionExpertMember/list',
+    url: '/supervision/supervisionExpertMember/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionExpertMember = (query?: SupervisionExpertMemberQuery
  */
 export const getSupervisionExpertMember = (id: string | number): AxiosPromise<SupervisionExpertMemberVO> => {
   return request({
-    url: '/system/supervisionExpertMember/' + id,
+    url: '/supervision/supervisionExpertMember/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionExpertMember = (id: string | number): AxiosPromise<Su
  */
 export const addSupervisionExpertMember = (data: SupervisionExpertMemberForm) => {
   return request({
-    url: '/system/supervisionExpertMember',
+    url: '/supervision/supervisionExpertMember',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionExpertMember = (data: SupervisionExpertMemberForm) =>
  */
 export const updateSupervisionExpertMember = (data: SupervisionExpertMemberForm) => {
   return request({
-    url: '/system/supervisionExpertMember',
+    url: '/supervision/supervisionExpertMember',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionExpertMember = (data: SupervisionExpertMemberForm)
  */
 export const delSupervisionExpertMember = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionExpertMember/' + id,
+    url: '/supervision/supervisionExpertMember/' + id,
     method: 'delete'
   });
 };

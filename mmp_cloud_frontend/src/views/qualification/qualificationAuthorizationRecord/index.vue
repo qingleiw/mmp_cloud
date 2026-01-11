@@ -172,12 +172,12 @@ import {
   delQualificationAuthorizationRecord,
   addQualificationAuthorizationRecord,
   updateQualificationAuthorizationRecord
-} from '@/api/system/qualificationAuthorizationRecord';
+} from '@/api/qualification/qualificationAuthorizationRecord';
 import {
   QualificationAuthorizationRecordVO,
   QualificationAuthorizationRecordQuery,
   QualificationAuthorizationRecordForm
-} from '@/api/system/qualificationAuthorizationRecord/types';
+} from '@/api/qualification/qualificationAuthorizationRecord/types';
 import { createQualificationAuthorizationRecordFieldConfig } from '@/utils/fieldConfig';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

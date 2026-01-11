@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectVO, NewTechnologyProjectForm, NewTechnologyProjectQuery } from '@/api/system/newTechnologyProject/types';
+import { NewTechnologyProjectVO, NewTechnologyProjectForm, NewTechnologyProjectQuery } from '@/api/ntp/newTechnologyProject/types';
 
 /**
  * 查询新技术项目基本信息列表
@@ -10,7 +10,7 @@ import { NewTechnologyProjectVO, NewTechnologyProjectForm, NewTechnologyProjectQ
 
 export const listNewTechnologyProject = (query?: NewTechnologyProjectQuery): AxiosPromise<NewTechnologyProjectVO[]> => {
   return request({
-    url: '/system/newTechnologyProject/list',
+    url: '/ntp/newTechnologyProject/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listNewTechnologyProject = (query?: NewTechnologyProjectQuery): Axi
  */
 export const getNewTechnologyProject = (id: string | number): AxiosPromise<NewTechnologyProjectVO> => {
   return request({
-    url: '/system/newTechnologyProject/' + id,
+    url: '/ntp/newTechnologyProject/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getNewTechnologyProject = (id: string | number): AxiosPromise<NewTe
  */
 export const addNewTechnologyProject = (data: NewTechnologyProjectForm) => {
   return request({
-    url: '/system/newTechnologyProject',
+    url: '/ntp/newTechnologyProject',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addNewTechnologyProject = (data: NewTechnologyProjectForm) => {
  */
 export const updateNewTechnologyProject = (data: NewTechnologyProjectForm) => {
   return request({
-    url: '/system/newTechnologyProject',
+    url: '/ntp/newTechnologyProject',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateNewTechnologyProject = (data: NewTechnologyProjectForm) => {
  */
 export const delNewTechnologyProject = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/newTechnologyProject/' + id,
+    url: '/ntp/newTechnologyProject/' + id,
     method: 'delete'
   });
 };

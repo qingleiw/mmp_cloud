@@ -188,8 +188,8 @@ import {
   delRadiationDoseAlertRecord,
   addRadiationDoseAlertRecord,
   updateRadiationDoseAlertRecord
-} from '@/api/system/radiationDoseAlertRecord';
-import { RadiationDoseAlertRecordVO, RadiationDoseAlertRecordQuery, RadiationDoseAlertRecordForm } from '@/api/system/radiationDoseAlertRecord/types';
+} from '@/api/radiation/radiationDoseAlertRecord';
+import { RadiationDoseAlertRecordVO, RadiationDoseAlertRecordQuery, RadiationDoseAlertRecordForm } from '@/api/radiation/radiationDoseAlertRecord/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

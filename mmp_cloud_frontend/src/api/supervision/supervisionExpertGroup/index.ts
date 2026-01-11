@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionExpertGroupVO, SupervisionExpertGroupForm, SupervisionExpertGroupQuery } from '@/api/system/supervisionExpertGroup/types';
+import { SupervisionExpertGroupVO, SupervisionExpertGroupForm, SupervisionExpertGroupQuery } from '@/api/supervision/supervisionExpertGroup/types';
 
 /**
  * 查询专家组列表
@@ -10,7 +10,7 @@ import { SupervisionExpertGroupVO, SupervisionExpertGroupForm, SupervisionExpert
 
 export const listSupervisionExpertGroup = (query?: SupervisionExpertGroupQuery): AxiosPromise<SupervisionExpertGroupVO[]> => {
   return request({
-    url: '/system/supervisionExpertGroup/list',
+    url: '/supervision/supervisionExpertGroup/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionExpertGroup = (query?: SupervisionExpertGroupQuery):
  */
 export const getSupervisionExpertGroup = (id: string | number): AxiosPromise<SupervisionExpertGroupVO> => {
   return request({
-    url: '/system/supervisionExpertGroup/' + id,
+    url: '/supervision/supervisionExpertGroup/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionExpertGroup = (id: string | number): AxiosPromise<Sup
  */
 export const addSupervisionExpertGroup = (data: SupervisionExpertGroupForm) => {
   return request({
-    url: '/system/supervisionExpertGroup',
+    url: '/supervision/supervisionExpertGroup',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionExpertGroup = (data: SupervisionExpertGroupForm) => {
  */
 export const updateSupervisionExpertGroup = (data: SupervisionExpertGroupForm) => {
   return request({
-    url: '/system/supervisionExpertGroup',
+    url: '/supervision/supervisionExpertGroup',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionExpertGroup = (data: SupervisionExpertGroupForm) =
  */
 export const delSupervisionExpertGroup = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionExpertGroup/' + id,
+    url: '/supervision/supervisionExpertGroup/' + id,
     method: 'delete'
   });
 };

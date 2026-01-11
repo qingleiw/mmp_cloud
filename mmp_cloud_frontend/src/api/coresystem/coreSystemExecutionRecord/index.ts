@@ -4,7 +4,7 @@ import {
   CoreSystemExecutionRecordVO,
   CoreSystemExecutionRecordForm,
   CoreSystemExecutionRecordQuery
-} from '@/api/system/coreSystemExecutionRecord/types';
+} from '@/api/coresystem/coreSystemExecutionRecord/types';
 
 /**
  * 查询制度执行记录列表
@@ -14,7 +14,7 @@ import {
 
 export const listCoreSystemExecutionRecord = (query?: CoreSystemExecutionRecordQuery): AxiosPromise<CoreSystemExecutionRecordVO[]> => {
   return request({
-    url: '/system/coreSystemExecutionRecord/list',
+    url: '/coresystem/coreSystemExecutionRecord/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listCoreSystemExecutionRecord = (query?: CoreSystemExecutionRecordQ
  */
 export const getCoreSystemExecutionRecord = (id: string | number): AxiosPromise<CoreSystemExecutionRecordVO> => {
   return request({
-    url: '/system/coreSystemExecutionRecord/' + id,
+    url: '/coresystem/coreSystemExecutionRecord/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getCoreSystemExecutionRecord = (id: string | number): AxiosPromise<
  */
 export const addCoreSystemExecutionRecord = (data: CoreSystemExecutionRecordForm) => {
   return request({
-    url: '/system/coreSystemExecutionRecord',
+    url: '/coresystem/coreSystemExecutionRecord',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addCoreSystemExecutionRecord = (data: CoreSystemExecutionRecordForm
  */
 export const updateCoreSystemExecutionRecord = (data: CoreSystemExecutionRecordForm) => {
   return request({
-    url: '/system/coreSystemExecutionRecord',
+    url: '/coresystem/coreSystemExecutionRecord',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateCoreSystemExecutionRecord = (data: CoreSystemExecutionRecordF
  */
 export const delCoreSystemExecutionRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/coreSystemExecutionRecord/' + id,
+    url: '/coresystem/coreSystemExecutionRecord/' + id,
     method: 'delete'
   });
 };

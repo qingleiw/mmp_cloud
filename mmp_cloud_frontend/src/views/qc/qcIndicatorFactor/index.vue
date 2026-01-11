@@ -126,8 +126,8 @@ import {
   delQcIndicatorFactor,
   addQcIndicatorFactor,
   updateQcIndicatorFactor
-} from '@/api/system/qcIndicatorFactor';
-import { QcIndicatorFactorVO, QcIndicatorFactorQuery, QcIndicatorFactorForm } from '@/api/system/qcIndicatorFactor/types';
+} from '@/api/qc/qcIndicatorFactor';
+import { QcIndicatorFactorVO, QcIndicatorFactorQuery, QcIndicatorFactorForm } from '@/api/qc/qcIndicatorFactor/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

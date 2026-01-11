@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QualificationExamRecordVO, QualificationExamRecordForm, QualificationExamRecordQuery } from '@/api/system/qualificationExamRecord/types';
+import { QualificationExamRecordVO, QualificationExamRecordForm, QualificationExamRecordQuery } from '@/api/qualification/qualificationExamRecord/types';
 
 /**
  * 查询资质考试记录列表
@@ -10,7 +10,7 @@ import { QualificationExamRecordVO, QualificationExamRecordForm, QualificationEx
 
 export const listQualificationExamRecord = (query?: QualificationExamRecordQuery): AxiosPromise<QualificationExamRecordVO[]> => {
   return request({
-    url: '/system/qualificationExamRecord/list',
+    url: '/qualification/qualificationExamRecord/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQualificationExamRecord = (query?: QualificationExamRecordQuery
  */
 export const getQualificationExamRecord = (id: string | number): AxiosPromise<QualificationExamRecordVO> => {
   return request({
-    url: '/system/qualificationExamRecord/' + id,
+    url: '/qualification/qualificationExamRecord/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQualificationExamRecord = (id: string | number): AxiosPromise<Qu
  */
 export const addQualificationExamRecord = (data: QualificationExamRecordForm) => {
   return request({
-    url: '/system/qualificationExamRecord',
+    url: '/qualification/qualificationExamRecord',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQualificationExamRecord = (data: QualificationExamRecordForm) =>
  */
 export const updateQualificationExamRecord = (data: QualificationExamRecordForm) => {
   return request({
-    url: '/system/qualificationExamRecord',
+    url: '/qualification/qualificationExamRecord',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQualificationExamRecord = (data: QualificationExamRecordForm)
  */
 export const delQualificationExamRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationExamRecord/' + id,
+    url: '/qualification/qualificationExamRecord/' + id,
     method: 'delete'
   });
 };

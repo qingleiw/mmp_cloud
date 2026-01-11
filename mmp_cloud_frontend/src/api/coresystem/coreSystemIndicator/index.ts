@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { CoreSystemIndicatorVO, CoreSystemIndicatorForm, CoreSystemIndicatorQuery } from '@/api/system/coreSystemIndicator/types';
+import { CoreSystemIndicatorVO, CoreSystemIndicatorForm, CoreSystemIndicatorQuery } from '@/api/coresystem/coreSystemIndicator/types';
 
 /**
  * 查询核心制度指标列表
@@ -10,7 +10,7 @@ import { CoreSystemIndicatorVO, CoreSystemIndicatorForm, CoreSystemIndicatorQuer
 
 export const listCoreSystemIndicator = (query?: CoreSystemIndicatorQuery): AxiosPromise<CoreSystemIndicatorVO[]> => {
   return request({
-    url: '/system/coreSystemIndicator/list',
+    url: '/coresystem/coreSystemIndicator/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listCoreSystemIndicator = (query?: CoreSystemIndicatorQuery): Axios
  */
 export const getCoreSystemIndicator = (id: string | number): AxiosPromise<CoreSystemIndicatorVO> => {
   return request({
-    url: '/system/coreSystemIndicator/' + id,
+    url: '/coresystem/coreSystemIndicator/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getCoreSystemIndicator = (id: string | number): AxiosPromise<CoreSy
  */
 export const addCoreSystemIndicator = (data: CoreSystemIndicatorForm) => {
   return request({
-    url: '/system/coreSystemIndicator',
+    url: '/coresystem/coreSystemIndicator',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addCoreSystemIndicator = (data: CoreSystemIndicatorForm) => {
  */
 export const updateCoreSystemIndicator = (data: CoreSystemIndicatorForm) => {
   return request({
-    url: '/system/coreSystemIndicator',
+    url: '/coresystem/coreSystemIndicator',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateCoreSystemIndicator = (data: CoreSystemIndicatorForm) => {
  */
 export const delCoreSystemIndicator = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/coreSystemIndicator/' + id,
+    url: '/coresystem/coreSystemIndicator/' + id,
     method: 'delete'
   });
 };

@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SurgeryVideoVO, SurgeryVideoForm, SurgeryVideoQuery } from '@/api/system/surgeryVideo/types';
+import { SurgeryVideoVO, SurgeryVideoForm, SurgeryVideoQuery } from '@/api/surgery/surgeryVideo/types';
 
 /**
  * 查询手术视频列表
@@ -10,7 +10,7 @@ import { SurgeryVideoVO, SurgeryVideoForm, SurgeryVideoQuery } from '@/api/syste
 
 export const listSurgeryVideo = (query?: SurgeryVideoQuery): AxiosPromise<SurgeryVideoVO[]> => {
   return request({
-    url: '/system/surgeryVideo/list',
+    url: '/surgery/surgeryVideo/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSurgeryVideo = (query?: SurgeryVideoQuery): AxiosPromise<Surger
  */
 export const getSurgeryVideo = (id: string | number): AxiosPromise<SurgeryVideoVO> => {
   return request({
-    url: '/system/surgeryVideo/' + id,
+    url: '/surgery/surgeryVideo/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSurgeryVideo = (id: string | number): AxiosPromise<SurgeryVideoV
  */
 export const addSurgeryVideo = (data: SurgeryVideoForm) => {
   return request({
-    url: '/system/surgeryVideo',
+    url: '/surgery/surgeryVideo',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSurgeryVideo = (data: SurgeryVideoForm) => {
  */
 export const updateSurgeryVideo = (data: SurgeryVideoForm) => {
   return request({
-    url: '/system/surgeryVideo',
+    url: '/surgery/surgeryVideo',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSurgeryVideo = (data: SurgeryVideoForm) => {
  */
 export const delSurgeryVideo = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/surgeryVideo/' + id,
+    url: '/surgery/surgeryVideo/' + id,
     method: 'delete'
   });
 };

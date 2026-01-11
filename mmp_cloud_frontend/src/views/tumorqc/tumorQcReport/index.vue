@@ -244,8 +244,8 @@
 </template>
 
 <script setup name="TumorQcReport" lang="ts">
-import { listTumorQcReport, getTumorQcReport, delTumorQcReport, addTumorQcReport, updateTumorQcReport } from '@/api/system/tumorQcReport';
-import { TumorQcReportVO, TumorQcReportQuery, TumorQcReportForm } from '@/api/system/tumorQcReport/types';
+import { listTumorQcReport, getTumorQcReport, delTumorQcReport, addTumorQcReport, updateTumorQcReport } from '@/api/tumorqc/tumorQcReport';
+import { TumorQcReportVO, TumorQcReportQuery, TumorQcReportForm } from '@/api/tumorqc/tumorQcReport/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createTumorQcReportFieldConfig } from '@/utils/mmpFieldConfigs';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

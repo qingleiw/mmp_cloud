@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectDocumentVO, NewTechnologyProjectDocumentForm, NewTechnologyProjectDocumentQuery } from '@/api/system/newTechnologyProjectDocument/types';
+import { NewTechnologyProjectDocumentVO, NewTechnologyProjectDocumentForm, NewTechnologyProjectDocumentQuery } from '@/api/ntp/newTechnologyProjectDocument/types';
 
 /**
  * 查询项目文档列表
@@ -10,7 +10,7 @@ import { NewTechnologyProjectDocumentVO, NewTechnologyProjectDocumentForm, NewTe
 
 export const listNewTechnologyProjectDocument = (query?: NewTechnologyProjectDocumentQuery): AxiosPromise<NewTechnologyProjectDocumentVO[]> => {
   return request({
-    url: '/system/newTechnologyProjectDocument/list',
+    url: '/ntp/newTechnologyProjectDocument/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listNewTechnologyProjectDocument = (query?: NewTechnologyProjectDoc
  */
 export const getNewTechnologyProjectDocument = (id: string | number): AxiosPromise<NewTechnologyProjectDocumentVO> => {
   return request({
-    url: '/system/newTechnologyProjectDocument/' + id,
+    url: '/ntp/newTechnologyProjectDocument/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getNewTechnologyProjectDocument = (id: string | number): AxiosPromi
  */
 export const addNewTechnologyProjectDocument = (data: NewTechnologyProjectDocumentForm) => {
   return request({
-    url: '/system/newTechnologyProjectDocument',
+    url: '/ntp/newTechnologyProjectDocument',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addNewTechnologyProjectDocument = (data: NewTechnologyProjectDocume
  */
 export const updateNewTechnologyProjectDocument = (data: NewTechnologyProjectDocumentForm) => {
   return request({
-    url: '/system/newTechnologyProjectDocument',
+    url: '/ntp/newTechnologyProjectDocument',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateNewTechnologyProjectDocument = (data: NewTechnologyProjectDoc
  */
 export const delNewTechnologyProjectDocument = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/newTechnologyProjectDocument/' + id,
+    url: '/ntp/newTechnologyProjectDocument/' + id,
     method: 'delete'
   });
 };

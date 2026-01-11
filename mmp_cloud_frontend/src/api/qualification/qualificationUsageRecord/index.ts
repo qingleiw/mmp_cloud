@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QualificationUsageRecordVO, QualificationUsageRecordForm, QualificationUsageRecordQuery } from '@/api/system/qualificationUsageRecord/types';
+import { QualificationUsageRecordVO, QualificationUsageRecordForm, QualificationUsageRecordQuery } from '@/api/qualification/qualificationUsageRecord/types';
 
 /**
  * 查询资质使用记录列表
@@ -10,7 +10,7 @@ import { QualificationUsageRecordVO, QualificationUsageRecordForm, Qualification
 
 export const listQualificationUsageRecord = (query?: QualificationUsageRecordQuery): AxiosPromise<QualificationUsageRecordVO[]> => {
   return request({
-    url: '/system/qualificationUsageRecord/list',
+    url: '/qualification/qualificationUsageRecord/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQualificationUsageRecord = (query?: QualificationUsageRecordQue
  */
 export const getQualificationUsageRecord = (id: string | number): AxiosPromise<QualificationUsageRecordVO> => {
   return request({
-    url: '/system/qualificationUsageRecord/' + id,
+    url: '/qualification/qualificationUsageRecord/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQualificationUsageRecord = (id: string | number): AxiosPromise<Q
  */
 export const addQualificationUsageRecord = (data: QualificationUsageRecordForm) => {
   return request({
-    url: '/system/qualificationUsageRecord',
+    url: '/qualification/qualificationUsageRecord',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQualificationUsageRecord = (data: QualificationUsageRecordForm) 
  */
 export const updateQualificationUsageRecord = (data: QualificationUsageRecordForm) => {
   return request({
-    url: '/system/qualificationUsageRecord',
+    url: '/qualification/qualificationUsageRecord',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQualificationUsageRecord = (data: QualificationUsageRecordFor
  */
 export const delQualificationUsageRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationUsageRecord/' + id,
+    url: '/qualification/qualificationUsageRecord/' + id,
     method: 'delete'
   });
 };

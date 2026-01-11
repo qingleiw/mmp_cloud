@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectAssessmentVO, NewTechnologyProjectAssessmentForm, NewTechnologyProjectAssessmentQuery } from '@/api/system/newTechnologyProjectAssessment/types';
+import { NewTechnologyProjectAssessmentVO, NewTechnologyProjectAssessmentForm, NewTechnologyProjectAssessmentQuery } from '@/api/ntp/newTechnologyProjectAssessment/types';
 
 /**
  * 查询项目考核评估列表
@@ -10,7 +10,7 @@ import { NewTechnologyProjectAssessmentVO, NewTechnologyProjectAssessmentForm, N
 
 export const listNewTechnologyProjectAssessment = (query?: NewTechnologyProjectAssessmentQuery): AxiosPromise<NewTechnologyProjectAssessmentVO[]> => {
   return request({
-    url: '/system/newTechnologyProjectAssessment/list',
+    url: '/ntp/newTechnologyProjectAssessment/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listNewTechnologyProjectAssessment = (query?: NewTechnologyProjectA
  */
 export const getNewTechnologyProjectAssessment = (id: string | number): AxiosPromise<NewTechnologyProjectAssessmentVO> => {
   return request({
-    url: '/system/newTechnologyProjectAssessment/' + id,
+    url: '/ntp/newTechnologyProjectAssessment/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getNewTechnologyProjectAssessment = (id: string | number): AxiosPro
  */
 export const addNewTechnologyProjectAssessment = (data: NewTechnologyProjectAssessmentForm) => {
   return request({
-    url: '/system/newTechnologyProjectAssessment',
+    url: '/ntp/newTechnologyProjectAssessment',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addNewTechnologyProjectAssessment = (data: NewTechnologyProjectAsse
  */
 export const updateNewTechnologyProjectAssessment = (data: NewTechnologyProjectAssessmentForm) => {
   return request({
-    url: '/system/newTechnologyProjectAssessment',
+    url: '/ntp/newTechnologyProjectAssessment',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateNewTechnologyProjectAssessment = (data: NewTechnologyProjectA
  */
 export const delNewTechnologyProjectAssessment = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/newTechnologyProjectAssessment/' + id,
+    url: '/ntp/newTechnologyProjectAssessment/' + id,
     method: 'delete'
   });
 };

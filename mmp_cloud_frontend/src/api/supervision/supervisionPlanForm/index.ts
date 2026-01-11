@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionPlanFormVO, SupervisionPlanFormForm, SupervisionPlanFormQuery } from '@/api/system/supervisionPlanForm/types';
+import { SupervisionPlanFormVO, SupervisionPlanFormForm, SupervisionPlanFormQuery } from '@/api/supervision/supervisionPlanForm/types';
 
 /**
  * 查询督查计划单关联列表
@@ -10,7 +10,7 @@ import { SupervisionPlanFormVO, SupervisionPlanFormForm, SupervisionPlanFormQuer
 
 export const listSupervisionPlanForm = (query?: SupervisionPlanFormQuery): AxiosPromise<SupervisionPlanFormVO[]> => {
   return request({
-    url: '/system/supervisionPlanForm/list',
+    url: '/supervision/supervisionPlanForm/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionPlanForm = (query?: SupervisionPlanFormQuery): Axios
  */
 export const getSupervisionPlanForm = (id: string | number): AxiosPromise<SupervisionPlanFormVO> => {
   return request({
-    url: '/system/supervisionPlanForm/' + id,
+    url: '/supervision/supervisionPlanForm/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionPlanForm = (id: string | number): AxiosPromise<Superv
  */
 export const addSupervisionPlanForm = (data: SupervisionPlanFormForm) => {
   return request({
-    url: '/system/supervisionPlanForm',
+    url: '/supervision/supervisionPlanForm',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionPlanForm = (data: SupervisionPlanFormForm) => {
  */
 export const updateSupervisionPlanForm = (data: SupervisionPlanFormForm) => {
   return request({
-    url: '/system/supervisionPlanForm',
+    url: '/supervision/supervisionPlanForm',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionPlanForm = (data: SupervisionPlanFormForm) => {
  */
 export const delSupervisionPlanForm = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionPlanForm/' + id,
+    url: '/supervision/supervisionPlanForm/' + id,
     method: 'delete'
   });
 };

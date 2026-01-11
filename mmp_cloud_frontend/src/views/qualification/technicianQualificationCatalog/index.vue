@@ -243,12 +243,12 @@ import {
   delTechnicianQualificationCatalog,
   addTechnicianQualificationCatalog,
   updateTechnicianQualificationCatalog
-} from '@/api/system/technicianQualificationCatalog';
+} from '@/api/qualification/technicianQualificationCatalog';
 import {
   TechnicianQualificationCatalogVO,
   TechnicianQualificationCatalogQuery,
   TechnicianQualificationCatalogForm
-} from '@/api/system/technicianQualificationCatalog/types';
+} from '@/api/qualification/technicianQualificationCatalog/types';
 import { createTechnicianQualificationCatalogFieldConfig } from '@/utils/fieldConfig';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

@@ -122,8 +122,8 @@
 </template>
 
 <script setup name="QcScoringRule" lang="ts">
-import { listQcScoringRule, getQcScoringRule, delQcScoringRule, addQcScoringRule, updateQcScoringRule } from '@/api/system/qcScoringRule';
-import { QcScoringRuleVO, QcScoringRuleQuery, QcScoringRuleForm } from '@/api/system/qcScoringRule/types';
+import { listQcScoringRule, getQcScoringRule, delQcScoringRule, addQcScoringRule, updateQcScoringRule } from '@/api/qc/qcScoringRule';
+import { QcScoringRuleVO, QcScoringRuleQuery, QcScoringRuleForm } from '@/api/qc/qcScoringRule/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationDoseMonitoringVO, RadiationDoseMonitoringForm, RadiationDoseMonitoringQuery } from '@/api/system/radiationDoseMonitoring/types';
+import { RadiationDoseMonitoringVO, RadiationDoseMonitoringForm, RadiationDoseMonitoringQuery } from '@/api/radiation/radiationDoseMonitoring/types';
 
 /**
  * 查询个人剂量监测列表
@@ -10,7 +10,7 @@ import { RadiationDoseMonitoringVO, RadiationDoseMonitoringForm, RadiationDoseMo
 
 export const listRadiationDoseMonitoring = (query?: RadiationDoseMonitoringQuery): AxiosPromise<RadiationDoseMonitoringVO[]> => {
   return request({
-    url: '/system/radiationDoseMonitoring/list',
+    url: '/radiation/radiationDoseMonitoring/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listRadiationDoseMonitoring = (query?: RadiationDoseMonitoringQuery
  */
 export const getRadiationDoseMonitoring = (id: string | number): AxiosPromise<RadiationDoseMonitoringVO> => {
   return request({
-    url: '/system/radiationDoseMonitoring/' + id,
+    url: '/radiation/radiationDoseMonitoring/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getRadiationDoseMonitoring = (id: string | number): AxiosPromise<Ra
  */
 export const addRadiationDoseMonitoring = (data: RadiationDoseMonitoringForm) => {
   return request({
-    url: '/system/radiationDoseMonitoring',
+    url: '/radiation/radiationDoseMonitoring',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addRadiationDoseMonitoring = (data: RadiationDoseMonitoringForm) =>
  */
 export const updateRadiationDoseMonitoring = (data: RadiationDoseMonitoringForm) => {
   return request({
-    url: '/system/radiationDoseMonitoring',
+    url: '/radiation/radiationDoseMonitoring',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateRadiationDoseMonitoring = (data: RadiationDoseMonitoringForm)
  */
 export const delRadiationDoseMonitoring = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationDoseMonitoring/' + id,
+    url: '/radiation/radiationDoseMonitoring/' + id,
     method: 'delete'
   });
 };

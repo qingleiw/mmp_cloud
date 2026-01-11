@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QualificationRiskMonitorVO, QualificationRiskMonitorForm, QualificationRiskMonitorQuery } from '@/api/system/qualificationRiskMonitor/types';
+import { QualificationRiskMonitorVO, QualificationRiskMonitorForm, QualificationRiskMonitorQuery } from '@/api/qualification/qualificationRiskMonitor/types';
 
 /**
  * 查询资质风险监测列表
@@ -10,7 +10,7 @@ import { QualificationRiskMonitorVO, QualificationRiskMonitorForm, Qualification
 
 export const listQualificationRiskMonitor = (query?: QualificationRiskMonitorQuery): AxiosPromise<QualificationRiskMonitorVO[]> => {
   return request({
-    url: '/system/qualificationRiskMonitor/list',
+    url: '/qualification/qualificationRiskMonitor/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listQualificationRiskMonitor = (query?: QualificationRiskMonitorQue
  */
 export const getQualificationRiskMonitor = (id: string | number): AxiosPromise<QualificationRiskMonitorVO> => {
   return request({
-    url: '/system/qualificationRiskMonitor/' + id,
+    url: '/qualification/qualificationRiskMonitor/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getQualificationRiskMonitor = (id: string | number): AxiosPromise<Q
  */
 export const addQualificationRiskMonitor = (data: QualificationRiskMonitorForm) => {
   return request({
-    url: '/system/qualificationRiskMonitor',
+    url: '/qualification/qualificationRiskMonitor',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addQualificationRiskMonitor = (data: QualificationRiskMonitorForm) 
  */
 export const updateQualificationRiskMonitor = (data: QualificationRiskMonitorForm) => {
   return request({
-    url: '/system/qualificationRiskMonitor',
+    url: '/qualification/qualificationRiskMonitor',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateQualificationRiskMonitor = (data: QualificationRiskMonitorFor
  */
 export const delQualificationRiskMonitor = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationRiskMonitor/' + id,
+    url: '/qualification/qualificationRiskMonitor/' + id,
     method: 'delete'
   });
 };

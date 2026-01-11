@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyDrillSummaryVO, EmergencyDrillSummaryForm, EmergencyDrillSummaryQuery } from '@/api/system/emergencyDrillSummary/types';
+import { EmergencyDrillSummaryVO, EmergencyDrillSummaryForm, EmergencyDrillSummaryQuery } from '@/api/emergency/emergencyDrillSummary/types';
 
 /**
  * 查询应急演练总结列表
@@ -10,7 +10,7 @@ import { EmergencyDrillSummaryVO, EmergencyDrillSummaryForm, EmergencyDrillSumma
 
 export const listEmergencyDrillSummary = (query?: EmergencyDrillSummaryQuery): AxiosPromise<EmergencyDrillSummaryVO[]> => {
   return request({
-    url: '/system/emergencyDrillSummary/list',
+    url: '/emergency/emergencyDrillSummary/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyDrillSummary = (query?: EmergencyDrillSummaryQuery): A
  */
 export const getEmergencyDrillSummary = (id: string | number): AxiosPromise<EmergencyDrillSummaryVO> => {
   return request({
-    url: '/system/emergencyDrillSummary/' + id,
+    url: '/emergency/emergencyDrillSummary/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyDrillSummary = (id: string | number): AxiosPromise<Emer
  */
 export const addEmergencyDrillSummary = (data: EmergencyDrillSummaryForm) => {
   return request({
-    url: '/system/emergencyDrillSummary',
+    url: '/emergency/emergencyDrillSummary',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyDrillSummary = (data: EmergencyDrillSummaryForm) => {
  */
 export const updateEmergencyDrillSummary = (data: EmergencyDrillSummaryForm) => {
   return request({
-    url: '/system/emergencyDrillSummary',
+    url: '/emergency/emergencyDrillSummary',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyDrillSummary = (data: EmergencyDrillSummaryForm) => 
  */
 export const delEmergencyDrillSummary = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyDrillSummary/' + id,
+    url: '/emergency/emergencyDrillSummary/' + id,
     method: 'delete'
   });
 };

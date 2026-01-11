@@ -204,12 +204,12 @@ import {
   delQualificationExamArrangement,
   addQualificationExamArrangement,
   updateQualificationExamArrangement
-} from '@/api/system/qualificationExamArrangement';
+} from '@/api/qualification/qualificationExamArrangement';
 import {
   QualificationExamArrangementVO,
   QualificationExamArrangementQuery,
   QualificationExamArrangementForm
-} from '@/api/system/qualificationExamArrangement/types';
+} from '@/api/qualification/qualificationExamArrangement/types';
 import { createQualificationExamArrangementFieldConfig } from '@/utils/mmpFieldConfigs';
 import { createQualificationExamArrangementSearchConfig } from '@/utils/mmpSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

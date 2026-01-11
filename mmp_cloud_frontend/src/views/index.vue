@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container home">
+  <div class="app-container home" :style="{ color: textColor, padding: sidebarOpened ? '20px' : '20px 20px 20px 120px' }">
     <el-row :gutter="20">
       <el-col :sm="24" :lg="12" style="padding-left: 20px">
         <h2>RuoYi-Vue-Plus多租户管理系统</h2>
@@ -33,7 +33,7 @@
           * 部署方式 Docker 容器编排 一键部署业务集群<br />
           * 国际化 SpringMessage Spring标准国际化方案<br />
         </p>
-        <p><b>当前版本:</b> <span>v5.5.2</span></p>
+        <p><b>当前版本:</b> <span>v5.5.1</span></p>
         <p>
           <el-tag type="danger">&yen;免费开源</el-tag>
         </p>
@@ -77,7 +77,7 @@
           * 分布式监控 Prometheus、Grafana 全方位性能监控<br />
           * 其余与 Vue 版本一致<br />
         </p>
-        <p><b>当前版本:</b> <span>v2.5.2</span></p>
+        <p><b>当前版本:</b> <span>v2.5.1</span></p>
         <p>
           <el-tag type="danger">&yen;免费开源</el-tag>
         </p>
@@ -95,6 +95,16 @@
 </template>
 
 <script setup name="Index" lang="ts">
+import { useSettingsStore } from '@/store/modules/settings';
+import { useAppStore } from '@/store/modules/app';
+
+const settingsStore = useSettingsStore();
+const appStore = useAppStore();
+const sideTheme = computed(() => settingsStore.sideTheme);
+const sidebarOpened = computed(() => appStore.sidebar.opened);
+
+const textColor = computed(() => (sideTheme.value === 'theme-dark' ? '#bfcbd9' : 'rgba(0, 0, 0, 0.7)'));
+
 const goTarget = (url: string) => {
   window.open(url, '__blank');
 };
@@ -125,7 +135,7 @@ const goTarget = (url: string) => {
 
   font-family: 'open sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 13px;
-  color: #676a6c;
+  color: var(--current-color);
   overflow-x: hidden;
 
   ul {

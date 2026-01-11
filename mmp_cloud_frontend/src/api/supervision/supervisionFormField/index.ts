@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionFormFieldVO, SupervisionFormFieldForm, SupervisionFormFieldQuery } from '@/api/system/supervisionFormField/types';
+import { SupervisionFormFieldVO, SupervisionFormFieldForm, SupervisionFormFieldQuery } from '@/api/supervision/supervisionFormField/types';
 
 /**
  * 查询督查单字段列表
@@ -10,7 +10,7 @@ import { SupervisionFormFieldVO, SupervisionFormFieldForm, SupervisionFormFieldQ
 
 export const listSupervisionFormField = (query?: SupervisionFormFieldQuery): AxiosPromise<SupervisionFormFieldVO[]> => {
   return request({
-    url: '/system/supervisionFormField/list',
+    url: '/supervision/supervisionFormField/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionFormField = (query?: SupervisionFormFieldQuery): Axi
  */
 export const getSupervisionFormField = (id: string | number): AxiosPromise<SupervisionFormFieldVO> => {
   return request({
-    url: '/system/supervisionFormField/' + id,
+    url: '/supervision/supervisionFormField/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionFormField = (id: string | number): AxiosPromise<Super
  */
 export const addSupervisionFormField = (data: SupervisionFormFieldForm) => {
   return request({
-    url: '/system/supervisionFormField',
+    url: '/supervision/supervisionFormField',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionFormField = (data: SupervisionFormFieldForm) => {
  */
 export const updateSupervisionFormField = (data: SupervisionFormFieldForm) => {
   return request({
-    url: '/system/supervisionFormField',
+    url: '/supervision/supervisionFormField',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionFormField = (data: SupervisionFormFieldForm) => {
  */
 export const delSupervisionFormField = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionFormField/' + id,
+    url: '/supervision/supervisionFormField/' + id,
     method: 'delete'
   });
 };

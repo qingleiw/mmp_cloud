@@ -242,12 +242,12 @@ import {
   delCoreSystemInspectionRecord,
   addCoreSystemInspectionRecord,
   updateCoreSystemInspectionRecord
-} from '@/api/system/coreSystemInspectionRecord';
+} from '@/api/coresystem/coreSystemInspectionRecord';
 import {
   CoreSystemInspectionRecordVO,
   CoreSystemInspectionRecordQuery,
   CoreSystemInspectionRecordForm
-} from '@/api/system/coreSystemInspectionRecord/types';
+} from '@/api/coresystem/coreSystemInspectionRecord/types';
 import { createCoreSystemInspectionRecordFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

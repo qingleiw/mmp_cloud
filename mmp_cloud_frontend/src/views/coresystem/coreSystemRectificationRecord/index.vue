@@ -264,12 +264,12 @@ import {
   delCoreSystemRectificationRecord,
   addCoreSystemRectificationRecord,
   updateCoreSystemRectificationRecord
-} from '@/api/system/coreSystemRectificationRecord';
+} from '@/api/coresystem/coreSystemRectificationRecord';
 import {
   CoreSystemRectificationRecordVO,
   CoreSystemRectificationRecordQuery,
   CoreSystemRectificationRecordForm
-} from '@/api/system/coreSystemRectificationRecord/types';
+} from '@/api/coresystem/coreSystemRectificationRecord/types';
 import { createCoreSystemRectificationRecordFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

@@ -232,8 +232,8 @@ import {
   delQualificationUsageRecord,
   addQualificationUsageRecord,
   updateQualificationUsageRecord
-} from '@/api/system/qualificationUsageRecord';
-import { QualificationUsageRecordVO, QualificationUsageRecordQuery, QualificationUsageRecordForm } from '@/api/system/qualificationUsageRecord/types';
+} from '@/api/qualification/qualificationUsageRecord';
+import { QualificationUsageRecordVO, QualificationUsageRecordQuery, QualificationUsageRecordForm } from '@/api/qualification/qualificationUsageRecord/types';
 import { createQualificationUsageRecordFieldConfig } from '@/utils/mmpFieldConfigs';
 import { createQualificationUsageRecordSearchConfig } from '@/utils/mmpSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

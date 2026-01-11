@@ -128,8 +128,8 @@ import {
   delSupervisionExpertGroup,
   addSupervisionExpertGroup,
   updateSupervisionExpertGroup
-} from '@/api/system/supervisionExpertGroup';
-import { SupervisionExpertGroupVO, SupervisionExpertGroupQuery, SupervisionExpertGroupForm } from '@/api/system/supervisionExpertGroup/types';
+} from '@/api/supervision/supervisionExpertGroup';
+import { SupervisionExpertGroupVO, SupervisionExpertGroupQuery, SupervisionExpertGroupForm } from '@/api/supervision/supervisionExpertGroup/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

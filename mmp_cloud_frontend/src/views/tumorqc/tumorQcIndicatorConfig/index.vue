@@ -285,8 +285,8 @@ import {
   delTumorQcIndicatorConfig,
   addTumorQcIndicatorConfig,
   updateTumorQcIndicatorConfig
-} from '@/api/system/tumorQcIndicatorConfig';
-import { TumorQcIndicatorConfigVO, TumorQcIndicatorConfigQuery, TumorQcIndicatorConfigForm } from '@/api/system/tumorQcIndicatorConfig/types';
+} from '@/api/tumorqc/tumorQcIndicatorConfig';
+import { TumorQcIndicatorConfigVO, TumorQcIndicatorConfigQuery, TumorQcIndicatorConfigForm } from '@/api/tumorqc/tumorQcIndicatorConfig/types';
 import { createTumorQcIndicatorConfigFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

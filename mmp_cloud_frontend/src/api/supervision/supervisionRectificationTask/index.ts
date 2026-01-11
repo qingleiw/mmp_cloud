@@ -4,7 +4,7 @@ import {
   SupervisionRectificationTaskVO,
   SupervisionRectificationTaskForm,
   SupervisionRectificationTaskQuery
-} from '@/api/system/supervisionRectificationTask/types';
+} from '@/api/supervision/supervisionRectificationTask/types';
 
 /**
  * 查询整改任务列表
@@ -14,7 +14,7 @@ import {
 
 export const listSupervisionRectificationTask = (query?: SupervisionRectificationTaskQuery): AxiosPromise<SupervisionRectificationTaskVO[]> => {
   return request({
-    url: '/system/supervisionRectificationTask/list',
+    url: '/supervision/supervisionRectificationTask/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listSupervisionRectificationTask = (query?: SupervisionRectificatio
  */
 export const getSupervisionRectificationTask = (id: string | number): AxiosPromise<SupervisionRectificationTaskVO> => {
   return request({
-    url: '/system/supervisionRectificationTask/' + id,
+    url: '/supervision/supervisionRectificationTask/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getSupervisionRectificationTask = (id: string | number): AxiosPromi
  */
 export const addSupervisionRectificationTask = (data: SupervisionRectificationTaskForm) => {
   return request({
-    url: '/system/supervisionRectificationTask',
+    url: '/supervision/supervisionRectificationTask',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addSupervisionRectificationTask = (data: SupervisionRectificationTa
  */
 export const updateSupervisionRectificationTask = (data: SupervisionRectificationTaskForm) => {
   return request({
-    url: '/system/supervisionRectificationTask',
+    url: '/supervision/supervisionRectificationTask',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateSupervisionRectificationTask = (data: SupervisionRectificatio
  */
 export const delSupervisionRectificationTask = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionRectificationTask/' + id,
+    url: '/supervision/supervisionRectificationTask/' + id,
     method: 'delete'
   });
 };

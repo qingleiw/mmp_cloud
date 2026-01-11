@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyPlanVO, EmergencyPlanForm, EmergencyPlanQuery } from '@/api/system/emergencyPlan/types';
+import { EmergencyPlanVO, EmergencyPlanForm, EmergencyPlanQuery } from '@/api/emergency/emergencyPlan/types';
 
 /**
  * 查询应急预案列表
@@ -10,7 +10,7 @@ import { EmergencyPlanVO, EmergencyPlanForm, EmergencyPlanQuery } from '@/api/sy
 
 export const listEmergencyPlan = (query?: EmergencyPlanQuery): AxiosPromise<EmergencyPlanVO[]> => {
   return request({
-    url: '/system/emergencyPlan/list',
+    url: '/emergency/emergencyPlan/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyPlan = (query?: EmergencyPlanQuery): AxiosPromise<Emer
  */
 export const getEmergencyPlan = (id: string | number): AxiosPromise<EmergencyPlanVO> => {
   return request({
-    url: '/system/emergencyPlan/' + id,
+    url: '/emergency/emergencyPlan/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyPlan = (id: string | number): AxiosPromise<EmergencyPla
  */
 export const addEmergencyPlan = (data: EmergencyPlanForm) => {
   return request({
-    url: '/system/emergencyPlan',
+    url: '/emergency/emergencyPlan',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyPlan = (data: EmergencyPlanForm) => {
  */
 export const updateEmergencyPlan = (data: EmergencyPlanForm) => {
   return request({
-    url: '/system/emergencyPlan',
+    url: '/emergency/emergencyPlan',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyPlan = (data: EmergencyPlanForm) => {
  */
 export const delEmergencyPlan = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyPlan/' + id,
+    url: '/emergency/emergencyPlan/' + id,
     method: 'delete'
   });
 };

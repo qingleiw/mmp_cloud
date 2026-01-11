@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationTrainingVO, RadiationTrainingForm, RadiationTrainingQuery } from '@/api/system/radiationTraining/types';
+import { RadiationTrainingVO, RadiationTrainingForm, RadiationTrainingQuery } from '@/api/radiation/radiationTraining/types';
 
 /**
  * 查询职业健康培训列表
@@ -10,7 +10,7 @@ import { RadiationTrainingVO, RadiationTrainingForm, RadiationTrainingQuery } fr
 
 export const listRadiationTraining = (query?: RadiationTrainingQuery): AxiosPromise<RadiationTrainingVO[]> => {
   return request({
-    url: '/system/radiationTraining/list',
+    url: '/radiation/radiationTraining/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listRadiationTraining = (query?: RadiationTrainingQuery): AxiosProm
  */
 export const getRadiationTraining = (id: string | number): AxiosPromise<RadiationTrainingVO> => {
   return request({
-    url: '/system/radiationTraining/' + id,
+    url: '/radiation/radiationTraining/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getRadiationTraining = (id: string | number): AxiosPromise<Radiatio
  */
 export const addRadiationTraining = (data: RadiationTrainingForm) => {
   return request({
-    url: '/system/radiationTraining',
+    url: '/radiation/radiationTraining',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addRadiationTraining = (data: RadiationTrainingForm) => {
  */
 export const updateRadiationTraining = (data: RadiationTrainingForm) => {
   return request({
-    url: '/system/radiationTraining',
+    url: '/radiation/radiationTraining',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateRadiationTraining = (data: RadiationTrainingForm) => {
  */
 export const delRadiationTraining = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationTraining/' + id,
+    url: '/radiation/radiationTraining/' + id,
     method: 'delete'
   });
 };

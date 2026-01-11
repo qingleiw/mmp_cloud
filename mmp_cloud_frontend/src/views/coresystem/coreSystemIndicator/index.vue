@@ -260,7 +260,7 @@ import {
   delCoreSystemIndicator,
   addCoreSystemIndicator,
   updateCoreSystemIndicator
-} from '@/api/system/coreSystemIndicator';
+} from '@/api/coresystem/coreSystemIndicator';
 import { createCoreSystemIndicatorFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

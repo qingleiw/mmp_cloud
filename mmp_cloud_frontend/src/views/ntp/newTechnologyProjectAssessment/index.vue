@@ -136,8 +136,8 @@
 </template>
 
 <script setup name="NewTechnologyProjectAssessment" lang="ts">
-import { listNewTechnologyProjectAssessment, getNewTechnologyProjectAssessment, delNewTechnologyProjectAssessment, addNewTechnologyProjectAssessment, updateNewTechnologyProjectAssessment } from '@/api/system/newTechnologyProjectAssessment';
-import { NewTechnologyProjectAssessmentVO, NewTechnologyProjectAssessmentQuery, NewTechnologyProjectAssessmentForm } from '@/api/system/newTechnologyProjectAssessment/types';
+import { listNewTechnologyProjectAssessment, getNewTechnologyProjectAssessment, delNewTechnologyProjectAssessment, addNewTechnologyProjectAssessment, updateNewTechnologyProjectAssessment } from '@/api/ntp/newTechnologyProjectAssessment';
+import { NewTechnologyProjectAssessmentVO, NewTechnologyProjectAssessmentQuery, NewTechnologyProjectAssessmentForm } from '@/api/ntp/newTechnologyProjectAssessment/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

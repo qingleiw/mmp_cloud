@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyMedicalSupportVO, EmergencyMedicalSupportForm, EmergencyMedicalSupportQuery } from '@/api/system/emergencyMedicalSupport/types';
+import { EmergencyMedicalSupportVO, EmergencyMedicalSupportForm, EmergencyMedicalSupportQuery } from '@/api/emergency/emergencyMedicalSupport/types';
 
 /**
  * 查询医疗保障资源列表
@@ -10,7 +10,7 @@ import { EmergencyMedicalSupportVO, EmergencyMedicalSupportForm, EmergencyMedica
 
 export const listEmergencyMedicalSupport = (query?: EmergencyMedicalSupportQuery): AxiosPromise<EmergencyMedicalSupportVO[]> => {
   return request({
-    url: '/system/emergencyMedicalSupport/list',
+    url: '/emergency/emergencyMedicalSupport/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyMedicalSupport = (query?: EmergencyMedicalSupportQuery
  */
 export const getEmergencyMedicalSupport = (id: string | number): AxiosPromise<EmergencyMedicalSupportVO> => {
   return request({
-    url: '/system/emergencyMedicalSupport/' + id,
+    url: '/emergency/emergencyMedicalSupport/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyMedicalSupport = (id: string | number): AxiosPromise<Em
  */
 export const addEmergencyMedicalSupport = (data: EmergencyMedicalSupportForm) => {
   return request({
-    url: '/system/emergencyMedicalSupport',
+    url: '/emergency/emergencyMedicalSupport',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyMedicalSupport = (data: EmergencyMedicalSupportForm) =>
  */
 export const updateEmergencyMedicalSupport = (data: EmergencyMedicalSupportForm) => {
   return request({
-    url: '/system/emergencyMedicalSupport',
+    url: '/emergency/emergencyMedicalSupport',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyMedicalSupport = (data: EmergencyMedicalSupportForm)
  */
 export const delEmergencyMedicalSupport = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyMedicalSupport/' + id,
+    url: '/emergency/emergencyMedicalSupport/' + id,
     method: 'delete'
   });
 };

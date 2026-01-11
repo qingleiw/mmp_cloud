@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SurgeryApprovalFormVO, SurgeryApprovalFormForm, SurgeryApprovalFormQuery } from '@/api/system/surgeryApprovalForm/types';
+import { SurgeryApprovalFormVO, SurgeryApprovalFormForm, SurgeryApprovalFormQuery } from '@/api/surgery/surgeryApprovalForm/types';
 
 /**
  * 查询重大手术审批报告单列表
@@ -10,7 +10,7 @@ import { SurgeryApprovalFormVO, SurgeryApprovalFormForm, SurgeryApprovalFormQuer
 
 export const listSurgeryApprovalForm = (query?: SurgeryApprovalFormQuery): AxiosPromise<SurgeryApprovalFormVO[]> => {
   return request({
-    url: '/system/surgeryApprovalForm/list',
+    url: '/surgery/surgeryApprovalForm/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSurgeryApprovalForm = (query?: SurgeryApprovalFormQuery): Axios
  */
 export const getSurgeryApprovalForm = (id: string | number): AxiosPromise<SurgeryApprovalFormVO> => {
   return request({
-    url: '/system/surgeryApprovalForm/' + id,
+    url: '/surgery/surgeryApprovalForm/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSurgeryApprovalForm = (id: string | number): AxiosPromise<Surger
  */
 export const addSurgeryApprovalForm = (data: SurgeryApprovalFormForm) => {
   return request({
-    url: '/system/surgeryApprovalForm',
+    url: '/surgery/surgeryApprovalForm',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSurgeryApprovalForm = (data: SurgeryApprovalFormForm) => {
  */
 export const updateSurgeryApprovalForm = (data: SurgeryApprovalFormForm) => {
   return request({
-    url: '/system/surgeryApprovalForm',
+    url: '/surgery/surgeryApprovalForm',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSurgeryApprovalForm = (data: SurgeryApprovalFormForm) => {
  */
 export const delSurgeryApprovalForm = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/surgeryApprovalForm/' + id,
+    url: '/surgery/surgeryApprovalForm/' + id,
     method: 'delete'
   });
 };
@@ -68,7 +68,7 @@ export const delSurgeryApprovalForm = (id: string | number | Array<string | numb
  */
 export const submitApproval = (data: SurgeryApprovalFormForm) => {
   return request({
-    url: '/system/surgeryApprovalForm/submit',
+    url: '/surgery/surgeryApprovalForm/submit',
     method: 'post',
     data: data
   });

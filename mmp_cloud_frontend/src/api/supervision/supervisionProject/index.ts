@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionProjectVO, SupervisionProjectForm, SupervisionProjectQuery } from '@/api/system/supervisionProject/types';
+import { SupervisionProjectVO, SupervisionProjectForm, SupervisionProjectQuery } from '@/api/supervision/supervisionProject/types';
 
 /**
  * 查询督查项目列表
@@ -10,7 +10,7 @@ import { SupervisionProjectVO, SupervisionProjectForm, SupervisionProjectQuery }
 
 export const listSupervisionProject = (query?: SupervisionProjectQuery): AxiosPromise<SupervisionProjectVO[]> => {
   return request({
-    url: '/system/supervisionProject/list',
+    url: '/supervision/supervisionProject/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listSupervisionProject = (query?: SupervisionProjectQuery): AxiosPr
  */
 export const getSupervisionProject = (id: string | number): AxiosPromise<SupervisionProjectVO> => {
   return request({
-    url: '/system/supervisionProject/' + id,
+    url: '/supervision/supervisionProject/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getSupervisionProject = (id: string | number): AxiosPromise<Supervi
  */
 export const addSupervisionProject = (data: SupervisionProjectForm) => {
   return request({
-    url: '/system/supervisionProject',
+    url: '/supervision/supervisionProject',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addSupervisionProject = (data: SupervisionProjectForm) => {
  */
 export const updateSupervisionProject = (data: SupervisionProjectForm) => {
   return request({
-    url: '/system/supervisionProject',
+    url: '/supervision/supervisionProject',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateSupervisionProject = (data: SupervisionProjectForm) => {
  */
 export const delSupervisionProject = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/supervisionProject/' + id,
+    url: '/supervision/supervisionProject/' + id,
     method: 'delete'
   });
 };

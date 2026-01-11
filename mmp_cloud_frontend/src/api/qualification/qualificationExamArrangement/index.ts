@@ -4,7 +4,7 @@ import {
   QualificationExamArrangementVO,
   QualificationExamArrangementForm,
   QualificationExamArrangementQuery
-} from '@/api/system/qualificationExamArrangement/types';
+} from '@/api/qualification/qualificationExamArrangement/types';
 
 /**
  * 查询资质考试安排列表
@@ -14,7 +14,7 @@ import {
 
 export const listQualificationExamArrangement = (query?: QualificationExamArrangementQuery): AxiosPromise<QualificationExamArrangementVO[]> => {
   return request({
-    url: '/system/qualificationExamArrangement/list',
+    url: '/qualification/qualificationExamArrangement/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listQualificationExamArrangement = (query?: QualificationExamArrang
  */
 export const getQualificationExamArrangement = (id: string | number): AxiosPromise<QualificationExamArrangementVO> => {
   return request({
-    url: '/system/qualificationExamArrangement/' + id,
+    url: '/qualification/qualificationExamArrangement/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getQualificationExamArrangement = (id: string | number): AxiosPromi
  */
 export const addQualificationExamArrangement = (data: QualificationExamArrangementForm) => {
   return request({
-    url: '/system/qualificationExamArrangement',
+    url: '/qualification/qualificationExamArrangement',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addQualificationExamArrangement = (data: QualificationExamArrangeme
  */
 export const updateQualificationExamArrangement = (data: QualificationExamArrangementForm) => {
   return request({
-    url: '/system/qualificationExamArrangement',
+    url: '/qualification/qualificationExamArrangement',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateQualificationExamArrangement = (data: QualificationExamArrang
  */
 export const delQualificationExamArrangement = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationExamArrangement/' + id,
+    url: '/qualification/qualificationExamArrangement/' + id,
     method: 'delete'
   });
 };

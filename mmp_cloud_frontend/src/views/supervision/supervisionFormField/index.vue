@@ -136,8 +136,8 @@ import {
   delSupervisionFormField,
   addSupervisionFormField,
   updateSupervisionFormField
-} from '@/api/system/supervisionFormField';
-import { SupervisionFormFieldVO, SupervisionFormFieldQuery, SupervisionFormFieldForm } from '@/api/system/supervisionFormField/types';
+} from '@/api/supervision/supervisionFormField';
+import { SupervisionFormFieldVO, SupervisionFormFieldQuery, SupervisionFormFieldForm } from '@/api/supervision/supervisionFormField/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

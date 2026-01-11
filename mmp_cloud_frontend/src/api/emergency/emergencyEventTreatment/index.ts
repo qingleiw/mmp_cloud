@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { EmergencyEventTreatmentVO, EmergencyEventTreatmentForm, EmergencyEventTreatmentQuery } from '@/api/system/emergencyEventTreatment/types';
+import { EmergencyEventTreatmentVO, EmergencyEventTreatmentForm, EmergencyEventTreatmentQuery } from '@/api/emergency/emergencyEventTreatment/types';
 
 /**
  * 查询突发事件救治列表
@@ -10,7 +10,7 @@ import { EmergencyEventTreatmentVO, EmergencyEventTreatmentForm, EmergencyEventT
 
 export const listEmergencyEventTreatment = (query?: EmergencyEventTreatmentQuery): AxiosPromise<EmergencyEventTreatmentVO[]> => {
   return request({
-    url: '/system/emergencyEventTreatment/list',
+    url: '/emergency/emergencyEventTreatment/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listEmergencyEventTreatment = (query?: EmergencyEventTreatmentQuery
  */
 export const getEmergencyEventTreatment = (id: string | number): AxiosPromise<EmergencyEventTreatmentVO> => {
   return request({
-    url: '/system/emergencyEventTreatment/' + id,
+    url: '/emergency/emergencyEventTreatment/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getEmergencyEventTreatment = (id: string | number): AxiosPromise<Em
  */
 export const addEmergencyEventTreatment = (data: EmergencyEventTreatmentForm) => {
   return request({
-    url: '/system/emergencyEventTreatment',
+    url: '/emergency/emergencyEventTreatment',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addEmergencyEventTreatment = (data: EmergencyEventTreatmentForm) =>
  */
 export const updateEmergencyEventTreatment = (data: EmergencyEventTreatmentForm) => {
   return request({
-    url: '/system/emergencyEventTreatment',
+    url: '/emergency/emergencyEventTreatment',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateEmergencyEventTreatment = (data: EmergencyEventTreatmentForm)
  */
 export const delEmergencyEventTreatment = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/emergencyEventTreatment/' + id,
+    url: '/emergency/emergencyEventTreatment/' + id,
     method: 'delete'
   });
 };

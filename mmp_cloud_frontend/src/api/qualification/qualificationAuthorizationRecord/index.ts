@@ -4,7 +4,7 @@ import {
   QualificationAuthorizationRecordVO,
   QualificationAuthorizationRecordForm,
   QualificationAuthorizationRecordQuery
-} from '@/api/system/qualificationAuthorizationRecord/types';
+} from '@/api/qualification/qualificationAuthorizationRecord/types';
 
 /**
  * 查询资质授权记录列表
@@ -16,7 +16,7 @@ export const listQualificationAuthorizationRecord = (
   query?: QualificationAuthorizationRecordQuery
 ): AxiosPromise<QualificationAuthorizationRecordVO[]> => {
   return request({
-    url: '/system/qualificationAuthorizationRecord/list',
+    url: '/qualification/qualificationAuthorizationRecord/list',
     method: 'get',
     params: query
   });
@@ -28,7 +28,7 @@ export const listQualificationAuthorizationRecord = (
  */
 export const getQualificationAuthorizationRecord = (id: string | number): AxiosPromise<QualificationAuthorizationRecordVO> => {
   return request({
-    url: '/system/qualificationAuthorizationRecord/' + id,
+    url: '/qualification/qualificationAuthorizationRecord/' + id,
     method: 'get'
   });
 };
@@ -39,7 +39,7 @@ export const getQualificationAuthorizationRecord = (id: string | number): AxiosP
  */
 export const addQualificationAuthorizationRecord = (data: QualificationAuthorizationRecordForm) => {
   return request({
-    url: '/system/qualificationAuthorizationRecord',
+    url: '/qualification/qualificationAuthorizationRecord',
     method: 'post',
     data: data
   });
@@ -51,7 +51,7 @@ export const addQualificationAuthorizationRecord = (data: QualificationAuthoriza
  */
 export const updateQualificationAuthorizationRecord = (data: QualificationAuthorizationRecordForm) => {
   return request({
-    url: '/system/qualificationAuthorizationRecord',
+    url: '/qualification/qualificationAuthorizationRecord',
     method: 'put',
     data: data
   });
@@ -63,7 +63,7 @@ export const updateQualificationAuthorizationRecord = (data: QualificationAuthor
  */
 export const delQualificationAuthorizationRecord = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/qualificationAuthorizationRecord/' + id,
+    url: '/qualification/qualificationAuthorizationRecord/' + id,
     method: 'delete'
   });
 };

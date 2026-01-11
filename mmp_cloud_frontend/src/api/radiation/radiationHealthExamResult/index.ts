@@ -4,7 +4,7 @@ import {
   RadiationHealthExamResultVO,
   RadiationHealthExamResultForm,
   RadiationHealthExamResultQuery
-} from '@/api/system/radiationHealthExamResult/types';
+} from '@/api/radiation/radiationHealthExamResult/types';
 
 /**
  * 查询体检结果记录列表
@@ -14,7 +14,7 @@ import {
 
 export const listRadiationHealthExamResult = (query?: RadiationHealthExamResultQuery): AxiosPromise<RadiationHealthExamResultVO[]> => {
   return request({
-    url: '/system/radiationHealthExamResult/list',
+    url: '/radiation/radiationHealthExamResult/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listRadiationHealthExamResult = (query?: RadiationHealthExamResultQ
  */
 export const getRadiationHealthExamResult = (id: string | number): AxiosPromise<RadiationHealthExamResultVO> => {
   return request({
-    url: '/system/radiationHealthExamResult/' + id,
+    url: '/radiation/radiationHealthExamResult/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getRadiationHealthExamResult = (id: string | number): AxiosPromise<
  */
 export const addRadiationHealthExamResult = (data: RadiationHealthExamResultForm) => {
   return request({
-    url: '/system/radiationHealthExamResult',
+    url: '/radiation/radiationHealthExamResult',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addRadiationHealthExamResult = (data: RadiationHealthExamResultForm
  */
 export const updateRadiationHealthExamResult = (data: RadiationHealthExamResultForm) => {
   return request({
-    url: '/system/radiationHealthExamResult',
+    url: '/radiation/radiationHealthExamResult',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateRadiationHealthExamResult = (data: RadiationHealthExamResultF
  */
 export const delRadiationHealthExamResult = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/system/radiationHealthExamResult/' + id,
+    url: '/radiation/radiationHealthExamResult/' + id,
     method: 'delete'
   });
 };

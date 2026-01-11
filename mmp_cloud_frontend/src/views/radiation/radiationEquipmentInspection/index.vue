@@ -176,12 +176,12 @@ import {
   delRadiationEquipmentInspection,
   addRadiationEquipmentInspection,
   updateRadiationEquipmentInspection
-} from '@/api/system/radiationEquipmentInspection';
+} from '@/api/radiation/radiationEquipmentInspection';
 import {
   RadiationEquipmentInspectionVO,
   RadiationEquipmentInspectionQuery,
   RadiationEquipmentInspectionForm
-} from '@/api/system/radiationEquipmentInspection/types';
+} from '@/api/radiation/radiationEquipmentInspection/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
