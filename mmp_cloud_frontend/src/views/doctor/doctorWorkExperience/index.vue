@@ -109,6 +109,9 @@
               {{ scope.row[field.prop] === 0 ? '否' : '是' }}
             </el-tag>
           </template>
+          <template #default="scope" v-else-if="field.prop === 'doctorId'">
+            <span>{{ getDoctorName(scope.row.doctorId) }}</span>
+          </template>
           <template #default="scope" v-else>
             {{ scope.row[field.prop] }}
           </template>
@@ -205,7 +208,7 @@ import {
   addDoctorWorkExperience,
   updateDoctorWorkExperience
 } from '@/api/doctor/doctorWorkExperience';
-import { listDoctorInfo } from '@/api/doctor/doctorInfo';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorWorkExperienceVO, DoctorWorkExperienceQuery, DoctorWorkExperienceForm } from '@/api/doctor/doctorWorkExperience/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createDoctorWorkExperienceFieldConfig } from '@/utils/mmpFieldConfigs';
@@ -275,11 +278,17 @@ const { queryParams, form, rules } = toRefs(data);
 /** 加载医生选项 */
 const loadDoctorOptions = async () => {
   try {
-    const res = await listDoctorInfo({});
+    const res = await listDoctorBasicInfo({});
     doctorOptions.value = res.rows || [];
   } catch (error) {
     console.error('加载医生选项失败:', error);
   }
+};
+
+/** 根据医生ID获取医生姓名 */
+const getDoctorName = (doctorId: string | number) => {
+  const doctor = doctorOptions.value.find(d => d.doctorId === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
 // 字段配置管理器
