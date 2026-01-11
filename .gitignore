@@ -35,3 +35,8 @@ build/
 *.tmp
 *.swp
 *.bak
+
+#文档和测试数据
+
+docs/
+test-data/
