@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qualificationRiskMonitor")
+@RequestMapping("/qualificationRiskMonitor")
 public class MmpQualificationRiskMonitorController extends BaseController {
 
     private final IMmpQualificationRiskMonitorService mmpQualificationRiskMonitorService;

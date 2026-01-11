@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/radiationEquipmentInspection")
+@RequestMapping("/radiationEquipmentInspection")
 public class MmpRadiationEquipmentInspectionController extends BaseController {
 
     private final IMmpRadiationEquipmentInspectionService mmpRadiationEquipmentInspectionService;

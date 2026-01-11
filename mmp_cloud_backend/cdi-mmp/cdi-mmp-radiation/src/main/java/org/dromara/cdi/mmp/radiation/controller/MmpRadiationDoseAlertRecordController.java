@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/radiationDoseAlertRecord")
+@RequestMapping("/radiationDoseAlertRecord")
 public class MmpRadiationDoseAlertRecordController extends BaseController {
 
     private final IMmpRadiationDoseAlertRecordService mmpRadiationDoseAlertRecordService;

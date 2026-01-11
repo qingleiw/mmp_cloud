@@ -122,3 +122,798 @@ INSERT INTO sys_menu VALUES ('21123', '重要医疗事件修改', '21120', '3', 
 INSERT INTO sys_menu VALUES ('21124', '重要医疗事件删除', '21120', '4', '#', '', '', 1, 0, 'F', '0', '0', 'emergency:importantMedicalEvent:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('21125', '重要医疗事件导入', '21120', '5', '#', '', '', 1, 0, 'F', '0', '0', 'emergency:importantMedicalEvent:import', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('21126', '重要医疗事件导出', '21120', '6', '#', '', '', 1, 0, 'F', '0', '0', 'emergency:importantMedicalEvent:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- ----------------------------
+-- 4. 定义角色权限分配
+-- ----------------------------
+-- 为护士角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('5', '21000');
+
+INSERT INTO sys_role_menu VALUES ('5', '21010');
+INSERT INTO sys_role_menu VALUES ('5', '21011');
+INSERT INTO sys_role_menu VALUES ('5', '21012');
+INSERT INTO sys_role_menu VALUES ('5', '21013');
+INSERT INTO sys_role_menu VALUES ('5', '21014');
+INSERT INTO sys_role_menu VALUES ('5', '21015');
+INSERT INTO sys_role_menu VALUES ('5', '21016');
+
+INSERT INTO sys_role_menu VALUES ('5', '21020');
+INSERT INTO sys_role_menu VALUES ('5', '21021');
+INSERT INTO sys_role_menu VALUES ('5', '21022');
+INSERT INTO sys_role_menu VALUES ('5', '21023');
+INSERT INTO sys_role_menu VALUES ('5', '21024');
+INSERT INTO sys_role_menu VALUES ('5', '21025');
+INSERT INTO sys_role_menu VALUES ('5', '21026');
+
+INSERT INTO sys_role_menu VALUES ('5', '21030');
+INSERT INTO sys_role_menu VALUES ('5', '21031');
+INSERT INTO sys_role_menu VALUES ('5', '21032');
+INSERT INTO sys_role_menu VALUES ('5', '21033');
+INSERT INTO sys_role_menu VALUES ('5', '21034');
+INSERT INTO sys_role_menu VALUES ('5', '21035');
+INSERT INTO sys_role_menu VALUES ('5', '21036');
+
+INSERT INTO sys_role_menu VALUES ('5', '21040');
+INSERT INTO sys_role_menu VALUES ('5', '21041');
+INSERT INTO sys_role_menu VALUES ('5', '21042');
+INSERT INTO sys_role_menu VALUES ('5', '21043');
+INSERT INTO sys_role_menu VALUES ('5', '21044');
+INSERT INTO sys_role_menu VALUES ('5', '21045');
+INSERT INTO sys_role_menu VALUES ('5', '21046');
+
+INSERT INTO sys_role_menu VALUES ('5', '21050');
+INSERT INTO sys_role_menu VALUES ('5', '21051');
+INSERT INTO sys_role_menu VALUES ('5', '21052');
+INSERT INTO sys_role_menu VALUES ('5', '21053');
+INSERT INTO sys_role_menu VALUES ('5', '21054');
+INSERT INTO sys_role_menu VALUES ('5', '21055');
+INSERT INTO sys_role_menu VALUES ('5', '21056');
+
+INSERT INTO sys_role_menu VALUES ('5', '21060');
+INSERT INTO sys_role_menu VALUES ('5', '21061');
+INSERT INTO sys_role_menu VALUES ('5', '21062');
+INSERT INTO sys_role_menu VALUES ('5', '21063');
+INSERT INTO sys_role_menu VALUES ('5', '21064');
+INSERT INTO sys_role_menu VALUES ('5', '21065');
+INSERT INTO sys_role_menu VALUES ('5', '21066');
+
+INSERT INTO sys_role_menu VALUES ('5', '21070');
+INSERT INTO sys_role_menu VALUES ('5', '21071');
+INSERT INTO sys_role_menu VALUES ('5', '21072');
+INSERT INTO sys_role_menu VALUES ('5', '21073');
+INSERT INTO sys_role_menu VALUES ('5', '21074');
+INSERT INTO sys_role_menu VALUES ('5', '21075');
+INSERT INTO sys_role_menu VALUES ('5', '21076');
+
+INSERT INTO sys_role_menu VALUES ('5', '21080');
+INSERT INTO sys_role_menu VALUES ('5', '21081');
+INSERT INTO sys_role_menu VALUES ('5', '21082');
+INSERT INTO sys_role_menu VALUES ('5', '21083');
+INSERT INTO sys_role_menu VALUES ('5', '21084');
+INSERT INTO sys_role_menu VALUES ('5', '21085');
+INSERT INTO sys_role_menu VALUES ('5', '21086');
+
+INSERT INTO sys_role_menu VALUES ('5', '21090');
+INSERT INTO sys_role_menu VALUES ('5', '21091');
+INSERT INTO sys_role_menu VALUES ('5', '21092');
+INSERT INTO sys_role_menu VALUES ('5', '21093');
+INSERT INTO sys_role_menu VALUES ('5', '21094');
+INSERT INTO sys_role_menu VALUES ('5', '21095');
+INSERT INTO sys_role_menu VALUES ('5', '21096');
+
+INSERT INTO sys_role_menu VALUES ('5', '21100');
+INSERT INTO sys_role_menu VALUES ('5', '21101');
+INSERT INTO sys_role_menu VALUES ('5', '21102');
+INSERT INTO sys_role_menu VALUES ('5', '21103');
+INSERT INTO sys_role_menu VALUES ('5', '21104');
+INSERT INTO sys_role_menu VALUES ('5', '21105');
+INSERT INTO sys_role_menu VALUES ('5', '21106');
+
+INSERT INTO sys_role_menu VALUES ('5', '21110');
+INSERT INTO sys_role_menu VALUES ('5', '21111');
+INSERT INTO sys_role_menu VALUES ('5', '21112');
+INSERT INTO sys_role_menu VALUES ('5', '21113');
+INSERT INTO sys_role_menu VALUES ('5', '21114');
+INSERT INTO sys_role_menu VALUES ('5', '21115');
+INSERT INTO sys_role_menu VALUES ('5', '21116');
+
+INSERT INTO sys_role_menu VALUES ('5', '21120');
+INSERT INTO sys_role_menu VALUES ('5', '21121');
+INSERT INTO sys_role_menu VALUES ('5', '21122');
+INSERT INTO sys_role_menu VALUES ('5', '21123');
+INSERT INTO sys_role_menu VALUES ('5', '21124');
+INSERT INTO sys_role_menu VALUES ('5', '21125');
+INSERT INTO sys_role_menu VALUES ('5', '21126');
+
+-- 为医生角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('6', '21000');
+
+INSERT INTO sys_role_menu VALUES ('6', '21010');
+INSERT INTO sys_role_menu VALUES ('6', '21011');
+INSERT INTO sys_role_menu VALUES ('6', '21012');
+INSERT INTO sys_role_menu VALUES ('6', '21013');
+INSERT INTO sys_role_menu VALUES ('6', '21014');
+INSERT INTO sys_role_menu VALUES ('6', '21015');
+INSERT INTO sys_role_menu VALUES ('6', '21016');
+
+INSERT INTO sys_role_menu VALUES ('6', '21020');
+INSERT INTO sys_role_menu VALUES ('6', '21021');
+INSERT INTO sys_role_menu VALUES ('6', '21022');
+INSERT INTO sys_role_menu VALUES ('6', '21023');
+INSERT INTO sys_role_menu VALUES ('6', '21024');
+INSERT INTO sys_role_menu VALUES ('6', '21025');
+INSERT INTO sys_role_menu VALUES ('6', '21026');
+
+INSERT INTO sys_role_menu VALUES ('6', '21030');
+INSERT INTO sys_role_menu VALUES ('6', '21031');
+INSERT INTO sys_role_menu VALUES ('6', '21032');
+INSERT INTO sys_role_menu VALUES ('6', '21033');
+INSERT INTO sys_role_menu VALUES ('6', '21034');
+INSERT INTO sys_role_menu VALUES ('6', '21035');
+INSERT INTO sys_role_menu VALUES ('6', '21036');
+
+INSERT INTO sys_role_menu VALUES ('6', '21040');
+INSERT INTO sys_role_menu VALUES ('6', '21041');
+INSERT INTO sys_role_menu VALUES ('6', '21042');
+INSERT INTO sys_role_menu VALUES ('6', '21043');
+INSERT INTO sys_role_menu VALUES ('6', '21044');
+INSERT INTO sys_role_menu VALUES ('6', '21045');
+INSERT INTO sys_role_menu VALUES ('6', '21046');
+
+INSERT INTO sys_role_menu VALUES ('6', '21050');
+INSERT INTO sys_role_menu VALUES ('6', '21051');
+INSERT INTO sys_role_menu VALUES ('6', '21052');
+INSERT INTO sys_role_menu VALUES ('6', '21053');
+INSERT INTO sys_role_menu VALUES ('6', '21054');
+INSERT INTO sys_role_menu VALUES ('6', '21055');
+INSERT INTO sys_role_menu VALUES ('6', '21056');
+
+INSERT INTO sys_role_menu VALUES ('6', '21060');
+INSERT INTO sys_role_menu VALUES ('6', '21061');
+INSERT INTO sys_role_menu VALUES ('6', '21062');
+INSERT INTO sys_role_menu VALUES ('6', '21063');
+INSERT INTO sys_role_menu VALUES ('6', '21064');
+INSERT INTO sys_role_menu VALUES ('6', '21065');
+INSERT INTO sys_role_menu VALUES ('6', '21066');
+
+INSERT INTO sys_role_menu VALUES ('6', '21070');
+INSERT INTO sys_role_menu VALUES ('6', '21071');
+INSERT INTO sys_role_menu VALUES ('6', '21072');
+INSERT INTO sys_role_menu VALUES ('6', '21073');
+INSERT INTO sys_role_menu VALUES ('6', '21074');
+INSERT INTO sys_role_menu VALUES ('6', '21075');
+INSERT INTO sys_role_menu VALUES ('6', '21076');
+
+INSERT INTO sys_role_menu VALUES ('6', '21080');
+INSERT INTO sys_role_menu VALUES ('6', '21081');
+INSERT INTO sys_role_menu VALUES ('6', '21082');
+INSERT INTO sys_role_menu VALUES ('6', '21083');
+INSERT INTO sys_role_menu VALUES ('6', '21084');
+INSERT INTO sys_role_menu VALUES ('6', '21085');
+INSERT INTO sys_role_menu VALUES ('6', '21086');
+
+INSERT INTO sys_role_menu VALUES ('6', '21090');
+INSERT INTO sys_role_menu VALUES ('6', '21091');
+INSERT INTO sys_role_menu VALUES ('6', '21092');
+INSERT INTO sys_role_menu VALUES ('6', '21093');
+INSERT INTO sys_role_menu VALUES ('6', '21094');
+INSERT INTO sys_role_menu VALUES ('6', '21095');
+INSERT INTO sys_role_menu VALUES ('6', '21096');
+
+INSERT INTO sys_role_menu VALUES ('6', '21100');
+INSERT INTO sys_role_menu VALUES ('6', '21101');
+INSERT INTO sys_role_menu VALUES ('6', '21102');
+INSERT INTO sys_role_menu VALUES ('6', '21103');
+INSERT INTO sys_role_menu VALUES ('6', '21104');
+INSERT INTO sys_role_menu VALUES ('6', '21105');
+INSERT INTO sys_role_menu VALUES ('6', '21106');
+
+INSERT INTO sys_role_menu VALUES ('6', '21110');
+INSERT INTO sys_role_menu VALUES ('6', '21111');
+INSERT INTO sys_role_menu VALUES ('6', '21112');
+INSERT INTO sys_role_menu VALUES ('6', '21113');
+INSERT INTO sys_role_menu VALUES ('6', '21114');
+INSERT INTO sys_role_menu VALUES ('6', '21115');
+INSERT INTO sys_role_menu VALUES ('6', '21116');
+
+INSERT INTO sys_role_menu VALUES ('6', '21120');
+INSERT INTO sys_role_menu VALUES ('6', '21121');
+INSERT INTO sys_role_menu VALUES ('6', '21122');
+INSERT INTO sys_role_menu VALUES ('6', '21123');
+INSERT INTO sys_role_menu VALUES ('6', '21124');
+INSERT INTO sys_role_menu VALUES ('6', '21125');
+INSERT INTO sys_role_menu VALUES ('6', '21126');
+
+-- 为科室主任分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('7', '21000');
+
+INSERT INTO sys_role_menu VALUES ('7', '21010');
+INSERT INTO sys_role_menu VALUES ('7', '21011');
+INSERT INTO sys_role_menu VALUES ('7', '21012');
+INSERT INTO sys_role_menu VALUES ('7', '21013');
+INSERT INTO sys_role_menu VALUES ('7', '21014');
+INSERT INTO sys_role_menu VALUES ('7', '21015');
+INSERT INTO sys_role_menu VALUES ('7', '21016');
+
+INSERT INTO sys_role_menu VALUES ('7', '21020');
+INSERT INTO sys_role_menu VALUES ('7', '21021');
+INSERT INTO sys_role_menu VALUES ('7', '21022');
+INSERT INTO sys_role_menu VALUES ('7', '21023');
+INSERT INTO sys_role_menu VALUES ('7', '21024');
+INSERT INTO sys_role_menu VALUES ('7', '21025');
+INSERT INTO sys_role_menu VALUES ('7', '21026');
+
+INSERT INTO sys_role_menu VALUES ('7', '21030');
+INSERT INTO sys_role_menu VALUES ('7', '21031');
+INSERT INTO sys_role_menu VALUES ('7', '21032');
+INSERT INTO sys_role_menu VALUES ('7', '21033');
+INSERT INTO sys_role_menu VALUES ('7', '21034');
+INSERT INTO sys_role_menu VALUES ('7', '21035');
+INSERT INTO sys_role_menu VALUES ('7', '21036');
+
+INSERT INTO sys_role_menu VALUES ('7', '21040');
+INSERT INTO sys_role_menu VALUES ('7', '21041');
+INSERT INTO sys_role_menu VALUES ('7', '21042');
+INSERT INTO sys_role_menu VALUES ('7', '21043');
+INSERT INTO sys_role_menu VALUES ('7', '21044');
+INSERT INTO sys_role_menu VALUES ('7', '21045');
+INSERT INTO sys_role_menu VALUES ('7', '21046');
+
+INSERT INTO sys_role_menu VALUES ('7', '21050');
+INSERT INTO sys_role_menu VALUES ('7', '21051');
+INSERT INTO sys_role_menu VALUES ('7', '21052');
+INSERT INTO sys_role_menu VALUES ('7', '21053');
+INSERT INTO sys_role_menu VALUES ('7', '21054');
+INSERT INTO sys_role_menu VALUES ('7', '21055');
+INSERT INTO sys_role_menu VALUES ('7', '21056');
+
+INSERT INTO sys_role_menu VALUES ('7', '21060');
+INSERT INTO sys_role_menu VALUES ('7', '21061');
+INSERT INTO sys_role_menu VALUES ('7', '21062');
+INSERT INTO sys_role_menu VALUES ('7', '21063');
+INSERT INTO sys_role_menu VALUES ('7', '21064');
+INSERT INTO sys_role_menu VALUES ('7', '21065');
+INSERT INTO sys_role_menu VALUES ('7', '21066');
+
+INSERT INTO sys_role_menu VALUES ('7', '21070');
+INSERT INTO sys_role_menu VALUES ('7', '21071');
+INSERT INTO sys_role_menu VALUES ('7', '21072');
+INSERT INTO sys_role_menu VALUES ('7', '21073');
+INSERT INTO sys_role_menu VALUES ('7', '21074');
+INSERT INTO sys_role_menu VALUES ('7', '21075');
+INSERT INTO sys_role_menu VALUES ('7', '21076');
+
+INSERT INTO sys_role_menu VALUES ('7', '21080');
+INSERT INTO sys_role_menu VALUES ('7', '21081');
+INSERT INTO sys_role_menu VALUES ('7', '21082');
+INSERT INTO sys_role_menu VALUES ('7', '21083');
+INSERT INTO sys_role_menu VALUES ('7', '21084');
+INSERT INTO sys_role_menu VALUES ('7', '21085');
+INSERT INTO sys_role_menu VALUES ('7', '21086');
+
+INSERT INTO sys_role_menu VALUES ('7', '21090');
+INSERT INTO sys_role_menu VALUES ('7', '21091');
+INSERT INTO sys_role_menu VALUES ('7', '21092');
+INSERT INTO sys_role_menu VALUES ('7', '21093');
+INSERT INTO sys_role_menu VALUES ('7', '21094');
+INSERT INTO sys_role_menu VALUES ('7', '21095');
+INSERT INTO sys_role_menu VALUES ('7', '21096');
+
+INSERT INTO sys_role_menu VALUES ('7', '21100');
+INSERT INTO sys_role_menu VALUES ('7', '21101');
+INSERT INTO sys_role_menu VALUES ('7', '21102');
+INSERT INTO sys_role_menu VALUES ('7', '21103');
+INSERT INTO sys_role_menu VALUES ('7', '21104');
+INSERT INTO sys_role_menu VALUES ('7', '21105');
+INSERT INTO sys_role_menu VALUES ('7', '21106');
+
+INSERT INTO sys_role_menu VALUES ('7', '21110');
+INSERT INTO sys_role_menu VALUES ('7', '21111');
+INSERT INTO sys_role_menu VALUES ('7', '21112');
+INSERT INTO sys_role_menu VALUES ('7', '21113');
+INSERT INTO sys_role_menu VALUES ('7', '21114');
+INSERT INTO sys_role_menu VALUES ('7', '21115');
+INSERT INTO sys_role_menu VALUES ('7', '21116');
+
+INSERT INTO sys_role_menu VALUES ('7', '21120');
+INSERT INTO sys_role_menu VALUES ('7', '21121');
+INSERT INTO sys_role_menu VALUES ('7', '21122');
+INSERT INTO sys_role_menu VALUES ('7', '21123');
+INSERT INTO sys_role_menu VALUES ('7', '21124');
+INSERT INTO sys_role_menu VALUES ('7', '21125');
+INSERT INTO sys_role_menu VALUES ('7', '21126');
+
+-- 为质控员角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('8', '21000');
+
+INSERT INTO sys_role_menu VALUES ('8', '21010');
+INSERT INTO sys_role_menu VALUES ('8', '21011');
+INSERT INTO sys_role_menu VALUES ('8', '21012');
+INSERT INTO sys_role_menu VALUES ('8', '21013');
+INSERT INTO sys_role_menu VALUES ('8', '21014');
+INSERT INTO sys_role_menu VALUES ('8', '21015');
+INSERT INTO sys_role_menu VALUES ('8', '21016');
+
+INSERT INTO sys_role_menu VALUES ('8', '21020');
+INSERT INTO sys_role_menu VALUES ('8', '21021');
+INSERT INTO sys_role_menu VALUES ('8', '21022');
+INSERT INTO sys_role_menu VALUES ('8', '21023');
+INSERT INTO sys_role_menu VALUES ('8', '21024');
+INSERT INTO sys_role_menu VALUES ('8', '21025');
+INSERT INTO sys_role_menu VALUES ('8', '21026');
+
+INSERT INTO sys_role_menu VALUES ('8', '21030');
+INSERT INTO sys_role_menu VALUES ('8', '21031');
+INSERT INTO sys_role_menu VALUES ('8', '21032');
+INSERT INTO sys_role_menu VALUES ('8', '21033');
+INSERT INTO sys_role_menu VALUES ('8', '21034');
+INSERT INTO sys_role_menu VALUES ('8', '21035');
+INSERT INTO sys_role_menu VALUES ('8', '21036');
+
+INSERT INTO sys_role_menu VALUES ('8', '21040');
+INSERT INTO sys_role_menu VALUES ('8', '21041');
+INSERT INTO sys_role_menu VALUES ('8', '21042');
+INSERT INTO sys_role_menu VALUES ('8', '21043');
+INSERT INTO sys_role_menu VALUES ('8', '21044');
+INSERT INTO sys_role_menu VALUES ('8', '21045');
+INSERT INTO sys_role_menu VALUES ('8', '21046');
+
+INSERT INTO sys_role_menu VALUES ('8', '21050');
+INSERT INTO sys_role_menu VALUES ('8', '21051');
+INSERT INTO sys_role_menu VALUES ('8', '21052');
+INSERT INTO sys_role_menu VALUES ('8', '21053');
+INSERT INTO sys_role_menu VALUES ('8', '21054');
+INSERT INTO sys_role_menu VALUES ('8', '21055');
+INSERT INTO sys_role_menu VALUES ('8', '21056');
+
+INSERT INTO sys_role_menu VALUES ('8', '21060');
+INSERT INTO sys_role_menu VALUES ('8', '21061');
+INSERT INTO sys_role_menu VALUES ('8', '21062');
+INSERT INTO sys_role_menu VALUES ('8', '21063');
+INSERT INTO sys_role_menu VALUES ('8', '21064');
+INSERT INTO sys_role_menu VALUES ('8', '21065');
+INSERT INTO sys_role_menu VALUES ('8', '21066');
+
+INSERT INTO sys_role_menu VALUES ('8', '21070');
+INSERT INTO sys_role_menu VALUES ('8', '21071');
+INSERT INTO sys_role_menu VALUES ('8', '21072');
+INSERT INTO sys_role_menu VALUES ('8', '21073');
+INSERT INTO sys_role_menu VALUES ('8', '21074');
+INSERT INTO sys_role_menu VALUES ('8', '21075');
+INSERT INTO sys_role_menu VALUES ('8', '21076');
+
+INSERT INTO sys_role_menu VALUES ('8', '21080');
+INSERT INTO sys_role_menu VALUES ('8', '21081');
+INSERT INTO sys_role_menu VALUES ('8', '21082');
+INSERT INTO sys_role_menu VALUES ('8', '21083');
+INSERT INTO sys_role_menu VALUES ('8', '21084');
+INSERT INTO sys_role_menu VALUES ('8', '21085');
+INSERT INTO sys_role_menu VALUES ('8', '21086');
+
+INSERT INTO sys_role_menu VALUES ('8', '21090');
+INSERT INTO sys_role_menu VALUES ('8', '21091');
+INSERT INTO sys_role_menu VALUES ('8', '21092');
+INSERT INTO sys_role_menu VALUES ('8', '21093');
+INSERT INTO sys_role_menu VALUES ('8', '21094');
+INSERT INTO sys_role_menu VALUES ('8', '21095');
+INSERT INTO sys_role_menu VALUES ('8', '21096');
+
+INSERT INTO sys_role_menu VALUES ('8', '21100');
+INSERT INTO sys_role_menu VALUES ('8', '21101');
+INSERT INTO sys_role_menu VALUES ('8', '21102');
+INSERT INTO sys_role_menu VALUES ('8', '21103');
+INSERT INTO sys_role_menu VALUES ('8', '21104');
+INSERT INTO sys_role_menu VALUES ('8', '21105');
+INSERT INTO sys_role_menu VALUES ('8', '21106');
+
+INSERT INTO sys_role_menu VALUES ('8', '21110');
+INSERT INTO sys_role_menu VALUES ('8', '21111');
+INSERT INTO sys_role_menu VALUES ('8', '21112');
+INSERT INTO sys_role_menu VALUES ('8', '21113');
+INSERT INTO sys_role_menu VALUES ('8', '21114');
+INSERT INTO sys_role_menu VALUES ('8', '21115');
+INSERT INTO sys_role_menu VALUES ('8', '21116');
+
+INSERT INTO sys_role_menu VALUES ('8', '21120');
+INSERT INTO sys_role_menu VALUES ('8', '21121');
+INSERT INTO sys_role_menu VALUES ('8', '21122');
+INSERT INTO sys_role_menu VALUES ('8', '21123');
+INSERT INTO sys_role_menu VALUES ('8', '21124');
+INSERT INTO sys_role_menu VALUES ('8', '21125');
+INSERT INTO sys_role_menu VALUES ('8', '21126');
+
+-- 为医务部分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('9', '21000');
+
+INSERT INTO sys_role_menu VALUES ('9', '21010');
+INSERT INTO sys_role_menu VALUES ('9', '21011');
+INSERT INTO sys_role_menu VALUES ('9', '21012');
+INSERT INTO sys_role_menu VALUES ('9', '21013');
+INSERT INTO sys_role_menu VALUES ('9', '21014');
+INSERT INTO sys_role_menu VALUES ('9', '21015');
+INSERT INTO sys_role_menu VALUES ('9', '21016');
+
+INSERT INTO sys_role_menu VALUES ('9', '21020');
+INSERT INTO sys_role_menu VALUES ('9', '21021');
+INSERT INTO sys_role_menu VALUES ('9', '21022');
+INSERT INTO sys_role_menu VALUES ('9', '21023');
+INSERT INTO sys_role_menu VALUES ('9', '21024');
+INSERT INTO sys_role_menu VALUES ('9', '21025');
+INSERT INTO sys_role_menu VALUES ('9', '21026');
+
+INSERT INTO sys_role_menu VALUES ('9', '21030');
+INSERT INTO sys_role_menu VALUES ('9', '21031');
+INSERT INTO sys_role_menu VALUES ('9', '21032');
+INSERT INTO sys_role_menu VALUES ('9', '21033');
+INSERT INTO sys_role_menu VALUES ('9', '21034');
+INSERT INTO sys_role_menu VALUES ('9', '21035');
+INSERT INTO sys_role_menu VALUES ('9', '21036');
+
+INSERT INTO sys_role_menu VALUES ('9', '21040');
+INSERT INTO sys_role_menu VALUES ('9', '21041');
+INSERT INTO sys_role_menu VALUES ('9', '21042');
+INSERT INTO sys_role_menu VALUES ('9', '21043');
+INSERT INTO sys_role_menu VALUES ('9', '21044');
+INSERT INTO sys_role_menu VALUES ('9', '21045');
+INSERT INTO sys_role_menu VALUES ('9', '21046');
+
+INSERT INTO sys_role_menu VALUES ('9', '21050');
+INSERT INTO sys_role_menu VALUES ('9', '21051');
+INSERT INTO sys_role_menu VALUES ('9', '21052');
+INSERT INTO sys_role_menu VALUES ('9', '21053');
+INSERT INTO sys_role_menu VALUES ('9', '21054');
+INSERT INTO sys_role_menu VALUES ('9', '21055');
+INSERT INTO sys_role_menu VALUES ('9', '21056');
+
+INSERT INTO sys_role_menu VALUES ('9', '21060');
+INSERT INTO sys_role_menu VALUES ('9', '21061');
+INSERT INTO sys_role_menu VALUES ('9', '21062');
+INSERT INTO sys_role_menu VALUES ('9', '21063');
+INSERT INTO sys_role_menu VALUES ('9', '21064');
+INSERT INTO sys_role_menu VALUES ('9', '21065');
+INSERT INTO sys_role_menu VALUES ('9', '21066');
+
+INSERT INTO sys_role_menu VALUES ('9', '21070');
+INSERT INTO sys_role_menu VALUES ('9', '21071');
+INSERT INTO sys_role_menu VALUES ('9', '21072');
+INSERT INTO sys_role_menu VALUES ('9', '21073');
+INSERT INTO sys_role_menu VALUES ('9', '21074');
+INSERT INTO sys_role_menu VALUES ('9', '21075');
+INSERT INTO sys_role_menu VALUES ('9', '21076');
+
+INSERT INTO sys_role_menu VALUES ('9', '21080');
+INSERT INTO sys_role_menu VALUES ('9', '21081');
+INSERT INTO sys_role_menu VALUES ('9', '21082');
+INSERT INTO sys_role_menu VALUES ('9', '21083');
+INSERT INTO sys_role_menu VALUES ('9', '21084');
+INSERT INTO sys_role_menu VALUES ('9', '21085');
+INSERT INTO sys_role_menu VALUES ('9', '21086');
+
+INSERT INTO sys_role_menu VALUES ('9', '21090');
+INSERT INTO sys_role_menu VALUES ('9', '21091');
+INSERT INTO sys_role_menu VALUES ('9', '21092');
+INSERT INTO sys_role_menu VALUES ('9', '21093');
+INSERT INTO sys_role_menu VALUES ('9', '21094');
+INSERT INTO sys_role_menu VALUES ('9', '21095');
+INSERT INTO sys_role_menu VALUES ('9', '21096');
+
+INSERT INTO sys_role_menu VALUES ('9', '21100');
+INSERT INTO sys_role_menu VALUES ('9', '21101');
+INSERT INTO sys_role_menu VALUES ('9', '21102');
+INSERT INTO sys_role_menu VALUES ('9', '21103');
+INSERT INTO sys_role_menu VALUES ('9', '21104');
+INSERT INTO sys_role_menu VALUES ('9', '21105');
+INSERT INTO sys_role_menu VALUES ('9', '21106');
+
+INSERT INTO sys_role_menu VALUES ('9', '21110');
+INSERT INTO sys_role_menu VALUES ('9', '21111');
+INSERT INTO sys_role_menu VALUES ('9', '21112');
+INSERT INTO sys_role_menu VALUES ('9', '21113');
+INSERT INTO sys_role_menu VALUES ('9', '21114');
+INSERT INTO sys_role_menu VALUES ('9', '21115');
+INSERT INTO sys_role_menu VALUES ('9', '21116');
+
+INSERT INTO sys_role_menu VALUES ('9', '21120');
+INSERT INTO sys_role_menu VALUES ('9', '21121');
+INSERT INTO sys_role_menu VALUES ('9', '21122');
+INSERT INTO sys_role_menu VALUES ('9', '21123');
+INSERT INTO sys_role_menu VALUES ('9', '21124');
+INSERT INTO sys_role_menu VALUES ('9', '21125');
+INSERT INTO sys_role_menu VALUES ('9', '21126');
+
+-- 为医务部主任角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('10', '21000');
+
+INSERT INTO sys_role_menu VALUES ('10', '21010');
+INSERT INTO sys_role_menu VALUES ('10', '21011');
+INSERT INTO sys_role_menu VALUES ('10', '21012');
+INSERT INTO sys_role_menu VALUES ('10', '21013');
+INSERT INTO sys_role_menu VALUES ('10', '21014');
+INSERT INTO sys_role_menu VALUES ('10', '21015');
+INSERT INTO sys_role_menu VALUES ('10', '21016');
+
+INSERT INTO sys_role_menu VALUES ('10', '21020');
+INSERT INTO sys_role_menu VALUES ('10', '21021');
+INSERT INTO sys_role_menu VALUES ('10', '21022');
+INSERT INTO sys_role_menu VALUES ('10', '21023');
+INSERT INTO sys_role_menu VALUES ('10', '21024');
+INSERT INTO sys_role_menu VALUES ('10', '21025');
+INSERT INTO sys_role_menu VALUES ('10', '21026');
+
+INSERT INTO sys_role_menu VALUES ('10', '21030');
+INSERT INTO sys_role_menu VALUES ('10', '21031');
+INSERT INTO sys_role_menu VALUES ('10', '21032');
+INSERT INTO sys_role_menu VALUES ('10', '21033');
+INSERT INTO sys_role_menu VALUES ('10', '21034');
+INSERT INTO sys_role_menu VALUES ('10', '21035');
+INSERT INTO sys_role_menu VALUES ('10', '21036');
+
+INSERT INTO sys_role_menu VALUES ('10', '21040');
+INSERT INTO sys_role_menu VALUES ('10', '21041');
+INSERT INTO sys_role_menu VALUES ('10', '21042');
+INSERT INTO sys_role_menu VALUES ('10', '21043');
+INSERT INTO sys_role_menu VALUES ('10', '21044');
+INSERT INTO sys_role_menu VALUES ('10', '21045');
+INSERT INTO sys_role_menu VALUES ('10', '21046');
+
+INSERT INTO sys_role_menu VALUES ('10', '21050');
+INSERT INTO sys_role_menu VALUES ('10', '21051');
+INSERT INTO sys_role_menu VALUES ('10', '21052');
+INSERT INTO sys_role_menu VALUES ('10', '21053');
+INSERT INTO sys_role_menu VALUES ('10', '21054');
+INSERT INTO sys_role_menu VALUES ('10', '21055');
+INSERT INTO sys_role_menu VALUES ('10', '21056');
+
+INSERT INTO sys_role_menu VALUES ('10', '21060');
+INSERT INTO sys_role_menu VALUES ('10', '21061');
+INSERT INTO sys_role_menu VALUES ('10', '21062');
+INSERT INTO sys_role_menu VALUES ('10', '21063');
+INSERT INTO sys_role_menu VALUES ('10', '21064');
+INSERT INTO sys_role_menu VALUES ('10', '21065');
+INSERT INTO sys_role_menu VALUES ('10', '21066');
+
+INSERT INTO sys_role_menu VALUES ('10', '21070');
+INSERT INTO sys_role_menu VALUES ('10', '21071');
+INSERT INTO sys_role_menu VALUES ('10', '21072');
+INSERT INTO sys_role_menu VALUES ('10', '21073');
+INSERT INTO sys_role_menu VALUES ('10', '21074');
+INSERT INTO sys_role_menu VALUES ('10', '21075');
+INSERT INTO sys_role_menu VALUES ('10', '21076');
+
+INSERT INTO sys_role_menu VALUES ('10', '21080');
+INSERT INTO sys_role_menu VALUES ('10', '21081');
+INSERT INTO sys_role_menu VALUES ('10', '21082');
+INSERT INTO sys_role_menu VALUES ('10', '21083');
+INSERT INTO sys_role_menu VALUES ('10', '21084');
+INSERT INTO sys_role_menu VALUES ('10', '21085');
+INSERT INTO sys_role_menu VALUES ('10', '21086');
+
+INSERT INTO sys_role_menu VALUES ('10', '21090');
+INSERT INTO sys_role_menu VALUES ('10', '21091');
+INSERT INTO sys_role_menu VALUES ('10', '21092');
+INSERT INTO sys_role_menu VALUES ('10', '21093');
+INSERT INTO sys_role_menu VALUES ('10', '21094');
+INSERT INTO sys_role_menu VALUES ('10', '21095');
+INSERT INTO sys_role_menu VALUES ('10', '21096');
+
+INSERT INTO sys_role_menu VALUES ('10', '21100');
+INSERT INTO sys_role_menu VALUES ('10', '21101');
+INSERT INTO sys_role_menu VALUES ('10', '21102');
+INSERT INTO sys_role_menu VALUES ('10', '21103');
+INSERT INTO sys_role_menu VALUES ('10', '21104');
+INSERT INTO sys_role_menu VALUES ('10', '21105');
+INSERT INTO sys_role_menu VALUES ('10', '21106');
+
+INSERT INTO sys_role_menu VALUES ('10', '21110');
+INSERT INTO sys_role_menu VALUES ('10', '21111');
+INSERT INTO sys_role_menu VALUES ('10', '21112');
+INSERT INTO sys_role_menu VALUES ('10', '21113');
+INSERT INTO sys_role_menu VALUES ('10', '21114');
+INSERT INTO sys_role_menu VALUES ('10', '21115');
+INSERT INTO sys_role_menu VALUES ('10', '21116');
+
+INSERT INTO sys_role_menu VALUES ('10', '21120');
+INSERT INTO sys_role_menu VALUES ('10', '21121');
+INSERT INTO sys_role_menu VALUES ('10', '21122');
+INSERT INTO sys_role_menu VALUES ('10', '21123');
+INSERT INTO sys_role_menu VALUES ('10', '21124');
+INSERT INTO sys_role_menu VALUES ('10', '21125');
+INSERT INTO sys_role_menu VALUES ('10', '21126');
+
+-- 为医院管理员角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('11', '21000');
+
+INSERT INTO sys_role_menu VALUES ('11', '21010');
+INSERT INTO sys_role_menu VALUES ('11', '21011');
+INSERT INTO sys_role_menu VALUES ('11', '21012');
+INSERT INTO sys_role_menu VALUES ('11', '21013');
+INSERT INTO sys_role_menu VALUES ('11', '21014');
+INSERT INTO sys_role_menu VALUES ('11', '21015');
+INSERT INTO sys_role_menu VALUES ('11', '21016');
+
+INSERT INTO sys_role_menu VALUES ('11', '21020');
+INSERT INTO sys_role_menu VALUES ('11', '21021');
+INSERT INTO sys_role_menu VALUES ('11', '21022');
+INSERT INTO sys_role_menu VALUES ('11', '21023');
+INSERT INTO sys_role_menu VALUES ('11', '21024');
+INSERT INTO sys_role_menu VALUES ('11', '21025');
+INSERT INTO sys_role_menu VALUES ('11', '21026');
+
+INSERT INTO sys_role_menu VALUES ('11', '21030');
+INSERT INTO sys_role_menu VALUES ('11', '21031');
+INSERT INTO sys_role_menu VALUES ('11', '21032');
+INSERT INTO sys_role_menu VALUES ('11', '21033');
+INSERT INTO sys_role_menu VALUES ('11', '21034');
+INSERT INTO sys_role_menu VALUES ('11', '21035');
+INSERT INTO sys_role_menu VALUES ('11', '21036');
+
+INSERT INTO sys_role_menu VALUES ('11', '21040');
+INSERT INTO sys_role_menu VALUES ('11', '21041');
+INSERT INTO sys_role_menu VALUES ('11', '21042');
+INSERT INTO sys_role_menu VALUES ('11', '21043');
+INSERT INTO sys_role_menu VALUES ('11', '21044');
+INSERT INTO sys_role_menu VALUES ('11', '21045');
+INSERT INTO sys_role_menu VALUES ('11', '21046');
+
+INSERT INTO sys_role_menu VALUES ('11', '21050');
+INSERT INTO sys_role_menu VALUES ('11', '21051');
+INSERT INTO sys_role_menu VALUES ('11', '21052');
+INSERT INTO sys_role_menu VALUES ('11', '21053');
+INSERT INTO sys_role_menu VALUES ('11', '21054');
+INSERT INTO sys_role_menu VALUES ('11', '21055');
+INSERT INTO sys_role_menu VALUES ('11', '21056');
+
+INSERT INTO sys_role_menu VALUES ('11', '21060');
+INSERT INTO sys_role_menu VALUES ('11', '21061');
+INSERT INTO sys_role_menu VALUES ('11', '21062');
+INSERT INTO sys_role_menu VALUES ('11', '21063');
+INSERT INTO sys_role_menu VALUES ('11', '21064');
+INSERT INTO sys_role_menu VALUES ('11', '21065');
+INSERT INTO sys_role_menu VALUES ('11', '21066');
+
+INSERT INTO sys_role_menu VALUES ('11', '21070');
+INSERT INTO sys_role_menu VALUES ('11', '21071');
+INSERT INTO sys_role_menu VALUES ('11', '21072');
+INSERT INTO sys_role_menu VALUES ('11', '21073');
+INSERT INTO sys_role_menu VALUES ('11', '21074');
+INSERT INTO sys_role_menu VALUES ('11', '21075');
+INSERT INTO sys_role_menu VALUES ('11', '21076');
+
+INSERT INTO sys_role_menu VALUES ('11', '21080');
+INSERT INTO sys_role_menu VALUES ('11', '21081');
+INSERT INTO sys_role_menu VALUES ('11', '21082');
+INSERT INTO sys_role_menu VALUES ('11', '21083');
+INSERT INTO sys_role_menu VALUES ('11', '21084');
+INSERT INTO sys_role_menu VALUES ('11', '21085');
+INSERT INTO sys_role_menu VALUES ('11', '21086');
+
+INSERT INTO sys_role_menu VALUES ('11', '21090');
+INSERT INTO sys_role_menu VALUES ('11', '21091');
+INSERT INTO sys_role_menu VALUES ('11', '21092');
+INSERT INTO sys_role_menu VALUES ('11', '21093');
+INSERT INTO sys_role_menu VALUES ('11', '21094');
+INSERT INTO sys_role_menu VALUES ('11', '21095');
+INSERT INTO sys_role_menu VALUES ('11', '21096');
+
+INSERT INTO sys_role_menu VALUES ('11', '21100');
+INSERT INTO sys_role_menu VALUES ('11', '21101');
+INSERT INTO sys_role_menu VALUES ('11', '21102');
+INSERT INTO sys_role_menu VALUES ('11', '21103');
+INSERT INTO sys_role_menu VALUES ('11', '21104');
+INSERT INTO sys_role_menu VALUES ('11', '21105');
+INSERT INTO sys_role_menu VALUES ('11', '21106');
+
+INSERT INTO sys_role_menu VALUES ('11', '21110');
+INSERT INTO sys_role_menu VALUES ('11', '21111');
+INSERT INTO sys_role_menu VALUES ('11', '21112');
+INSERT INTO sys_role_menu VALUES ('11', '21113');
+INSERT INTO sys_role_menu VALUES ('11', '21114');
+INSERT INTO sys_role_menu VALUES ('11', '21115');
+INSERT INTO sys_role_menu VALUES ('11', '21116');
+
+INSERT INTO sys_role_menu VALUES ('11', '21120');
+INSERT INTO sys_role_menu VALUES ('11', '21121');
+INSERT INTO sys_role_menu VALUES ('11', '21122');
+INSERT INTO sys_role_menu VALUES ('11', '21123');
+INSERT INTO sys_role_menu VALUES ('11', '21124');
+INSERT INTO sys_role_menu VALUES ('11', '21125');
+INSERT INTO sys_role_menu VALUES ('11', '21126');
+
+-- 为超级管理员角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('1', '21000');
+
+INSERT INTO sys_role_menu VALUES ('1', '21010');
+INSERT INTO sys_role_menu VALUES ('1', '21011');
+INSERT INTO sys_role_menu VALUES ('1', '21012');
+INSERT INTO sys_role_menu VALUES ('1', '21013');
+INSERT INTO sys_role_menu VALUES ('1', '21014');
+INSERT INTO sys_role_menu VALUES ('1', '21015');
+INSERT INTO sys_role_menu VALUES ('1', '21016');
+
+INSERT INTO sys_role_menu VALUES ('1', '21020');
+INSERT INTO sys_role_menu VALUES ('1', '21021');
+INSERT INTO sys_role_menu VALUES ('1', '21022');
+INSERT INTO sys_role_menu VALUES ('1', '21023');
+INSERT INTO sys_role_menu VALUES ('1', '21024');
+INSERT INTO sys_role_menu VALUES ('1', '21025');
+INSERT INTO sys_role_menu VALUES ('1', '21026');
+
+INSERT INTO sys_role_menu VALUES ('1', '21030');
+INSERT INTO sys_role_menu VALUES ('1', '21031');
+INSERT INTO sys_role_menu VALUES ('1', '21032');
+INSERT INTO sys_role_menu VALUES ('1', '21033');
+INSERT INTO sys_role_menu VALUES ('1', '21034');
+INSERT INTO sys_role_menu VALUES ('1', '21035');
+INSERT INTO sys_role_menu VALUES ('1', '21036');
+
+INSERT INTO sys_role_menu VALUES ('1', '21040');
+INSERT INTO sys_role_menu VALUES ('1', '21041');
+INSERT INTO sys_role_menu VALUES ('1', '21042');
+INSERT INTO sys_role_menu VALUES ('1', '21043');
+INSERT INTO sys_role_menu VALUES ('1', '21044');
+INSERT INTO sys_role_menu VALUES ('1', '21045');
+INSERT INTO sys_role_menu VALUES ('1', '21046');
+
+INSERT INTO sys_role_menu VALUES ('1', '21050');
+INSERT INTO sys_role_menu VALUES ('1', '21051');
+INSERT INTO sys_role_menu VALUES ('1', '21052');
+INSERT INTO sys_role_menu VALUES ('1', '21053');
+INSERT INTO sys_role_menu VALUES ('1', '21054');
+INSERT INTO sys_role_menu VALUES ('1', '21055');
+INSERT INTO sys_role_menu VALUES ('1', '21056');
+
+INSERT INTO sys_role_menu VALUES ('1', '21060');
+INSERT INTO sys_role_menu VALUES ('1', '21061');
+INSERT INTO sys_role_menu VALUES ('1', '21062');
+INSERT INTO sys_role_menu VALUES ('1', '21063');
+INSERT INTO sys_role_menu VALUES ('1', '21064');
+INSERT INTO sys_role_menu VALUES ('1', '21065');
+INSERT INTO sys_role_menu VALUES ('1', '21066');
+
+INSERT INTO sys_role_menu VALUES ('1', '21070');
+INSERT INTO sys_role_menu VALUES ('1', '21071');
+INSERT INTO sys_role_menu VALUES ('1', '21072');
+INSERT INTO sys_role_menu VALUES ('1', '21073');
+INSERT INTO sys_role_menu VALUES ('1', '21074');
+INSERT INTO sys_role_menu VALUES ('1', '21075');
+INSERT INTO sys_role_menu VALUES ('1', '21076');
+
+INSERT INTO sys_role_menu VALUES ('1', '21080');
+INSERT INTO sys_role_menu VALUES ('1', '21081');
+INSERT INTO sys_role_menu VALUES ('1', '21082');
+INSERT INTO sys_role_menu VALUES ('1', '21083');
+INSERT INTO sys_role_menu VALUES ('1', '21084');
+INSERT INTO sys_role_menu VALUES ('1', '21085');
+INSERT INTO sys_role_menu VALUES ('1', '21086');
+
+INSERT INTO sys_role_menu VALUES ('1', '21090');
+INSERT INTO sys_role_menu VALUES ('1', '21091');
+INSERT INTO sys_role_menu VALUES ('1', '21092');
+INSERT INTO sys_role_menu VALUES ('1', '21093');
+INSERT INTO sys_role_menu VALUES ('1', '21094');
+INSERT INTO sys_role_menu VALUES ('1', '21095');
+INSERT INTO sys_role_menu VALUES ('1', '21096');
+
+INSERT INTO sys_role_menu VALUES ('1', '21100');
+INSERT INTO sys_role_menu VALUES ('1', '21101');
+INSERT INTO sys_role_menu VALUES ('1', '21102');
+INSERT INTO sys_role_menu VALUES ('1', '21103');
+INSERT INTO sys_role_menu VALUES ('1', '21104');
+INSERT INTO sys_role_menu VALUES ('1', '21105');
+INSERT INTO sys_role_menu VALUES ('1', '21106');
+
+INSERT INTO sys_role_menu VALUES ('1', '21110');
+INSERT INTO sys_role_menu VALUES ('1', '21111');
+INSERT INTO sys_role_menu VALUES ('1', '21112');
+INSERT INTO sys_role_menu VALUES ('1', '21113');
+INSERT INTO sys_role_menu VALUES ('1', '21114');
+INSERT INTO sys_role_menu VALUES ('1', '21115');
+INSERT INTO sys_role_menu VALUES ('1', '21116');
+
+INSERT INTO sys_role_menu VALUES ('1', '21120');
+INSERT INTO sys_role_menu VALUES ('1', '21121');
+INSERT INTO sys_role_menu VALUES ('1', '21122');
+INSERT INTO sys_role_menu VALUES ('1', '21123');
+INSERT INTO sys_role_menu VALUES ('1', '21124');
+INSERT INTO sys_role_menu VALUES ('1', '21125');
+INSERT INTO sys_role_menu VALUES ('1', '21126');

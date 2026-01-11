@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/supervisionPlan")
+@RequestMapping("/supervisionPlan")
 public class MmpSupervisionPlanController extends BaseController {
 
     private final IMmpSupervisionPlanService mmpSupervisionPlanService;

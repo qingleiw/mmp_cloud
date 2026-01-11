@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/emergencyTeamMember")
+@RequestMapping("/emergencyTeamMember")
 public class MmpEmergencyTeamMemberController extends BaseController {
 
     private final IMmpEmergencyTeamMemberService mmpEmergencyTeamMemberService;

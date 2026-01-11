@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qcManualData")
+@RequestMapping("/qcManualData")
 public class MmpQcManualDataController extends BaseController {
 
     private final IMmpQcManualDataService mmpQcManualDataService;

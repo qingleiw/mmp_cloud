@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/tumorQcIndicatorDetail")
+@RequestMapping("/tumorQcIndicatorDetail")
 public class MmpTumorQcIndicatorDetailController extends BaseController {
 
     private final IMmpTumorQcIndicatorDetailService mmpTumorQcIndicatorDetailService;

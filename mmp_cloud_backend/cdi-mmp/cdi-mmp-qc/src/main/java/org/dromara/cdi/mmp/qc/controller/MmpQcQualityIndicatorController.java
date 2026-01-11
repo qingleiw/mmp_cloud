@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qcQualityIndicator")
+@RequestMapping("/qcQualityIndicator")
 public class MmpQcQualityIndicatorController extends BaseController {
 
     private final IMmpQcQualityIndicatorService mmpQcQualityIndicatorService;

@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qcScoringResult")
+@RequestMapping("/qcScoringResult")
 public class MmpQcScoringResultController extends BaseController {
 
     private final IMmpQcScoringResultService mmpQcScoringResultService;

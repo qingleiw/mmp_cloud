@@ -23,3 +23,94 @@ INSERT INTO sys_menu VALUES ('21513', '新技术项目修改', '21510', '3', '#'
 INSERT INTO sys_menu VALUES ('21514', '新技术项目删除', '21510', '4', '#', '', '', 1, 0, 'F', '0', '0', 'ntp:newTechnologyProject:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('21515', '新技术项目导入', '21510', '5', '#', '', '', 1, 0, 'F', '0', '0', 'ntp:newTechnologyProject:import', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('21516', '新技术项目导出', '21510', '6', '#', '', '', 1, 0, 'F', '0', '0', 'ntp:newTechnologyProject:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- ----------------------------
+-- 4. 定义角色权限分配
+-- ----------------------------
+-- 为护士角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('5', '21500');
+
+INSERT INTO sys_role_menu VALUES ('5', '21510');
+INSERT INTO sys_role_menu VALUES ('5', '21511');
+INSERT INTO sys_role_menu VALUES ('5', '21512');
+INSERT INTO sys_role_menu VALUES ('5', '21513');
+INSERT INTO sys_role_menu VALUES ('5', '21514');
+INSERT INTO sys_role_menu VALUES ('5', '21515');
+INSERT INTO sys_role_menu VALUES ('5', '21516');
+
+-- 为医生角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('6', '21500');
+
+INSERT INTO sys_role_menu VALUES ('6', '21510');
+INSERT INTO sys_role_menu VALUES ('6', '21511');
+INSERT INTO sys_role_menu VALUES ('6', '21512');
+INSERT INTO sys_role_menu VALUES ('6', '21513');
+INSERT INTO sys_role_menu VALUES ('6', '21514');
+INSERT INTO sys_role_menu VALUES ('6', '21515');
+INSERT INTO sys_role_menu VALUES ('6', '21516');
+
+-- 为科室主任分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('7', '21500');
+
+INSERT INTO sys_role_menu VALUES ('7', '21510');
+INSERT INTO sys_role_menu VALUES ('7', '21511');
+INSERT INTO sys_role_menu VALUES ('7', '21512');
+INSERT INTO sys_role_menu VALUES ('7', '21513');
+INSERT INTO sys_role_menu VALUES ('7', '21514');
+INSERT INTO sys_role_menu VALUES ('7', '21515');
+INSERT INTO sys_role_menu VALUES ('7', '21516');
+
+-- 为质控员角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('8', '21500');
+
+INSERT INTO sys_role_menu VALUES ('8', '21510');
+INSERT INTO sys_role_menu VALUES ('8', '21511');
+INSERT INTO sys_role_menu VALUES ('8', '21512');
+INSERT INTO sys_role_menu VALUES ('8', '21513');
+INSERT INTO sys_role_menu VALUES ('8', '21514');
+INSERT INTO sys_role_menu VALUES ('8', '21515');
+INSERT INTO sys_role_menu VALUES ('8', '21516');
+
+-- 为医务部分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('9', '21500');
+
+INSERT INTO sys_role_menu VALUES ('9', '21510');
+INSERT INTO sys_role_menu VALUES ('9', '21511');
+INSERT INTO sys_role_menu VALUES ('9', '21512');
+INSERT INTO sys_role_menu VALUES ('9', '21513');
+INSERT INTO sys_role_menu VALUES ('9', '21514');
+INSERT INTO sys_role_menu VALUES ('9', '21515');
+INSERT INTO sys_role_menu VALUES ('9', '21516');
+
+-- 为医务部主任角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('10', '21500');
+
+INSERT INTO sys_role_menu VALUES ('10', '21510');
+INSERT INTO sys_role_menu VALUES ('10', '21511');
+INSERT INTO sys_role_menu VALUES ('10', '21512');
+INSERT INTO sys_role_menu VALUES ('10', '21513');
+INSERT INTO sys_role_menu VALUES ('10', '21514');
+INSERT INTO sys_role_menu VALUES ('10', '21515');
+INSERT INTO sys_role_menu VALUES ('10', '21516');
+
+-- 为医院管理员角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('11', '21500');
+
+INSERT INTO sys_role_menu VALUES ('11', '21510');
+INSERT INTO sys_role_menu VALUES ('11', '21511');
+INSERT INTO sys_role_menu VALUES ('11', '21512');
+INSERT INTO sys_role_menu VALUES ('11', '21513');
+INSERT INTO sys_role_menu VALUES ('11', '21514');
+INSERT INTO sys_role_menu VALUES ('11', '21515');
+INSERT INTO sys_role_menu VALUES ('11', '21516');
+
+-- 为超级管理员角色分配菜单按钮权限
+INSERT INTO sys_role_menu VALUES ('1', '21500');
+
+INSERT INTO sys_role_menu VALUES ('1', '21510');
+INSERT INTO sys_role_menu VALUES ('1', '21511');
+INSERT INTO sys_role_menu VALUES ('1', '21512');
+INSERT INTO sys_role_menu VALUES ('1', '21513');
+INSERT INTO sys_role_menu VALUES ('1', '21514');
+INSERT INTO sys_role_menu VALUES ('1', '21515');
+INSERT INTO sys_role_menu VALUES ('1', '21516');

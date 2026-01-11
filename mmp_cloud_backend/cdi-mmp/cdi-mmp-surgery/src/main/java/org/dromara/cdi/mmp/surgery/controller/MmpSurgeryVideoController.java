@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/surgeryVideo")
+@RequestMapping("/surgeryVideo")
 public class MmpSurgeryVideoController extends BaseController {
 
     private final IMmpSurgeryVideoService mmpSurgeryVideoService;

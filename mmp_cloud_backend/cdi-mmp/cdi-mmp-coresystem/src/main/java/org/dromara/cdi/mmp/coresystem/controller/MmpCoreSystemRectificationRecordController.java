@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/coresystem/coreSystemRectificationRecord")
+@RequestMapping("/coreSystemRectificationRecord")
 public class MmpCoreSystemRectificationRecordController extends BaseController {
 
     private final IMmpCoreSystemRectificationRecordService mmpCoreSystemRectificationRecordService;

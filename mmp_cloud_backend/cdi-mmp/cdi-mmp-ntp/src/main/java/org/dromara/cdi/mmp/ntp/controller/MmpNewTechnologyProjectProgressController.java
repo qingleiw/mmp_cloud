@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/newTechnologyProjectProgress")
+@RequestMapping("/newTechnologyProjectProgress")
 public class MmpNewTechnologyProjectProgressController extends BaseController {
 
     private final IMmpNewTechnologyProjectProgressService mmpNewTechnologyProjectProgressService;

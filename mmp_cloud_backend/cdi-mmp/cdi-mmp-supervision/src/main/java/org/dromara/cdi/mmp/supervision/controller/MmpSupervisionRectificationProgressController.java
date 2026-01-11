@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/supervisionRectificationProgress")
+@RequestMapping("/supervisionRectificationProgress")
 public class MmpSupervisionRectificationProgressController extends BaseController {
 
     private final IMmpSupervisionRectificationProgressService mmpSupervisionRectificationProgressService;

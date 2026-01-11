@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qcIndicatorCollectionConfig")
+@RequestMapping("/qcIndicatorCollectionConfig")
 public class MmpQcIndicatorCollectionConfigController extends BaseController {
 
     private final IMmpQcIndicatorCollectionConfigService mmpQcIndicatorCollectionConfigService;

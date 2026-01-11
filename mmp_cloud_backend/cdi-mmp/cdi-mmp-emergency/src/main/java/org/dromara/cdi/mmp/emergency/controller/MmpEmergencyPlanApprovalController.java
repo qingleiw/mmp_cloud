@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/emergencyPlanApproval")
+@RequestMapping("/emergencyPlanApproval")
 public class MmpEmergencyPlanApprovalController extends BaseController {
 
     private final IMmpEmergencyPlanApprovalService mmpEmergencyPlanApprovalService;

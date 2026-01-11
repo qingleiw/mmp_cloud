@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qualificationAdmissionCondition")
+@RequestMapping("/qualificationAdmissionCondition")
 public class MmpQualificationAdmissionConditionController extends BaseController {
 
     private final IMmpQualificationAdmissionConditionService mmpQualificationAdmissionConditionService;

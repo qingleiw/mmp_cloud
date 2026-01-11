@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qualificationExamRecord")
+@RequestMapping("/qualificationExamRecord")
 public class MmpQualificationExamRecordController extends BaseController {
 
     private final IMmpQualificationExamRecordService mmpQualificationExamRecordService;

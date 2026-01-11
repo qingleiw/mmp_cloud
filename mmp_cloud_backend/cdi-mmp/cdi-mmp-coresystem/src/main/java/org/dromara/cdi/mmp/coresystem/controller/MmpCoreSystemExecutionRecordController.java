@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/coresystem/coreSystemExecutionRecord")
+@RequestMapping("/coreSystemExecutionRecord")
 public class MmpCoreSystemExecutionRecordController extends BaseController {
 
     private final IMmpCoreSystemExecutionRecordService mmpCoreSystemExecutionRecordService;

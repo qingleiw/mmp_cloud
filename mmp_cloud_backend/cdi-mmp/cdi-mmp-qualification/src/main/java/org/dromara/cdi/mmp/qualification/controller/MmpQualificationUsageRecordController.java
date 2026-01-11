@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qualificationUsageRecord")
+@RequestMapping("/qualificationUsageRecord")
 public class MmpQualificationUsageRecordController extends BaseController {
 
     private final IMmpQualificationUsageRecordService mmpQualificationUsageRecordService;

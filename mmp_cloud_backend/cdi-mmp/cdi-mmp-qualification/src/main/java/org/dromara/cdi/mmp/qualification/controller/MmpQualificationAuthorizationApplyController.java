@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/qualificationAuthorizationApply")
+@RequestMapping("/qualificationAuthorizationApply")
 public class MmpQualificationAuthorizationApplyController extends BaseController {
 
     private final IMmpQualificationAuthorizationApplyService mmpQualificationAuthorizationApplyService;
