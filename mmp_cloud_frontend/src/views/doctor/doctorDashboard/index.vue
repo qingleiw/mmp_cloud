@@ -29,8 +29,8 @@
 </template>
 
 <script setup name="DoctorDashboard" lang="ts">
-import { listDoctorBasicInfo } from '@/api/system/doctorBasicInfo';
-import { DoctorBasicInfoVO, DoctorBasicInfoQuery } from '@/api/system/doctorBasicInfo/types';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO, DoctorBasicInfoQuery } from '@/api/doctor/doctorBasicInfo/types';
 import * as echarts from 'echarts';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

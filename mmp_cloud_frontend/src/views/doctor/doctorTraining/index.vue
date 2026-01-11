@@ -167,10 +167,10 @@
 </template>
 
 <script setup name="DoctorTraining" lang="ts">
-import { listDoctorTraining, getDoctorTraining, delDoctorTraining, addDoctorTraining, updateDoctorTraining } from '@/api/system/doctorTraining';
-import { DoctorTrainingVO, DoctorTrainingQuery, DoctorTrainingForm } from '@/api/system/doctorTraining/types';
-import { listDoctorInfo } from '@/api/system/doctorInfo';
-import { DoctorInfoVO } from '@/api/system/doctorInfo/types';
+import { listDoctorTraining, getDoctorTraining, delDoctorTraining, addDoctorTraining, updateDoctorTraining } from '@/api/doctor/doctorTraining';
+import { DoctorTrainingVO, DoctorTrainingQuery, DoctorTrainingForm } from '@/api/doctor/doctorTraining/types';
+import { listDoctorInfo } from '@/api/doctor/doctorInfo';
+import { DoctorInfoVO } from '@/api/doctor/doctorInfo/types';
 import { createDoctorTrainingFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

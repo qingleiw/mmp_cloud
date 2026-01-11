@@ -207,8 +207,8 @@ import {
   delDoctorPublication,
   addDoctorPublication,
   updateDoctorPublication
-} from '@/api/system/doctorPublication';
-import { DoctorPublicationVO, DoctorPublicationQuery, DoctorPublicationForm } from '@/api/system/doctorPublication/types';
+} from '@/api/doctor/doctorPublication';
+import { DoctorPublicationVO, DoctorPublicationQuery, DoctorPublicationForm } from '@/api/doctor/doctorPublication/types';
 import { createDoctorPublicationFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

@@ -242,8 +242,8 @@
 </template>
 
 <script setup name="DoctorBasicInfo" lang="ts">
-import { listDoctorBasicInfo, getDoctorBasicInfo, delDoctorBasicInfo, addDoctorBasicInfo, updateDoctorBasicInfo } from '@/api/system/doctorBasicInfo';
-import { DoctorBasicInfoVO, DoctorBasicInfoQuery, DoctorBasicInfoForm } from '@/api/system/doctorBasicInfo/types';
+import { listDoctorBasicInfo, getDoctorBasicInfo, delDoctorBasicInfo, addDoctorBasicInfo, updateDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO, DoctorBasicInfoQuery, DoctorBasicInfoForm } from '@/api/doctor/doctorBasicInfo/types';
 import { createDoctorBasicInfoFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

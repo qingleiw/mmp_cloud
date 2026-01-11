@@ -204,9 +204,9 @@ import {
   delDoctorWorkExperience,
   addDoctorWorkExperience,
   updateDoctorWorkExperience
-} from '@/api/system/doctorWorkExperience';
-import { listDoctorInfo } from '@/api/system/doctorInfo';
-import { DoctorWorkExperienceVO, DoctorWorkExperienceQuery, DoctorWorkExperienceForm } from '@/api/system/doctorWorkExperience/types';
+} from '@/api/doctor/doctorWorkExperience';
+import { listDoctorInfo } from '@/api/doctor/doctorInfo';
+import { DoctorWorkExperienceVO, DoctorWorkExperienceQuery, DoctorWorkExperienceForm } from '@/api/doctor/doctorWorkExperience/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createDoctorWorkExperienceFieldConfig } from '@/utils/mmpFieldConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

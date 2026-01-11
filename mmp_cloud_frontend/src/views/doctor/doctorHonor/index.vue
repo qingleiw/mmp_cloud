@@ -127,8 +127,8 @@
 </template>
 
 <script setup name="DoctorHonor" lang="ts">
-import { listDoctorHonor, getDoctorHonor, delDoctorHonor, addDoctorHonor, updateDoctorHonor } from '@/api/system/doctorHonor';
-import { DoctorHonorVO, DoctorHonorQuery, DoctorHonorForm } from '@/api/system/doctorHonor/types';
+import { listDoctorHonor, getDoctorHonor, delDoctorHonor, addDoctorHonor, updateDoctorHonor } from '@/api/doctor/doctorHonor';
+import { DoctorHonorVO, DoctorHonorQuery, DoctorHonorForm } from '@/api/doctor/doctorHonor/types';
 import { createDoctorHonorFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

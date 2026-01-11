@@ -161,8 +161,8 @@ import {
   delDoctorAcademicPosition,
   addDoctorAcademicPosition,
   updateDoctorAcademicPosition
-} from '@/api/system/doctorAcademicPosition';
-import { DoctorAcademicPositionVO, DoctorAcademicPositionQuery, DoctorAcademicPositionForm } from '@/api/system/doctorAcademicPosition/types';
+} from '@/api/doctor/doctorAcademicPosition';
+import { DoctorAcademicPositionVO, DoctorAcademicPositionQuery, DoctorAcademicPositionForm } from '@/api/doctor/doctorAcademicPosition/types';
 import { createDoctorAcademicPositionFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

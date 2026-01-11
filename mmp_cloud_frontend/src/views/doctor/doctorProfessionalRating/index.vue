@@ -233,9 +233,9 @@ import {
   delDoctorProfessionalRating,
   addDoctorProfessionalRating,
   updateDoctorProfessionalRating
-} from '@/api/system/doctorProfessionalRating';
-import { listDoctorInfo } from '@/api/system/doctorInfo';
-import { DoctorProfessionalRatingVO, DoctorProfessionalRatingQuery, DoctorProfessionalRatingForm } from '@/api/system/doctorProfessionalRating/types';
+} from '@/api/doctor/doctorProfessionalRating';
+import { listDoctorInfo } from '@/api/doctor/doctorInfo';
+import { DoctorProfessionalRatingVO, DoctorProfessionalRatingQuery, DoctorProfessionalRatingForm } from '@/api/doctor/doctorProfessionalRating/types';
 import { createDoctorProfessionalRatingFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

@@ -19,7 +19,7 @@ import org.dromara.cdi.mmp.doctor.service.IMmpDoctorInfoService;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/doctor/doctorInfo")
+@RequestMapping("/doctorInfo")
 public class MmpDoctorInfoController extends BaseController {
 
     private final IMmpDoctorInfoService mmpDoctorInfoService;

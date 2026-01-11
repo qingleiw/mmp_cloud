@@ -173,12 +173,12 @@ import {
   delDoctorElectronicRegistration,
   addDoctorElectronicRegistration,
   updateDoctorElectronicRegistration
-} from '@/api/system/doctorElectronicRegistration';
+} from '@/api/doctor/doctorElectronicRegistration';
 import {
   DoctorElectronicRegistrationVO,
   DoctorElectronicRegistrationQuery,
   DoctorElectronicRegistrationForm
-} from '@/api/system/doctorElectronicRegistration/types';
+} from '@/api/doctor/doctorElectronicRegistration/types';
 import { createDoctorElectronicRegistrationSearchConfig } from '@/utils/mmpSearchConfigs';
 import { createDoctorElectronicRegistrationFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';

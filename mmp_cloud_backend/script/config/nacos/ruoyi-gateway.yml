@@ -83,3 +83,10 @@ spring:
                 - Path=/test-mq/**
               filters:
                 - StripPrefix=1
+            # cdi-mmp-doctor服务
+            - id: cdi-mmp-doctor
+              uri: lb://cdi-mmp-doctor
+              predicates:
+                - Path=/doctor/**
+              filters:
+                - StripPrefix=0

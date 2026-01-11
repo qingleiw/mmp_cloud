@@ -218,9 +218,9 @@ import {
   delDoctorResearchProject,
   addDoctorResearchProject,
   updateDoctorResearchProject
-} from '@/api/system/doctorResearchProject';
-import { listDoctorInfo } from '@/api/system/doctorInfo';
-import { DoctorResearchProjectVO, DoctorResearchProjectQuery, DoctorResearchProjectForm } from '@/api/system/doctorResearchProject/types';
+} from '@/api/doctor/doctorResearchProject';
+import { listDoctorInfo } from '@/api/doctor/doctorInfo';
+import { DoctorResearchProjectVO, DoctorResearchProjectQuery, DoctorResearchProjectForm } from '@/api/doctor/doctorResearchProject/types';
 import { createDoctorResearchProjectFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

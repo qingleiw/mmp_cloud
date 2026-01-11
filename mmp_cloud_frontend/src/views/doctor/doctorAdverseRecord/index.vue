@@ -170,10 +170,10 @@ import {
   delDoctorAdverseRecord,
   addDoctorAdverseRecord,
   updateDoctorAdverseRecord
-} from '@/api/system/doctorAdverseRecord';
-import { DoctorAdverseRecordVO, DoctorAdverseRecordQuery, DoctorAdverseRecordForm } from '@/api/system/doctorAdverseRecord/types';
-import { listDoctorInfo } from '@/api/system/doctorInfo';
-import { DoctorInfoVO } from '@/api/system/doctorInfo/types';
+} from '@/api/doctor/doctorAdverseRecord';
+import { DoctorAdverseRecordVO, DoctorAdverseRecordQuery, DoctorAdverseRecordForm } from '@/api/doctor/doctorAdverseRecord/types';
+import { listDoctorInfo } from '@/api/doctor/doctorInfo';
+import { DoctorInfoVO } from '@/api/doctor/doctorInfo/types';
 import { createDoctorAdverseRecordFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

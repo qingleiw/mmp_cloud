@@ -167,8 +167,8 @@ import {
   delDoctorAbilityAssessment,
   addDoctorAbilityAssessment,
   updateDoctorAbilityAssessment
-} from '@/api/system/doctorAbilityAssessment';
-import { DoctorAbilityAssessmentVO, DoctorAbilityAssessmentQuery, DoctorAbilityAssessmentForm } from '@/api/system/doctorAbilityAssessment/types';
+} from '@/api/doctor/doctorAbilityAssessment';
+import { DoctorAbilityAssessmentVO, DoctorAbilityAssessmentQuery, DoctorAbilityAssessmentForm } from '@/api/doctor/doctorAbilityAssessment/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createDoctorAbilityAssessmentFieldConfig } from '@/utils/mmpFieldConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

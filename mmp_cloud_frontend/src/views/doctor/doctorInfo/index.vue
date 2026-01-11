@@ -578,8 +578,8 @@
 </template>
 
 <script setup name="DoctorBasicInfo" lang="ts">
-import { listDoctorBasicInfo, getDoctorBasicInfo, delDoctorBasicInfo, addDoctorBasicInfo, updateDoctorBasicInfo } from '@/api/system/doctorBasicInfo';
-import { DoctorBasicInfoVO, DoctorBasicInfoQuery, DoctorBasicInfoForm } from '@/api/system/doctorBasicInfo/types';
+import { listDoctorBasicInfo, getDoctorBasicInfo, delDoctorBasicInfo, addDoctorBasicInfo, updateDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO, DoctorBasicInfoQuery, DoctorBasicInfoForm } from '@/api/doctor/doctorBasicInfo/types';
 import { createDoctorBasicInfoFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
@@ -591,23 +591,23 @@ import type { DialogOption, PageData } from '@/types/global';
 import type { ComponentInternalInstance } from 'vue';
 import * as echarts from 'echarts';
 import { Folder, FolderOpened, User } from '@element-plus/icons-vue';
-import { listDept } from '@/api/system/dept';
-import type { DeptVO } from '@/api/system/dept/types';
-import { listDoctorWorkExperience } from '@/api/system/doctorWorkExperience';
-import { listDoctorEducation } from '@/api/system/doctorEducation';
-import { listDoctorTraining } from '@/api/system/doctorTraining';
-import { listDoctorHonor } from '@/api/system/doctorHonor';
-import { listDoctorPublication } from '@/api/system/doctorPublication';
-import { listDoctorResearchProject } from '@/api/system/doctorResearchProject';
-import { listDoctorAcademicPosition } from '@/api/system/doctorAcademicPosition';
-import type { DoctorWorkExperienceVO } from '@/api/system/doctorWorkExperience/types';
-import type { DoctorEducationVO } from '@/api/system/doctorEducation/types';
-import type { DoctorTrainingVO } from '@/api/system/doctorTraining/types';
-import type { DoctorHonorVO } from '@/api/system/doctorHonor/types';
-import type { DoctorPublicationVO } from '@/api/system/doctorPublication/types';
-import type { DoctorResearchProjectVO } from '@/api/system/doctorResearchProject/types';
-import type { DoctorAcademicPositionVO } from '@/api/system/doctorAcademicPosition/types';
-import type { DoctorEvaluationVO } from '@/api/system/doctorBasicInfo/types';
+import { listDept } from '@/api/doctor/dept';
+import type { DeptVO } from '@/api/doctor/dept/types';
+import { listDoctorWorkExperience } from '@/api/doctor/doctorWorkExperience';
+import { listDoctorEducation } from '@/api/doctor/doctorEducation';
+import { listDoctorTraining } from '@/api/doctor/doctorTraining';
+import { listDoctorHonor } from '@/api/doctor/doctorHonor';
+import { listDoctorPublication } from '@/api/doctor/doctorPublication';
+import { listDoctorResearchProject } from '@/api/doctor/doctorResearchProject';
+import { listDoctorAcademicPosition } from '@/api/doctor/doctorAcademicPosition';
+import type { DoctorWorkExperienceVO } from '@/api/doctor/doctorWorkExperience/types';
+import type { DoctorEducationVO } from '@/api/doctor/doctorEducation/types';
+import type { DoctorTrainingVO } from '@/api/doctor/doctorTraining/types';
+import type { DoctorHonorVO } from '@/api/doctor/doctorHonor/types';
+import type { DoctorPublicationVO } from '@/api/doctor/doctorPublication/types';
+import type { DoctorResearchProjectVO } from '@/api/doctor/doctorResearchProject/types';
+import type { DoctorAcademicPositionVO } from '@/api/doctor/doctorAcademicPosition/types';
+import type { DoctorEvaluationVO } from '@/api/doctor/doctorBasicInfo/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/doctor/doctorEthicsEvaluation")
+@RequestMapping("/doctorEthicsEvaluation")
 public class MmpDoctorEthicsEvaluationController extends BaseController {
 
     private final IMmpDoctorEthicsEvaluationService mmpDoctorEthicsEvaluationService;

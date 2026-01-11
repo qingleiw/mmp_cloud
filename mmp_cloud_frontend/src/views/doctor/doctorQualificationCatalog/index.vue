@@ -203,12 +203,12 @@ import {
   delDoctorQualificationCatalog,
   addDoctorQualificationCatalog,
   updateDoctorQualificationCatalog
-} from '@/api/system/doctorQualificationCatalog';
+} from '@/api/doctor/doctorQualificationCatalog';
 import {
   DoctorQualificationCatalogVO,
   DoctorQualificationCatalogQuery,
   DoctorQualificationCatalogForm
-} from '@/api/system/doctorQualificationCatalog/types';
+} from '@/api/doctor/doctorQualificationCatalog/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createDoctorQualificationCatalogFieldConfig } from '@/utils/fieldConfig';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

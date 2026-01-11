@@ -172,8 +172,8 @@
 </template>
 
 <script setup name="DoctorEducation" lang="ts">
-import { listDoctorEducation, getDoctorEducation, delDoctorEducation, addDoctorEducation, updateDoctorEducation } from '@/api/system/doctorEducation';
-import { DoctorEducationVO, DoctorEducationQuery, DoctorEducationForm } from '@/api/system/doctorEducation/types';
+import { listDoctorEducation, getDoctorEducation, delDoctorEducation, addDoctorEducation, updateDoctorEducation } from '@/api/doctor/doctorEducation';
+import { DoctorEducationVO, DoctorEducationQuery, DoctorEducationForm } from '@/api/doctor/doctorEducation/types';
 import { createDoctorEducationFieldConfig } from '@/utils/mmpFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

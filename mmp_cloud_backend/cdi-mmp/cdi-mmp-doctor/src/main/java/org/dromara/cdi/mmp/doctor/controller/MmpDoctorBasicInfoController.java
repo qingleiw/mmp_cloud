@@ -32,7 +32,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/doctor/doctorBasicInfo")
+@RequestMapping("/doctorBasicInfo")
 public class MmpDoctorBasicInfoController extends BaseController {
 
     private final IMmpDoctorBasicInfoService mmpDoctorBasicInfoService;

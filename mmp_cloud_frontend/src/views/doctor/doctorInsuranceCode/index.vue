@@ -143,8 +143,8 @@ import {
   delDoctorInsuranceCode,
   addDoctorInsuranceCode,
   updateDoctorInsuranceCode
-} from '@/api/system/doctorInsuranceCode';
-import { DoctorInsuranceCodeVO, DoctorInsuranceCodeQuery, DoctorInsuranceCodeForm } from '@/api/system/doctorInsuranceCode/types';
+} from '@/api/doctor/doctorInsuranceCode';
+import { DoctorInsuranceCodeVO, DoctorInsuranceCodeQuery, DoctorInsuranceCodeForm } from '@/api/doctor/doctorInsuranceCode/types';
 import { createDoctorInsuranceCodeFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
