@@ -149,7 +149,7 @@
           <el-col v-for="field in visibleColumns" :key="field.prop" :span="field.formSpan || 24">
             <el-form-item :label="field.label" :prop="field.prop" v-if="field.prop !== 'createTime' && field.prop !== 'updateTime'">
               <el-select v-if="field.prop === 'doctorId'" v-model="form.doctorId" placeholder="请选择医生" filterable clearable style="width: 100%">
-                <el-option v-for="doctor in doctorOptions" :key="doctor.doctorId" :label="doctor.doctorName" :value="doctor.doctorId" />
+                <el-option v-for="doctor in doctorOptions" :key="doctor.id" :label="doctor.doctorName" :value="doctor.id" />
               </el-select>
               <el-input v-else-if="field.type === 'input' || !field.type" v-model="form[field.prop]" :placeholder="`请输入${field.label}`" />
               <el-input
@@ -287,7 +287,7 @@ const loadDoctorOptions = async () => {
 
 /** 根据医生ID获取医生姓名 */
 const getDoctorName = (doctorId: string | number) => {
-  const doctor = doctorOptions.value.find(d => d.doctorId === doctorId);
+  const doctor = doctorOptions.value.find(d => d.id === doctorId);
   return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
