@@ -68,7 +68,7 @@ export function createDoctorWorkExperienceFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'organization', label: '工作单位', visible: true, required: true, group: 'basic' },
         { prop: 'department', label: '部门', visible: true, group: 'basic' },
         { prop: 'position', label: '职位', visible: true, required: true, group: 'basic' }
@@ -122,7 +122,7 @@ export function createDoctorSimpleAbilityAssessmentFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'assessmentYear', label: '评估年度', visible: true, group: 'basic' },
         { prop: 'assessmentType', label: '评估类型', visible: true, group: 'basic' },
         { prop: 'assessmentDate', label: '评估日期', visible: true, width: '120', group: 'basic' },
@@ -175,7 +175,7 @@ export function createDoctorAdverseRecordSimpleFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'recordType', label: '记录类型', visible: true, group: 'basic' },
         { prop: 'recordTitle', label: '记录标题', visible: true, group: 'basic' },
         { prop: 'occurDate', label: '发生日期', visible: true, width: '120', group: 'basic' }
@@ -223,7 +223,7 @@ export function createDoctorEducationFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'schoolName', label: '学校名称', visible: true, group: 'basic' },
         { prop: 'major', label: '专业', visible: true, group: 'basic' },
         { prop: 'educationLevel', label: '学历', visible: true, group: 'basic' },
@@ -278,7 +278,7 @@ export function createDoctorElectronicRegistrationFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'registrationNo', label: '注册编号', visible: true, group: 'basic' },
         { prop: 'registrationType', label: '注册类型', visible: true, group: 'basic' },
         { prop: 'practiceCategory', label: '执业类别', visible: true, group: 'basic' }
@@ -394,7 +394,7 @@ export function createDoctorInsuranceCodeFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: false, group: 'basic' },
         { prop: 'doctorName', label: '医生姓名', visible: true, required: true, group: 'basic' },
         { prop: 'insuranceCode', label: '保险代码', visible: true, required: true, group: 'basic' },
         { prop: 'insuranceType', label: '保险类型', visible: true, group: 'basic' }
@@ -446,7 +446,7 @@ export function createDoctorPublicationFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'publicationType', label: '发表类型', visible: true, group: 'basic' },
         { prop: 'title', label: '标题', visible: true, group: 'basic' },
         { prop: 'authors', label: '作者', visible: true, group: 'basic' },
@@ -505,7 +505,7 @@ export function createDoctorResearchProjectFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, group: 'basic' },
         { prop: 'projectName', label: '项目名称', visible: true, group: 'basic' },
         { prop: 'projectNo', label: '项目编号', visible: true, group: 'basic' },
         { prop: 'projectLevel', label: '项目级别', visible: true, group: 'basic' },
@@ -1794,7 +1794,7 @@ export function createDoctorAbilityAssessmentFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户编号', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, required: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, required: true, group: 'basic' },
         { prop: 'assessmentYear', label: '评估年度', visible: true, required: true, group: 'basic' },
         { prop: 'assessmentType', label: '评估类型', visible: true, group: 'basic' }
       ]
@@ -3411,7 +3411,7 @@ export function createDoctorAcademicPositionFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, required: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, required: true, group: 'basic' },
         { prop: 'organization', label: '学术组织', visible: true, required: true, group: 'basic' },
         { prop: 'position', label: '职务', visible: true, required: true, group: 'basic' },
         { prop: 'positionLevel', label: '职务级别', visible: true, group: 'basic' }
@@ -3460,7 +3460,7 @@ export function createDoctorHonorFieldConfig() {
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
         { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'doctorId', label: '医生ID', visible: true, required: true, group: 'basic' },
+        { prop: 'doctorId', label: '医生姓名', visible: true, required: true, group: 'basic' },
         { prop: 'honorName', label: '荣誉名称', visible: true, required: true, group: 'basic' },
         { prop: 'honorLevel', label: '荣誉级别', visible: true, group: 'basic' },
         { prop: 'awardUnit', label: '授予单位', visible: true, group: 'basic' }
