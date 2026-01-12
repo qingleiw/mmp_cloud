@@ -25,7 +25,7 @@ spring:
 #          username: ${datasource.system-postgres.username}
 #          password: ${datasource.system-postgres.password}
 
-# 医师管理模块
+# 核心制度管理模块
 cdi-mmp-coresystem:
   # 作者
   author: cdi
