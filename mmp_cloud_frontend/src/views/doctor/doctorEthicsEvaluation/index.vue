@@ -62,7 +62,12 @@
           :width="field.width || undefined"
         >
           <template #default="scope">
-            <span>{{ scope.row[field.prop] }}</span>
+            <span v-if="field.prop === 'doctorId'">
+              {{ getDoctorName(scope.row[field.prop]) }}
+            </span>
+            <span v-else>
+              {{ scope.row[field.prop] }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
@@ -157,8 +162,8 @@ import {
   updateDoctorEthicsEvaluation
 } from '@/api/doctor/doctorEthicsEvaluation';
 import { DoctorEthicsEvaluationVO, DoctorEthicsEvaluationQuery, DoctorEthicsEvaluationForm } from '@/api/doctor/doctorEthicsEvaluation/types';
-import { listDoctorInfo } from '@/api/doctor/doctorInfo';
-import { DoctorInfoVO } from '@/api/doctor/doctorInfo/types';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { createDoctorEthicsEvaluationFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
@@ -176,6 +181,7 @@ const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 const queryFormRef = ref<ElFormInstance>();
 const doctorEthicsEvaluationFormRef = ref<ElFormInstance>();
@@ -234,6 +240,23 @@ const data = reactive<PageData<DoctorEthicsEvaluationForm, DoctorEthicsEvaluatio
 });
 
 const { queryParams, form, rules } = toRefs(data);
+
+/** 加载医生选项 */
+const loadDoctorOptions = async () => {
+  try {
+    const res = await listDoctorBasicInfo({});
+    doctorOptions.value = res.rows;
+  } catch (error) {
+    console.error('加载医生选项失败:', error);
+  }
+};
+
+/** 获取医生姓名 */
+const getDoctorName = (doctorId: number | string | undefined): string => {
+  if (!doctorId) return '';
+  const doctor = doctorOptions.value.find((d) => d.id === doctorId);
+  return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
+};
 
 /** 查询医德医风考评列表 */
 const getList = async () => {
@@ -367,6 +390,7 @@ const handleSearchConfigConfirm = () => {
 };
 
 onMounted(() => {
+  loadDoctorOptions();
   getList();
 });
 </script>
