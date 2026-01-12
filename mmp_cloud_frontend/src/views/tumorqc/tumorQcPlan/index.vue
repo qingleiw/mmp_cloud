@@ -1,74 +1,85 @@
 <template>
-  <div class="app-container">
-    <div class="page-header mb-4">
-      <h2 class="page-title">
-        <i-ep-folder-checked class="title-icon"></i-ep-folder-checked>
-        肿瘤质控方案管理
-      </h2>
-      <p class="page-description">管理肿瘤质控方案，包括方案名称、周期与状态等信息</p>
-    </div>
+  <div class="p-2">
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover" class="search-card">
-          <template #header>
-            <div class="search-header">
-              <span class="search-title">
-                <i-ep-search class="search-icon"></i-ep-search>
-                搜索条件
-              </span>
-              <div class="search-actions">
-                <el-button text type="primary" @click="searchConfigVisible = true" class="config-btn">
-                  <i-ep-setting class="btn-icon"></i-ep-setting>
-                  搜索配置
-                </el-button>
-              </div>
-            </div>
-          </template>
-          <DynamicSearchForm
-            ref="queryFormRef"
-            :query="queryParams"
-            :visible-fields="visibleSearchFields"
-            @search="handleQuery"
-            @reset="resetQuery"
-          />
+        <el-card shadow="hover">
+          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
+            <el-form-item label="方案编码" prop="planCode">
+              <el-input v-model="queryParams.planCode" placeholder="请输入方案编码" clearable @keyup.enter="handleQuery" />
+            </el-form-item>
+            <el-form-item label="方案名称" prop="planName">
+              <el-input v-model="queryParams.planName" placeholder="请输入方案名称" clearable @keyup.enter="handleQuery" />
+            </el-form-item>
+            <el-form-item label="方案描述" prop="description">
+              <el-input v-model="queryParams.description" placeholder="请输入方案描述" clearable @keyup.enter="handleQuery" />
+            </el-form-item>
+            <el-form-item label="开始日期" prop="startDate">
+              <el-date-picker clearable
+                v-model="queryParams.startDate"
+                type="date"
+                value-format="YYYY-MM-DD"
+                placeholder="请选择开始日期"
+              />
+            </el-form-item>
+            <el-form-item label="结束日期" prop="endDate">
+              <el-date-picker clearable
+                v-model="queryParams.endDate"
+                type="date"
+                value-format="YYYY-MM-DD"
+                placeholder="请选择结束日期"
+              />
+            </el-form-item>
+            <el-form-item label="删除标志" prop="isDeleted">
+              <el-input v-model="queryParams.isDeleted" placeholder="请输入删除标志" clearable @keyup.enter="handleQuery" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
+            </el-form-item>
+          </el-form>
         </el-card>
       </div>
     </transition>
 
-    <el-card shadow="never" class="table-card">
+    <el-card shadow="never">
       <template #header>
-        <div class="table-header">
-          <div class="table-title">
-            <i-ep-list class="table-icon"></i-ep-list>
-            方案列表
-            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
-          </div>
-          <div class="table-actions">
+        <el-row :gutter="10" class="mb8">
+          <el-col :span="1.5">
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:tumorQcPlan:add']">新增</el-button>
+          </el-col>
+          <el-col :span="1.5">
             <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:tumorQcPlan:edit']">修改</el-button>
+          </el-col>
+          <el-col :span="1.5">
             <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:tumorQcPlan:remove']">删除</el-button>
+          </el-col>
+          <el-col :span="1.5">
             <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:tumorQcPlan:export']">导出</el-button>
-            <el-button type="warning" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
-            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-          </div>
-        </div>
+          </el-col>
+          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+        </el-row>
       </template>
 
       <el-table v-loading="loading" border :data="tumorQcPlanList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column
-          v-for="field in fieldConfigManager.getVisibleFields()"
-          :key="field.prop"
-          :label="field.label"
-          :prop="field.prop"
-          :width="field.width"
-          align="center"
-        >
+        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
+        <el-table-column label="方案编码" align="center" prop="planCode" />
+        <el-table-column label="方案名称" align="center" prop="planName" />
+        <el-table-column label="方案类型" align="center" prop="planType" />
+        <el-table-column label="方案描述" align="center" prop="description" />
+        <el-table-column label="开始日期" align="center" prop="startDate" width="180">
           <template #default="scope">
-            <span v-if="field.prop === 'startDate' || field.prop === 'endDate'">{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
-            <span v-else>{{ scope.row[field.prop] }}</span>
+            <span>{{ parseTime(scope.row.startDate, '{y}-{m}-{d}') }}</span>
           </template>
         </el-table-column>
+        <el-table-column label="结束日期" align="center" prop="endDate" width="180">
+          <template #default="scope">
+            <span>{{ parseTime(scope.row.endDate, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态" align="center" prop="status" />
+        <el-table-column label="审批状态" align="center" prop="approvalStatus" />
+        <el-table-column label="删除标志" align="center" prop="isDeleted" />
         <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
@@ -111,8 +122,8 @@
             placeholder="请选择结束日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="删除标志" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入删除标志" />
+        <el-form-item label="删除标志" prop="isDeleted">
+          <el-input v-model="form.isDeleted" placeholder="请输入删除标志" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -122,19 +133,12 @@
         </div>
       </template>
     </el-dialog>
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="() => (showFieldConfig = false)" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="() => (searchConfigVisible = false)" />
   </div>
 </template>
 
 <script setup name="TumorQcPlan" lang="ts">
 import { listTumorQcPlan, getTumorQcPlan, delTumorQcPlan, addTumorQcPlan, updateTumorQcPlan } from '@/api/tumorqc/tumorQcPlan';
 import { TumorQcPlanVO, TumorQcPlanQuery, TumorQcPlanForm } from '@/api/tumorqc/tumorQcPlan/types';
-import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import { createTumorQcPlanFieldConfig } from '@/utils/mmpFieldConfigs';
-import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createTumorQcPlanSearchConfig } from '@/utils/mmpSearchConfigs';
-import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -147,18 +151,13 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref();
+const queryFormRef = ref<ElFormInstance>();
 const tumorQcPlanFormRef = ref<ElFormInstance>();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
-const showFieldConfig = ref(false);
-const fieldConfigManager = createTumorQcPlanFieldConfig();
-const searchConfigVisible = ref(false);
-const searchConfigManager = createTumorQcPlanSearchConfig();
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 const initFormData: TumorQcPlanForm = {
   id: undefined,
@@ -170,7 +169,7 @@ const initFormData: TumorQcPlanForm = {
   endDate: undefined,
   status: undefined,
   approvalStatus: undefined,
-  delFlag: undefined
+  isDeleted: undefined
 }
 const data = reactive<PageData<TumorQcPlanForm, TumorQcPlanQuery>>({
   form: {...initFormData},
@@ -185,7 +184,7 @@ const data = reactive<PageData<TumorQcPlanForm, TumorQcPlanQuery>>({
     endDate: undefined,
     status: undefined,
     approvalStatus: undefined,
-    delFlag: undefined,
+    isDeleted: undefined,
     params: {
     }
   },
@@ -298,45 +297,3 @@ onMounted(() => {
   getList();
 });
 </script>
-<style scoped>
-.page-header .page-description {
-  font-size: 13px;
-  color: #86909c;
-  line-height: 1.6;
-}
-.search-card .search-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 44px;
-}
-.search-card .search-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.table-card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px;
-}
-.table-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 44px;
-  padding: 6px 8px;
-}
-.table-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.table-actions {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-}
-</style>

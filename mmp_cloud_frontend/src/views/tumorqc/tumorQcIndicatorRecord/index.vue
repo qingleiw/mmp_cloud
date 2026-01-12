@@ -7,7 +7,7 @@
       </h2>
       <p class="page-description">管理肿瘤质控指标的监测记录，包括记录日期、科室、指标数值与趋势等</p>
     </div>
-    <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
+    <transition :enter-active-class="animate.searchAnimate.enter" :leave-active-class="animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
         <el-card shadow="hover" class="search-card">
           <template #header>
@@ -182,6 +182,7 @@ import { createTumorQcIndicatorRecordSearchConfig } from '@/utils/mmpSearchConfi
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
+const animate = proxy.animate;
 
 const tumorQcIndicatorRecordList = ref<TumorQcIndicatorRecordVO[]>([]);
 const buttonLoading = ref(false);

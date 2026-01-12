@@ -47,10 +47,10 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:ledgerLongStayPatient:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerLongStayPatient:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:ledgerLongStayPatient:edit']"
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ledger:ledgerLongStayPatient:edit']"
               >修改</el-button
             >
           </el-col>
@@ -61,12 +61,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:ledgerLongStayPatient:remove']"
+              v-hasPermi="['ledger:ledgerLongStayPatient:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:ledgerLongStayPatient:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerLongStayPatient:export']"
               >导出</el-button
             >
           </el-col>
@@ -105,7 +105,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:ledgerLongStayPatient:edit']"
+                v-hasPermi="['ledger:ledgerLongStayPatient:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -114,7 +114,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:ledgerLongStayPatient:remove']"
+                v-hasPermi="['ledger:ledgerLongStayPatient:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -182,8 +182,8 @@ import {
   delLedgerLongStayPatient,
   addLedgerLongStayPatient,
   updateLedgerLongStayPatient
-} from '@/api/system/ledgerLongStayPatient';
-import { LedgerLongStayPatientVO, LedgerLongStayPatientQuery, LedgerLongStayPatientForm } from '@/api/system/ledgerLongStayPatient/types';
+} from '@/api/ledger/ledgerLongStayPatient';
+import { LedgerLongStayPatientVO, LedgerLongStayPatientQuery, LedgerLongStayPatientForm } from '@/api/ledger/ledgerLongStayPatient/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -334,7 +334,7 @@ const handleDelete = async (row?: LedgerLongStayPatientVO) => {
 /** 导出按钮操作 */
 const handleExport = () => {
   proxy?.download(
-    'system/ledgerLongStayPatient/export',
+    'ledger/ledgerLongStayPatient/export',
     {
       ...queryParams.value
     },

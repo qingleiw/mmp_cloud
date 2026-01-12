@@ -10,7 +10,7 @@
     </div>
 
     <!-- 动态搜索表单 -->
-    <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
+    <transition :enter-active-class="animate.searchAnimate.enter" :leave-active-class="animate.searchAnimate.leave">
       <div v-show="showSearch" class="search-container mb-4">
         <el-card shadow="hover" class="search-card">
           <template #header>
@@ -215,7 +215,7 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="() => (showFieldConfig = false)" />
+    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="() => (showFieldConfig = false)" />
     <!-- 搜索配置对话框 -->
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" />
   </div>
@@ -241,6 +241,7 @@ import { createCoreSystemExecutionRecordSearchConfig } from '@/utils/mmpSearchCo
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
+const animate = proxy.animate;
 
 const coreSystemExecutionRecordList = ref<CoreSystemExecutionRecordVO[]>([]);
 const buttonLoading = ref(false);

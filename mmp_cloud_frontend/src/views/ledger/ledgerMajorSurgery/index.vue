@@ -8,7 +8,12 @@
               <el-input v-model="queryParams.patientName" placeholder="请输入患者姓名" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="手术日期" prop="operationDate">
-              <el-date-picker clearable v-model="queryParams.operationDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择手术日期" />
+              <el-date-picker clearable
+                v-model="queryParams.operationDate"
+                type="date"
+                value-format="YYYY-MM-DD"
+                placeholder="请选择手术日期"
+              />
             </el-form-item>
             <el-form-item label="手术科室" prop="department">
               <el-input v-model="queryParams.department" placeholder="请输入手术科室" clearable @keyup.enter="handleQuery" />
@@ -59,26 +64,16 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:ledgerMajorSurgery:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerMajorSurgery:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:ledgerMajorSurgery:edit']"
-              >修改</el-button
-            >
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ledger:ledgerMajorSurgery:edit']">修改</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button
-              type="danger"
-              plain
-              icon="Delete"
-              :disabled="multiple"
-              @click="handleDelete()"
-              v-hasPermi="['system:ledgerMajorSurgery:remove']"
-              >删除</el-button
-            >
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['ledger:ledgerMajorSurgery:remove']">删除</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:ledgerMajorSurgery:export']">导出</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerMajorSurgery:export']">导出</el-button>
           </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
@@ -107,19 +102,13 @@
         <el-table-column label="医疗评价" align="center" prop="medicalEvaluation" />
         <el-table-column label="状态" align="center" prop="status" />
         <el-table-column label="备注" align="center" prop="remark" />
-        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:ledgerMajorSurgery:edit']"></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['ledger:ledgerMajorSurgery:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button
-                link
-                type="primary"
-                icon="Delete"
-                @click="handleDelete(scope.row)"
-                v-hasPermi="['system:ledgerMajorSurgery:remove']"
-              ></el-button>
+              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['ledger:ledgerMajorSurgery:remove']"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -137,7 +126,11 @@
           <el-input v-model="form.patientName" placeholder="请输入患者姓名" />
         </el-form-item>
         <el-form-item label="手术日期" prop="operationDate">
-          <el-date-picker clearable v-model="form.operationDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择手术日期">
+          <el-date-picker clearable
+            v-model="form.operationDate"
+            type="datetime"
+            value-format="YYYY-MM-DD HH:mm:ss"
+            placeholder="请选择手术日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="手术科室" prop="department">
@@ -153,10 +146,10 @@
           <el-input v-model="form.operationLevel" placeholder="请输入手术等级" />
         </el-form-item>
         <el-form-item label="术前诊断" prop="preoperativeDiagnosis">
-          <el-input v-model="form.preoperativeDiagnosis" type="textarea" placeholder="请输入内容" />
+            <el-input v-model="form.preoperativeDiagnosis" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="术后诊断" prop="postoperativeDiagnosis">
-          <el-input v-model="form.postoperativeDiagnosis" type="textarea" placeholder="请输入内容" />
+            <el-input v-model="form.postoperativeDiagnosis" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="手术时长(分钟)" prop="operationDuration">
           <el-input v-model="form.operationDuration" placeholder="请输入手术时长(分钟)" />
@@ -165,19 +158,19 @@
           <el-input v-model="form.anesthesiaMethod" placeholder="请输入麻醉方式" />
         </el-form-item>
         <el-form-item label="术中并发症" prop="complications">
-          <el-input v-model="form.complications" type="textarea" placeholder="请输入内容" />
+            <el-input v-model="form.complications" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="手术结局" prop="outcome">
           <el-input v-model="form.outcome" placeholder="请输入手术结局" />
         </el-form-item>
         <el-form-item label="随访结果" prop="followUpResults">
-          <el-input v-model="form.followUpResults" type="textarea" placeholder="请输入内容" />
+            <el-input v-model="form.followUpResults" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="医疗评价" prop="medicalEvaluation">
-          <el-input v-model="form.medicalEvaluation" type="textarea" placeholder="请输入内容" />
+            <el-input v-model="form.medicalEvaluation" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -191,14 +184,8 @@
 </template>
 
 <script setup name="LedgerMajorSurgery" lang="ts">
-import {
-  listLedgerMajorSurgery,
-  getLedgerMajorSurgery,
-  delLedgerMajorSurgery,
-  addLedgerMajorSurgery,
-  updateLedgerMajorSurgery
-} from '@/api/system/ledgerMajorSurgery';
-import { LedgerMajorSurgeryVO, LedgerMajorSurgeryQuery, LedgerMajorSurgeryForm } from '@/api/system/ledgerMajorSurgery/types';
+import { listLedgerMajorSurgery, getLedgerMajorSurgery, delLedgerMajorSurgery, addLedgerMajorSurgery, updateLedgerMajorSurgery } from '@/api/ledger/ledgerMajorSurgery';
+import { LedgerMajorSurgeryVO, LedgerMajorSurgeryQuery, LedgerMajorSurgeryForm } from '@/api/ledger/ledgerMajorSurgery/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -238,9 +225,9 @@ const initFormData: LedgerMajorSurgeryForm = {
   medicalEvaluation: undefined,
   status: undefined,
   remark: undefined
-};
+}
 const data = reactive<PageData<LedgerMajorSurgeryForm, LedgerMajorSurgeryQuery>>({
-  form: { ...initFormData },
+  form: {...initFormData},
   queryParams: {
     pageNum: 1,
     pageSize: 10,
@@ -259,14 +246,25 @@ const data = reactive<PageData<LedgerMajorSurgeryForm, LedgerMajorSurgeryQuery>>
     followUpResults: undefined,
     medicalEvaluation: undefined,
     status: undefined,
-    params: {}
+    params: {
+    }
   },
   rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
-    patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
-    patientName: [{ required: true, message: '患者姓名不能为空', trigger: 'blur' }],
-    operationDate: [{ required: true, message: '手术日期不能为空', trigger: 'blur' }],
-    operationName: [{ required: true, message: '手术名称不能为空', trigger: 'blur' }]
+    id: [
+      { required: true, message: "主键ID不能为空", trigger: "blur" }
+    ],
+    patientId: [
+      { required: true, message: "患者ID不能为空", trigger: "blur" }
+    ],
+    patientName: [
+      { required: true, message: "患者姓名不能为空", trigger: "blur" }
+    ],
+    operationDate: [
+      { required: true, message: "手术日期不能为空", trigger: "blur" }
+    ],
+    operationName: [
+      { required: true, message: "手术名称不能为空", trigger: "blur" }
+    ],
   }
 });
 
@@ -279,55 +277,55 @@ const getList = async () => {
   ledgerMajorSurgeryList.value = res.rows;
   total.value = res.total;
   loading.value = false;
-};
+}
 
 /** 取消按钮 */
 const cancel = () => {
   reset();
   dialog.visible = false;
-};
+}
 
 /** 表单重置 */
 const reset = () => {
-  form.value = { ...initFormData };
+  form.value = {...initFormData};
   ledgerMajorSurgeryFormRef.value?.resetFields();
-};
+}
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
   queryParams.value.pageNum = 1;
   getList();
-};
+}
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
   handleQuery();
-};
+}
 
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: LedgerMajorSurgeryVO[]) => {
-  ids.value = selection.map((item) => item.id);
+  ids.value = selection.map(item => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-};
+}
 
 /** 新增按钮操作 */
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加重大疑难手术监测与管理';
-};
+  dialog.title = "添加重大疑难手术监测与管理";
+}
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: LedgerMajorSurgeryVO) => {
   reset();
-  const _id = row?.id || ids.value[0];
+  const _id = row?.id || ids.value[0]
   const res = await getLedgerMajorSurgery(_id);
   Object.assign(form.value, res.data);
   dialog.visible = true;
-  dialog.title = '修改重大疑难手术监测与管理';
-};
+  dialog.title = "修改重大疑难手术监测与管理";
+}
 
 /** 提交按钮 */
 const submitForm = () => {
@@ -335,36 +333,32 @@ const submitForm = () => {
     if (valid) {
       buttonLoading.value = true;
       if (form.value.id) {
-        await updateLedgerMajorSurgery(form.value).finally(() => (buttonLoading.value = false));
+        await updateLedgerMajorSurgery(form.value).finally(() =>  buttonLoading.value = false);
       } else {
-        await addLedgerMajorSurgery(form.value).finally(() => (buttonLoading.value = false));
+        await addLedgerMajorSurgery(form.value).finally(() =>  buttonLoading.value = false);
       }
-      proxy?.$modal.msgSuccess('操作成功');
+      proxy?.$modal.msgSuccess("操作成功");
       dialog.visible = false;
       await getList();
     }
   });
-};
+}
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: LedgerMajorSurgeryVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除重大疑难手术监测与管理编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
+  await proxy?.$modal.confirm('是否确认删除重大疑难手术监测与管理编号为"' + _ids + '"的数据项？').finally(() => loading.value = false);
   await delLedgerMajorSurgery(_ids);
-  proxy?.$modal.msgSuccess('删除成功');
+  proxy?.$modal.msgSuccess("删除成功");
   await getList();
-};
+}
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download(
-    'system/ledgerMajorSurgery/export',
-    {
-      ...queryParams.value
-    },
-    `ledgerMajorSurgery_${new Date().getTime()}.xlsx`
-  );
-};
+  proxy?.download('ledger/ledgerMajorSurgery/export', {
+    ...queryParams.value
+  }, `ledgerMajorSurgery_${new Date().getTime()}.xlsx`)
+}
 
 onMounted(() => {
   getList();
