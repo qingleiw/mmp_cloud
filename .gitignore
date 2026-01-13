@@ -40,3 +40,7 @@ build/
 
 docs/
 test-data/
+
+# 程序自带的jar文件，不忽略
+!mmp_cloud_backend/ruoyi-visual/ruoyi-nacos/src/main/resources/lib/*.jar
+!mmp_cloud_backend/ruoyi-visual/ruoyi-seata-server/src/main/resources/lib/*.jar
