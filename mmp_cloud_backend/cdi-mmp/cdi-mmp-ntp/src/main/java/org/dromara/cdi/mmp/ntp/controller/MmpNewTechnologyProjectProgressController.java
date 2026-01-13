@@ -39,7 +39,7 @@ public class MmpNewTechnologyProjectProgressController extends BaseController {
     /**
      * 查询新技术进展报告列表
      */
-    @SaCheckPermission("system:newTechnologyProjectProgress:list")
+    @SaCheckPermission("ntp:newTechnologyProjectProgress:list")
     @GetMapping("/list")
     public TableDataInfo<MmpNewTechnologyProjectProgressVo> list(MmpNewTechnologyProjectProgressBo bo, PageQuery pageQuery) {
         return mmpNewTechnologyProjectProgressService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpNewTechnologyProjectProgressController extends BaseController {
     /**
      * 导出新技术进展报告列表
      */
-    @SaCheckPermission("system:newTechnologyProjectProgress:export")
+    @SaCheckPermission("ntp:newTechnologyProjectProgress:export")
     @Log(title = "新技术进展报告", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpNewTechnologyProjectProgressBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpNewTechnologyProjectProgressController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:newTechnologyProjectProgress:query")
+    @SaCheckPermission("ntp:newTechnologyProjectProgress:query")
     @GetMapping("/{id}")
     public R<MmpNewTechnologyProjectProgressVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpNewTechnologyProjectProgressController extends BaseController {
     /**
      * 新增新技术进展报告
      */
-    @SaCheckPermission("system:newTechnologyProjectProgress:add")
+    @SaCheckPermission("ntp:newTechnologyProjectProgress:add")
     @Log(title = "新技术进展报告", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpNewTechnologyProjectProgressController extends BaseController {
     /**
      * 修改新技术进展报告
      */
-    @SaCheckPermission("system:newTechnologyProjectProgress:edit")
+    @SaCheckPermission("ntp:newTechnologyProjectProgress:edit")
     @Log(title = "新技术进展报告", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpNewTechnologyProjectProgressController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:newTechnologyProjectProgress:remove")
+    @SaCheckPermission("ntp:newTechnologyProjectProgress:remove")
     @Log(title = "新技术进展报告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

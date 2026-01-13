@@ -39,7 +39,7 @@ public class MmpEmergencyPlanApprovalController extends BaseController {
     /**
      * 查询应急预案审批列表
      */
-    @SaCheckPermission("system:emergencyPlanApproval:list")
+    @SaCheckPermission("emergency:emergencyPlanApproval:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyPlanApprovalVo> list(MmpEmergencyPlanApprovalBo bo, PageQuery pageQuery) {
         return mmpEmergencyPlanApprovalService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyPlanApprovalController extends BaseController {
     /**
      * 导出应急预案审批列表
      */
-    @SaCheckPermission("system:emergencyPlanApproval:export")
+    @SaCheckPermission("emergency:emergencyPlanApproval:export")
     @Log(title = "应急预案审批", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyPlanApprovalBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyPlanApprovalController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyPlanApproval:query")
+    @SaCheckPermission("emergency:emergencyPlanApproval:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyPlanApprovalVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyPlanApprovalController extends BaseController {
     /**
      * 新增应急预案审批
      */
-    @SaCheckPermission("system:emergencyPlanApproval:add")
+    @SaCheckPermission("emergency:emergencyPlanApproval:add")
     @Log(title = "应急预案审批", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyPlanApprovalController extends BaseController {
     /**
      * 修改应急预案审批
      */
-    @SaCheckPermission("system:emergencyPlanApproval:edit")
+    @SaCheckPermission("emergency:emergencyPlanApproval:edit")
     @Log(title = "应急预案审批", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyPlanApprovalController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyPlanApproval:remove")
+    @SaCheckPermission("emergency:emergencyPlanApproval:remove")
     @Log(title = "应急预案审批", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

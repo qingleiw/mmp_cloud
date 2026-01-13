@@ -542,7 +542,7 @@
   </el-dialog>
 
   <!-- 字段配置对话框 -->
-  <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" />
+  <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" />
 </template>
 
 <script setup name="ComplaintDispute" lang="ts">
@@ -552,8 +552,8 @@ import {
   delComplaintDispute,
   addComplaintDispute,
   updateComplaintDispute
-} from '@/api/system/complaintDispute';
-import { ComplaintDisputeVO, ComplaintDisputeQuery, ComplaintDisputeForm } from '@/api/system/complaintDispute/types';
+} from '@/api/complaindispute/complaintDispute';
+import { ComplaintDisputeVO, ComplaintDisputeQuery, ComplaintDisputeForm } from '@/api/complaindispute/complaintDispute/types';
 import { createComplaintDisputeFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { ref, reactive, toRefs, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
@@ -747,7 +747,7 @@ const handleExport = () => {
 
 /** 导入按钮操作 */
 const handleImport = () => {
-  proxy?.$modal.upload({
+  proxy?.upload({
     url: 'system/complaintDispute/importData',
     accept: '.xlsx,.xls',
     onSuccess: () => {

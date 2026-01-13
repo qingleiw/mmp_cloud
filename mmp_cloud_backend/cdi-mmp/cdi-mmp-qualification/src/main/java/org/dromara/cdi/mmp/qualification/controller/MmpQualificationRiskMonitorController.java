@@ -39,7 +39,7 @@ public class MmpQualificationRiskMonitorController extends BaseController {
     /**
      * 查询资质风险监测列表
      */
-    @SaCheckPermission("system:qualificationRiskMonitor:list")
+    @SaCheckPermission("qualification:qualificationRiskMonitor:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationRiskMonitorVo> list(MmpQualificationRiskMonitorBo bo, PageQuery pageQuery) {
         return mmpQualificationRiskMonitorService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationRiskMonitorController extends BaseController {
     /**
      * 导出资质风险监测列表
      */
-    @SaCheckPermission("system:qualificationRiskMonitor:export")
+    @SaCheckPermission("qualification:qualificationRiskMonitor:export")
     @Log(title = "资质风险监测", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationRiskMonitorBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationRiskMonitorController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationRiskMonitor:query")
+    @SaCheckPermission("qualification:qualificationRiskMonitor:query")
     @GetMapping("/{id}")
     public R<MmpQualificationRiskMonitorVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationRiskMonitorController extends BaseController {
     /**
      * 新增资质风险监测
      */
-    @SaCheckPermission("system:qualificationRiskMonitor:add")
+    @SaCheckPermission("qualification:qualificationRiskMonitor:add")
     @Log(title = "资质风险监测", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationRiskMonitorController extends BaseController {
     /**
      * 修改资质风险监测
      */
-    @SaCheckPermission("system:qualificationRiskMonitor:edit")
+    @SaCheckPermission("qualification:qualificationRiskMonitor:edit")
     @Log(title = "资质风险监测", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationRiskMonitorController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationRiskMonitor:remove")
+    @SaCheckPermission("qualification:qualificationRiskMonitor:remove")
     @Log(title = "资质风险监测", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

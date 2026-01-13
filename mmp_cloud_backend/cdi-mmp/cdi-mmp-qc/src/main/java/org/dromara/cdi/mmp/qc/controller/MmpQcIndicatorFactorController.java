@@ -39,7 +39,7 @@ public class MmpQcIndicatorFactorController extends BaseController {
     /**
      * 查询指标计算因子列表
      */
-    @SaCheckPermission("system:qcIndicatorFactor:list")
+    @SaCheckPermission("qc:qcIndicatorFactor:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQcIndicatorFactorVo> list(MmpQcIndicatorFactorBo bo, PageQuery pageQuery) {
         return mmpQcIndicatorFactorService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQcIndicatorFactorController extends BaseController {
     /**
      * 导出指标计算因子列表
      */
-    @SaCheckPermission("system:qcIndicatorFactor:export")
+    @SaCheckPermission("qc:qcIndicatorFactor:export")
     @Log(title = "指标计算因子", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQcIndicatorFactorBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQcIndicatorFactorController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qcIndicatorFactor:query")
+    @SaCheckPermission("qc:qcIndicatorFactor:query")
     @GetMapping("/{id}")
     public R<MmpQcIndicatorFactorVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQcIndicatorFactorController extends BaseController {
     /**
      * 新增指标计算因子
      */
-    @SaCheckPermission("system:qcIndicatorFactor:add")
+    @SaCheckPermission("qc:qcIndicatorFactor:add")
     @Log(title = "指标计算因子", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQcIndicatorFactorController extends BaseController {
     /**
      * 修改指标计算因子
      */
-    @SaCheckPermission("system:qcIndicatorFactor:edit")
+    @SaCheckPermission("qc:qcIndicatorFactor:edit")
     @Log(title = "指标计算因子", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQcIndicatorFactorController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qcIndicatorFactor:remove")
+    @SaCheckPermission("qc:qcIndicatorFactor:remove")
     @Log(title = "指标计算因子", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

@@ -39,7 +39,7 @@ public class MmpTechnicianQualificationCatalogController extends BaseController 
     /**
      * 查询医技资质目录列表
      */
-    @SaCheckPermission("system:technicianQualificationCatalog:list")
+    @SaCheckPermission("qualification:technicianQualificationCatalog:list")
     @GetMapping("/list")
     public TableDataInfo<MmpTechnicianQualificationCatalogVo> list(MmpTechnicianQualificationCatalogBo bo, PageQuery pageQuery) {
         return mmpTechnicianQualificationCatalogService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpTechnicianQualificationCatalogController extends BaseController 
     /**
      * 导出医技资质目录列表
      */
-    @SaCheckPermission("system:technicianQualificationCatalog:export")
+    @SaCheckPermission("qualification:technicianQualificationCatalog:export")
     @Log(title = "医技资质目录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpTechnicianQualificationCatalogBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpTechnicianQualificationCatalogController extends BaseController 
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:technicianQualificationCatalog:query")
+    @SaCheckPermission("qualification:technicianQualificationCatalog:query")
     @GetMapping("/{id}")
     public R<MmpTechnicianQualificationCatalogVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpTechnicianQualificationCatalogController extends BaseController 
     /**
      * 新增医技资质目录
      */
-    @SaCheckPermission("system:technicianQualificationCatalog:add")
+    @SaCheckPermission("qualification:technicianQualificationCatalog:add")
     @Log(title = "医技资质目录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpTechnicianQualificationCatalogController extends BaseController 
     /**
      * 修改医技资质目录
      */
-    @SaCheckPermission("system:technicianQualificationCatalog:edit")
+    @SaCheckPermission("qualification:technicianQualificationCatalog:edit")
     @Log(title = "医技资质目录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpTechnicianQualificationCatalogController extends BaseController 
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:technicianQualificationCatalog:remove")
+    @SaCheckPermission("qualification:technicianQualificationCatalog:remove")
     @Log(title = "医技资质目录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

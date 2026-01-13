@@ -1,5 +1,10 @@
 export interface LedgerBusinessLearningVO {
   /**
+   * 主键ID
+   */
+  id: number;
+
+  /**
    * 学习日期
    */
   learningDate: string;

@@ -39,7 +39,7 @@ public class MmpQualificationAdmissionConditionController extends BaseController
     /**
      * 查询资质准入条件列表
      */
-    @SaCheckPermission("system:qualificationAdmissionCondition:list")
+    @SaCheckPermission("qualification:qualificationAdmissionCondition:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationAdmissionConditionVo> list(MmpQualificationAdmissionConditionBo bo, PageQuery pageQuery) {
         return mmpQualificationAdmissionConditionService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationAdmissionConditionController extends BaseController
     /**
      * 导出资质准入条件列表
      */
-    @SaCheckPermission("system:qualificationAdmissionCondition:export")
+    @SaCheckPermission("qualification:qualificationAdmissionCondition:export")
     @Log(title = "资质准入条件", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationAdmissionConditionBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationAdmissionConditionController extends BaseController
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationAdmissionCondition:query")
+    @SaCheckPermission("qualification:qualificationAdmissionCondition:query")
     @GetMapping("/{id}")
     public R<MmpQualificationAdmissionConditionVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationAdmissionConditionController extends BaseController
     /**
      * 新增资质准入条件
      */
-    @SaCheckPermission("system:qualificationAdmissionCondition:add")
+    @SaCheckPermission("qualification:qualificationAdmissionCondition:add")
     @Log(title = "资质准入条件", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationAdmissionConditionController extends BaseController
     /**
      * 修改资质准入条件
      */
-    @SaCheckPermission("system:qualificationAdmissionCondition:edit")
+    @SaCheckPermission("qualification:qualificationAdmissionCondition:edit")
     @Log(title = "资质准入条件", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationAdmissionConditionController extends BaseController
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationAdmissionCondition:remove")
+    @SaCheckPermission("qualification:qualificationAdmissionCondition:remove")
     @Log(title = "资质准入条件", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

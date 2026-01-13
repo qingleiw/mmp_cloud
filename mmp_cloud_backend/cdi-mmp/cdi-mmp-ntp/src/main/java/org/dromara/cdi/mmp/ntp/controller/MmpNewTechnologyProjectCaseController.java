@@ -39,7 +39,7 @@ public class MmpNewTechnologyProjectCaseController extends BaseController {
     /**
      * 查询新技术病例登记列表
      */
-    @SaCheckPermission("system:newTechnologyProjectCase:list")
+    @SaCheckPermission("ntp:newTechnologyProjectCase:list")
     @GetMapping("/list")
     public TableDataInfo<MmpNewTechnologyProjectCaseVo> list(MmpNewTechnologyProjectCaseBo bo, PageQuery pageQuery) {
         return mmpNewTechnologyProjectCaseService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpNewTechnologyProjectCaseController extends BaseController {
     /**
      * 导出新技术病例登记列表
      */
-    @SaCheckPermission("system:newTechnologyProjectCase:export")
+    @SaCheckPermission("ntp:newTechnologyProjectCase:export")
     @Log(title = "新技术病例登记", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpNewTechnologyProjectCaseBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpNewTechnologyProjectCaseController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:newTechnologyProjectCase:query")
+    @SaCheckPermission("ntp:newTechnologyProjectCase:query")
     @GetMapping("/{id}")
     public R<MmpNewTechnologyProjectCaseVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpNewTechnologyProjectCaseController extends BaseController {
     /**
      * 新增新技术病例登记
      */
-    @SaCheckPermission("system:newTechnologyProjectCase:add")
+    @SaCheckPermission("ntp:newTechnologyProjectCase:add")
     @Log(title = "新技术病例登记", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpNewTechnologyProjectCaseController extends BaseController {
     /**
      * 修改新技术病例登记
      */
-    @SaCheckPermission("system:newTechnologyProjectCase:edit")
+    @SaCheckPermission("ntp:newTechnologyProjectCase:edit")
     @Log(title = "新技术病例登记", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpNewTechnologyProjectCaseController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:newTechnologyProjectCase:remove")
+    @SaCheckPermission("ntp:newTechnologyProjectCase:remove")
     @Log(title = "新技术病例登记", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

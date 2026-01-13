@@ -39,7 +39,7 @@ public class MmpQcDataCollectionController extends BaseController {
     /**
      * 查询数据采集记录列表
      */
-    @SaCheckPermission("system:qcDataCollection:list")
+    @SaCheckPermission("qc:qcDataCollection:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQcDataCollectionVo> list(MmpQcDataCollectionBo bo, PageQuery pageQuery) {
         return mmpQcDataCollectionService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQcDataCollectionController extends BaseController {
     /**
      * 导出数据采集记录列表
      */
-    @SaCheckPermission("system:qcDataCollection:export")
+    @SaCheckPermission("qc:qcDataCollection:export")
     @Log(title = "数据采集记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQcDataCollectionBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQcDataCollectionController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qcDataCollection:query")
+    @SaCheckPermission("qc:qcDataCollection:query")
     @GetMapping("/{id}")
     public R<MmpQcDataCollectionVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQcDataCollectionController extends BaseController {
     /**
      * 新增数据采集记录
      */
-    @SaCheckPermission("system:qcDataCollection:add")
+    @SaCheckPermission("qc:qcDataCollection:add")
     @Log(title = "数据采集记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQcDataCollectionController extends BaseController {
     /**
      * 修改数据采集记录
      */
-    @SaCheckPermission("system:qcDataCollection:edit")
+    @SaCheckPermission("qc:qcDataCollection:edit")
     @Log(title = "数据采集记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQcDataCollectionController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qcDataCollection:remove")
+    @SaCheckPermission("qc:qcDataCollection:remove")
     @Log(title = "数据采集记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

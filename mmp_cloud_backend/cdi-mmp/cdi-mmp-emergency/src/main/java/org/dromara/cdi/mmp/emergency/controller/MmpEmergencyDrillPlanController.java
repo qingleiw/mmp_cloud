@@ -39,7 +39,7 @@ public class MmpEmergencyDrillPlanController extends BaseController {
     /**
      * 查询应急演练计划列表
      */
-    @SaCheckPermission("system:emergencyDrillPlan:list")
+    @SaCheckPermission("emergency:emergencyDrillPlan:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyDrillPlanVo> list(MmpEmergencyDrillPlanBo bo, PageQuery pageQuery) {
         return mmpEmergencyDrillPlanService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyDrillPlanController extends BaseController {
     /**
      * 导出应急演练计划列表
      */
-    @SaCheckPermission("system:emergencyDrillPlan:export")
+    @SaCheckPermission("emergency:emergencyDrillPlan:export")
     @Log(title = "应急演练计划", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyDrillPlanBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyDrillPlanController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyDrillPlan:query")
+    @SaCheckPermission("emergency:emergencyDrillPlan:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyDrillPlanVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyDrillPlanController extends BaseController {
     /**
      * 新增应急演练计划
      */
-    @SaCheckPermission("system:emergencyDrillPlan:add")
+    @SaCheckPermission("emergency:emergencyDrillPlan:add")
     @Log(title = "应急演练计划", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyDrillPlanController extends BaseController {
     /**
      * 修改应急演练计划
      */
-    @SaCheckPermission("system:emergencyDrillPlan:edit")
+    @SaCheckPermission("emergency:emergencyDrillPlan:edit")
     @Log(title = "应急演练计划", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyDrillPlanController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyDrillPlan:remove")
+    @SaCheckPermission("emergency:emergencyDrillPlan:remove")
     @Log(title = "应急演练计划", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

@@ -39,7 +39,7 @@ public class MmpEmergencyDrillSummaryController extends BaseController {
     /**
      * 查询应急演练总结列表
      */
-    @SaCheckPermission("system:emergencyDrillSummary:list")
+    @SaCheckPermission("emergency:emergencyDrillSummary:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyDrillSummaryVo> list(MmpEmergencyDrillSummaryBo bo, PageQuery pageQuery) {
         return mmpEmergencyDrillSummaryService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyDrillSummaryController extends BaseController {
     /**
      * 导出应急演练总结列表
      */
-    @SaCheckPermission("system:emergencyDrillSummary:export")
+    @SaCheckPermission("emergency:emergencyDrillSummary:export")
     @Log(title = "应急演练总结", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyDrillSummaryBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyDrillSummaryController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyDrillSummary:query")
+    @SaCheckPermission("emergency:emergencyDrillSummary:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyDrillSummaryVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyDrillSummaryController extends BaseController {
     /**
      * 新增应急演练总结
      */
-    @SaCheckPermission("system:emergencyDrillSummary:add")
+    @SaCheckPermission("emergency:emergencyDrillSummary:add")
     @Log(title = "应急演练总结", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyDrillSummaryController extends BaseController {
     /**
      * 修改应急演练总结
      */
-    @SaCheckPermission("system:emergencyDrillSummary:edit")
+    @SaCheckPermission("emergency:emergencyDrillSummary:edit")
     @Log(title = "应急演练总结", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyDrillSummaryController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyDrillSummary:remove")
+    @SaCheckPermission("emergency:emergencyDrillSummary:remove")
     @Log(title = "应急演练总结", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

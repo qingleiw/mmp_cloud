@@ -39,7 +39,7 @@ public class MmpQualificationCatalogController extends BaseController {
     /**
      * 查询医生手术授权目录列表
      */
-    @SaCheckPermission("system:qualificationCatalog:list")
+    @SaCheckPermission("qualification:qualificationCatalog:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationCatalogVo> list(MmpQualificationCatalogBo bo, PageQuery pageQuery) {
         return mmpQualificationCatalogService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationCatalogController extends BaseController {
     /**
      * 导出医生手术授权目录列表
      */
-    @SaCheckPermission("system:qualificationCatalog:export")
+    @SaCheckPermission("qualification:qualificationCatalog:export")
     @Log(title = "医生手术授权目录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationCatalogBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationCatalogController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationCatalog:query")
+    @SaCheckPermission("qualification:qualificationCatalog:query")
     @GetMapping("/{id}")
     public R<MmpQualificationCatalogVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationCatalogController extends BaseController {
     /**
      * 新增医生手术授权目录
      */
-    @SaCheckPermission("system:qualificationCatalog:add")
+    @SaCheckPermission("qualification:qualificationCatalog:add")
     @Log(title = "医生手术授权目录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationCatalogController extends BaseController {
     /**
      * 修改医生手术授权目录
      */
-    @SaCheckPermission("system:qualificationCatalog:edit")
+    @SaCheckPermission("qualification:qualificationCatalog:edit")
     @Log(title = "医生手术授权目录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationCatalogController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationCatalog:remove")
+    @SaCheckPermission("qualification:qualificationCatalog:remove")
     @Log(title = "医生手术授权目录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

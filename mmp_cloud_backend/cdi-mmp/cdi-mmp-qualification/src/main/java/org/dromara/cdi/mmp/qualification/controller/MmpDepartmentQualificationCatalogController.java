@@ -39,7 +39,7 @@ public class MmpDepartmentQualificationCatalogController extends BaseController 
     /**
      * 查询科室资质目录列表
      */
-    @SaCheckPermission("system:departmentQualificationCatalog:list")
+    @SaCheckPermission("qualification:departmentQualificationCatalog:list")
     @GetMapping("/list")
     public TableDataInfo<MmpDepartmentQualificationCatalogVo> list(MmpDepartmentQualificationCatalogBo bo, PageQuery pageQuery) {
         return mmpDepartmentQualificationCatalogService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpDepartmentQualificationCatalogController extends BaseController 
     /**
      * 导出科室资质目录列表
      */
-    @SaCheckPermission("system:departmentQualificationCatalog:export")
+    @SaCheckPermission("qualification:departmentQualificationCatalog:export")
     @Log(title = "科室资质目录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpDepartmentQualificationCatalogBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpDepartmentQualificationCatalogController extends BaseController 
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:departmentQualificationCatalog:query")
+    @SaCheckPermission("qualification:departmentQualificationCatalog:query")
     @GetMapping("/{id}")
     public R<MmpDepartmentQualificationCatalogVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpDepartmentQualificationCatalogController extends BaseController 
     /**
      * 新增科室资质目录
      */
-    @SaCheckPermission("system:departmentQualificationCatalog:add")
+    @SaCheckPermission("qualification:departmentQualificationCatalog:add")
     @Log(title = "科室资质目录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpDepartmentQualificationCatalogController extends BaseController 
     /**
      * 修改科室资质目录
      */
-    @SaCheckPermission("system:departmentQualificationCatalog:edit")
+    @SaCheckPermission("qualification:departmentQualificationCatalog:edit")
     @Log(title = "科室资质目录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpDepartmentQualificationCatalogController extends BaseController 
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:departmentQualificationCatalog:remove")
+    @SaCheckPermission("qualification:departmentQualificationCatalog:remove")
     @Log(title = "科室资质目录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

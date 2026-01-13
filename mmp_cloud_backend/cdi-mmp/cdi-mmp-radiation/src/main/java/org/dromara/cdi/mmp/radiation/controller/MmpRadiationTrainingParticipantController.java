@@ -39,7 +39,7 @@ public class MmpRadiationTrainingParticipantController extends BaseController {
     /**
      * 查询培训参与记录列表
      */
-    @SaCheckPermission("system:radiationTrainingParticipant:list")
+    @SaCheckPermission("radiation:radiationTrainingParticipant:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationTrainingParticipantVo> list(MmpRadiationTrainingParticipantBo bo, PageQuery pageQuery) {
         return mmpRadiationTrainingParticipantService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationTrainingParticipantController extends BaseController {
     /**
      * 导出培训参与记录列表
      */
-    @SaCheckPermission("system:radiationTrainingParticipant:export")
+    @SaCheckPermission("radiation:radiationTrainingParticipant:export")
     @Log(title = "培训参与记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationTrainingParticipantBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationTrainingParticipantController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationTrainingParticipant:query")
+    @SaCheckPermission("radiation:radiationTrainingParticipant:query")
     @GetMapping("/{id}")
     public R<MmpRadiationTrainingParticipantVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationTrainingParticipantController extends BaseController {
     /**
      * 新增培训参与记录
      */
-    @SaCheckPermission("system:radiationTrainingParticipant:add")
+    @SaCheckPermission("radiation:radiationTrainingParticipant:add")
     @Log(title = "培训参与记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationTrainingParticipantController extends BaseController {
     /**
      * 修改培训参与记录
      */
-    @SaCheckPermission("system:radiationTrainingParticipant:edit")
+    @SaCheckPermission("radiation:radiationTrainingParticipant:edit")
     @Log(title = "培训参与记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationTrainingParticipantController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationTrainingParticipant:remove")
+    @SaCheckPermission("radiation:radiationTrainingParticipant:remove")
     @Log(title = "培训参与记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

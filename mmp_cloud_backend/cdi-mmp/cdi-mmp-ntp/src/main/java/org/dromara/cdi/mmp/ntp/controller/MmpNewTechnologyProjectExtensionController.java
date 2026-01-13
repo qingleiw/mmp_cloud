@@ -39,7 +39,7 @@ public class MmpNewTechnologyProjectExtensionController extends BaseController {
     /**
      * 查询新技术延期申请列表
      */
-    @SaCheckPermission("system:newTechnologyProjectExtension:list")
+    @SaCheckPermission("ntp:newTechnologyProjectExtension:list")
     @GetMapping("/list")
     public TableDataInfo<MmpNewTechnologyProjectExtensionVo> list(MmpNewTechnologyProjectExtensionBo bo, PageQuery pageQuery) {
         return mmpNewTechnologyProjectExtensionService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpNewTechnologyProjectExtensionController extends BaseController {
     /**
      * 导出新技术延期申请列表
      */
-    @SaCheckPermission("system:newTechnologyProjectExtension:export")
+    @SaCheckPermission("ntp:newTechnologyProjectExtension:export")
     @Log(title = "新技术延期申请", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpNewTechnologyProjectExtensionBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpNewTechnologyProjectExtensionController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:newTechnologyProjectExtension:query")
+    @SaCheckPermission("ntp:newTechnologyProjectExtension:query")
     @GetMapping("/{id}")
     public R<MmpNewTechnologyProjectExtensionVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpNewTechnologyProjectExtensionController extends BaseController {
     /**
      * 新增新技术延期申请
      */
-    @SaCheckPermission("system:newTechnologyProjectExtension:add")
+    @SaCheckPermission("ntp:newTechnologyProjectExtension:add")
     @Log(title = "新技术延期申请", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpNewTechnologyProjectExtensionController extends BaseController {
     /**
      * 修改新技术延期申请
      */
-    @SaCheckPermission("system:newTechnologyProjectExtension:edit")
+    @SaCheckPermission("ntp:newTechnologyProjectExtension:edit")
     @Log(title = "新技术延期申请", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpNewTechnologyProjectExtensionController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:newTechnologyProjectExtension:remove")
+    @SaCheckPermission("ntp:newTechnologyProjectExtension:remove")
     @Log(title = "新技术延期申请", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

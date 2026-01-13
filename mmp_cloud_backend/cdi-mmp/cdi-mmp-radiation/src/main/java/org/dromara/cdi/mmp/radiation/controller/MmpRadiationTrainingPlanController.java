@@ -39,7 +39,7 @@ public class MmpRadiationTrainingPlanController extends BaseController {
     /**
      * 查询职业健康培训计划列表
      */
-    @SaCheckPermission("system:radiationTrainingPlan:list")
+    @SaCheckPermission("radiation:radiationTrainingPlan:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationTrainingPlanVo> list(MmpRadiationTrainingPlanBo bo, PageQuery pageQuery) {
         return mmpRadiationTrainingPlanService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationTrainingPlanController extends BaseController {
     /**
      * 导出职业健康培训计划列表
      */
-    @SaCheckPermission("system:radiationTrainingPlan:export")
+    @SaCheckPermission("radiation:radiationTrainingPlan:export")
     @Log(title = "职业健康培训计划", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationTrainingPlanBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationTrainingPlanController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationTrainingPlan:query")
+    @SaCheckPermission("radiation:radiationTrainingPlan:query")
     @GetMapping("/{id}")
     public R<MmpRadiationTrainingPlanVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationTrainingPlanController extends BaseController {
     /**
      * 新增职业健康培训计划
      */
-    @SaCheckPermission("system:radiationTrainingPlan:add")
+    @SaCheckPermission("radiation:radiationTrainingPlan:add")
     @Log(title = "职业健康培训计划", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationTrainingPlanController extends BaseController {
     /**
      * 修改职业健康培训计划
      */
-    @SaCheckPermission("system:radiationTrainingPlan:edit")
+    @SaCheckPermission("radiation:radiationTrainingPlan:edit")
     @Log(title = "职业健康培训计划", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationTrainingPlanController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationTrainingPlan:remove")
+    @SaCheckPermission("radiation:radiationTrainingPlan:remove")
     @Log(title = "职业健康培训计划", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

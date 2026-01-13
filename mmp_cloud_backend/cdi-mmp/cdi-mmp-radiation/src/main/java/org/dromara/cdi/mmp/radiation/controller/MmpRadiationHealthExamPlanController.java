@@ -39,7 +39,7 @@ public class MmpRadiationHealthExamPlanController extends BaseController {
     /**
      * 查询职业健康体检计划列表
      */
-    @SaCheckPermission("system:radiationHealthExamPlan:list")
+    @SaCheckPermission("radiation:radiationHealthExamPlan:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationHealthExamPlanVo> list(MmpRadiationHealthExamPlanBo bo, PageQuery pageQuery) {
         return mmpRadiationHealthExamPlanService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationHealthExamPlanController extends BaseController {
     /**
      * 导出职业健康体检计划列表
      */
-    @SaCheckPermission("system:radiationHealthExamPlan:export")
+    @SaCheckPermission("radiation:radiationHealthExamPlan:export")
     @Log(title = "职业健康体检计划", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationHealthExamPlanBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationHealthExamPlanController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationHealthExamPlan:query")
+    @SaCheckPermission("radiation:radiationHealthExamPlan:query")
     @GetMapping("/{id}")
     public R<MmpRadiationHealthExamPlanVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationHealthExamPlanController extends BaseController {
     /**
      * 新增职业健康体检计划
      */
-    @SaCheckPermission("system:radiationHealthExamPlan:add")
+    @SaCheckPermission("radiation:radiationHealthExamPlan:add")
     @Log(title = "职业健康体检计划", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationHealthExamPlanController extends BaseController {
     /**
      * 修改职业健康体检计划
      */
-    @SaCheckPermission("system:radiationHealthExamPlan:edit")
+    @SaCheckPermission("radiation:radiationHealthExamPlan:edit")
     @Log(title = "职业健康体检计划", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationHealthExamPlanController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationHealthExamPlan:remove")
+    @SaCheckPermission("radiation:radiationHealthExamPlan:remove")
     @Log(title = "职业健康体检计划", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

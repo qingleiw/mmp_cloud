@@ -39,7 +39,7 @@ public class MmpQualificationExamArrangementController extends BaseController {
     /**
      * 查询资质考试安排列表
      */
-    @SaCheckPermission("system:qualificationExamArrangement:list")
+    @SaCheckPermission("qualification:qualificationExamArrangement:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationExamArrangementVo> list(MmpQualificationExamArrangementBo bo, PageQuery pageQuery) {
         return mmpQualificationExamArrangementService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationExamArrangementController extends BaseController {
     /**
      * 导出资质考试安排列表
      */
-    @SaCheckPermission("system:qualificationExamArrangement:export")
+    @SaCheckPermission("qualification:qualificationExamArrangement:export")
     @Log(title = "资质考试安排", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationExamArrangementBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationExamArrangementController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationExamArrangement:query")
+    @SaCheckPermission("qualification:qualificationExamArrangement:query")
     @GetMapping("/{id}")
     public R<MmpQualificationExamArrangementVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationExamArrangementController extends BaseController {
     /**
      * 新增资质考试安排
      */
-    @SaCheckPermission("system:qualificationExamArrangement:add")
+    @SaCheckPermission("qualification:qualificationExamArrangement:add")
     @Log(title = "资质考试安排", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationExamArrangementController extends BaseController {
     /**
      * 修改资质考试安排
      */
-    @SaCheckPermission("system:qualificationExamArrangement:edit")
+    @SaCheckPermission("qualification:qualificationExamArrangement:edit")
     @Log(title = "资质考试安排", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationExamArrangementController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationExamArrangement:remove")
+    @SaCheckPermission("qualification:qualificationExamArrangement:remove")
     @Log(title = "资质考试安排", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

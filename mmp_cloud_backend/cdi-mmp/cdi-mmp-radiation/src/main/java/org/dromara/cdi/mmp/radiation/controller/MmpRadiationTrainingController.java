@@ -39,7 +39,7 @@ public class MmpRadiationTrainingController extends BaseController {
     /**
      * 查询职业健康培训列表
      */
-    @SaCheckPermission("system:radiationTraining:list")
+    @SaCheckPermission("radiation:radiationTraining:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationTrainingVo> list(MmpRadiationTrainingBo bo, PageQuery pageQuery) {
         return mmpRadiationTrainingService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationTrainingController extends BaseController {
     /**
      * 导出职业健康培训列表
      */
-    @SaCheckPermission("system:radiationTraining:export")
+    @SaCheckPermission("radiation:radiationTraining:export")
     @Log(title = "职业健康培训", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationTrainingBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationTrainingController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationTraining:query")
+    @SaCheckPermission("radiation:radiationTraining:query")
     @GetMapping("/{id}")
     public R<MmpRadiationTrainingVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationTrainingController extends BaseController {
     /**
      * 新增职业健康培训
      */
-    @SaCheckPermission("system:radiationTraining:add")
+    @SaCheckPermission("radiation:radiationTraining:add")
     @Log(title = "职业健康培训", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationTrainingController extends BaseController {
     /**
      * 修改职业健康培训
      */
-    @SaCheckPermission("system:radiationTraining:edit")
+    @SaCheckPermission("radiation:radiationTraining:edit")
     @Log(title = "职业健康培训", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationTrainingController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationTraining:remove")
+    @SaCheckPermission("radiation:radiationTraining:remove")
     @Log(title = "职业健康培训", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

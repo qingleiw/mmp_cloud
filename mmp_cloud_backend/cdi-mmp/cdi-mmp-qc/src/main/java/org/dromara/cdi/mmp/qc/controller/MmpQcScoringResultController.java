@@ -39,7 +39,7 @@ public class MmpQcScoringResultController extends BaseController {
     /**
      * 查询评分结果列表
      */
-    @SaCheckPermission("system:qcScoringResult:list")
+    @SaCheckPermission("qc:qcScoringResult:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQcScoringResultVo> list(MmpQcScoringResultBo bo, PageQuery pageQuery) {
         return mmpQcScoringResultService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQcScoringResultController extends BaseController {
     /**
      * 导出评分结果列表
      */
-    @SaCheckPermission("system:qcScoringResult:export")
+    @SaCheckPermission("qc:qcScoringResult:export")
     @Log(title = "评分结果", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQcScoringResultBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQcScoringResultController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qcScoringResult:query")
+    @SaCheckPermission("qc:qcScoringResult:query")
     @GetMapping("/{id}")
     public R<MmpQcScoringResultVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQcScoringResultController extends BaseController {
     /**
      * 新增评分结果
      */
-    @SaCheckPermission("system:qcScoringResult:add")
+    @SaCheckPermission("qc:qcScoringResult:add")
     @Log(title = "评分结果", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQcScoringResultController extends BaseController {
     /**
      * 修改评分结果
      */
-    @SaCheckPermission("system:qcScoringResult:edit")
+    @SaCheckPermission("qc:qcScoringResult:edit")
     @Log(title = "评分结果", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQcScoringResultController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qcScoringResult:remove")
+    @SaCheckPermission("qc:qcScoringResult:remove")
     @Log(title = "评分结果", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

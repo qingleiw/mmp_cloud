@@ -39,7 +39,7 @@ public class MmpQcIndicatorCollectionConfigController extends BaseController {
     /**
      * 查询质控指标数据采集配置列表
      */
-    @SaCheckPermission("system:qcIndicatorCollectionConfig:list")
+    @SaCheckPermission("qc:qcIndicatorCollectionConfig:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQcIndicatorCollectionConfigVo> list(MmpQcIndicatorCollectionConfigBo bo, PageQuery pageQuery) {
         return mmpQcIndicatorCollectionConfigService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQcIndicatorCollectionConfigController extends BaseController {
     /**
      * 导出质控指标数据采集配置列表
      */
-    @SaCheckPermission("system:qcIndicatorCollectionConfig:export")
+    @SaCheckPermission("qc:qcIndicatorCollectionConfig:export")
     @Log(title = "质控指标数据采集配置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQcIndicatorCollectionConfigBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQcIndicatorCollectionConfigController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qcIndicatorCollectionConfig:query")
+    @SaCheckPermission("qc:qcIndicatorCollectionConfig:query")
     @GetMapping("/{id}")
     public R<MmpQcIndicatorCollectionConfigVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQcIndicatorCollectionConfigController extends BaseController {
     /**
      * 新增质控指标数据采集配置
      */
-    @SaCheckPermission("system:qcIndicatorCollectionConfig:add")
+    @SaCheckPermission("qc:qcIndicatorCollectionConfig:add")
     @Log(title = "质控指标数据采集配置", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQcIndicatorCollectionConfigController extends BaseController {
     /**
      * 修改质控指标数据采集配置
      */
-    @SaCheckPermission("system:qcIndicatorCollectionConfig:edit")
+    @SaCheckPermission("qc:qcIndicatorCollectionConfig:edit")
     @Log(title = "质控指标数据采集配置", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQcIndicatorCollectionConfigController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qcIndicatorCollectionConfig:remove")
+    @SaCheckPermission("qc:qcIndicatorCollectionConfig:remove")
     @Log(title = "质控指标数据采集配置", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

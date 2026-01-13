@@ -39,7 +39,7 @@ public class MmpQualificationAuthorizationApplyController extends BaseController
     /**
      * 查询资质授权申请列表
      */
-    @SaCheckPermission("system:qualificationAuthorizationApply:list")
+    @SaCheckPermission("qualification:qualificationAuthorizationApply:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationAuthorizationApplyVo> list(MmpQualificationAuthorizationApplyBo bo, PageQuery pageQuery) {
         return mmpQualificationAuthorizationApplyService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationAuthorizationApplyController extends BaseController
     /**
      * 导出资质授权申请列表
      */
-    @SaCheckPermission("system:qualificationAuthorizationApply:export")
+    @SaCheckPermission("qualification:qualificationAuthorizationApply:export")
     @Log(title = "资质授权申请", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationAuthorizationApplyBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationAuthorizationApplyController extends BaseController
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationAuthorizationApply:query")
+    @SaCheckPermission("qualification:qualificationAuthorizationApply:query")
     @GetMapping("/{id}")
     public R<MmpQualificationAuthorizationApplyVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationAuthorizationApplyController extends BaseController
     /**
      * 新增资质授权申请
      */
-    @SaCheckPermission("system:qualificationAuthorizationApply:add")
+    @SaCheckPermission("qualification:qualificationAuthorizationApply:add")
     @Log(title = "资质授权申请", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationAuthorizationApplyController extends BaseController
     /**
      * 修改资质授权申请
      */
-    @SaCheckPermission("system:qualificationAuthorizationApply:edit")
+    @SaCheckPermission("qualification:qualificationAuthorizationApply:edit")
     @Log(title = "资质授权申请", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationAuthorizationApplyController extends BaseController
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationAuthorizationApply:remove")
+    @SaCheckPermission("qualification:qualificationAuthorizationApply:remove")
     @Log(title = "资质授权申请", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

@@ -154,6 +154,16 @@ export const loadView = (view: any, name: string) => {
       return res;
     }
   }
+  // 如果没有找到，尝试添加 /index
+  for (const path in modules) {
+    const viewsIndex = path.indexOf('/views/');
+    let dir = path.substring(viewsIndex + 7);
+    dir = dir.substring(0, dir.lastIndexOf('.vue'));
+    if (dir === view + '/index') {
+      res = createCustomNameComponent(modules[path], { name });
+      return res;
+    }
+  }
   return res;
 };
 

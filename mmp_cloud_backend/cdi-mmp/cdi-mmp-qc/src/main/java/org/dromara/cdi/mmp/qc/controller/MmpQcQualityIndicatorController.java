@@ -39,7 +39,7 @@ public class MmpQcQualityIndicatorController extends BaseController {
     /**
      * 查询质量指标列表
      */
-    @SaCheckPermission("system:qcQualityIndicator:list")
+    @SaCheckPermission("qc:qcQualityIndicator:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQcQualityIndicatorVo> list(MmpQcQualityIndicatorBo bo, PageQuery pageQuery) {
         return mmpQcQualityIndicatorService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQcQualityIndicatorController extends BaseController {
     /**
      * 导出质量指标列表
      */
-    @SaCheckPermission("system:qcQualityIndicator:export")
+    @SaCheckPermission("qc:qcQualityIndicator:export")
     @Log(title = "质量指标", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQcQualityIndicatorBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQcQualityIndicatorController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qcQualityIndicator:query")
+    @SaCheckPermission("qc:qcQualityIndicator:query")
     @GetMapping("/{id}")
     public R<MmpQcQualityIndicatorVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQcQualityIndicatorController extends BaseController {
     /**
      * 新增质量指标
      */
-    @SaCheckPermission("system:qcQualityIndicator:add")
+    @SaCheckPermission("qc:qcQualityIndicator:add")
     @Log(title = "质量指标", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQcQualityIndicatorController extends BaseController {
     /**
      * 修改质量指标
      */
-    @SaCheckPermission("system:qcQualityIndicator:edit")
+    @SaCheckPermission("qc:qcQualityIndicator:edit")
     @Log(title = "质量指标", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQcQualityIndicatorController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qcQualityIndicator:remove")
+    @SaCheckPermission("qc:qcQualityIndicator:remove")
     @Log(title = "质量指标", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

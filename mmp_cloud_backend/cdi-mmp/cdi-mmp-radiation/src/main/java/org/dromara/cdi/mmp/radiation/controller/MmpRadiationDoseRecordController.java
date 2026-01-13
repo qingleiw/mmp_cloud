@@ -39,7 +39,7 @@ public class MmpRadiationDoseRecordController extends BaseController {
     /**
      * 查询个人剂量监测记录列表
      */
-    @SaCheckPermission("system:radiationDoseRecord:list")
+    @SaCheckPermission("radiation:radiationDoseRecord:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationDoseRecordVo> list(MmpRadiationDoseRecordBo bo, PageQuery pageQuery) {
         return mmpRadiationDoseRecordService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationDoseRecordController extends BaseController {
     /**
      * 导出个人剂量监测记录列表
      */
-    @SaCheckPermission("system:radiationDoseRecord:export")
+    @SaCheckPermission("radiation:radiationDoseRecord:export")
     @Log(title = "个人剂量监测记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationDoseRecordBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationDoseRecordController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationDoseRecord:query")
+    @SaCheckPermission("radiation:radiationDoseRecord:query")
     @GetMapping("/{id}")
     public R<MmpRadiationDoseRecordVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationDoseRecordController extends BaseController {
     /**
      * 新增个人剂量监测记录
      */
-    @SaCheckPermission("system:radiationDoseRecord:add")
+    @SaCheckPermission("radiation:radiationDoseRecord:add")
     @Log(title = "个人剂量监测记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationDoseRecordController extends BaseController {
     /**
      * 修改个人剂量监测记录
      */
-    @SaCheckPermission("system:radiationDoseRecord:edit")
+    @SaCheckPermission("radiation:radiationDoseRecord:edit")
     @Log(title = "个人剂量监测记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationDoseRecordController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationDoseRecord:remove")
+    @SaCheckPermission("radiation:radiationDoseRecord:remove")
     @Log(title = "个人剂量监测记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

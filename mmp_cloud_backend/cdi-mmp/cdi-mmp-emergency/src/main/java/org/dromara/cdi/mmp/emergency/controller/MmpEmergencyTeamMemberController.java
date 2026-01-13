@@ -39,7 +39,7 @@ public class MmpEmergencyTeamMemberController extends BaseController {
     /**
      * 查询应急队伍成员列表
      */
-    @SaCheckPermission("system:emergencyTeamMember:list")
+    @SaCheckPermission("emergency:emergencyTeamMember:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyTeamMemberVo> list(MmpEmergencyTeamMemberBo bo, PageQuery pageQuery) {
         return mmpEmergencyTeamMemberService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyTeamMemberController extends BaseController {
     /**
      * 导出应急队伍成员列表
      */
-    @SaCheckPermission("system:emergencyTeamMember:export")
+    @SaCheckPermission("emergency:emergencyTeamMember:export")
     @Log(title = "应急队伍成员", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyTeamMemberBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyTeamMemberController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyTeamMember:query")
+    @SaCheckPermission("emergency:emergencyTeamMember:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyTeamMemberVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyTeamMemberController extends BaseController {
     /**
      * 新增应急队伍成员
      */
-    @SaCheckPermission("system:emergencyTeamMember:add")
+    @SaCheckPermission("emergency:emergencyTeamMember:add")
     @Log(title = "应急队伍成员", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyTeamMemberController extends BaseController {
     /**
      * 修改应急队伍成员
      */
-    @SaCheckPermission("system:emergencyTeamMember:edit")
+    @SaCheckPermission("emergency:emergencyTeamMember:edit")
     @Log(title = "应急队伍成员", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyTeamMemberController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyTeamMember:remove")
+    @SaCheckPermission("emergency:emergencyTeamMember:remove")
     @Log(title = "应急队伍成员", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

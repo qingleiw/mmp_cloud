@@ -39,7 +39,7 @@ public class MmpEmergencyIncidentController extends BaseController {
     /**
      * 查询突发事件记录列表
      */
-    @SaCheckPermission("system:emergencyIncident:list")
+    @SaCheckPermission("emergency:emergencyIncident:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyIncidentVo> list(MmpEmergencyIncidentBo bo, PageQuery pageQuery) {
         return mmpEmergencyIncidentService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyIncidentController extends BaseController {
     /**
      * 导出突发事件记录列表
      */
-    @SaCheckPermission("system:emergencyIncident:export")
+    @SaCheckPermission("emergency:emergencyIncident:export")
     @Log(title = "突发事件记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyIncidentBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyIncidentController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyIncident:query")
+    @SaCheckPermission("emergency:emergencyIncident:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyIncidentVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyIncidentController extends BaseController {
     /**
      * 新增突发事件记录
      */
-    @SaCheckPermission("system:emergencyIncident:add")
+    @SaCheckPermission("emergency:emergencyIncident:add")
     @Log(title = "突发事件记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyIncidentController extends BaseController {
     /**
      * 修改突发事件记录
      */
-    @SaCheckPermission("system:emergencyIncident:edit")
+    @SaCheckPermission("emergency:emergencyIncident:edit")
     @Log(title = "突发事件记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyIncidentController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyIncident:remove")
+    @SaCheckPermission("emergency:emergencyIncident:remove")
     @Log(title = "突发事件记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

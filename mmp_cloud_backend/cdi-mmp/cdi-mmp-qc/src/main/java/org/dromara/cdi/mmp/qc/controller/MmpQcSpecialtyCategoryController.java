@@ -39,7 +39,7 @@ public class MmpQcSpecialtyCategoryController extends BaseController {
     /**
      * 查询专业类别列表
      */
-    @SaCheckPermission("system:qcSpecialtyCategory:list")
+    @SaCheckPermission("qc:qcSpecialtyCategory:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQcSpecialtyCategoryVo> list(MmpQcSpecialtyCategoryBo bo, PageQuery pageQuery) {
         return mmpQcSpecialtyCategoryService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQcSpecialtyCategoryController extends BaseController {
     /**
      * 导出专业类别列表
      */
-    @SaCheckPermission("system:qcSpecialtyCategory:export")
+    @SaCheckPermission("qc:qcSpecialtyCategory:export")
     @Log(title = "专业类别", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQcSpecialtyCategoryBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQcSpecialtyCategoryController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qcSpecialtyCategory:query")
+    @SaCheckPermission("qc:qcSpecialtyCategory:query")
     @GetMapping("/{id}")
     public R<MmpQcSpecialtyCategoryVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQcSpecialtyCategoryController extends BaseController {
     /**
      * 新增专业类别
      */
-    @SaCheckPermission("system:qcSpecialtyCategory:add")
+    @SaCheckPermission("qc:qcSpecialtyCategory:add")
     @Log(title = "专业类别", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQcSpecialtyCategoryController extends BaseController {
     /**
      * 修改专业类别
      */
-    @SaCheckPermission("system:qcSpecialtyCategory:edit")
+    @SaCheckPermission("qc:qcSpecialtyCategory:edit")
     @Log(title = "专业类别", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQcSpecialtyCategoryController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qcSpecialtyCategory:remove")
+    @SaCheckPermission("qc:qcSpecialtyCategory:remove")
     @Log(title = "专业类别", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

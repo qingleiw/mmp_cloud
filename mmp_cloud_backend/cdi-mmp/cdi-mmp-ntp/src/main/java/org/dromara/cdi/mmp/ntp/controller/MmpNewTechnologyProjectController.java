@@ -39,7 +39,7 @@ public class MmpNewTechnologyProjectController extends BaseController {
     /**
      * 查询新技术项目基本信息列表
      */
-    @SaCheckPermission("system:newTechnologyProject:list")
+    @SaCheckPermission("ntp:newTechnologyProject:list")
     @GetMapping("/list")
     public TableDataInfo<MmpNewTechnologyProjectVo> list(MmpNewTechnologyProjectBo bo, PageQuery pageQuery) {
         return mmpNewTechnologyProjectService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpNewTechnologyProjectController extends BaseController {
     /**
      * 导出新技术项目基本信息列表
      */
-    @SaCheckPermission("system:newTechnologyProject:export")
+    @SaCheckPermission("ntp:newTechnologyProject:export")
     @Log(title = "新技术项目基本信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpNewTechnologyProjectBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpNewTechnologyProjectController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:newTechnologyProject:query")
+    @SaCheckPermission("ntp:newTechnologyProject:query")
     @GetMapping("/{id}")
     public R<MmpNewTechnologyProjectVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpNewTechnologyProjectController extends BaseController {
     /**
      * 新增新技术项目基本信息
      */
-    @SaCheckPermission("system:newTechnologyProject:add")
+    @SaCheckPermission("ntp:newTechnologyProject:add")
     @Log(title = "新技术项目基本信息", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpNewTechnologyProjectController extends BaseController {
     /**
      * 修改新技术项目基本信息
      */
-    @SaCheckPermission("system:newTechnologyProject:edit")
+    @SaCheckPermission("ntp:newTechnologyProject:edit")
     @Log(title = "新技术项目基本信息", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpNewTechnologyProjectController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:newTechnologyProject:remove")
+    @SaCheckPermission("ntp:newTechnologyProject:remove")
     @Log(title = "新技术项目基本信息", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

@@ -39,7 +39,7 @@ public class MmpRadiationEquipmentInspectionController extends BaseController {
     /**
      * 查询放射设备检测记录列表
      */
-    @SaCheckPermission("system:radiationEquipmentInspection:list")
+    @SaCheckPermission("radiation:radiationEquipmentInspection:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationEquipmentInspectionVo> list(MmpRadiationEquipmentInspectionBo bo, PageQuery pageQuery) {
         return mmpRadiationEquipmentInspectionService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationEquipmentInspectionController extends BaseController {
     /**
      * 导出放射设备检测记录列表
      */
-    @SaCheckPermission("system:radiationEquipmentInspection:export")
+    @SaCheckPermission("radiation:radiationEquipmentInspection:export")
     @Log(title = "放射设备检测记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationEquipmentInspectionBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationEquipmentInspectionController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationEquipmentInspection:query")
+    @SaCheckPermission("radiation:radiationEquipmentInspection:query")
     @GetMapping("/{id}")
     public R<MmpRadiationEquipmentInspectionVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationEquipmentInspectionController extends BaseController {
     /**
      * 新增放射设备检测记录
      */
-    @SaCheckPermission("system:radiationEquipmentInspection:add")
+    @SaCheckPermission("radiation:radiationEquipmentInspection:add")
     @Log(title = "放射设备检测记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationEquipmentInspectionController extends BaseController {
     /**
      * 修改放射设备检测记录
      */
-    @SaCheckPermission("system:radiationEquipmentInspection:edit")
+    @SaCheckPermission("radiation:radiationEquipmentInspection:edit")
     @Log(title = "放射设备检测记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationEquipmentInspectionController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationEquipmentInspection:remove")
+    @SaCheckPermission("radiation:radiationEquipmentInspection:remove")
     @Log(title = "放射设备检测记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

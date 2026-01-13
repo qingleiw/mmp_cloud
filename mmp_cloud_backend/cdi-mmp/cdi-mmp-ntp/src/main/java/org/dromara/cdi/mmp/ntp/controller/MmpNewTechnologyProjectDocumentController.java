@@ -39,7 +39,7 @@ public class MmpNewTechnologyProjectDocumentController extends BaseController {
     /**
      * 查询项目文档列表
      */
-    @SaCheckPermission("system:newTechnologyProjectDocument:list")
+    @SaCheckPermission("ntp:newTechnologyProjectDocument:list")
     @GetMapping("/list")
     public TableDataInfo<MmpNewTechnologyProjectDocumentVo> list(MmpNewTechnologyProjectDocumentBo bo, PageQuery pageQuery) {
         return mmpNewTechnologyProjectDocumentService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpNewTechnologyProjectDocumentController extends BaseController {
     /**
      * 导出项目文档列表
      */
-    @SaCheckPermission("system:newTechnologyProjectDocument:export")
+    @SaCheckPermission("ntp:newTechnologyProjectDocument:export")
     @Log(title = "项目文档", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpNewTechnologyProjectDocumentBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpNewTechnologyProjectDocumentController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:newTechnologyProjectDocument:query")
+    @SaCheckPermission("ntp:newTechnologyProjectDocument:query")
     @GetMapping("/{id}")
     public R<MmpNewTechnologyProjectDocumentVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpNewTechnologyProjectDocumentController extends BaseController {
     /**
      * 新增项目文档
      */
-    @SaCheckPermission("system:newTechnologyProjectDocument:add")
+    @SaCheckPermission("ntp:newTechnologyProjectDocument:add")
     @Log(title = "项目文档", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpNewTechnologyProjectDocumentController extends BaseController {
     /**
      * 修改项目文档
      */
-    @SaCheckPermission("system:newTechnologyProjectDocument:edit")
+    @SaCheckPermission("ntp:newTechnologyProjectDocument:edit")
     @Log(title = "项目文档", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpNewTechnologyProjectDocumentController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:newTechnologyProjectDocument:remove")
+    @SaCheckPermission("ntp:newTechnologyProjectDocument:remove")
     @Log(title = "项目文档", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

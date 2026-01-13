@@ -39,7 +39,7 @@ public class MmpRadiationDoseMonitoringController extends BaseController {
     /**
      * 查询个人剂量监测列表
      */
-    @SaCheckPermission("system:radiationDoseMonitoring:list")
+    @SaCheckPermission("radiation:radiationDoseMonitoring:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationDoseMonitoringVo> list(MmpRadiationDoseMonitoringBo bo, PageQuery pageQuery) {
         return mmpRadiationDoseMonitoringService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationDoseMonitoringController extends BaseController {
     /**
      * 导出个人剂量监测列表
      */
-    @SaCheckPermission("system:radiationDoseMonitoring:export")
+    @SaCheckPermission("radiation:radiationDoseMonitoring:export")
     @Log(title = "个人剂量监测", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationDoseMonitoringBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationDoseMonitoringController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationDoseMonitoring:query")
+    @SaCheckPermission("radiation:radiationDoseMonitoring:query")
     @GetMapping("/{id}")
     public R<MmpRadiationDoseMonitoringVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationDoseMonitoringController extends BaseController {
     /**
      * 新增个人剂量监测
      */
-    @SaCheckPermission("system:radiationDoseMonitoring:add")
+    @SaCheckPermission("radiation:radiationDoseMonitoring:add")
     @Log(title = "个人剂量监测", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationDoseMonitoringController extends BaseController {
     /**
      * 修改个人剂量监测
      */
-    @SaCheckPermission("system:radiationDoseMonitoring:edit")
+    @SaCheckPermission("radiation:radiationDoseMonitoring:edit")
     @Log(title = "个人剂量监测", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationDoseMonitoringController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationDoseMonitoring:remove")
+    @SaCheckPermission("radiation:radiationDoseMonitoring:remove")
     @Log(title = "个人剂量监测", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

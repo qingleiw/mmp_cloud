@@ -39,7 +39,7 @@ public class MmpQualificationUsageRecordController extends BaseController {
     /**
      * 查询资质使用记录列表
      */
-    @SaCheckPermission("system:qualificationUsageRecord:list")
+    @SaCheckPermission("qualification:qualificationUsageRecord:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationUsageRecordVo> list(MmpQualificationUsageRecordBo bo, PageQuery pageQuery) {
         return mmpQualificationUsageRecordService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationUsageRecordController extends BaseController {
     /**
      * 导出资质使用记录列表
      */
-    @SaCheckPermission("system:qualificationUsageRecord:export")
+    @SaCheckPermission("qualification:qualificationUsageRecord:export")
     @Log(title = "资质使用记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationUsageRecordBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationUsageRecordController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationUsageRecord:query")
+    @SaCheckPermission("qualification:qualificationUsageRecord:query")
     @GetMapping("/{id}")
     public R<MmpQualificationUsageRecordVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationUsageRecordController extends BaseController {
     /**
      * 新增资质使用记录
      */
-    @SaCheckPermission("system:qualificationUsageRecord:add")
+    @SaCheckPermission("qualification:qualificationUsageRecord:add")
     @Log(title = "资质使用记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationUsageRecordController extends BaseController {
     /**
      * 修改资质使用记录
      */
-    @SaCheckPermission("system:qualificationUsageRecord:edit")
+    @SaCheckPermission("qualification:qualificationUsageRecord:edit")
     @Log(title = "资质使用记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationUsageRecordController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationUsageRecord:remove")
+    @SaCheckPermission("qualification:qualificationUsageRecord:remove")
     @Log(title = "资质使用记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

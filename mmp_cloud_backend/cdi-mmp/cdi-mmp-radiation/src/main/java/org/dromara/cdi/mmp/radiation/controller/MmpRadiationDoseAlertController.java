@@ -39,7 +39,7 @@ public class MmpRadiationDoseAlertController extends BaseController {
     /**
      * 查询剂量监测预警设置列表
      */
-    @SaCheckPermission("system:radiationDoseAlert:list")
+    @SaCheckPermission("radiation:radiationDoseAlert:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationDoseAlertVo> list(MmpRadiationDoseAlertBo bo, PageQuery pageQuery) {
         return mmpRadiationDoseAlertService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationDoseAlertController extends BaseController {
     /**
      * 导出剂量监测预警设置列表
      */
-    @SaCheckPermission("system:radiationDoseAlert:export")
+    @SaCheckPermission("radiation:radiationDoseAlert:export")
     @Log(title = "剂量监测预警设置", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationDoseAlertBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationDoseAlertController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationDoseAlert:query")
+    @SaCheckPermission("radiation:radiationDoseAlert:query")
     @GetMapping("/{id}")
     public R<MmpRadiationDoseAlertVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationDoseAlertController extends BaseController {
     /**
      * 新增剂量监测预警设置
      */
-    @SaCheckPermission("system:radiationDoseAlert:add")
+    @SaCheckPermission("radiation:radiationDoseAlert:add")
     @Log(title = "剂量监测预警设置", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationDoseAlertController extends BaseController {
     /**
      * 修改剂量监测预警设置
      */
-    @SaCheckPermission("system:radiationDoseAlert:edit")
+    @SaCheckPermission("radiation:radiationDoseAlert:edit")
     @Log(title = "剂量监测预警设置", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationDoseAlertController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationDoseAlert:remove")
+    @SaCheckPermission("radiation:radiationDoseAlert:remove")
     @Log(title = "剂量监测预警设置", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

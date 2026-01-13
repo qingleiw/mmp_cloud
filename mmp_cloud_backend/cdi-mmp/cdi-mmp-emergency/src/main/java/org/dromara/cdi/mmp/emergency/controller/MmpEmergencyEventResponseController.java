@@ -39,7 +39,7 @@ public class MmpEmergencyEventResponseController extends BaseController {
     /**
      * 查询突发事件响应列表
      */
-    @SaCheckPermission("system:emergencyEventResponse:list")
+    @SaCheckPermission("emergency:emergencyEventResponse:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyEventResponseVo> list(MmpEmergencyEventResponseBo bo, PageQuery pageQuery) {
         return mmpEmergencyEventResponseService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyEventResponseController extends BaseController {
     /**
      * 导出突发事件响应列表
      */
-    @SaCheckPermission("system:emergencyEventResponse:export")
+    @SaCheckPermission("emergency:emergencyEventResponse:export")
     @Log(title = "突发事件响应", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyEventResponseBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyEventResponseController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyEventResponse:query")
+    @SaCheckPermission("emergency:emergencyEventResponse:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyEventResponseVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyEventResponseController extends BaseController {
     /**
      * 新增突发事件响应
      */
-    @SaCheckPermission("system:emergencyEventResponse:add")
+    @SaCheckPermission("emergency:emergencyEventResponse:add")
     @Log(title = "突发事件响应", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyEventResponseController extends BaseController {
     /**
      * 修改突发事件响应
      */
-    @SaCheckPermission("system:emergencyEventResponse:edit")
+    @SaCheckPermission("emergency:emergencyEventResponse:edit")
     @Log(title = "突发事件响应", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyEventResponseController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyEventResponse:remove")
+    @SaCheckPermission("emergency:emergencyEventResponse:remove")
     @Log(title = "突发事件响应", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

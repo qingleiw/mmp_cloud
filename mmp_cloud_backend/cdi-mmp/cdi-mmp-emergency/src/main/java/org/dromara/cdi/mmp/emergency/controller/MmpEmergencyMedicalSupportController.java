@@ -39,7 +39,7 @@ public class MmpEmergencyMedicalSupportController extends BaseController {
     /**
      * 查询医疗保障资源列表
      */
-    @SaCheckPermission("system:emergencyMedicalSupport:list")
+    @SaCheckPermission("emergency:emergencyMedicalSupport:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyMedicalSupportVo> list(MmpEmergencyMedicalSupportBo bo, PageQuery pageQuery) {
         return mmpEmergencyMedicalSupportService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyMedicalSupportController extends BaseController {
     /**
      * 导出医疗保障资源列表
      */
-    @SaCheckPermission("system:emergencyMedicalSupport:export")
+    @SaCheckPermission("emergency:emergencyMedicalSupport:export")
     @Log(title = "医疗保障资源", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyMedicalSupportBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyMedicalSupportController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyMedicalSupport:query")
+    @SaCheckPermission("emergency:emergencyMedicalSupport:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyMedicalSupportVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyMedicalSupportController extends BaseController {
     /**
      * 新增医疗保障资源
      */
-    @SaCheckPermission("system:emergencyMedicalSupport:add")
+    @SaCheckPermission("emergency:emergencyMedicalSupport:add")
     @Log(title = "医疗保障资源", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyMedicalSupportController extends BaseController {
     /**
      * 修改医疗保障资源
      */
-    @SaCheckPermission("system:emergencyMedicalSupport:edit")
+    @SaCheckPermission("emergency:emergencyMedicalSupport:edit")
     @Log(title = "医疗保障资源", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyMedicalSupportController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyMedicalSupport:remove")
+    @SaCheckPermission("emergency:emergencyMedicalSupport:remove")
     @Log(title = "医疗保障资源", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

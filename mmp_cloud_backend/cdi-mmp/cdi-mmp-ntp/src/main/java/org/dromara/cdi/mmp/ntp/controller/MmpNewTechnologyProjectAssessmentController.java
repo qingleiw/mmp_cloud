@@ -39,7 +39,7 @@ public class MmpNewTechnologyProjectAssessmentController extends BaseController 
     /**
      * 查询项目考核评估列表
      */
-    @SaCheckPermission("system:newTechnologyProjectAssessment:list")
+    @SaCheckPermission("ntp:newTechnologyProjectAssessment:list")
     @GetMapping("/list")
     public TableDataInfo<MmpNewTechnologyProjectAssessmentVo> list(MmpNewTechnologyProjectAssessmentBo bo, PageQuery pageQuery) {
         return mmpNewTechnologyProjectAssessmentService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpNewTechnologyProjectAssessmentController extends BaseController 
     /**
      * 导出项目考核评估列表
      */
-    @SaCheckPermission("system:newTechnologyProjectAssessment:export")
+    @SaCheckPermission("ntp:newTechnologyProjectAssessment:export")
     @Log(title = "项目考核评估", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpNewTechnologyProjectAssessmentBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpNewTechnologyProjectAssessmentController extends BaseController 
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:newTechnologyProjectAssessment:query")
+    @SaCheckPermission("ntp:newTechnologyProjectAssessment:query")
     @GetMapping("/{id}")
     public R<MmpNewTechnologyProjectAssessmentVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpNewTechnologyProjectAssessmentController extends BaseController 
     /**
      * 新增项目考核评估
      */
-    @SaCheckPermission("system:newTechnologyProjectAssessment:add")
+    @SaCheckPermission("ntp:newTechnologyProjectAssessment:add")
     @Log(title = "项目考核评估", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpNewTechnologyProjectAssessmentController extends BaseController 
     /**
      * 修改项目考核评估
      */
-    @SaCheckPermission("system:newTechnologyProjectAssessment:edit")
+    @SaCheckPermission("ntp:newTechnologyProjectAssessment:edit")
     @Log(title = "项目考核评估", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpNewTechnologyProjectAssessmentController extends BaseController 
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:newTechnologyProjectAssessment:remove")
+    @SaCheckPermission("ntp:newTechnologyProjectAssessment:remove")
     @Log(title = "项目考核评估", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

@@ -39,7 +39,7 @@ public class MmpQcManualDataController extends BaseController {
     /**
      * 查询人工补录数据列表
      */
-    @SaCheckPermission("system:qcManualData:list")
+    @SaCheckPermission("qc:qcManualData:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQcManualDataVo> list(MmpQcManualDataBo bo, PageQuery pageQuery) {
         return mmpQcManualDataService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQcManualDataController extends BaseController {
     /**
      * 导出人工补录数据列表
      */
-    @SaCheckPermission("system:qcManualData:export")
+    @SaCheckPermission("qc:qcManualData:export")
     @Log(title = "人工补录数据", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQcManualDataBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQcManualDataController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qcManualData:query")
+    @SaCheckPermission("qc:qcManualData:query")
     @GetMapping("/{id}")
     public R<MmpQcManualDataVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQcManualDataController extends BaseController {
     /**
      * 新增人工补录数据
      */
-    @SaCheckPermission("system:qcManualData:add")
+    @SaCheckPermission("qc:qcManualData:add")
     @Log(title = "人工补录数据", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQcManualDataController extends BaseController {
     /**
      * 修改人工补录数据
      */
-    @SaCheckPermission("system:qcManualData:edit")
+    @SaCheckPermission("qc:qcManualData:edit")
     @Log(title = "人工补录数据", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQcManualDataController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qcManualData:remove")
+    @SaCheckPermission("qc:qcManualData:remove")
     @Log(title = "人工补录数据", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

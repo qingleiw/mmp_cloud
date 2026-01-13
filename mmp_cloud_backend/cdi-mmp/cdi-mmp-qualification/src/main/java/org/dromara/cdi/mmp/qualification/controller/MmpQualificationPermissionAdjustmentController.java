@@ -39,7 +39,7 @@ public class MmpQualificationPermissionAdjustmentController extends BaseControll
     /**
      * 查询资质权限调整历史列表
      */
-    @SaCheckPermission("system:qualificationPermissionAdjustment:list")
+    @SaCheckPermission("qualification:qualificationPermissionAdjustment:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationPermissionAdjustmentVo> list(MmpQualificationPermissionAdjustmentBo bo, PageQuery pageQuery) {
         return mmpQualificationPermissionAdjustmentService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationPermissionAdjustmentController extends BaseControll
     /**
      * 导出资质权限调整历史列表
      */
-    @SaCheckPermission("system:qualificationPermissionAdjustment:export")
+    @SaCheckPermission("qualification:qualificationPermissionAdjustment:export")
     @Log(title = "资质权限调整历史", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationPermissionAdjustmentBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationPermissionAdjustmentController extends BaseControll
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationPermissionAdjustment:query")
+    @SaCheckPermission("qualification:qualificationPermissionAdjustment:query")
     @GetMapping("/{id}")
     public R<MmpQualificationPermissionAdjustmentVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationPermissionAdjustmentController extends BaseControll
     /**
      * 新增资质权限调整历史
      */
-    @SaCheckPermission("system:qualificationPermissionAdjustment:add")
+    @SaCheckPermission("qualification:qualificationPermissionAdjustment:add")
     @Log(title = "资质权限调整历史", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationPermissionAdjustmentController extends BaseControll
     /**
      * 修改资质权限调整历史
      */
-    @SaCheckPermission("system:qualificationPermissionAdjustment:edit")
+    @SaCheckPermission("qualification:qualificationPermissionAdjustment:edit")
     @Log(title = "资质权限调整历史", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationPermissionAdjustmentController extends BaseControll
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationPermissionAdjustment:remove")
+    @SaCheckPermission("qualification:qualificationPermissionAdjustment:remove")
     @Log(title = "资质权限调整历史", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

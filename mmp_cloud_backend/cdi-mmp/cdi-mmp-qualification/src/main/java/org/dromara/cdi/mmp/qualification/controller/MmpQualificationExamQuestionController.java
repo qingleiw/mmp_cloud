@@ -39,7 +39,7 @@ public class MmpQualificationExamQuestionController extends BaseController {
     /**
      * 查询资质考核题库列表
      */
-    @SaCheckPermission("system:qualificationExamQuestion:list")
+    @SaCheckPermission("qualification:qualificationExamQuestion:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationExamQuestionVo> list(MmpQualificationExamQuestionBo bo, PageQuery pageQuery) {
         return mmpQualificationExamQuestionService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationExamQuestionController extends BaseController {
     /**
      * 导出资质考核题库列表
      */
-    @SaCheckPermission("system:qualificationExamQuestion:export")
+    @SaCheckPermission("qualification:qualificationExamQuestion:export")
     @Log(title = "资质考核题库", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationExamQuestionBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationExamQuestionController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationExamQuestion:query")
+    @SaCheckPermission("qualification:qualificationExamQuestion:query")
     @GetMapping("/{id}")
     public R<MmpQualificationExamQuestionVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationExamQuestionController extends BaseController {
     /**
      * 新增资质考核题库
      */
-    @SaCheckPermission("system:qualificationExamQuestion:add")
+    @SaCheckPermission("qualification:qualificationExamQuestion:add")
     @Log(title = "资质考核题库", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationExamQuestionController extends BaseController {
     /**
      * 修改资质考核题库
      */
-    @SaCheckPermission("system:qualificationExamQuestion:edit")
+    @SaCheckPermission("qualification:qualificationExamQuestion:edit")
     @Log(title = "资质考核题库", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationExamQuestionController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationExamQuestion:remove")
+    @SaCheckPermission("qualification:qualificationExamQuestion:remove")
     @Log(title = "资质考核题库", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

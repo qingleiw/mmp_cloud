@@ -39,7 +39,7 @@ public class MmpEmergencyEventTreatmentController extends BaseController {
     /**
      * 查询突发事件救治列表
      */
-    @SaCheckPermission("system:emergencyEventTreatment:list")
+    @SaCheckPermission("emergency:emergencyEventTreatment:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyEventTreatmentVo> list(MmpEmergencyEventTreatmentBo bo, PageQuery pageQuery) {
         return mmpEmergencyEventTreatmentService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyEventTreatmentController extends BaseController {
     /**
      * 导出突发事件救治列表
      */
-    @SaCheckPermission("system:emergencyEventTreatment:export")
+    @SaCheckPermission("emergency:emergencyEventTreatment:export")
     @Log(title = "突发事件救治", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyEventTreatmentBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyEventTreatmentController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyEventTreatment:query")
+    @SaCheckPermission("emergency:emergencyEventTreatment:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyEventTreatmentVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyEventTreatmentController extends BaseController {
     /**
      * 新增突发事件救治
      */
-    @SaCheckPermission("system:emergencyEventTreatment:add")
+    @SaCheckPermission("emergency:emergencyEventTreatment:add")
     @Log(title = "突发事件救治", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyEventTreatmentController extends BaseController {
     /**
      * 修改突发事件救治
      */
-    @SaCheckPermission("system:emergencyEventTreatment:edit")
+    @SaCheckPermission("emergency:emergencyEventTreatment:edit")
     @Log(title = "突发事件救治", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyEventTreatmentController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyEventTreatment:remove")
+    @SaCheckPermission("emergency:emergencyEventTreatment:remove")
     @Log(title = "突发事件救治", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

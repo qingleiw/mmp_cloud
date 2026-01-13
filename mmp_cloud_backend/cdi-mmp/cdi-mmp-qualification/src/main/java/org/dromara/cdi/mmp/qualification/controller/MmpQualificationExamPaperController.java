@@ -39,7 +39,7 @@ public class MmpQualificationExamPaperController extends BaseController {
     /**
      * 查询资质考核试卷列表
      */
-    @SaCheckPermission("system:qualificationExamPaper:list")
+    @SaCheckPermission("qualification:qualificationExamPaper:list")
     @GetMapping("/list")
     public TableDataInfo<MmpQualificationExamPaperVo> list(MmpQualificationExamPaperBo bo, PageQuery pageQuery) {
         return mmpQualificationExamPaperService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpQualificationExamPaperController extends BaseController {
     /**
      * 导出资质考核试卷列表
      */
-    @SaCheckPermission("system:qualificationExamPaper:export")
+    @SaCheckPermission("qualification:qualificationExamPaper:export")
     @Log(title = "资质考核试卷", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpQualificationExamPaperBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpQualificationExamPaperController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:qualificationExamPaper:query")
+    @SaCheckPermission("qualification:qualificationExamPaper:query")
     @GetMapping("/{id}")
     public R<MmpQualificationExamPaperVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpQualificationExamPaperController extends BaseController {
     /**
      * 新增资质考核试卷
      */
-    @SaCheckPermission("system:qualificationExamPaper:add")
+    @SaCheckPermission("qualification:qualificationExamPaper:add")
     @Log(title = "资质考核试卷", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpQualificationExamPaperController extends BaseController {
     /**
      * 修改资质考核试卷
      */
-    @SaCheckPermission("system:qualificationExamPaper:edit")
+    @SaCheckPermission("qualification:qualificationExamPaper:edit")
     @Log(title = "资质考核试卷", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpQualificationExamPaperController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:qualificationExamPaper:remove")
+    @SaCheckPermission("qualification:qualificationExamPaper:remove")
     @Log(title = "资质考核试卷", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

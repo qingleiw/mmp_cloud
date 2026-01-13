@@ -39,7 +39,7 @@ public class MmpRadiationStaffController extends BaseController {
     /**
      * 查询放射工作人员列表
      */
-    @SaCheckPermission("system:radiationStaff:list")
+    @SaCheckPermission("radiation:radiationStaff:list")
     @GetMapping("/list")
     public TableDataInfo<MmpRadiationStaffVo> list(MmpRadiationStaffBo bo, PageQuery pageQuery) {
         return mmpRadiationStaffService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpRadiationStaffController extends BaseController {
     /**
      * 导出放射工作人员列表
      */
-    @SaCheckPermission("system:radiationStaff:export")
+    @SaCheckPermission("radiation:radiationStaff:export")
     @Log(title = "放射工作人员", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpRadiationStaffBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpRadiationStaffController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:radiationStaff:query")
+    @SaCheckPermission("radiation:radiationStaff:query")
     @GetMapping("/{id}")
     public R<MmpRadiationStaffVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpRadiationStaffController extends BaseController {
     /**
      * 新增放射工作人员
      */
-    @SaCheckPermission("system:radiationStaff:add")
+    @SaCheckPermission("radiation:radiationStaff:add")
     @Log(title = "放射工作人员", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpRadiationStaffController extends BaseController {
     /**
      * 修改放射工作人员
      */
-    @SaCheckPermission("system:radiationStaff:edit")
+    @SaCheckPermission("radiation:radiationStaff:edit")
     @Log(title = "放射工作人员", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpRadiationStaffController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:radiationStaff:remove")
+    @SaCheckPermission("radiation:radiationStaff:remove")
     @Log(title = "放射工作人员", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

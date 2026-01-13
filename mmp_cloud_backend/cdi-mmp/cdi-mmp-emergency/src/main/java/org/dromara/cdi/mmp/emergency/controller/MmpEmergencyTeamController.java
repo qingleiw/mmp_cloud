@@ -39,7 +39,7 @@ public class MmpEmergencyTeamController extends BaseController {
     /**
      * 查询应急队伍列表
      */
-    @SaCheckPermission("system:emergencyTeam:list")
+    @SaCheckPermission("emergency:emergencyTeam:list")
     @GetMapping("/list")
     public TableDataInfo<MmpEmergencyTeamVo> list(MmpEmergencyTeamBo bo, PageQuery pageQuery) {
         return mmpEmergencyTeamService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpEmergencyTeamController extends BaseController {
     /**
      * 导出应急队伍列表
      */
-    @SaCheckPermission("system:emergencyTeam:export")
+    @SaCheckPermission("emergency:emergencyTeam:export")
     @Log(title = "应急队伍", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpEmergencyTeamBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpEmergencyTeamController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:emergencyTeam:query")
+    @SaCheckPermission("emergency:emergencyTeam:query")
     @GetMapping("/{id}")
     public R<MmpEmergencyTeamVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpEmergencyTeamController extends BaseController {
     /**
      * 新增应急队伍
      */
-    @SaCheckPermission("system:emergencyTeam:add")
+    @SaCheckPermission("emergency:emergencyTeam:add")
     @Log(title = "应急队伍", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpEmergencyTeamController extends BaseController {
     /**
      * 修改应急队伍
      */
-    @SaCheckPermission("system:emergencyTeam:edit")
+    @SaCheckPermission("emergency:emergencyTeam:edit")
     @Log(title = "应急队伍", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpEmergencyTeamController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:emergencyTeam:remove")
+    @SaCheckPermission("emergency:emergencyTeam:remove")
     @Log(title = "应急队伍", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")
