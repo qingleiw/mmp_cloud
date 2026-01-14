@@ -24,6 +24,7 @@ INSERT INTO sys_menu VALUES ('25540', '台账重大手术', '25500', '40', 'ledg
 INSERT INTO sys_menu VALUES ('25550', '台账患者全周期', '25500', '50', 'ledgerPatientFullCycle', 'ledger/ledgerPatientFullCycle/index', '', 1, 0, 'C', '0', '0', 'ledger:ledgerPatientFullCycle:list', 'route', 100, 1, sysdate(), NULL, NULL, '台账患者全周期');
 INSERT INTO sys_menu VALUES ('25560', '台账非计划再手术', '25500', '60', 'ledgerUnplannedReoperation', 'ledger/ledgerUnplannedReoperation/index', '', 1, 0, 'C', '0', '0', 'ledger:ledgerUnplannedReoperation:list', 'redo', 100, 1, sysdate(), NULL, NULL, '台账非计划再手术');
 INSERT INTO sys_menu VALUES ('25570', '台账死亡病例讨论', '25500', '70', 'deathCaseDiscussion', 'ledger/deathCaseDiscussion/index', '', 1, 0, 'C', '0', '0', 'ledger:deathCaseDiscussion:list', 'skull', 100, 1, sysdate(), NULL, NULL, '台账死亡病例讨论');
+INSERT INTO sys_menu VALUES ('25580', '医疗仪表板', '25500', '80', 'medicalStats', 'ledger/medicalStats/index', '', 1, 0, 'C', '0', '0', 'ledger:medicalStats:list', 'pie-chart', 100, 1, sysdate(), NULL, NULL, '医疗质量统计数据');
 
 -- ----------------------------
 -- 3. 定义按钮权限(每个模块6个按钮)
@@ -84,6 +85,14 @@ INSERT INTO sys_menu VALUES ('25573', '台账死亡病例讨论修改', '25570',
 INSERT INTO sys_menu VALUES ('25574', '台账死亡病例讨论删除', '25570', '4', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:deathCaseDiscussion:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('25575', '台账死亡病例讨论导入', '25570', '5', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:deathCaseDiscussion:import', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('25576', '台账死亡病例讨论导出', '25570', '6', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:deathCaseDiscussion:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- 3.8 医疗仪表板按钮
+INSERT INTO sys_menu VALUES ('25581', '医疗仪表板查询', '25580', '1', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:medicalStats:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('25582', '医疗仪表板新增', '25580', '2', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:medicalStats:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('25583', '医疗仪表板修改', '25580', '3', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:medicalStats:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('25584', '医疗仪表板删除', '25580', '4', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:medicalStats:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('25585', '医疗仪表板导入', '25580', '5', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:medicalStats:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('25586', '医疗仪表板导出', '25580', '6', '#', '', '', 1, 0, 'F', '0', '0', 'ledger:medicalStats:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
 -- ----------------------------
 -- 4. 定义角色权限分配
