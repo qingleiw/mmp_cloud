@@ -1,4 +1,4 @@
-package org.dromara.system.controller;
+package org.dromara.cdi.mmp.surgery.controller;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.excel.utils.ExcelUtil;
-import org.dromara.system.domain.vo.MmpSurgeryCatalogVo;
-import org.dromara.system.domain.bo.MmpSurgeryCatalogBo;
-import org.dromara.system.service.IMmpSurgeryCatalogService;
+import org.dromara.cdi.mmp.surgery.domain.vo.MmpSurgeryCatalogVo;
+import org.dromara.cdi.mmp.surgery.domain.bo.MmpSurgeryCatalogBo;
+import org.dromara.cdi.mmp.surgery.service.IMmpSurgeryCatalogService;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 
 /**
@@ -31,7 +31,7 @@ import org.dromara.common.mybatis.core.page.TableDataInfo;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/system/surgeryCatalog")
+@RequestMapping("/surgeryCatalog")
 public class MmpSurgeryCatalogController extends BaseController {
 
     private final IMmpSurgeryCatalogService mmpSurgeryCatalogService;
@@ -39,7 +39,7 @@ public class MmpSurgeryCatalogController extends BaseController {
     /**
      * 查询手术目录列表
      */
-    @SaCheckPermission("system:surgeryCatalog:list")
+    @SaCheckPermission("surgery:surgeryCatalog:list")
     @GetMapping("/list")
     public TableDataInfo<MmpSurgeryCatalogVo> list(MmpSurgeryCatalogBo bo, PageQuery pageQuery) {
         return mmpSurgeryCatalogService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpSurgeryCatalogController extends BaseController {
     /**
      * 导出手术目录列表
      */
-    @SaCheckPermission("system:surgeryCatalog:export")
+    @SaCheckPermission("surgery:surgeryCatalog:export")
     @Log(title = "手术目录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpSurgeryCatalogBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpSurgeryCatalogController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:surgeryCatalog:query")
+    @SaCheckPermission("surgery:surgeryCatalog:query")
     @GetMapping("/{id}")
     public R<MmpSurgeryCatalogVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpSurgeryCatalogController extends BaseController {
     /**
      * 新增手术目录
      */
-    @SaCheckPermission("system:surgeryCatalog:add")
+    @SaCheckPermission("surgery:surgeryCatalog:add")
     @Log(title = "手术目录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpSurgeryCatalogController extends BaseController {
     /**
      * 修改手术目录
      */
-    @SaCheckPermission("system:surgeryCatalog:edit")
+    @SaCheckPermission("surgery:surgeryCatalog:edit")
     @Log(title = "手术目录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpSurgeryCatalogController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:surgeryCatalog:remove")
+    @SaCheckPermission("surgery:surgeryCatalog:remove")
     @Log(title = "手术目录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

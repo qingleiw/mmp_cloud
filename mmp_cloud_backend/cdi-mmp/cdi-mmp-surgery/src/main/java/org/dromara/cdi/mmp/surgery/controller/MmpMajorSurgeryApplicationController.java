@@ -39,7 +39,7 @@ public class MmpMajorSurgeryApplicationController extends BaseController {
     /**
      * 查询重大手术申请列表
      */
-    @SaCheckPermission("system:majorSurgeryApplication:list")
+    @SaCheckPermission("surgery:majorSurgeryApplication:list")
     @GetMapping("/list")
     public TableDataInfo<MmpMajorSurgeryApplicationVo> list(MmpMajorSurgeryApplicationBo bo, PageQuery pageQuery) {
         return mmpMajorSurgeryApplicationService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpMajorSurgeryApplicationController extends BaseController {
     /**
      * 导出重大手术申请列表
      */
-    @SaCheckPermission("system:majorSurgeryApplication:export")
+    @SaCheckPermission("surgery:majorSurgeryApplication:export")
     @Log(title = "重大手术申请", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpMajorSurgeryApplicationBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpMajorSurgeryApplicationController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:majorSurgeryApplication:query")
+    @SaCheckPermission("surgery:majorSurgeryApplication:query")
     @GetMapping("/{id}")
     public R<MmpMajorSurgeryApplicationVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpMajorSurgeryApplicationController extends BaseController {
     /**
      * 新增重大手术申请
      */
-    @SaCheckPermission("system:majorSurgeryApplication:add")
+    @SaCheckPermission("surgery:majorSurgeryApplication:add")
     @Log(title = "重大手术申请", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpMajorSurgeryApplicationController extends BaseController {
     /**
      * 修改重大手术申请
      */
-    @SaCheckPermission("system:majorSurgeryApplication:edit")
+    @SaCheckPermission("surgery:majorSurgeryApplication:edit")
     @Log(title = "重大手术申请", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpMajorSurgeryApplicationController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:majorSurgeryApplication:remove")
+    @SaCheckPermission("surgery:majorSurgeryApplication:remove")
     @Log(title = "重大手术申请", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

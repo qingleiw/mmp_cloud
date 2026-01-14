@@ -1,7 +1,7 @@
-package org.dromara.system.mapper;
+package org.dromara.cdi.mmp.surgery.mapper;
 
-import org.dromara.system.domain.MmpSurgeryCatalog;
-import org.dromara.system.domain.vo.MmpSurgeryCatalogVo;
+import org.dromara.cdi.mmp.surgery.domain.MmpSurgeryCatalog;
+import org.dromara.cdi.mmp.surgery.domain.vo.MmpSurgeryCatalogVo;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 
 /**

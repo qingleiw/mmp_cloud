@@ -1,4 +1,4 @@
-package org.dromara.system.domain;
+package org.dromara.cdi.mmp.surgery.domain;
 
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import com.baomidou.mybatisplus.annotation.*;

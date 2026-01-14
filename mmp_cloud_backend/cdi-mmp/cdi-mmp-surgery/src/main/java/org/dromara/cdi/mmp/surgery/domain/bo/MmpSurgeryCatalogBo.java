@@ -1,6 +1,6 @@
-package org.dromara.system.domain.bo;
+package org.dromara.cdi.mmp.surgery.domain.bo;
 
-import org.dromara.system.domain.MmpSurgeryCatalog;
+import org.dromara.cdi.mmp.surgery.domain.MmpSurgeryCatalog;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;

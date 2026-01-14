@@ -1,4 +1,4 @@
-package org.dromara.system.service.impl;
+package org.dromara.cdi.mmp.surgery.service.impl;
 
 import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.StringUtils;
@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.dromara.system.domain.bo.MmpSurgeryCatalogBo;
-import org.dromara.system.domain.vo.MmpSurgeryCatalogVo;
-import org.dromara.system.domain.MmpSurgeryCatalog;
-import org.dromara.system.mapper.MmpSurgeryCatalogMapper;
-import org.dromara.system.service.IMmpSurgeryCatalogService;
+import org.dromara.cdi.mmp.surgery.domain.bo.MmpSurgeryCatalogBo;
+import org.dromara.cdi.mmp.surgery.domain.vo.MmpSurgeryCatalogVo;
+import org.dromara.cdi.mmp.surgery.domain.MmpSurgeryCatalog;
+import org.dromara.cdi.mmp.surgery.mapper.MmpSurgeryCatalogMapper;
+import org.dromara.cdi.mmp.surgery.service.IMmpSurgeryCatalogService;
 
 import java.util.List;
 import java.util.Map;

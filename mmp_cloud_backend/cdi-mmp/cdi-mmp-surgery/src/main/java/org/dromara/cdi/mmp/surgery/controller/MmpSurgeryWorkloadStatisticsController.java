@@ -39,7 +39,7 @@ public class MmpSurgeryWorkloadStatisticsController extends BaseController {
     /**
      * 查询手术工作量统计列表
      */
-    @SaCheckPermission("system:surgeryWorkloadStatistics:list")
+    @SaCheckPermission("surgery:surgeryWorkloadStatistics:list")
     @GetMapping("/list")
     public TableDataInfo<MmpSurgeryWorkloadStatisticsVo> list(MmpSurgeryWorkloadStatisticsBo bo, PageQuery pageQuery) {
         return mmpSurgeryWorkloadStatisticsService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpSurgeryWorkloadStatisticsController extends BaseController {
     /**
      * 导出手术工作量统计列表
      */
-    @SaCheckPermission("system:surgeryWorkloadStatistics:export")
+    @SaCheckPermission("surgery:surgeryWorkloadStatistics:export")
     @Log(title = "手术工作量统计", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpSurgeryWorkloadStatisticsBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpSurgeryWorkloadStatisticsController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:surgeryWorkloadStatistics:query")
+    @SaCheckPermission("surgery:surgeryWorkloadStatistics:query")
     @GetMapping("/{id}")
     public R<MmpSurgeryWorkloadStatisticsVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpSurgeryWorkloadStatisticsController extends BaseController {
     /**
      * 新增手术工作量统计
      */
-    @SaCheckPermission("system:surgeryWorkloadStatistics:add")
+    @SaCheckPermission("surgery:surgeryWorkloadStatistics:add")
     @Log(title = "手术工作量统计", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpSurgeryWorkloadStatisticsController extends BaseController {
     /**
      * 修改手术工作量统计
      */
-    @SaCheckPermission("system:surgeryWorkloadStatistics:edit")
+    @SaCheckPermission("surgery:surgeryWorkloadStatistics:edit")
     @Log(title = "手术工作量统计", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpSurgeryWorkloadStatisticsController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:surgeryWorkloadStatistics:remove")
+    @SaCheckPermission("surgery:surgeryWorkloadStatistics:remove")
     @Log(title = "手术工作量统计", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

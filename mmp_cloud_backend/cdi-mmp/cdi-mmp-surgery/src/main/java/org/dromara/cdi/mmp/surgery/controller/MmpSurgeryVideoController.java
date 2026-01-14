@@ -39,7 +39,7 @@ public class MmpSurgeryVideoController extends BaseController {
     /**
      * 查询手术视频列表
      */
-    @SaCheckPermission("system:surgeryVideo:list")
+    @SaCheckPermission("surgery:surgeryVideo:list")
     @GetMapping("/list")
     public TableDataInfo<MmpSurgeryVideoVo> list(MmpSurgeryVideoBo bo, PageQuery pageQuery) {
         return mmpSurgeryVideoService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpSurgeryVideoController extends BaseController {
     /**
      * 导出手术视频列表
      */
-    @SaCheckPermission("system:surgeryVideo:export")
+    @SaCheckPermission("surgery:surgeryVideo:export")
     @Log(title = "手术视频", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpSurgeryVideoBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpSurgeryVideoController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:surgeryVideo:query")
+    @SaCheckPermission("surgery:surgeryVideo:query")
     @GetMapping("/{id}")
     public R<MmpSurgeryVideoVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpSurgeryVideoController extends BaseController {
     /**
      * 新增手术视频
      */
-    @SaCheckPermission("system:surgeryVideo:add")
+    @SaCheckPermission("surgery:surgeryVideo:add")
     @Log(title = "手术视频", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpSurgeryVideoController extends BaseController {
     /**
      * 修改手术视频
      */
-    @SaCheckPermission("system:surgeryVideo:edit")
+    @SaCheckPermission("surgery:surgeryVideo:edit")
     @Log(title = "手术视频", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpSurgeryVideoController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:surgeryVideo:remove")
+    @SaCheckPermission("surgery:surgeryVideo:remove")
     @Log(title = "手术视频", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

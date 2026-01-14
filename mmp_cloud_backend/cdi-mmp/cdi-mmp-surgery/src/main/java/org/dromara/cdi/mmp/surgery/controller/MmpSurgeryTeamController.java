@@ -39,7 +39,7 @@ public class MmpSurgeryTeamController extends BaseController {
     /**
      * 查询手术团队列表
      */
-    @SaCheckPermission("system:surgeryTeam:list")
+    @SaCheckPermission("surgery:surgeryTeam:list")
     @GetMapping("/list")
     public TableDataInfo<MmpSurgeryTeamVo> list(MmpSurgeryTeamBo bo, PageQuery pageQuery) {
         return mmpSurgeryTeamService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpSurgeryTeamController extends BaseController {
     /**
      * 导出手术团队列表
      */
-    @SaCheckPermission("system:surgeryTeam:export")
+    @SaCheckPermission("surgery:surgeryTeam:export")
     @Log(title = "手术团队", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpSurgeryTeamBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpSurgeryTeamController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:surgeryTeam:query")
+    @SaCheckPermission("surgery:surgeryTeam:query")
     @GetMapping("/{id}")
     public R<MmpSurgeryTeamVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpSurgeryTeamController extends BaseController {
     /**
      * 新增手术团队
      */
-    @SaCheckPermission("system:surgeryTeam:add")
+    @SaCheckPermission("surgery:surgeryTeam:add")
     @Log(title = "手术团队", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpSurgeryTeamController extends BaseController {
     /**
      * 修改手术团队
      */
-    @SaCheckPermission("system:surgeryTeam:edit")
+    @SaCheckPermission("surgery:surgeryTeam:edit")
     @Log(title = "手术团队", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpSurgeryTeamController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:surgeryTeam:remove")
+    @SaCheckPermission("surgery:surgeryTeam:remove")
     @Log(title = "手术团队", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

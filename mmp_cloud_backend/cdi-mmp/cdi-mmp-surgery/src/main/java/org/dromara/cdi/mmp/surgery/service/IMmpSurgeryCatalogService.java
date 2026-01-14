@@ -1,7 +1,7 @@
-package org.dromara.system.service;
+package org.dromara.cdi.mmp.surgery.service;
 
-import org.dromara.system.domain.vo.MmpSurgeryCatalogVo;
-import org.dromara.system.domain.bo.MmpSurgeryCatalogBo;
+import org.dromara.cdi.mmp.surgery.domain.vo.MmpSurgeryCatalogVo;
+import org.dromara.cdi.mmp.surgery.domain.bo.MmpSurgeryCatalogBo;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.common.mybatis.core.page.PageQuery;
 

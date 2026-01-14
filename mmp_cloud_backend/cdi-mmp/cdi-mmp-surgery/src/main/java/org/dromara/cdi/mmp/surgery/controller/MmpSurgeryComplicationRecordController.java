@@ -39,7 +39,7 @@ public class MmpSurgeryComplicationRecordController extends BaseController {
     /**
      * 查询手术并发症记录列表
      */
-    @SaCheckPermission("system:surgeryComplicationRecord:list")
+    @SaCheckPermission("surgery:surgeryComplicationRecord:list")
     @GetMapping("/list")
     public TableDataInfo<MmpSurgeryComplicationRecordVo> list(MmpSurgeryComplicationRecordBo bo, PageQuery pageQuery) {
         return mmpSurgeryComplicationRecordService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpSurgeryComplicationRecordController extends BaseController {
     /**
      * 导出手术并发症记录列表
      */
-    @SaCheckPermission("system:surgeryComplicationRecord:export")
+    @SaCheckPermission("surgery:surgeryComplicationRecord:export")
     @Log(title = "手术并发症记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpSurgeryComplicationRecordBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpSurgeryComplicationRecordController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:surgeryComplicationRecord:query")
+    @SaCheckPermission("surgery:surgeryComplicationRecord:query")
     @GetMapping("/{id}")
     public R<MmpSurgeryComplicationRecordVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpSurgeryComplicationRecordController extends BaseController {
     /**
      * 新增手术并发症记录
      */
-    @SaCheckPermission("system:surgeryComplicationRecord:add")
+    @SaCheckPermission("surgery:surgeryComplicationRecord:add")
     @Log(title = "手术并发症记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpSurgeryComplicationRecordController extends BaseController {
     /**
      * 修改手术并发症记录
      */
-    @SaCheckPermission("system:surgeryComplicationRecord:edit")
+    @SaCheckPermission("surgery:surgeryComplicationRecord:edit")
     @Log(title = "手术并发症记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpSurgeryComplicationRecordController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:surgeryComplicationRecord:remove")
+    @SaCheckPermission("surgery:surgeryComplicationRecord:remove")
     @Log(title = "手术并发症记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

@@ -39,7 +39,7 @@ public class MmpSurgeryApprovalFormController extends BaseController {
     /**
      * 查询重大手术审批报告单列表
      */
-    @SaCheckPermission("system:surgeryApprovalForm:list")
+    @SaCheckPermission("surgery:surgeryApprovalForm:list")
     @GetMapping("/list")
     public TableDataInfo<MmpSurgeryApprovalFormVo> list(MmpSurgeryApprovalFormBo bo, PageQuery pageQuery) {
         return mmpSurgeryApprovalFormService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpSurgeryApprovalFormController extends BaseController {
     /**
      * 导出重大手术审批报告单列表
      */
-    @SaCheckPermission("system:surgeryApprovalForm:export")
+    @SaCheckPermission("surgery:surgeryApprovalForm:export")
     @Log(title = "重大手术审批报告单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpSurgeryApprovalFormBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpSurgeryApprovalFormController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:surgeryApprovalForm:query")
+    @SaCheckPermission("surgery:surgeryApprovalForm:query")
     @GetMapping("/{id}")
     public R<MmpSurgeryApprovalFormVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpSurgeryApprovalFormController extends BaseController {
     /**
      * 新增重大手术审批报告单
      */
-    @SaCheckPermission("system:surgeryApprovalForm:add")
+    @SaCheckPermission("surgery:surgeryApprovalForm:add")
     @Log(title = "重大手术审批报告单", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpSurgeryApprovalFormController extends BaseController {
     /**
      * 修改重大手术审批报告单
      */
-    @SaCheckPermission("system:surgeryApprovalForm:edit")
+    @SaCheckPermission("surgery:surgeryApprovalForm:edit")
     @Log(title = "重大手术审批报告单", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpSurgeryApprovalFormController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:surgeryApprovalForm:remove")
+    @SaCheckPermission("surgery:surgeryApprovalForm:remove")
     @Log(title = "重大手术审批报告单", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")

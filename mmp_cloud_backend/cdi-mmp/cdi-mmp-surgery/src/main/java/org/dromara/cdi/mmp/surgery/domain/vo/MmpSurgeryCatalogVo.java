@@ -1,6 +1,6 @@
-package org.dromara.system.domain.vo;
+package org.dromara.cdi.mmp.surgery.domain.vo;
 
-import org.dromara.system.domain.MmpSurgeryCatalog;
+import org.dromara.cdi.mmp.surgery.domain.MmpSurgeryCatalog;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import org.dromara.common.excel.annotation.ExcelDictFormat;

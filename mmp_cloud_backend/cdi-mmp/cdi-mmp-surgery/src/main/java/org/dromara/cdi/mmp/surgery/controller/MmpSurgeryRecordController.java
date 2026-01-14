@@ -39,7 +39,7 @@ public class MmpSurgeryRecordController extends BaseController {
     /**
      * 查询手术记录列表
      */
-    @SaCheckPermission("system:surgeryRecord:list")
+    @SaCheckPermission("surgery:surgeryRecord:list")
     @GetMapping("/list")
     public TableDataInfo<MmpSurgeryRecordVo> list(MmpSurgeryRecordBo bo, PageQuery pageQuery) {
         return mmpSurgeryRecordService.queryPageList(bo, pageQuery);
@@ -48,7 +48,7 @@ public class MmpSurgeryRecordController extends BaseController {
     /**
      * 导出手术记录列表
      */
-    @SaCheckPermission("system:surgeryRecord:export")
+    @SaCheckPermission("surgery:surgeryRecord:export")
     @Log(title = "手术记录", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(MmpSurgeryRecordBo bo, HttpServletResponse response) {
@@ -61,7 +61,7 @@ public class MmpSurgeryRecordController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("system:surgeryRecord:query")
+    @SaCheckPermission("surgery:surgeryRecord:query")
     @GetMapping("/{id}")
     public R<MmpSurgeryRecordVo> getInfo(@NotNull(message = "主键不能为空")
                                      @PathVariable Long id) {
@@ -71,7 +71,7 @@ public class MmpSurgeryRecordController extends BaseController {
     /**
      * 新增手术记录
      */
-    @SaCheckPermission("system:surgeryRecord:add")
+    @SaCheckPermission("surgery:surgeryRecord:add")
     @Log(title = "手术记录", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
@@ -82,7 +82,7 @@ public class MmpSurgeryRecordController extends BaseController {
     /**
      * 修改手术记录
      */
-    @SaCheckPermission("system:surgeryRecord:edit")
+    @SaCheckPermission("surgery:surgeryRecord:edit")
     @Log(title = "手术记录", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
@@ -95,7 +95,7 @@ public class MmpSurgeryRecordController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("system:surgeryRecord:remove")
+    @SaCheckPermission("surgery:surgeryRecord:remove")
     @Log(title = "手术记录", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")
