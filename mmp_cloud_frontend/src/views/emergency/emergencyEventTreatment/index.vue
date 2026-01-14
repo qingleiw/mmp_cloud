@@ -35,7 +35,7 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:emergencyEventTreatment:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['emergency:emergencyEventTreatment:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -44,7 +44,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:emergencyEventTreatment:edit']"
+              v-hasPermi="['emergency:emergencyEventTreatment:edit']"
               >修改</el-button
             >
           </el-col>
@@ -55,12 +55,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:emergencyEventTreatment:remove']"
+              v-hasPermi="['emergency:emergencyEventTreatment:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:emergencyEventTreatment:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['emergency:emergencyEventTreatment:export']"
               >导出</el-button
             >
           </el-col>
@@ -90,7 +90,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:emergencyEventTreatment:edit']"
+                v-hasPermi="['emergency:emergencyEventTreatment:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -99,7 +99,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:emergencyEventTreatment:remove']"
+                v-hasPermi="['emergency:emergencyEventTreatment:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -157,8 +157,8 @@ import {
   delEmergencyEventTreatment,
   addEmergencyEventTreatment,
   updateEmergencyEventTreatment
-} from '@/api/system/emergencyEventTreatment';
-import { EmergencyEventTreatmentVO, EmergencyEventTreatmentQuery, EmergencyEventTreatmentForm } from '@/api/system/emergencyEventTreatment/types';
+} from '@/api/emergency/emergencyEventTreatment';
+import { EmergencyEventTreatmentVO, EmergencyEventTreatmentQuery, EmergencyEventTreatmentForm } from '@/api/emergency/emergencyEventTreatment/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

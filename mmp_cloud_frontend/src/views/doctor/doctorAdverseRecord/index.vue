@@ -50,10 +50,10 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorAdverseRecord:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorAdverseRecord:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:doctorAdverseRecord:edit']"
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['doctor:doctorAdverseRecord:edit']"
               >修改</el-button
             >
           </el-col>
@@ -64,12 +64,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorAdverseRecord:remove']"
+              v-hasPermi="['doctor:doctorAdverseRecord:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorAdverseRecord:export']">导出</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorAdverseRecord:export']">导出</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button type="info" plain icon="Setting" @click="handleFieldConfig">字段配置</el-button>
@@ -103,7 +103,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:doctorAdverseRecord:edit']"
+                v-hasPermi="['doctor:doctorAdverseRecord:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -112,7 +112,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:doctorAdverseRecord:remove']"
+                v-hasPermi="['doctor:doctorAdverseRecord:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -158,7 +158,7 @@
       </template>
     </el-dialog>
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
@@ -172,8 +172,8 @@ import {
   updateDoctorAdverseRecord
 } from '@/api/doctor/doctorAdverseRecord';
 import { DoctorAdverseRecordVO, DoctorAdverseRecordQuery, DoctorAdverseRecordForm } from '@/api/doctor/doctorAdverseRecord/types';
-import { listDoctorInfo } from '@/api/doctor/doctorInfo';
-import { DoctorInfoVO } from '@/api/doctor/doctorInfo/types';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { createDoctorAdverseRecordFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
@@ -254,9 +254,9 @@ const getList = async () => {
 
     // 获取所有医生信息来映射医生姓名
     if (records.length > 0) {
-      const doctorRes = await listDoctorInfo({ pageSize: 1000 }); // 获取所有医生数据
+      const doctorRes = await listDoctorBasicInfo({ pageSize: 1000 }); // 获取所有医生数据
       const doctorMap = new Map();
-      doctorRes.rows.forEach((doctor: DoctorInfoVO) => {
+      doctorRes.rows.forEach((doctor: DoctorBasicInfoVO) => {
         doctorMap.set(doctor.id, doctor.doctorName);
       });
 

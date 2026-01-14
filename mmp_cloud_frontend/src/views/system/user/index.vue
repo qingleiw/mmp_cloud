@@ -440,10 +440,17 @@ watchEffect(
 /** 查询用户列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await api.listUser(proxy?.addDateRange(queryParams.value, dateRange.value));
-  loading.value = false;
-  userList.value = res.rows;
-  total.value = res.total;
+  try {
+    const res = await api.listUser(proxy?.addDateRange(queryParams.value, dateRange.value));
+    userList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取用户列表失败:', error);
+    userList.value = [];
+    total.value = 0;
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 查询部门下拉树结构 */

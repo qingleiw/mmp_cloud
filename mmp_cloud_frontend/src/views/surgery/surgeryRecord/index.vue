@@ -48,23 +48,23 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['system:surgeryRecord:add']">
+            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['surgery:surgeryRecord:add']">
               <i-ep-plus class="btn-icon"></i-ep-plus>
               新增
             </el-button>
-            <el-button type="success" plain :disabled="single" @click="handleUpdate()" v-hasPermi="['system:surgeryRecord:edit']">
+            <el-button type="success" plain :disabled="single" @click="handleUpdate()" v-hasPermi="['surgery:surgeryRecord:edit']">
               <i-ep-edit class="btn-icon"></i-ep-edit>
               修改
             </el-button>
-            <el-button type="danger" plain :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:surgeryRecord:remove']">
+            <el-button type="danger" plain :disabled="multiple" @click="handleDelete()" v-hasPermi="['surgery:surgeryRecord:remove']">
               <i-ep-delete class="btn-icon"></i-ep-delete>
               删除
             </el-button>
-            <el-button type="warning" plain @click="handleExport" v-hasPermi="['system:surgeryRecord:export']">
+            <el-button type="warning" plain @click="handleExport" v-hasPermi="['surgery:surgeryRecord:export']">
               <i-ep-download class="btn-icon"></i-ep-download>
               导出
             </el-button>
-            <el-button type="info" plain @click="handleImport" v-hasPermi="['system:surgeryRecord:import']">
+            <el-button type="info" plain @click="handleImport" v-hasPermi="['surgery:surgeryRecord:import']">
               <i-ep-upload class="btn-icon"></i-ep-upload>
               导入
             </el-button>
@@ -110,10 +110,10 @@
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:surgeryRecord:edit']"></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['surgery:surgeryRecord:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['system:surgeryRecord:remove']"></el-button>
+              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['surgery:surgeryRecord:remove']"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -264,13 +264,13 @@
   <SearchConfigDialog v-model="showSearchConfig" :search-config-manager="searchConfigManager" />
 
   <!-- 字段配置对话框 -->
-  <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+  <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
 </template>
 
 <script setup name="SurgeryRecord" lang="ts">
-import { listSurgeryRecord, getSurgeryRecord, delSurgeryRecord, addSurgeryRecord, updateSurgeryRecord } from '@/api/system/surgeryRecord';
-import { listDoctorInfo } from '@/api/system/doctorInfo';
-import { SurgeryRecordVO, SurgeryRecordQuery, SurgeryRecordForm } from '@/api/system/surgeryRecord/types';
+import { listSurgeryRecord, getSurgeryRecord, delSurgeryRecord, addSurgeryRecord, updateSurgeryRecord } from '@/api/surgery/surgeryRecord';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { SurgeryRecordVO, SurgeryRecordQuery, SurgeryRecordForm } from '@/api/surgery/surgeryRecord/types';
 import { createSurgeryRecordFieldConfig } from '@/utils/mmpFieldConfigs';
 import { createSurgeryRecordSearchConfig } from '@/utils/mmpSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -453,7 +453,7 @@ const handleDelete = async (row?: SurgeryRecordVO) => {
 /** 导入按钮操作 */
 const handleImport = () => {
   proxy.$modal.upload({
-    url: '/dev-api/system/surgeryRecord/importData',
+    url: '/dev-api/surgery/surgeryRecord/importData',
     success: () => {
       proxy.$modal.msgSuccess('导入成功');
       getList();
@@ -464,7 +464,7 @@ const handleImport = () => {
 /** 导出按钮操作 */
 const handleExport = () => {
   proxy?.download(
-    'system/surgeryRecord/export',
+    'surgery/surgeryRecord/export',
     {
       ...queryParams.value
     },

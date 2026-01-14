@@ -1,7 +1,12 @@
 -- ----------------------------
--- 监督管理菜单SQL脚本
--- 生成时间：2026-01-11
+-- 监督管理完整菜单SQL脚本（正确版本）
+-- 生成时间：2026-01-14
+-- 包含15个子模块
 -- ----------------------------
+
+-- 清理旧数据
+DELETE FROM sys_role_menu WHERE menu_id >= 23500 AND menu_id < 24000;
+DELETE FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
 -- ----------------------------
 -- 1. 创建监督管理主菜单
@@ -9,20 +14,30 @@
 INSERT INTO sys_menu VALUES ('23500', '监督管理', '0', '100', 'supervision', NULL, '', 1, 0, 'M', '0', '0', '', 'eye', 100, 1, sysdate(), NULL, NULL, '监督管理目录');
 
 -- ----------------------------
--- 2. 创建子菜单
+-- 2. 创建子菜单(15个模块)
 -- ----------------------------
 INSERT INTO sys_menu VALUES ('23510', '监督专家组', '23500', '10', 'supervisionExpertGroup', 'supervision/supervisionExpertGroup/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionExpertGroup:list', 'users-cog', 100, 1, sysdate(), NULL, NULL, '监督专家组');
-INSERT INTO sys_menu VALUES ('23520', '监督检查', '23500', '20', 'supervisionInspection', 'supervision/supervisionInspection/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionInspection:list', 'search', 100, 1, sysdate(), NULL, NULL, '监督检查');
-INSERT INTO sys_menu VALUES ('23530', '监督检查记录', '23500', '30', 'supervisionInspectionRecord', 'supervision/supervisionInspectionRecord/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionInspectionRecord:list', 'file-alt', 100, 1, sysdate(), NULL, NULL, '监督检查记录');
-INSERT INTO sys_menu VALUES ('23540', '监督计划', '23500', '40', 'supervisionPlan', 'supervision/supervisionPlan/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionPlan:list', 'clipboard-list', 100, 1, sysdate(), NULL, NULL, '监督计划');
-INSERT INTO sys_menu VALUES ('23550', '监督报告', '23500', '50', 'supervisionReport', 'supervision/supervisionReport/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionReport:list', 'file-chart-line', 100, 1, sysdate(), NULL, NULL, '监督报告');
-INSERT INTO sys_menu VALUES ('23560', '监督任务', '23500', '60', 'supervisionTask', 'supervision/supervisionTask/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionTask:list', 'tasks', 100, 1, sysdate(), NULL, NULL, '监督任务');
-INSERT INTO sys_menu VALUES ('23570', '监督任务执行', '23500', '70', 'supervisionTaskExecution', 'supervision/supervisionTaskExecution/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionTaskExecution:list', 'play-circle', 100, 1, sysdate(), NULL, NULL, '监督任务执行');
+INSERT INTO sys_menu VALUES ('23520', '监督专家成员', '23500', '20', 'supervisionExpertMember', 'supervision/supervisionExpertMember/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionExpertMember:list', 'user-tie', 100, 1, sysdate(), NULL, NULL, '监督专家成员');
+INSERT INTO sys_menu VALUES ('23530', '监督表单', '23500', '30', 'supervisionForm', 'supervision/supervisionForm/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionForm:list', 'file-alt', 100, 1, sysdate(), NULL, NULL, '监督表单');
+INSERT INTO sys_menu VALUES ('23540', '监督表单字段', '23500', '40', 'supervisionFormField', 'supervision/supervisionFormField/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionFormField:list', 'list', 100, 1, sysdate(), NULL, NULL, '监督表单字段');
+INSERT INTO sys_menu VALUES ('23550', '监督问题', '23500', '50', 'supervisionIssue', 'supervision/supervisionIssue/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionIssue:list', 'exclamation-circle', 100, 1, sysdate(), NULL, NULL, '监督问题');
+INSERT INTO sys_menu VALUES ('23560', '监督计划', '23500', '60', 'supervisionPlan', 'supervision/supervisionPlan/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionPlan:list', 'calendar-alt', 100, 1, sysdate(), NULL, NULL, '监督计划');
+INSERT INTO sys_menu VALUES ('23570', '监督计划科室', '23500', '70', 'supervisionPlanDept', 'supervision/supervisionPlanDept/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionPlanDept:list', 'building', 100, 1, sysdate(), NULL, NULL, '监督计划科室');
+INSERT INTO sys_menu VALUES ('23580', '监督计划表单', '23500', '80', 'supervisionPlanForm', 'supervision/supervisionPlanForm/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionPlanForm:list', 'clipboard-list', 100, 1, sysdate(), NULL, NULL, '监督计划表单');
+INSERT INTO sys_menu VALUES ('23590', '监督项目', '23500', '90', 'supervisionProject', 'supervision/supervisionProject/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionProject:list', 'project-diagram', 100, 1, sysdate(), NULL, NULL, '监督项目');
+INSERT INTO sys_menu VALUES ('23600', '监督项目指标', '23500', '100', 'supervisionProjectIndicator', 'supervision/supervisionProjectIndicator/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionProjectIndicator:list', 'chart-bar', 100, 1, sysdate(), NULL, NULL, '监督项目指标');
+INSERT INTO sys_menu VALUES ('23610', '监督整改进度', '23500', '110', 'supervisionRectificationProgress', 'supervision/supervisionRectificationProgress/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionRectificationProgress:list', 'tasks', 100, 1, sysdate(), NULL, NULL, '监督整改进度');
+INSERT INTO sys_menu VALUES ('23620', '监督整改任务', '23500', '120', 'supervisionRectificationTask', 'supervision/supervisionRectificationTask/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionRectificationTask:list', 'clipboard-check', 100, 1, sysdate(), NULL, NULL, '监督整改任务');
+INSERT INTO sys_menu VALUES ('23630', '监督结果', '23500', '130', 'supervisionResult', 'supervision/supervisionResult/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionResult:list', 'poll', 100, 1, sysdate(), NULL, NULL, '监督结果');
+INSERT INTO sys_menu VALUES ('23640', '监督结果明细', '23500', '140', 'supervisionResultDetail', 'supervision/supervisionResultDetail/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionResultDetail:list', 'list-alt', 100, 1, sysdate(), NULL, NULL, '监督结果明细');
+INSERT INTO sys_menu VALUES ('23650', '监督复核', '23500', '150', 'supervisionReview', 'supervision/supervisionReview/index', '', 1, 0, 'C', '0', '0', 'supervision:supervisionReview:list', 'redo', 100, 1, sysdate(), NULL, NULL, '监督复核');
 
 -- ----------------------------
--- 3. 定义按钮权限
+-- 3. 定义按钮权限(每个模块6个按钮，共90个按钮)
+-- 由于内容较多，这里生成所有按钮
 -- ----------------------------
--- 监督专家组按钮
+
+-- 3.1 监督专家组按钮
 INSERT INTO sys_menu VALUES ('23511', '监督专家组查询', '23510', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertGroup:query', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('23512', '监督专家组新增', '23510', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertGroup:add', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('23513', '监督专家组修改', '23510', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertGroup:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
@@ -30,525 +45,149 @@ INSERT INTO sys_menu VALUES ('23514', '监督专家组删除', '23510', '4', '#'
 INSERT INTO sys_menu VALUES ('23515', '监督专家组导入', '23510', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertGroup:import', '#', 100, 1, sysdate(), NULL, NULL, '');
 INSERT INTO sys_menu VALUES ('23516', '监督专家组导出', '23510', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertGroup:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
--- 监督检查按钮
-INSERT INTO sys_menu VALUES ('23521', '监督检查查询', '23520', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspection:query', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23522', '监督检查新增', '23520', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspection:add', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23523', '监督检查修改', '23520', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspection:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23524', '监督检查删除', '23520', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspection:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23525', '监督检查导入', '23520', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspection:import', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23526', '监督检查导出', '23520', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspection:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+-- 3.2 监督专家成员按钮
+INSERT INTO sys_menu VALUES ('23521', '监督专家成员查询', '23520', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertMember:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23522', '监督专家成员新增', '23520', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertMember:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23523', '监督专家成员修改', '23520', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertMember:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23524', '监督专家成员删除', '23520', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertMember:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23525', '监督专家成员导入', '23520', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertMember:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23526', '监督专家成员导出', '23520', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionExpertMember:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
--- 监督检查记录按钮
-INSERT INTO sys_menu VALUES ('23531', '监督检查记录查询', '23530', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspectionRecord:query', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23532', '监督检查记录新增', '23530', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspectionRecord:add', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23533', '监督检查记录修改', '23530', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspectionRecord:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23534', '监督检查记录删除', '23530', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspectionRecord:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23535', '监督检查记录导入', '23530', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspectionRecord:import', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23536', '监督检查记录导出', '23530', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionInspectionRecord:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+-- 3.3 监督表单按钮
+INSERT INTO sys_menu VALUES ('23531', '监督表单查询', '23530', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionForm:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23532', '监督表单新增', '23530', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionForm:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23533', '监督表单修改', '23530', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionForm:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23534', '监督表单删除', '23530', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionForm:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23535', '监督表单导入', '23530', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionForm:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23536', '监督表单导出', '23530', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionForm:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
--- 监督计划按钮
-INSERT INTO sys_menu VALUES ('23541', '监督计划查询', '23540', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:query', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23542', '监督计划新增', '23540', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:add', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23543', '监督计划修改', '23540', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23544', '监督计划删除', '23540', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23545', '监督计划导入', '23540', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:import', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23546', '监督计划导出', '23540', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+-- 3.4 监督表单字段按钮
+INSERT INTO sys_menu VALUES ('23541', '监督表单字段查询', '23540', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionFormField:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23542', '监督表单字段新增', '23540', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionFormField:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23543', '监督表单字段修改', '23540', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionFormField:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23544', '监督表单字段删除', '23540', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionFormField:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23545', '监督表单字段导入', '23540', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionFormField:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23546', '监督表单字段导出', '23540', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionFormField:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
--- 监督报告按钮
-INSERT INTO sys_menu VALUES ('23551', '监督报告查询', '23550', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReport:query', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23552', '监督报告新增', '23550', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReport:add', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23553', '监督报告修改', '23550', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReport:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23554', '监督报告删除', '23550', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReport:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23555', '监督报告导入', '23550', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReport:import', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23556', '监督报告导出', '23550', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReport:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+-- 3.5 监督问题按钮
+INSERT INTO sys_menu VALUES ('23551', '监督问题查询', '23550', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionIssue:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23552', '监督问题新增', '23550', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionIssue:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23553', '监督问题修改', '23550', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionIssue:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23554', '监督问题删除', '23550', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionIssue:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23555', '监督问题导入', '23550', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionIssue:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23556', '监督问题导出', '23550', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionIssue:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
--- 监督任务按钮
-INSERT INTO sys_menu VALUES ('23561', '监督任务查询', '23560', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTask:query', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23562', '监督任务新增', '23560', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTask:add', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23563', '监督任务修改', '23560', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTask:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23564', '监督任务删除', '23560', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTask:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23565', '监督任务导入', '23560', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTask:import', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23566', '监督任务导出', '23560', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTask:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+-- 3.6 监督计划按钮
+INSERT INTO sys_menu VALUES ('23561', '监督计划查询', '23560', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23562', '监督计划新增', '23560', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23563', '监督计划修改', '23560', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23564', '监督计划删除', '23560', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23565', '监督计划导入', '23560', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23566', '监督计划导出', '23560', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlan:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
--- 监督任务执行按钮
-INSERT INTO sys_menu VALUES ('23571', '监督任务执行查询', '23570', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTaskExecution:query', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23572', '监督任务执行新增', '23570', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTaskExecution:add', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23573', '监督任务执行修改', '23570', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTaskExecution:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23574', '监督任务执行删除', '23570', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTaskExecution:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23575', '监督任务执行导入', '23570', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTaskExecution:import', '#', 100, 1, sysdate(), NULL, NULL, '');
-INSERT INTO sys_menu VALUES ('23576', '监督任务执行导出', '23570', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionTaskExecution:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+-- 3.7 监督计划科室按钮
+INSERT INTO sys_menu VALUES ('23571', '监督计划科室查询', '23570', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanDept:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23572', '监督计划科室新增', '23570', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanDept:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23573', '监督计划科室修改', '23570', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanDept:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23574', '监督计划科室删除', '23570', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanDept:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23575', '监督计划科室导入', '23570', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanDept:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23576', '监督计划科室导出', '23570', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanDept:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- 3.8 监督计划表单按钮
+INSERT INTO sys_menu VALUES ('23581', '监督计划表单查询', '23580', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanForm:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23582', '监督计划表单新增', '23580', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanForm:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23583', '监督计划表单修改', '23580', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanForm:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23584', '监督计划表单删除', '23580', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanForm:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23585', '监督计划表单导入', '23580', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanForm:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23586', '监督计划表单导出', '23580', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionPlanForm:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- 3.9 监督项目按钮
+INSERT INTO sys_menu VALUES ('23591', '监督项目查询', '23590', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProject:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23592', '监督项目新增', '23590', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProject:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23593', '监督项目修改', '23590', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProject:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23594', '监督项目删除', '23590', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProject:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23595', '监督项目导入', '23590', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProject:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23596', '监督项目导出', '23590', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProject:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- 3.10 监督项目指标按钮
+INSERT INTO sys_menu VALUES ('23601', '监督项目指标查询', '23600', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProjectIndicator:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23602', '监督项目指标新增', '23600', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProjectIndicator:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23603', '监督项目指标修改', '23600', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProjectIndicator:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23604', '监督项目指标删除', '23600', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProjectIndicator:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23605', '监督项目指标导入', '23600', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProjectIndicator:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23606', '监督项目指标导出', '23600', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionProjectIndicator:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- 3.11 监督整改进度按钮
+INSERT INTO sys_menu VALUES ('23611', '监督整改进度查询', '23610', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationProgress:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23612', '监督整改进度新增', '23610', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationProgress:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23613', '监督整改进度修改', '23610', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationProgress:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23614', '监督整改进度删除', '23610', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationProgress:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23615', '监督整改进度导入', '23610', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationProgress:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23616', '监督整改进度导出', '23610', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationProgress:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- 3.12 监督整改任务按钮
+INSERT INTO sys_menu VALUES ('23621', '监督整改任务查询', '23620', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationTask:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23622', '监督整改任务新增', '23620', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationTask:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23623', '监督整改任务修改', '23620', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationTask:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23624', '监督整改任务删除', '23620', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationTask:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23625', '监督整改任务导入', '23620', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationTask:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23626', '监督整改任务导出', '23620', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionRectificationTask:export', '#', 100, 1, sysdate(), NULL, NULL, '');
+
+-- 3.13 监督结果按钮
+INSERT INTO sys_menu VALUES ('23631', '监督结果查询', '23630', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResult:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23632', '监督结果新增', '23630', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResult:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23633', '监督结果修改', '23630', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResult:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23634', '监督结果删除', '23630', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResult:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23635', '监督结果导入', '23630', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResult:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23636', '监督结果导出', '23630', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResult:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
 -- ----------------------------
--- 4. 定义角色权限分配
+-- 3.14 监督结果明细按钮
 -- ----------------------------
--- 为护士角色分配菜单按钮权限
-INSERT INTO sys_role_menu VALUES ('5', '23500');
+INSERT INTO sys_menu VALUES ('23641', '监督结果明细查询', '23640', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResultDetail:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23642', '监督结果明细新增', '23640', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResultDetail:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23643', '监督结果明细修改', '23640', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResultDetail:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23644', '监督结果明细删除', '23640', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResultDetail:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23645', '监督结果明细导入', '23640', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResultDetail:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23646', '监督结果明细导出', '23640', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionResultDetail:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
-INSERT INTO sys_role_menu VALUES ('5', '23510');
-INSERT INTO sys_role_menu VALUES ('5', '23511');
-INSERT INTO sys_role_menu VALUES ('5', '23512');
-INSERT INTO sys_role_menu VALUES ('5', '23513');
-INSERT INTO sys_role_menu VALUES ('5', '23514');
-INSERT INTO sys_role_menu VALUES ('5', '23515');
-INSERT INTO sys_role_menu VALUES ('5', '23516');
+-- ----------------------------
+-- 3.15 监督复核按钮
+-- ----------------------------
+INSERT INTO sys_menu VALUES ('23651', '监督复核查询', '23650', '1', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReview:query', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23652', '监督复核新增', '23650', '2', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReview:add', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23653', '监督复核修改', '23650', '3', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReview:edit', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23654', '监督复核删除', '23650', '4', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReview:remove', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23655', '监督复核导入', '23650', '5', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReview:import', '#', 100, 1, sysdate(), NULL, NULL, '');
+INSERT INTO sys_menu VALUES ('23656', '监督复核导出', '23650', '6', '#', '', '', 1, 0, 'F', '0', '0', 'supervision:supervisionReview:export', '#', 100, 1, sysdate(), NULL, NULL, '');
 
-INSERT INTO sys_role_menu VALUES ('5', '23520');
-INSERT INTO sys_role_menu VALUES ('5', '23521');
-INSERT INTO sys_role_menu VALUES ('5', '23522');
-INSERT INTO sys_role_menu VALUES ('5', '23523');
-INSERT INTO sys_role_menu VALUES ('5', '23524');
-INSERT INTO sys_role_menu VALUES ('5', '23525');
-INSERT INTO sys_role_menu VALUES ('5', '23526');
 
-INSERT INTO sys_role_menu VALUES ('5', '23530');
-INSERT INTO sys_role_menu VALUES ('5', '23531');
-INSERT INTO sys_role_menu VALUES ('5', '23532');
-INSERT INTO sys_role_menu VALUES ('5', '23533');
-INSERT INTO sys_role_menu VALUES ('5', '23534');
-INSERT INTO sys_role_menu VALUES ('5', '23535');
-INSERT INTO sys_role_menu VALUES ('5', '23536');
+-- ----------------------------
+-- 监督管理模块 - 角色权限分配
+-- ----------------------------
 
-INSERT INTO sys_role_menu VALUES ('5', '23540');
-INSERT INTO sys_role_menu VALUES ('5', '23541');
-INSERT INTO sys_role_menu VALUES ('5', '23542');
-INSERT INTO sys_role_menu VALUES ('5', '23543');
-INSERT INTO sys_role_menu VALUES ('5', '23544');
-INSERT INTO sys_role_menu VALUES ('5', '23545');
-INSERT INTO sys_role_menu VALUES ('5', '23546');
+-- 为护士角色(Role ID: 5)分配所有菜单权限
+INSERT INTO sys_role_menu SELECT '5', menu_id FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
-INSERT INTO sys_role_menu VALUES ('5', '23550');
-INSERT INTO sys_role_menu VALUES ('5', '23551');
-INSERT INTO sys_role_menu VALUES ('5', '23552');
-INSERT INTO sys_role_menu VALUES ('5', '23553');
-INSERT INTO sys_role_menu VALUES ('5', '23554');
-INSERT INTO sys_role_menu VALUES ('5', '23555');
-INSERT INTO sys_role_menu VALUES ('5', '23556');
+-- 为医生角色(Role ID: 6)分配所有菜单权限
+INSERT INTO sys_role_menu SELECT '6', menu_id FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
-INSERT INTO sys_role_menu VALUES ('5', '23560');
-INSERT INTO sys_role_menu VALUES ('5', '23561');
-INSERT INTO sys_role_menu VALUES ('5', '23562');
-INSERT INTO sys_role_menu VALUES ('5', '23563');
-INSERT INTO sys_role_menu VALUES ('5', '23564');
-INSERT INTO sys_role_menu VALUES ('5', '23565');
-INSERT INTO sys_role_menu VALUES ('5', '23566');
+-- 为科室主任角色(Role ID: 7)分配所有菜单权限
+INSERT INTO sys_role_menu SELECT '7', menu_id FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
-INSERT INTO sys_role_menu VALUES ('5', '23570');
-INSERT INTO sys_role_menu VALUES ('5', '23571');
-INSERT INTO sys_role_menu VALUES ('5', '23572');
-INSERT INTO sys_role_menu VALUES ('5', '23573');
-INSERT INTO sys_role_menu VALUES ('5', '23574');
-INSERT INTO sys_role_menu VALUES ('5', '23575');
-INSERT INTO sys_role_menu VALUES ('5', '23576');
+-- 为质控员角色(Role ID: 8)分配所有菜单权限
+INSERT INTO sys_role_menu SELECT '8', menu_id FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
--- 为医生角色分配菜单按钮权限
-INSERT INTO sys_role_menu VALUES ('6', '23500');
+-- 为医务部角色(Role ID: 9)分配所有菜单权限
+INSERT INTO sys_role_menu SELECT '9', menu_id FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
-INSERT INTO sys_role_menu VALUES ('6', '23510');
-INSERT INTO sys_role_menu VALUES ('6', '23511');
-INSERT INTO sys_role_menu VALUES ('6', '23512');
-INSERT INTO sys_role_menu VALUES ('6', '23513');
-INSERT INTO sys_role_menu VALUES ('6', '23514');
-INSERT INTO sys_role_menu VALUES ('6', '23515');
-INSERT INTO sys_role_menu VALUES ('6', '23516');
+-- 为医务部主任角色(Role ID: 10)分配所有菜单权限
+INSERT INTO sys_role_menu SELECT '10', menu_id FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
-INSERT INTO sys_role_menu VALUES ('6', '23520');
-INSERT INTO sys_role_menu VALUES ('6', '23521');
-INSERT INTO sys_role_menu VALUES ('6', '23522');
-INSERT INTO sys_role_menu VALUES ('6', '23523');
-INSERT INTO sys_role_menu VALUES ('6', '23524');
-INSERT INTO sys_role_menu VALUES ('6', '23525');
-INSERT INTO sys_role_menu VALUES ('6', '23526');
+-- 为医院管理员角色(Role ID: 11)分配所有菜单权限
+INSERT INTO sys_role_menu SELECT '11', menu_id FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
-INSERT INTO sys_role_menu VALUES ('6', '23530');
-INSERT INTO sys_role_menu VALUES ('6', '23531');
-INSERT INTO sys_role_menu VALUES ('6', '23532');
-INSERT INTO sys_role_menu VALUES ('6', '23533');
-INSERT INTO sys_role_menu VALUES ('6', '23534');
-INSERT INTO sys_role_menu VALUES ('6', '23535');
-INSERT INTO sys_role_menu VALUES ('6', '23536');
+-- 为超级管理员角色(Role ID: 1)分配所有菜单权限
+INSERT INTO sys_role_menu SELECT '1', menu_id FROM sys_menu WHERE menu_id >= 23500 AND menu_id < 24000;
 
-INSERT INTO sys_role_menu VALUES ('6', '23540');
-INSERT INTO sys_role_menu VALUES ('6', '23541');
-INSERT INTO sys_role_menu VALUES ('6', '23542');
-INSERT INTO sys_role_menu VALUES ('6', '23543');
-INSERT INTO sys_role_menu VALUES ('6', '23544');
-INSERT INTO sys_role_menu VALUES ('6', '23545');
-INSERT INTO sys_role_menu VALUES ('6', '23546');
-
-INSERT INTO sys_role_menu VALUES ('6', '23550');
-INSERT INTO sys_role_menu VALUES ('6', '23551');
-INSERT INTO sys_role_menu VALUES ('6', '23552');
-INSERT INTO sys_role_menu VALUES ('6', '23553');
-INSERT INTO sys_role_menu VALUES ('6', '23554');
-INSERT INTO sys_role_menu VALUES ('6', '23555');
-INSERT INTO sys_role_menu VALUES ('6', '23556');
-
-INSERT INTO sys_role_menu VALUES ('6', '23560');
-INSERT INTO sys_role_menu VALUES ('6', '23561');
-INSERT INTO sys_role_menu VALUES ('6', '23562');
-INSERT INTO sys_role_menu VALUES ('6', '23563');
-INSERT INTO sys_role_menu VALUES ('6', '23564');
-INSERT INTO sys_role_menu VALUES ('6', '23565');
-INSERT INTO sys_role_menu VALUES ('6', '23566');
-
-INSERT INTO sys_role_menu VALUES ('6', '23570');
-INSERT INTO sys_role_menu VALUES ('6', '23571');
-INSERT INTO sys_role_menu VALUES ('6', '23572');
-INSERT INTO sys_role_menu VALUES ('6', '23573');
-INSERT INTO sys_role_menu VALUES ('6', '23574');
-INSERT INTO sys_role_menu VALUES ('6', '23575');
-INSERT INTO sys_role_menu VALUES ('6', '23576');
-
--- 为科室主任分配菜单按钮权限
-INSERT INTO sys_role_menu VALUES ('7', '23500');
-
-INSERT INTO sys_role_menu VALUES ('7', '23510');
-INSERT INTO sys_role_menu VALUES ('7', '23511');
-INSERT INTO sys_role_menu VALUES ('7', '23512');
-INSERT INTO sys_role_menu VALUES ('7', '23513');
-INSERT INTO sys_role_menu VALUES ('7', '23514');
-INSERT INTO sys_role_menu VALUES ('7', '23515');
-INSERT INTO sys_role_menu VALUES ('7', '23516');
-
-INSERT INTO sys_role_menu VALUES ('7', '23520');
-INSERT INTO sys_role_menu VALUES ('7', '23521');
-INSERT INTO sys_role_menu VALUES ('7', '23522');
-INSERT INTO sys_role_menu VALUES ('7', '23523');
-INSERT INTO sys_role_menu VALUES ('7', '23524');
-INSERT INTO sys_role_menu VALUES ('7', '23525');
-INSERT INTO sys_role_menu VALUES ('7', '23526');
-
-INSERT INTO sys_role_menu VALUES ('7', '23530');
-INSERT INTO sys_role_menu VALUES ('7', '23531');
-INSERT INTO sys_role_menu VALUES ('7', '23532');
-INSERT INTO sys_role_menu VALUES ('7', '23533');
-INSERT INTO sys_role_menu VALUES ('7', '23534');
-INSERT INTO sys_role_menu VALUES ('7', '23535');
-INSERT INTO sys_role_menu VALUES ('7', '23536');
-
-INSERT INTO sys_role_menu VALUES ('7', '23540');
-INSERT INTO sys_role_menu VALUES ('7', '23541');
-INSERT INTO sys_role_menu VALUES ('7', '23542');
-INSERT INTO sys_role_menu VALUES ('7', '23543');
-INSERT INTO sys_role_menu VALUES ('7', '23544');
-INSERT INTO sys_role_menu VALUES ('7', '23545');
-INSERT INTO sys_role_menu VALUES ('7', '23546');
-
-INSERT INTO sys_role_menu VALUES ('7', '23550');
-INSERT INTO sys_role_menu VALUES ('7', '23551');
-INSERT INTO sys_role_menu VALUES ('7', '23552');
-INSERT INTO sys_role_menu VALUES ('7', '23553');
-INSERT INTO sys_role_menu VALUES ('7', '23554');
-INSERT INTO sys_role_menu VALUES ('7', '23555');
-INSERT INTO sys_role_menu VALUES ('7', '23556');
-
-INSERT INTO sys_role_menu VALUES ('7', '23560');
-INSERT INTO sys_role_menu VALUES ('7', '23561');
-INSERT INTO sys_role_menu VALUES ('7', '23562');
-INSERT INTO sys_role_menu VALUES ('7', '23563');
-INSERT INTO sys_role_menu VALUES ('7', '23564');
-INSERT INTO sys_role_menu VALUES ('7', '23565');
-INSERT INTO sys_role_menu VALUES ('7', '23566');
-
-INSERT INTO sys_role_menu VALUES ('7', '23570');
-INSERT INTO sys_role_menu VALUES ('7', '23571');
-INSERT INTO sys_role_menu VALUES ('7', '23572');
-INSERT INTO sys_role_menu VALUES ('7', '23573');
-INSERT INTO sys_role_menu VALUES ('7', '23574');
-INSERT INTO sys_role_menu VALUES ('7', '23575');
-INSERT INTO sys_role_menu VALUES ('7', '23576');
-
--- 为质控员角色分配菜单按钮权限
-INSERT INTO sys_role_menu VALUES ('8', '23500');
-
-INSERT INTO sys_role_menu VALUES ('8', '23510');
-INSERT INTO sys_role_menu VALUES ('8', '23511');
-INSERT INTO sys_role_menu VALUES ('8', '23512');
-INSERT INTO sys_role_menu VALUES ('8', '23513');
-INSERT INTO sys_role_menu VALUES ('8', '23514');
-INSERT INTO sys_role_menu VALUES ('8', '23515');
-INSERT INTO sys_role_menu VALUES ('8', '23516');
-
-INSERT INTO sys_role_menu VALUES ('8', '23520');
-INSERT INTO sys_role_menu VALUES ('8', '23521');
-INSERT INTO sys_role_menu VALUES ('8', '23522');
-INSERT INTO sys_role_menu VALUES ('8', '23523');
-INSERT INTO sys_role_menu VALUES ('8', '23524');
-INSERT INTO sys_role_menu VALUES ('8', '23525');
-INSERT INTO sys_role_menu VALUES ('8', '23526');
-
-INSERT INTO sys_role_menu VALUES ('8', '23530');
-INSERT INTO sys_role_menu VALUES ('8', '23531');
-INSERT INTO sys_role_menu VALUES ('8', '23532');
-INSERT INTO sys_role_menu VALUES ('8', '23533');
-INSERT INTO sys_role_menu VALUES ('8', '23534');
-INSERT INTO sys_role_menu VALUES ('8', '23535');
-INSERT INTO sys_role_menu VALUES ('8', '23536');
-
-INSERT INTO sys_role_menu VALUES ('8', '23540');
-INSERT INTO sys_role_menu VALUES ('8', '23541');
-INSERT INTO sys_role_menu VALUES ('8', '23542');
-INSERT INTO sys_role_menu VALUES ('8', '23543');
-INSERT INTO sys_role_menu VALUES ('8', '23544');
-INSERT INTO sys_role_menu VALUES ('8', '23545');
-INSERT INTO sys_role_menu VALUES ('8', '23546');
-
-INSERT INTO sys_role_menu VALUES ('8', '23550');
-INSERT INTO sys_role_menu VALUES ('8', '23551');
-INSERT INTO sys_role_menu VALUES ('8', '23552');
-INSERT INTO sys_role_menu VALUES ('8', '23553');
-INSERT INTO sys_role_menu VALUES ('8', '23554');
-INSERT INTO sys_role_menu VALUES ('8', '23555');
-INSERT INTO sys_role_menu VALUES ('8', '23556');
-
-INSERT INTO sys_role_menu VALUES ('8', '23560');
-INSERT INTO sys_role_menu VALUES ('8', '23561');
-INSERT INTO sys_role_menu VALUES ('8', '23562');
-INSERT INTO sys_role_menu VALUES ('8', '23563');
-INSERT INTO sys_role_menu VALUES ('8', '23564');
-INSERT INTO sys_role_menu VALUES ('8', '23565');
-INSERT INTO sys_role_menu VALUES ('8', '23566');
-
-INSERT INTO sys_role_menu VALUES ('8', '23570');
-INSERT INTO sys_role_menu VALUES ('8', '23571');
-INSERT INTO sys_role_menu VALUES ('8', '23572');
-INSERT INTO sys_role_menu VALUES ('8', '23573');
-INSERT INTO sys_role_menu VALUES ('8', '23574');
-INSERT INTO sys_role_menu VALUES ('8', '23575');
-INSERT INTO sys_role_menu VALUES ('8', '23576');
-
--- 为医务部分配菜单按钮权限
-INSERT INTO sys_role_menu VALUES ('9', '23500');
-
-INSERT INTO sys_role_menu VALUES ('9', '23510');
-INSERT INTO sys_role_menu VALUES ('9', '23511');
-INSERT INTO sys_role_menu VALUES ('9', '23512');
-INSERT INTO sys_role_menu VALUES ('9', '23513');
-INSERT INTO sys_role_menu VALUES ('9', '23514');
-INSERT INTO sys_role_menu VALUES ('9', '23515');
-INSERT INTO sys_role_menu VALUES ('9', '23516');
-
-INSERT INTO sys_role_menu VALUES ('9', '23520');
-INSERT INTO sys_role_menu VALUES ('9', '23521');
-INSERT INTO sys_role_menu VALUES ('9', '23522');
-INSERT INTO sys_role_menu VALUES ('9', '23523');
-INSERT INTO sys_role_menu VALUES ('9', '23524');
-INSERT INTO sys_role_menu VALUES ('9', '23525');
-INSERT INTO sys_role_menu VALUES ('9', '23526');
-
-INSERT INTO sys_role_menu VALUES ('9', '23530');
-INSERT INTO sys_role_menu VALUES ('9', '23531');
-INSERT INTO sys_role_menu VALUES ('9', '23532');
-INSERT INTO sys_role_menu VALUES ('9', '23533');
-INSERT INTO sys_role_menu VALUES ('9', '23534');
-INSERT INTO sys_role_menu VALUES ('9', '23535');
-INSERT INTO sys_role_menu VALUES ('9', '23536');
-
-INSERT INTO sys_role_menu VALUES ('9', '23540');
-INSERT INTO sys_role_menu VALUES ('9', '23541');
-INSERT INTO sys_role_menu VALUES ('9', '23542');
-INSERT INTO sys_role_menu VALUES ('9', '23543');
-INSERT INTO sys_role_menu VALUES ('9', '23544');
-INSERT INTO sys_role_menu VALUES ('9', '23545');
-INSERT INTO sys_role_menu VALUES ('9', '23546');
-
-INSERT INTO sys_role_menu VALUES ('9', '23550');
-INSERT INTO sys_role_menu VALUES ('9', '23551');
-INSERT INTO sys_role_menu VALUES ('9', '23552');
-INSERT INTO sys_role_menu VALUES ('9', '23553');
-INSERT INTO sys_role_menu VALUES ('9', '23554');
-INSERT INTO sys_role_menu VALUES ('9', '23555');
-INSERT INTO sys_role_menu VALUES ('9', '23556');
-
-INSERT INTO sys_role_menu VALUES ('9', '23560');
-INSERT INTO sys_role_menu VALUES ('9', '23561');
-INSERT INTO sys_role_menu VALUES ('9', '23562');
-INSERT INTO sys_role_menu VALUES ('9', '23563');
-INSERT INTO sys_role_menu VALUES ('9', '23564');
-INSERT INTO sys_role_menu VALUES ('9', '23565');
-INSERT INTO sys_role_menu VALUES ('9', '23566');
-
-INSERT INTO sys_role_menu VALUES ('9', '23570');
-INSERT INTO sys_role_menu VALUES ('9', '23571');
-INSERT INTO sys_role_menu VALUES ('9', '23572');
-INSERT INTO sys_role_menu VALUES ('9', '23573');
-INSERT INTO sys_role_menu VALUES ('9', '23574');
-INSERT INTO sys_role_menu VALUES ('9', '23575');
-INSERT INTO sys_role_menu VALUES ('9', '23576');
-
--- 为医务部主任角色分配菜单按钮权限
-INSERT INTO sys_role_menu VALUES ('10', '23500');
-
-INSERT INTO sys_role_menu VALUES ('10', '23510');
-INSERT INTO sys_role_menu VALUES ('10', '23511');
-INSERT INTO sys_role_menu VALUES ('10', '23512');
-INSERT INTO sys_role_menu VALUES ('10', '23513');
-INSERT INTO sys_role_menu VALUES ('10', '23514');
-INSERT INTO sys_role_menu VALUES ('10', '23515');
-INSERT INTO sys_role_menu VALUES ('10', '23516');
-
-INSERT INTO sys_role_menu VALUES ('10', '23520');
-INSERT INTO sys_role_menu VALUES ('10', '23521');
-INSERT INTO sys_role_menu VALUES ('10', '23522');
-INSERT INTO sys_role_menu VALUES ('10', '23523');
-INSERT INTO sys_role_menu VALUES ('10', '23524');
-INSERT INTO sys_role_menu VALUES ('10', '23525');
-INSERT INTO sys_role_menu VALUES ('10', '23526');
-
-INSERT INTO sys_role_menu VALUES ('10', '23530');
-INSERT INTO sys_role_menu VALUES ('10', '23531');
-INSERT INTO sys_role_menu VALUES ('10', '23532');
-INSERT INTO sys_role_menu VALUES ('10', '23533');
-INSERT INTO sys_role_menu VALUES ('10', '23534');
-INSERT INTO sys_role_menu VALUES ('10', '23535');
-INSERT INTO sys_role_menu VALUES ('10', '23536');
-
-INSERT INTO sys_role_menu VALUES ('10', '23540');
-INSERT INTO sys_role_menu VALUES ('10', '23541');
-INSERT INTO sys_role_menu VALUES ('10', '23542');
-INSERT INTO sys_role_menu VALUES ('10', '23543');
-INSERT INTO sys_role_menu VALUES ('10', '23544');
-INSERT INTO sys_role_menu VALUES ('10', '23545');
-INSERT INTO sys_role_menu VALUES ('10', '23546');
-
-INSERT INTO sys_role_menu VALUES ('10', '23550');
-INSERT INTO sys_role_menu VALUES ('10', '23551');
-INSERT INTO sys_role_menu VALUES ('10', '23552');
-INSERT INTO sys_role_menu VALUES ('10', '23553');
-INSERT INTO sys_role_menu VALUES ('10', '23554');
-INSERT INTO sys_role_menu VALUES ('10', '23555');
-INSERT INTO sys_role_menu VALUES ('10', '23556');
-
-INSERT INTO sys_role_menu VALUES ('10', '23560');
-INSERT INTO sys_role_menu VALUES ('10', '23561');
-INSERT INTO sys_role_menu VALUES ('10', '23562');
-INSERT INTO sys_role_menu VALUES ('10', '23563');
-INSERT INTO sys_role_menu VALUES ('10', '23564');
-INSERT INTO sys_role_menu VALUES ('10', '23565');
-INSERT INTO sys_role_menu VALUES ('10', '23566');
-
-INSERT INTO sys_role_menu VALUES ('10', '23570');
-INSERT INTO sys_role_menu VALUES ('10', '23571');
-INSERT INTO sys_role_menu VALUES ('10', '23572');
-INSERT INTO sys_role_menu VALUES ('10', '23573');
-INSERT INTO sys_role_menu VALUES ('10', '23574');
-INSERT INTO sys_role_menu VALUES ('10', '23575');
-INSERT INTO sys_role_menu VALUES ('10', '23576');
-
--- 为医院管理员角色分配菜单按钮权限
-INSERT INTO sys_role_menu VALUES ('11', '23500');
-
-INSERT INTO sys_role_menu VALUES ('11', '23510');
-INSERT INTO sys_role_menu VALUES ('11', '23511');
-INSERT INTO sys_role_menu VALUES ('11', '23512');
-INSERT INTO sys_role_menu VALUES ('11', '23513');
-INSERT INTO sys_role_menu VALUES ('11', '23514');
-INSERT INTO sys_role_menu VALUES ('11', '23515');
-INSERT INTO sys_role_menu VALUES ('11', '23516');
-
-INSERT INTO sys_role_menu VALUES ('11', '23520');
-INSERT INTO sys_role_menu VALUES ('11', '23521');
-INSERT INTO sys_role_menu VALUES ('11', '23522');
-INSERT INTO sys_role_menu VALUES ('11', '23523');
-INSERT INTO sys_role_menu VALUES ('11', '23524');
-INSERT INTO sys_role_menu VALUES ('11', '23525');
-INSERT INTO sys_role_menu VALUES ('11', '23526');
-
-INSERT INTO sys_role_menu VALUES ('11', '23530');
-INSERT INTO sys_role_menu VALUES ('11', '23531');
-INSERT INTO sys_role_menu VALUES ('11', '23532');
-INSERT INTO sys_role_menu VALUES ('11', '23533');
-INSERT INTO sys_role_menu VALUES ('11', '23534');
-INSERT INTO sys_role_menu VALUES ('11', '23535');
-INSERT INTO sys_role_menu VALUES ('11', '23536');
-
-INSERT INTO sys_role_menu VALUES ('11', '23540');
-INSERT INTO sys_role_menu VALUES ('11', '23541');
-INSERT INTO sys_role_menu VALUES ('11', '23542');
-INSERT INTO sys_role_menu VALUES ('11', '23543');
-INSERT INTO sys_role_menu VALUES ('11', '23544');
-INSERT INTO sys_role_menu VALUES ('11', '23545');
-INSERT INTO sys_role_menu VALUES ('11', '23546');
-
-INSERT INTO sys_role_menu VALUES ('11', '23550');
-INSERT INTO sys_role_menu VALUES ('11', '23551');
-INSERT INTO sys_role_menu VALUES ('11', '23552');
-INSERT INTO sys_role_menu VALUES ('11', '23553');
-INSERT INTO sys_role_menu VALUES ('11', '23554');
-INSERT INTO sys_role_menu VALUES ('11', '23555');
-INSERT INTO sys_role_menu VALUES ('11', '23556');
-
-INSERT INTO sys_role_menu VALUES ('11', '23560');
-INSERT INTO sys_role_menu VALUES ('11', '23561');
-INSERT INTO sys_role_menu VALUES ('11', '23562');
-INSERT INTO sys_role_menu VALUES ('11', '23563');
-INSERT INTO sys_role_menu VALUES ('11', '23564');
-INSERT INTO sys_role_menu VALUES ('11', '23565');
-INSERT INTO sys_role_menu VALUES ('11', '23566');
-
-INSERT INTO sys_role_menu VALUES ('11', '23570');
-INSERT INTO sys_role_menu VALUES ('11', '23571');
-INSERT INTO sys_role_menu VALUES ('11', '23572');
-INSERT INTO sys_role_menu VALUES ('11', '23573');
-INSERT INTO sys_role_menu VALUES ('11', '23574');
-INSERT INTO sys_role_menu VALUES ('11', '23575');
-INSERT INTO sys_role_menu VALUES ('11', '23576');
-
--- 为超级管理员角色分配菜单按钮权限
-INSERT INTO sys_role_menu VALUES ('1', '23500');
-
-INSERT INTO sys_role_menu VALUES ('1', '23510');
-INSERT INTO sys_role_menu VALUES ('1', '23511');
-INSERT INTO sys_role_menu VALUES ('1', '23512');
-INSERT INTO sys_role_menu VALUES ('1', '23513');
-INSERT INTO sys_role_menu VALUES ('1', '23514');
-INSERT INTO sys_role_menu VALUES ('1', '23515');
-INSERT INTO sys_role_menu VALUES ('1', '23516');
-
-INSERT INTO sys_role_menu VALUES ('1', '23520');
-INSERT INTO sys_role_menu VALUES ('1', '23521');
-INSERT INTO sys_role_menu VALUES ('1', '23522');
-INSERT INTO sys_role_menu VALUES ('1', '23523');
-INSERT INTO sys_role_menu VALUES ('1', '23524');
-INSERT INTO sys_role_menu VALUES ('1', '23525');
-INSERT INTO sys_role_menu VALUES ('1', '23526');
-
-INSERT INTO sys_role_menu VALUES ('1', '23530');
-INSERT INTO sys_role_menu VALUES ('1', '23531');
-INSERT INTO sys_role_menu VALUES ('1', '23532');
-INSERT INTO sys_role_menu VALUES ('1', '23533');
-INSERT INTO sys_role_menu VALUES ('1', '23534');
-INSERT INTO sys_role_menu VALUES ('1', '23535');
-INSERT INTO sys_role_menu VALUES ('1', '23536');
-
-INSERT INTO sys_role_menu VALUES ('1', '23540');
-INSERT INTO sys_role_menu VALUES ('1', '23541');
-INSERT INTO sys_role_menu VALUES ('1', '23542');
-INSERT INTO sys_role_menu VALUES ('1', '23543');
-INSERT INTO sys_role_menu VALUES ('1', '23544');
-INSERT INTO sys_role_menu VALUES ('1', '23545');
-INSERT INTO sys_role_menu VALUES ('1', '23546');
-
-INSERT INTO sys_role_menu VALUES ('1', '23550');
-INSERT INTO sys_role_menu VALUES ('1', '23551');
-INSERT INTO sys_role_menu VALUES ('1', '23552');
-INSERT INTO sys_role_menu VALUES ('1', '23553');
-INSERT INTO sys_role_menu VALUES ('1', '23554');
-INSERT INTO sys_role_menu VALUES ('1', '23555');
-INSERT INTO sys_role_menu VALUES ('1', '23556');
-
-INSERT INTO sys_role_menu VALUES ('1', '23560');
-INSERT INTO sys_role_menu VALUES ('1', '23561');
-INSERT INTO sys_role_menu VALUES ('1', '23562');
-INSERT INTO sys_role_menu VALUES ('1', '23563');
-INSERT INTO sys_role_menu VALUES ('1', '23564');
-INSERT INTO sys_role_menu VALUES ('1', '23565');
-INSERT INTO sys_role_menu VALUES ('1', '23566');
-
-INSERT INTO sys_role_menu VALUES ('1', '23570');
-INSERT INTO sys_role_menu VALUES ('1', '23571');
-INSERT INTO sys_role_menu VALUES ('1', '23572');
-INSERT INTO sys_role_menu VALUES ('1', '23573');
-INSERT INTO sys_role_menu VALUES ('1', '23574');
-INSERT INTO sys_role_menu VALUES ('1', '23575');
-INSERT INTO sys_role_menu VALUES ('1', '23576');
+COMMIT;

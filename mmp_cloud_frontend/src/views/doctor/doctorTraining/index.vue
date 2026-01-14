@@ -37,14 +37,14 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorTraining:add']" size="small">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorTraining:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:doctorTraining:edit']"
+              v-hasPermi="['doctor:doctorTraining:edit']"
               size="small"
               >修改</el-button
             >
@@ -54,14 +54,14 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorTraining:remove']"
+              v-hasPermi="['doctor:doctorTraining:remove']"
               size="small"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorTraining:export']" size="small"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorTraining:export']" size="small"
               >导出</el-button
             >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['system:doctorTraining:import']" size="small"
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorTraining:import']" size="small"
               >导入</el-button
             >
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
@@ -100,10 +100,10 @@
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:doctorTraining:edit']"></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['doctor:doctorTraining:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['system:doctorTraining:remove']"></el-button>
+              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['doctor:doctorTraining:remove']"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -164,7 +164,7 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>

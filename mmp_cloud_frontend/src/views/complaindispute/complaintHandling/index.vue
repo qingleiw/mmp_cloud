@@ -234,8 +234,8 @@ import {
   delComplaintHandling,
   addComplaintHandling,
   updateComplaintHandling
-} from '@/api/system/complaintHandling';
-import { ComplaintHandlingVO, ComplaintHandlingQuery, ComplaintHandlingForm } from '@/api/system/complaintHandling/types';
+} from '@/api/complaindispute/complaintHandling';
+import { ComplaintHandlingVO, ComplaintHandlingQuery, ComplaintHandlingForm } from '@/api/complaindispute/complaintHandling/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -81,7 +81,7 @@
           <span class="font-medium">申请记录列表</span>
           <span class="text-[12px] text-gray-500">{{ total }} 条记录</span>
           <div class="ml-auto flex items-center gap-2">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:qualificationAuthorizationApply:add']"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationAuthorizationApply:add']"
               >新增</el-button
             >
             <el-button
@@ -90,7 +90,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:qualificationAuthorizationApply:edit']"
+              v-hasPermi="['qualification:qualificationAuthorizationApply:edit']"
               >修改</el-button
             >
             <el-button
@@ -99,10 +99,10 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:qualificationAuthorizationApply:remove']"
+              v-hasPermi="['qualification:qualificationAuthorizationApply:remove']"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:qualificationAuthorizationApply:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationAuthorizationApply:export']"
               >导出</el-button
             >
             <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
@@ -133,7 +133,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:qualificationAuthorizationApply:edit']"
+                v-hasPermi="['qualification:qualificationAuthorizationApply:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -142,7 +142,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:qualificationAuthorizationApply:remove']"
+                v-hasPermi="['qualification:qualificationAuthorizationApply:remove']"
               ></el-button>
             </el-tooltip>
           </template>

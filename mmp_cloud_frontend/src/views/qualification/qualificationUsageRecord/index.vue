@@ -44,14 +44,14 @@
           <span class="font-medium">资质使用记录列表</span>
           <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           <div class="ml-auto flex items-center gap-2">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:qualificationUsageRecord:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationUsageRecord:add']">新增</el-button>
             <el-button
               type="success"
               plain
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:qualificationUsageRecord:edit']"
+              v-hasPermi="['qualification:qualificationUsageRecord:edit']"
               >修改</el-button
             >
             <el-button
@@ -60,10 +60,10 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:qualificationUsageRecord:remove']"
+              v-hasPermi="['qualification:qualificationUsageRecord:remove']"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:qualificationUsageRecord:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationUsageRecord:export']"
               >导出</el-button
             >
             <el-button type="info" plain icon="Setting" @click="toggleFieldConfig">字段配置</el-button>
@@ -107,7 +107,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:qualificationUsageRecord:edit']"
+                v-hasPermi="['qualification:qualificationUsageRecord:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip v-if="false" content="删除" placement="top">
@@ -116,7 +116,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:qualificationUsageRecord:remove']"
+                v-hasPermi="['qualification:qualificationUsageRecord:remove']"
               ></el-button>
             </el-tooltip>
             <el-button link type="primary" @click="handleView(scope.row)">

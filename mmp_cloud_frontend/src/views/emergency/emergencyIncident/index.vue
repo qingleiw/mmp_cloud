@@ -56,20 +56,20 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:emergencyIncident:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['emergency:emergencyIncident:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:emergencyIncident:edit']"
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['emergency:emergencyIncident:edit']"
               >修改</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:emergencyIncident:remove']"
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['emergency:emergencyIncident:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:emergencyIncident:export']">导出</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['emergency:emergencyIncident:export']">导出</el-button>
           </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
@@ -105,7 +105,7 @@
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:emergencyIncident:edit']"></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['emergency:emergencyIncident:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
               <el-button
@@ -113,7 +113,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:emergencyIncident:remove']"
+                v-hasPermi="['emergency:emergencyIncident:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -187,8 +187,8 @@ import {
   delEmergencyIncident,
   addEmergencyIncident,
   updateEmergencyIncident
-} from '@/api/system/emergencyIncident';
-import { EmergencyIncidentVO, EmergencyIncidentQuery, EmergencyIncidentForm } from '@/api/system/emergencyIncident/types';
+} from '@/api/emergency/emergencyIncident';
+import { EmergencyIncidentVO, EmergencyIncidentQuery, EmergencyIncidentForm } from '@/api/emergency/emergencyIncident/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

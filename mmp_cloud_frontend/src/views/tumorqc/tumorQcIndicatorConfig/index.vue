@@ -48,7 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:tumorQcIndicatorConfig:add']" size="small"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['tumorqc:tumorQcIndicatorConfig:add']" size="small"
               >新增</el-button
             >
             <el-button
@@ -57,7 +57,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:tumorQcIndicatorConfig:edit']"
+              v-hasPermi="['tumorqc:tumorQcIndicatorConfig:edit']"
               size="small"
               >修改</el-button
             >
@@ -67,14 +67,14 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:tumorQcIndicatorConfig:remove']"
+              v-hasPermi="['tumorqc:tumorQcIndicatorConfig:remove']"
               size="small"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:tumorQcIndicatorConfig:export']" size="small"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['tumorqc:tumorQcIndicatorConfig:export']" size="small"
               >导出</el-button
             >
-            <el-button type="info" plain icon="Upload" @click="handleImport" v-hasPermi="['system:tumorQcIndicatorConfig:import']" size="small"
+            <el-button type="info" plain icon="Upload" @click="handleImport" v-hasPermi="['tumorqc:tumorQcIndicatorConfig:import']" size="small"
               >导入</el-button
             >
             <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
@@ -117,7 +117,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:tumorQcIndicatorConfig:edit']"
+                v-hasPermi="['tumorqc:tumorQcIndicatorConfig:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -126,7 +126,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:tumorQcIndicatorConfig:remove']"
+                v-hasPermi="['tumorqc:tumorQcIndicatorConfig:remove']"
               ></el-button>
             </el-tooltip>
           </template>

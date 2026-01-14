@@ -30,8 +30,8 @@
         <span class="font-medium">资质考试试卷列表</span>
         <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
         <div class="ml-auto flex items-center gap-2">
-          <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:qualificationExamPaper:add']">新增</el-button>
-          <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:qualificationExamPaper:edit']"
+          <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationExamPaper:add']">新增</el-button>
+          <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['qualification:qualificationExamPaper:edit']"
             >修改</el-button
           >
           <el-button
@@ -40,10 +40,10 @@
             icon="Delete"
             :disabled="multiple"
             @click="handleDelete()"
-            v-hasPermi="['system:qualificationExamPaper:remove']"
+            v-hasPermi="['qualification:qualificationExamPaper:remove']"
             >删除</el-button
           >
-          <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:qualificationExamPaper:export']">导出</el-button>
+          <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationExamPaper:export']">导出</el-button>
           <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </div>
@@ -79,7 +79,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:qualificationExamPaper:edit']"
+                v-hasPermi="['qualification:qualificationExamPaper:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -88,7 +88,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:qualificationExamPaper:remove']"
+                v-hasPermi="['qualification:qualificationExamPaper:remove']"
               ></el-button>
             </el-tooltip>
           </template>

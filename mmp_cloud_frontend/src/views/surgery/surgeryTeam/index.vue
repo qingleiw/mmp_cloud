@@ -47,14 +47,14 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:surgeryTeam:add']">新增</el-button>
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:surgeryTeam:edit']"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['surgery:surgeryTeam:add']">新增</el-button>
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['surgery:surgeryTeam:edit']"
               >修改</el-button
             >
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:surgeryTeam:remove']"
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['surgery:surgeryTeam:remove']"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:surgeryTeam:export']">导出</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['surgery:surgeryTeam:export']">导出</el-button>
             <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -98,12 +98,12 @@
         <el-table-column label="操作" align="center" fixed="right" width="120" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" @click="handleUpdate(scope.row)" v-hasPermi="['system:surgeryTeam:edit']">
+              <el-button link type="primary" @click="handleUpdate(scope.row)" v-hasPermi="['surgery:surgeryTeam:edit']">
                 <i-ep-edit class="btn-icon"></i-ep-edit>
               </el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="danger" @click="handleDelete(scope.row)" v-hasPermi="['system:surgeryTeam:remove']">
+              <el-button link type="danger" @click="handleDelete(scope.row)" v-hasPermi="['surgery:surgeryTeam:remove']">
                 <i-ep-delete class="btn-icon"></i-ep-delete>
               </el-button>
             </el-tooltip>
@@ -160,9 +160,9 @@
 </template>
 
 <script setup name="SurgeryTeam" lang="ts">
-import { listSurgeryTeam, getSurgeryTeam, delSurgeryTeam, addSurgeryTeam, updateSurgeryTeam } from '@/api/system/surgeryTeam';
-import { listDoctorInfo } from '@/api/system/doctorInfo';
-import { SurgeryTeamVO, SurgeryTeamQuery, SurgeryTeamForm } from '@/api/system/surgeryTeam/types';
+import { listSurgeryTeam, getSurgeryTeam, delSurgeryTeam, addSurgeryTeam, updateSurgeryTeam } from '@/api/surgery/surgeryTeam';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
+import { SurgeryTeamVO, SurgeryTeamQuery, SurgeryTeamForm } from '@/api/surgery/surgeryTeam/types';
 import { createSurgeryTeamFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
@@ -316,7 +316,7 @@ const handleDelete = async (row?: SurgeryTeamVO) => {
 /** 导出按钮操作 */
 const handleExport = () => {
   proxy?.download(
-    'system/surgeryTeam/export',
+    'surgery/surgeryTeam/export',
     {
       ...queryParams.value
     },

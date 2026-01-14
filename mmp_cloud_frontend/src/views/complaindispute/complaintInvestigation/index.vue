@@ -220,8 +220,8 @@ import {
   delComplaintInvestigation,
   addComplaintInvestigation,
   updateComplaintInvestigation
-} from '@/api/system/complaintInvestigation';
-import { ComplaintInvestigationVO, ComplaintInvestigationQuery, ComplaintInvestigationForm } from '@/api/system/complaintInvestigation/types';
+} from '@/api/complaindispute/complaintInvestigation';
+import { ComplaintInvestigationVO, ComplaintInvestigationQuery, ComplaintInvestigationForm } from '@/api/complaindispute/complaintInvestigation/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -42,14 +42,14 @@
           <span class="font-medium">资质风险监测列表</span>
           <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           <div class="ml-auto flex items-center gap-2">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:qualificationRiskMonitor:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationRiskMonitor:add']">新增</el-button>
             <el-button
               type="success"
               plain
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:qualificationRiskMonitor:edit']"
+              v-hasPermi="['qualification:qualificationRiskMonitor:edit']"
               >修改</el-button
             >
             <el-button
@@ -58,10 +58,10 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:qualificationRiskMonitor:remove']"
+              v-hasPermi="['qualification:qualificationRiskMonitor:remove']"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:qualificationRiskMonitor:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationRiskMonitor:export']"
               >导出</el-button
             >
             <el-button type="info" plain icon="Setting" @click="toggleFieldConfig">字段配置</el-button>

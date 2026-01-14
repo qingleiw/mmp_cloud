@@ -48,7 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorWorkExperience:add']" size="small"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorWorkExperience:add']" size="small"
               >新增</el-button
             >
             <el-button
@@ -57,7 +57,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:doctorWorkExperience:edit']"
+              v-hasPermi="['doctor:doctorWorkExperience:edit']"
               size="small"
               >修改</el-button
             >
@@ -67,14 +67,14 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorWorkExperience:remove']"
+              v-hasPermi="['doctor:doctorWorkExperience:remove']"
               size="small"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorWorkExperience:export']" size="small"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorWorkExperience:export']" size="small"
               >导出</el-button
             >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['system:doctorWorkExperience:import']" size="small"
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorWorkExperience:import']" size="small"
               >导入</el-button
             >
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
@@ -124,7 +124,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:doctorWorkExperience:edit']"
+                v-hasPermi="['doctor:doctorWorkExperience:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -133,7 +133,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:doctorWorkExperience:remove']"
+                v-hasPermi="['doctor:doctorWorkExperience:remove']"
               ></el-button>
             </el-tooltip>
           </template>

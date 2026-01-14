@@ -56,10 +56,10 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:emergencyDrillPlan:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['emergency:emergencyDrillPlan:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:emergencyDrillPlan:edit']"
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['emergency:emergencyDrillPlan:edit']"
               >修改</el-button
             >
           </el-col>
@@ -70,12 +70,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:emergencyDrillPlan:remove']"
+              v-hasPermi="['emergency:emergencyDrillPlan:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:emergencyDrillPlan:export']">导出</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['emergency:emergencyDrillPlan:export']">导出</el-button>
           </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
@@ -111,7 +111,7 @@
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:emergencyDrillPlan:edit']"></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['emergency:emergencyDrillPlan:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
               <el-button
@@ -119,7 +119,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:emergencyDrillPlan:remove']"
+                v-hasPermi="['emergency:emergencyDrillPlan:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -193,8 +193,8 @@ import {
   delEmergencyDrillPlan,
   addEmergencyDrillPlan,
   updateEmergencyDrillPlan
-} from '@/api/system/emergencyDrillPlan';
-import { EmergencyDrillPlanVO, EmergencyDrillPlanQuery, EmergencyDrillPlanForm } from '@/api/system/emergencyDrillPlan/types';
+} from '@/api/emergency/emergencyDrillPlan';
+import { EmergencyDrillPlanVO, EmergencyDrillPlanQuery, EmergencyDrillPlanForm } from '@/api/emergency/emergencyDrillPlan/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

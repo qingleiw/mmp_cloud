@@ -26,7 +26,7 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:supervisionRectificationProgress:add']"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['supervision:supervisionRectificationProgress:add']"
               >新增</el-button
             >
           </el-col>
@@ -37,7 +37,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:supervisionRectificationProgress:edit']"
+              v-hasPermi="['supervision:supervisionRectificationProgress:edit']"
               >修改</el-button
             >
           </el-col>
@@ -48,12 +48,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:supervisionRectificationProgress:remove']"
+              v-hasPermi="['supervision:supervisionRectificationProgress:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:supervisionRectificationProgress:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['supervision:supervisionRectificationProgress:export']"
               >导出</el-button
             >
           </el-col>
@@ -77,7 +77,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:supervisionRectificationProgress:edit']"
+                v-hasPermi="['supervision:supervisionRectificationProgress:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -86,7 +86,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:supervisionRectificationProgress:remove']"
+                v-hasPermi="['supervision:supervisionRectificationProgress:remove']"
               ></el-button>
             </el-tooltip>
           </template>

@@ -95,19 +95,19 @@
             <span class="record-count">{{ total }} 条记录</span>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['system:surgeryWorkloadStatistics:add']">
+            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['surgery:surgeryWorkloadStatistics:add']">
               <i-ep-plus class="btn-icon"></i-ep-plus>
               新增
             </el-button>
-            <el-button type="success" plain :disabled="single" @click="handleUpdate()" v-hasPermi="['system:surgeryWorkloadStatistics:edit']">
+            <el-button type="success" plain :disabled="single" @click="handleUpdate()" v-hasPermi="['surgery:surgeryWorkloadStatistics:edit']">
               <i-ep-edit class="btn-icon"></i-ep-edit>
               修改
             </el-button>
-            <el-button type="danger" plain :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:surgeryWorkloadStatistics:remove']">
+            <el-button type="danger" plain :disabled="multiple" @click="handleDelete()" v-hasPermi="['surgery:surgeryWorkloadStatistics:remove']">
               <i-ep-delete class="btn-icon"></i-ep-delete>
               删除
             </el-button>
-            <el-button type="warning" plain @click="handleExport" v-hasPermi="['system:surgeryWorkloadStatistics:export']">
+            <el-button type="warning" plain @click="handleExport" v-hasPermi="['surgery:surgeryWorkloadStatistics:export']">
               <i-ep-download class="btn-icon"></i-ep-download>
               导出
             </el-button>
@@ -215,7 +215,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:surgeryWorkloadStatistics:edit']"
+                v-hasPermi="['surgery:surgeryWorkloadStatistics:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -224,7 +224,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:surgeryWorkloadStatistics:remove']"
+                v-hasPermi="['surgery:surgeryWorkloadStatistics:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -329,12 +329,12 @@ import {
   delSurgeryWorkloadStatistics,
   addSurgeryWorkloadStatistics,
   updateSurgeryWorkloadStatistics
-} from '@/api/system/surgeryWorkloadStatistics';
+} from '@/api/surgery/surgeryWorkloadStatistics';
 import {
   SurgeryWorkloadStatisticsVO,
   SurgeryWorkloadStatisticsQuery,
   SurgeryWorkloadStatisticsForm
-} from '@/api/system/surgeryWorkloadStatistics/types';
+} from '@/api/surgery/surgeryWorkloadStatistics/types';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createSurgeryWorkloadStatisticsSearchConfig } from '@/utils/mmpSearchConfigs';
@@ -419,16 +419,23 @@ const getSurgeryLevelTagType = (level: string) => {
     '三级': 'warning',
     '四级': 'danger'
   };
-  return levelMap[level] || '';
+  return levelMap[level] || 'primary';
 };
 
 /** 查询手术工作量统计列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listSurgeryWorkloadStatistics(queryParams.value);
-  surgeryWorkloadStatisticsList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
+  try {
+    const res = await listSurgeryWorkloadStatistics(queryParams.value);
+    surgeryWorkloadStatisticsList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取手术工作量统计列表失败:', error);
+    surgeryWorkloadStatisticsList.value = [];
+    total.value = 0;
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 取消按钮 */
@@ -508,7 +515,7 @@ const handleDelete = async (row?: SurgeryWorkloadStatisticsVO) => {
 /** 导出按钮操作 */
 const handleExport = () => {
   proxy?.download(
-    'system/surgeryWorkloadStatistics/export',
+    'surgery/surgeryWorkloadStatistics/export',
     {
       ...queryParams.value
     },

@@ -18,10 +18,10 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorEthicsEvaluation:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorEthicsEvaluation:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:doctorEthicsEvaluation:edit']"
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['doctor:doctorEthicsEvaluation:edit']"
               >修改</el-button
             >
           </el-col>
@@ -32,12 +32,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorEthicsEvaluation:remove']"
+              v-hasPermi="['doctor:doctorEthicsEvaluation:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorEthicsEvaluation:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorEthicsEvaluation:export']"
               >导出</el-button
             >
           </el-col>
@@ -78,7 +78,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:doctorEthicsEvaluation:edit']"
+                v-hasPermi="['doctor:doctorEthicsEvaluation:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -87,7 +87,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:doctorEthicsEvaluation:remove']"
+                v-hasPermi="['doctor:doctorEthicsEvaluation:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -148,7 +148,7 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
@@ -267,9 +267,9 @@ const getList = async () => {
 
     // 获取所有医生信息来映射医生姓名
     if (evaluations.length > 0) {
-      const doctorRes = await listDoctorInfo({ pageSize: 1000 }); // 获取所有医生数据
+      const doctorRes = await listDoctorBasicInfo({ pageSize: 1000 }); // 获取所有医生数据
       const doctorMap = new Map();
-      doctorRes.rows.forEach((doctor: DoctorInfoVO) => {
+      doctorRes.rows.forEach((doctor: DoctorBasicInfoVO) => {
         doctorMap.set(doctor.id, doctor.doctorName);
       });
 

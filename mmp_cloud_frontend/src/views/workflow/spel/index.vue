@@ -206,10 +206,17 @@ const { queryParams, form, rules } = toRefs(data);
 /** 查询流程spel表达式定义列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listSpel(queryParams.value);
-  spelList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
+  try {
+    const res = await listSpel(queryParams.value);
+    spelList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取流程spel表达式定义列表失败:', error);
+    spelList.value = [];
+    total.value = 0;
+  } finally {
+    loading.value = false;
+  }
 }
 
 /** 取消按钮 */

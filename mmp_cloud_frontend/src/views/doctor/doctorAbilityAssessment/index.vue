@@ -18,7 +18,7 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorAbilityAssessment:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorAbilityAssessment:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -27,7 +27,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:doctorAbilityAssessment:edit']"
+              v-hasPermi="['doctor:doctorAbilityAssessment:edit']"
               >修改</el-button
             >
           </el-col>
@@ -38,12 +38,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorAbilityAssessment:remove']"
+              v-hasPermi="['doctor:doctorAbilityAssessment:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorAbilityAssessment:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorAbilityAssessment:export']"
               >导出</el-button
             >
           </el-col>
@@ -90,7 +90,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:doctorAbilityAssessment:edit']"
+                v-hasPermi="['doctor:doctorAbilityAssessment:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -99,7 +99,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:doctorAbilityAssessment:remove']"
+                v-hasPermi="['doctor:doctorAbilityAssessment:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -158,7 +158,7 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>

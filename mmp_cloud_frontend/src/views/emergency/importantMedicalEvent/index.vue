@@ -5,14 +5,14 @@
       <h1>重要医疗事件管理</h1>
       <p>管理系统中的重要医疗事件信息，包括事件记录、通知和处理等功能</p>
       <div class="flex gap-2">
-        <el-button type="primary" icon="i-ep:Plus" @click="handleAdd" v-hasPermi="['system:importantMedicalEvent:add']">新增</el-button>
-        <el-button type="success" icon="i-ep:Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:importantMedicalEvent:edit']"
+        <el-button type="primary" icon="i-ep:Plus" @click="handleAdd" v-hasPermi="['emergency:importantMedicalEvent:add']">新增</el-button>
+        <el-button type="success" icon="i-ep:Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['emergency:importantMedicalEvent:edit']"
           >修改</el-button
         >
-        <el-button type="danger" icon="i-ep:Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:importantMedicalEvent:remove']"
+        <el-button type="danger" icon="i-ep:Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['emergency:importantMedicalEvent:remove']"
           >删除</el-button
         >
-        <el-button type="warning" icon="i-ep:Download" @click="handleExport" v-hasPermi="['system:importantMedicalEvent:export']">导出</el-button>
+        <el-button type="warning" icon="i-ep:Download" @click="handleExport" v-hasPermi="['emergency:importantMedicalEvent:export']">导出</el-button>
         <el-button type="info" icon="i-ep:Setting" @click="fieldConfigVisible = true">字段配置</el-button>
         <el-button type="info" icon="i-ep:Setting" @click="searchConfigVisible = true">搜索项配置</el-button>
         <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
@@ -59,7 +59,7 @@
                   type="primary"
                   icon="i-ep:Edit"
                   @click="handleUpdate(scope.row)"
-                  v-hasPermi="['system:importantMedicalEvent:edit']"
+                  v-hasPermi="['emergency:importantMedicalEvent:edit']"
                   size="small"
                 ></el-button>
               </el-tooltip>
@@ -69,7 +69,7 @@
                   type="danger"
                   icon="i-ep:Delete"
                   @click="handleDelete(scope.row)"
-                  v-hasPermi="['system:importantMedicalEvent:remove']"
+                  v-hasPermi="['emergency:importantMedicalEvent:remove']"
                   size="small"
                 ></el-button>
               </el-tooltip>
@@ -116,7 +116,7 @@
                 type="primary"
                 icon="i-ep:Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:importantMedicalEvent:edit']"
+                v-hasPermi="['emergency:importantMedicalEvent:edit']"
                 size="small"
               ></el-button>
             </el-tooltip>
@@ -126,7 +126,7 @@
                 type="danger"
                 icon="i-ep:Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:importantMedicalEvent:remove']"
+                v-hasPermi="['emergency:importantMedicalEvent:remove']"
                 size="small"
               ></el-button>
             </el-tooltip>
@@ -196,7 +196,7 @@
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="() => (searchConfigVisible = false)" />
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="() => (fieldConfigVisible = false)" />
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="() => (fieldConfigVisible = false)" />
   </div>
 </template>
 
@@ -207,8 +207,8 @@ import {
   delImportantMedicalEvent,
   addImportantMedicalEvent,
   updateImportantMedicalEvent
-} from '@/api/system/importantMedicalEvent';
-import { ImportantMedicalEventVO, ImportantMedicalEventQuery, ImportantMedicalEventForm } from '@/api/system/importantMedicalEvent/types';
+} from '@/api/emergency/importantMedicalEvent';
+import { ImportantMedicalEventVO, ImportantMedicalEventQuery, ImportantMedicalEventForm } from '@/api/emergency/importantMedicalEvent/types';
 import { createImportantMedicalEventSearchConfig } from '@/utils/mmpSearchConfigs';
 import { createImportantMedicalEventFieldConfig } from '@/utils/mmpFieldConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
@@ -293,10 +293,17 @@ const { queryParams, form, rules } = toRefs(data);
 /** 查询重要医疗事件列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listImportantMedicalEvent(queryParams.value);
-  importantMedicalEventList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
+  try {
+    const res = await listImportantMedicalEvent(queryParams.value);
+    importantMedicalEventList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取重要医疗事件列表失败:', error);
+    importantMedicalEventList.value = [];
+    total.value = 0;
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 取消按钮 */

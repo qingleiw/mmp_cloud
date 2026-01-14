@@ -69,14 +69,14 @@
                 <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
               </div>
               <div class="table-actions">
-                <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorQualificationCatalog:add']">新增</el-button>
+                <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorQualificationCatalog:add']">新增</el-button>
                 <el-button
                   type="success"
                   plain
                   icon="Edit"
                   :disabled="single"
                   @click="handleUpdate()"
-                  v-hasPermi="['system:doctorQualificationCatalog:edit']"
+                  v-hasPermi="['doctor:doctorQualificationCatalog:edit']"
                   >修改</el-button
                 >
                 <el-button
@@ -85,10 +85,10 @@
                   icon="Delete"
                   :disabled="multiple"
                   @click="handleDelete()"
-                  v-hasPermi="['system:doctorQualificationCatalog:remove']"
+                  v-hasPermi="['doctor:doctorQualificationCatalog:remove']"
                   >删除</el-button
                 >
-                <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorQualificationCatalog:export']"
+                <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorQualificationCatalog:export']"
                   >导出</el-button
                 >
                 <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
@@ -127,7 +127,7 @@
                     type="primary"
                     icon="Edit"
                     @click="handleUpdate(scope.row)"
-                    v-hasPermi="['system:doctorQualificationCatalog:edit']"
+                    v-hasPermi="['doctor:doctorQualificationCatalog:edit']"
                   ></el-button>
                 </el-tooltip>
                 <el-tooltip content="删除" placement="top">
@@ -136,7 +136,7 @@
                     type="primary"
                     icon="Delete"
                     @click="handleDelete(scope.row)"
-                    v-hasPermi="['system:doctorQualificationCatalog:remove']"
+                    v-hasPermi="['doctor:doctorQualificationCatalog:remove']"
                   ></el-button>
                 </el-tooltip>
               </template>
@@ -191,7 +191,7 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>

@@ -42,16 +42,16 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:newTechnologyProjectExtension:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ntp:newTechnologyProjectExtension:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:newTechnologyProjectExtension:edit']">修改</el-button>
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ntp:newTechnologyProjectExtension:edit']">修改</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:newTechnologyProjectExtension:remove']">删除</el-button>
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['ntp:newTechnologyProjectExtension:remove']">删除</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:newTechnologyProjectExtension:export']">导出</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ntp:newTechnologyProjectExtension:export']">导出</el-button>
           </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
@@ -78,10 +78,10 @@
         <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:newTechnologyProjectExtension:edit']"></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['ntp:newTechnologyProjectExtension:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['system:newTechnologyProjectExtension:remove']"></el-button>
+              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['ntp:newTechnologyProjectExtension:remove']"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -138,8 +138,8 @@
 </template>
 
 <script setup name="NewTechnologyProjectExtension" lang="ts">
-import { listNewTechnologyProjectExtension, getNewTechnologyProjectExtension, delNewTechnologyProjectExtension, addNewTechnologyProjectExtension, updateNewTechnologyProjectExtension } from '@/api/system/newTechnologyProjectExtension';
-import { NewTechnologyProjectExtensionVO, NewTechnologyProjectExtensionQuery, NewTechnologyProjectExtensionForm } from '@/api/system/newTechnologyProjectExtension/types';
+import { listNewTechnologyProjectExtension, getNewTechnologyProjectExtension, delNewTechnologyProjectExtension, addNewTechnologyProjectExtension, updateNewTechnologyProjectExtension } from '@/api/ntp/newTechnologyProjectExtension';
+import { NewTechnologyProjectExtensionVO, NewTechnologyProjectExtensionQuery, NewTechnologyProjectExtensionForm } from '@/api/ntp/newTechnologyProjectExtension/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

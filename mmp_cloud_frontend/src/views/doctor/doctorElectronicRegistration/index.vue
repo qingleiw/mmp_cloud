@@ -18,7 +18,7 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorElectronicRegistration:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorElectronicRegistration:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -27,7 +27,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:doctorElectronicRegistration:edit']"
+              v-hasPermi="['doctor:doctorElectronicRegistration:edit']"
               >修改</el-button
             >
           </el-col>
@@ -38,12 +38,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorElectronicRegistration:remove']"
+              v-hasPermi="['doctor:doctorElectronicRegistration:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorElectronicRegistration:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorElectronicRegistration:export']"
               >导出</el-button
             >
           </el-col>
@@ -96,7 +96,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:doctorElectronicRegistration:edit']"
+                v-hasPermi="['doctor:doctorElectronicRegistration:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -105,7 +105,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:doctorElectronicRegistration:remove']"
+                v-hasPermi="['doctor:doctorElectronicRegistration:remove']"
               ></el-button>
             </el-tooltip>
           </template>

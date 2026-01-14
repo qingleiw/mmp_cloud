@@ -48,7 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:coreSystemInspectionRecord:add']" size="small"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['coresystem:coreSystemInspectionRecord:add']" size="small"
               >新增</el-button
             >
             <el-button
@@ -57,7 +57,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:coreSystemInspectionRecord:edit']"
+              v-hasPermi="['coresystem:coreSystemInspectionRecord:edit']"
               size="small"
               >修改</el-button
             >
@@ -67,7 +67,7 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:coreSystemInspectionRecord:remove']"
+              v-hasPermi="['coresystem:coreSystemInspectionRecord:remove']"
               size="small"
               >删除</el-button
             >
@@ -76,7 +76,7 @@
               plain
               icon="Download"
               @click="handleExport"
-              v-hasPermi="['system:coreSystemInspectionRecord:export']"
+              v-hasPermi="['coresystem:coreSystemInspectionRecord:export']"
               size="small"
               >导出</el-button
             >
@@ -127,7 +127,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:coreSystemInspectionRecord:edit']"
+                v-hasPermi="['coresystem:coreSystemInspectionRecord:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -136,7 +136,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:coreSystemInspectionRecord:remove']"
+                v-hasPermi="['coresystem:coreSystemInspectionRecord:remove']"
               ></el-button>
             </el-tooltip>
           </template>

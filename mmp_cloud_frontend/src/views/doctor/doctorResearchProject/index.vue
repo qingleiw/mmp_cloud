@@ -37,7 +37,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorResearchProject:add']" size="small"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorResearchProject:add']" size="small"
               >新增</el-button
             >
             <el-button
@@ -46,7 +46,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:doctorResearchProject:edit']"
+              v-hasPermi="['doctor:doctorResearchProject:edit']"
               size="small"
               >修改</el-button
             >
@@ -56,14 +56,14 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorResearchProject:remove']"
+              v-hasPermi="['doctor:doctorResearchProject:remove']"
               size="small"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorResearchProject:export']" size="small"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorResearchProject:export']" size="small"
               >导出</el-button
             >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['system:doctorResearchProject:import']" size="small"
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorResearchProject:import']" size="small"
               >导入</el-button
             >
             <el-button type="info" plain icon="Setting" @click="showFieldConfig = true" size="small">字段配置</el-button>
@@ -104,7 +104,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:doctorResearchProject:edit']"
+                v-hasPermi="['doctor:doctorResearchProject:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -113,7 +113,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:doctorResearchProject:remove']"
+                v-hasPermi="['doctor:doctorResearchProject:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -210,7 +210,7 @@
   </el-dialog>
 
   <!-- 字段配置对话框 -->
-  <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+  <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
   <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
 </template>
 

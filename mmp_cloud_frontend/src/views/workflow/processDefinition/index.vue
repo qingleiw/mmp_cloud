@@ -364,18 +364,32 @@ const getPageList = async () => {
 //分页
 const getList = async () => {
   loading.value = true;
-  const resp = await listDefinition(queryParams.value);
-  processDefinitionList.value = resp.rows;
-  total.value = resp.total;
-  loading.value = false;
+  try {
+    const resp = await listDefinition(queryParams.value);
+    processDefinitionList.value = resp.rows;
+    total.value = resp.total;
+  } catch (error) {
+    console.error('获取流程定义列表失败:', error);
+    processDefinitionList.value = [];
+    total.value = 0;
+  } finally {
+    loading.value = false;
+  }
 };
 //查询未发布的流程定义列表
 const getUnPublishList = async () => {
   loading.value = true;
-  const resp = await unPublishList(queryParams.value);
-  processDefinitionList.value = resp.rows;
-  total.value = resp.total;
-  loading.value = false;
+  try {
+    const resp = await unPublishList(queryParams.value);
+    processDefinitionList.value = resp.rows;
+    total.value = resp.total;
+  } catch (error) {
+    console.error('获取未发布流程定义列表失败:', error);
+    processDefinitionList.value = [];
+    total.value = 0;
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 删除按钮操作 */

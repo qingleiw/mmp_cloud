@@ -37,14 +37,14 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorBasicInfo:add']" size="small">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorBasicInfo:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:doctorBasicInfo:edit']"
+              v-hasPermi="['doctor:doctorBasicInfo:edit']"
               size="small"
               >修改</el-button
             >
@@ -54,11 +54,11 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorBasicInfo:remove']"
+              v-hasPermi="['doctor:doctorBasicInfo:remove']"
               size="small"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorBasicInfo:export']" size="small"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorBasicInfo:export']" size="small"
               >导出</el-button
             >
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
@@ -108,10 +108,10 @@
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-button link size="small" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:doctorBasicInfo:edit']"
+            <el-button link size="small" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['doctor:doctorBasicInfo:edit']"
               >修改</el-button
             >
-            <el-button link size="small" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['system:doctorBasicInfo:remove']"
+            <el-button link size="small" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['doctor:doctorBasicInfo:remove']"
               >删除</el-button
             >
           </template>

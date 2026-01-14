@@ -38,7 +38,7 @@
       <template #header>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:supervisionProjectIndicator:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['supervision:supervisionProjectIndicator:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -47,7 +47,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:supervisionProjectIndicator:edit']"
+              v-hasPermi="['supervision:supervisionProjectIndicator:edit']"
               >修改</el-button
             >
           </el-col>
@@ -58,12 +58,12 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:supervisionProjectIndicator:remove']"
+              v-hasPermi="['supervision:supervisionProjectIndicator:remove']"
               >删除</el-button
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:supervisionProjectIndicator:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['supervision:supervisionProjectIndicator:export']"
               >导出</el-button
             >
           </el-col>
@@ -92,7 +92,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:supervisionProjectIndicator:edit']"
+                v-hasPermi="['supervision:supervisionProjectIndicator:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -101,7 +101,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:supervisionProjectIndicator:remove']"
+                v-hasPermi="['supervision:supervisionProjectIndicator:remove']"
               ></el-button>
             </el-tooltip>
           </template>

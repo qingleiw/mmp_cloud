@@ -67,7 +67,7 @@
               <span class="table-title-text" title="医技资质目录列表">医技资质目录列表</span>
               <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
               <div class="ml-auto flex items-center gap-2">
-                <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:technicianQualificationCatalog:add']"
+                <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:technicianQualificationCatalog:add']"
                   >新增</el-button
                 >
                 <el-button
@@ -76,7 +76,7 @@
                   icon="Edit"
                   :disabled="single"
                   @click="handleUpdate()"
-                  v-hasPermi="['system:technicianQualificationCatalog:edit']"
+                  v-hasPermi="['qualification:technicianQualificationCatalog:edit']"
                   >修改</el-button
                 >
                 <el-button
@@ -85,10 +85,10 @@
                   icon="Delete"
                   :disabled="multiple"
                   @click="handleDelete()"
-                  v-hasPermi="['system:technicianQualificationCatalog:remove']"
+                  v-hasPermi="['qualification:technicianQualificationCatalog:remove']"
                   >删除</el-button
                 >
-                <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:technicianQualificationCatalog:export']"
+                <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:technicianQualificationCatalog:export']"
                   >导出</el-button
                 >
                 <el-button type="warning" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
@@ -119,7 +119,7 @@
                     type="primary"
                     icon="Edit"
                     @click="handleUpdate(scope.row)"
-                    v-hasPermi="['system:technicianQualificationCatalog:edit']"
+                    v-hasPermi="['qualification:technicianQualificationCatalog:edit']"
                   ></el-button>
                 </el-tooltip>
                 <el-tooltip content="删除" placement="top">
@@ -128,7 +128,7 @@
                     type="primary"
                     icon="Delete"
                     @click="handleDelete(scope.row)"
-                    v-hasPermi="['system:technicianQualificationCatalog:remove']"
+                    v-hasPermi="['qualification:technicianQualificationCatalog:remove']"
                   ></el-button>
                 </el-tooltip>
               </template>

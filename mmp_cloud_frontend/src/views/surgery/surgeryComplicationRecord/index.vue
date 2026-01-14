@@ -48,7 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:surgeryComplicationRecord:add']" size="small"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['surgery:surgeryComplicationRecord:add']" size="small"
               >新增</el-button
             >
             <el-button
@@ -57,7 +57,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:surgeryComplicationRecord:edit']"
+              v-hasPermi="['surgery:surgeryComplicationRecord:edit']"
               size="small"
               >修改</el-button
             >
@@ -67,7 +67,7 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:surgeryComplicationRecord:remove']"
+              v-hasPermi="['surgery:surgeryComplicationRecord:remove']"
               size="small"
               >删除</el-button
             >
@@ -76,11 +76,11 @@
               plain
               icon="Download"
               @click="handleExport"
-              v-hasPermi="['system:surgeryComplicationRecord:export']"
+              v-hasPermi="['surgery:surgeryComplicationRecord:export']"
               size="small"
               >导出</el-button
             >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['system:surgeryComplicationRecord:import']" size="small"
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['surgery:surgeryComplicationRecord:import']" size="small"
               >导入</el-button
             >
             <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
@@ -185,7 +185,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:surgeryComplicationRecord:edit']"
+                v-hasPermi="['surgery:surgeryComplicationRecord:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -194,7 +194,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:surgeryComplicationRecord:remove']"
+                v-hasPermi="['surgery:surgeryComplicationRecord:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -280,7 +280,7 @@
   </div>
 
   <!-- 字段配置对话框 -->
-  <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" />
+  <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" />
   <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="() => (searchConfigVisible = false)" />
 </template>
 
@@ -291,13 +291,13 @@ import {
   delSurgeryComplicationRecord,
   addSurgeryComplicationRecord,
   updateSurgeryComplicationRecord
-} from '@/api/system/surgeryComplicationRecord';
-import { listDoctorInfo } from '@/api/system/doctorInfo';
+} from '@/api/surgery/surgeryComplicationRecord';
+import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import {
   SurgeryComplicationRecordVO,
   SurgeryComplicationRecordQuery,
   SurgeryComplicationRecordForm
-} from '@/api/system/surgeryComplicationRecord/types';
+} from '@/api/surgery/surgeryComplicationRecord/types';
 import { createSurgeryComplicationRecordFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
@@ -457,7 +457,7 @@ const handleDelete = async (row?: SurgeryComplicationRecordVO) => {
 /** 导入按钮操作 */
 const handleImport = () => {
   proxy.$modal.upload({
-    url: '/dev-api/system/surgeryComplicationRecord/importData',
+    url: '/dev-api/surgery/surgeryComplicationRecord/importData',
     success: () => {
       proxy.$modal.msgSuccess('导入成功');
       getList();
@@ -468,7 +468,7 @@ const handleImport = () => {
 /** 导出按钮操作 */
 const handleExport = () => {
   proxy?.download(
-    'system/surgeryComplicationRecord/export',
+    'surgery/surgeryComplicationRecord/export',
     {
       ...queryParams.value
     },

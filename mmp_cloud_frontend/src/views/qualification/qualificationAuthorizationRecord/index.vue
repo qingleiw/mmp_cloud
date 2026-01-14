@@ -30,7 +30,7 @@
           <span class="font-medium">资质授权记录列表</span>
           <span class="text-[12px] text-gray-500">{{ total }} 条记录</span>
           <div class="ml-auto flex items-center gap-2">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:qualificationAuthorizationRecord:add']"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationAuthorizationRecord:add']"
               >新增</el-button
             >
             <el-button
@@ -39,7 +39,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:qualificationAuthorizationRecord:edit']"
+              v-hasPermi="['qualification:qualificationAuthorizationRecord:edit']"
               >修改</el-button
             >
             <el-button
@@ -48,10 +48,10 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:qualificationAuthorizationRecord:remove']"
+              v-hasPermi="['qualification:qualificationAuthorizationRecord:remove']"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:qualificationAuthorizationRecord:export']"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationAuthorizationRecord:export']"
               >导出</el-button
             >
             <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
@@ -87,7 +87,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:qualificationAuthorizationRecord:edit']"
+                v-hasPermi="['qualification:qualificationAuthorizationRecord:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -96,7 +96,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:qualificationAuthorizationRecord:remove']"
+                v-hasPermi="['qualification:qualificationAuthorizationRecord:remove']"
               ></el-button>
             </el-tooltip>
           </template>
@@ -160,7 +160,7 @@
         </div>
       </template>
     </el-dialog>
-    <FieldConfigDialog v-model="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>

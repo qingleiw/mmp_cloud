@@ -125,8 +125,8 @@
 <script setup lang="ts" name="SurgeryRecordDashboard">
 import { ref, reactive, onMounted, nextTick, onUnmounted } from 'vue';
 import * as echarts from 'echarts';
-import { getSurgeryRecordSummary } from '@/api/system/surgeryRecord';
-import { SurgeryRecordSummaryVO } from '@/api/system/surgeryRecord/types';
+import { getSurgeryRecordSummary } from '@/api/surgery/surgeryRecord';
+import { SurgeryRecordSummaryVO } from '@/api/surgery/surgeryRecord/types';
 
 // 数据
 const loading = ref(false);

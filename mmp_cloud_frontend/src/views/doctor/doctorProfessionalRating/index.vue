@@ -37,7 +37,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:doctorProfessionalRating:add']" size="small"
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorProfessionalRating:add']" size="small"
               >新增</el-button
             >
             <el-button
@@ -46,7 +46,7 @@
               icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
-              v-hasPermi="['system:doctorProfessionalRating:edit']"
+              v-hasPermi="['doctor:doctorProfessionalRating:edit']"
               size="small"
               >修改</el-button
             >
@@ -56,11 +56,11 @@
               icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
-              v-hasPermi="['system:doctorProfessionalRating:remove']"
+              v-hasPermi="['doctor:doctorProfessionalRating:remove']"
               size="small"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:doctorProfessionalRating:export']" size="small"
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorProfessionalRating:export']" size="small"
               >导出</el-button
             >
             <el-button type="info" plain icon="Setting" @click="handleFieldConfig" size="small">字段配置</el-button>
@@ -99,7 +99,7 @@
                 type="primary"
                 icon="Edit"
                 @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:doctorProfessionalRating:edit']"
+                v-hasPermi="['doctor:doctorProfessionalRating:edit']"
               ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
@@ -108,7 +108,7 @@
                 type="primary"
                 icon="Delete"
                 @click="handleDelete(scope.row)"
-                v-hasPermi="['system:doctorProfessionalRating:remove']"
+                v-hasPermi="['doctor:doctorProfessionalRating:remove']"
               ></el-button>
             </el-tooltip>
           </template>

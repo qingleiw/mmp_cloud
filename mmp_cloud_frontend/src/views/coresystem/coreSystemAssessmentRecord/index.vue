@@ -48,14 +48,14 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['system:coreSystemAssessmentRecord:add']"><i-ep-plus />新增</el-button>
-            <el-button type="success" plain :disabled="single" @click="handleUpdate()" v-hasPermi="['system:coreSystemAssessmentRecord:edit']"
+            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['coresystem:coreSystemAssessmentRecord:add']"><i-ep-plus />新增</el-button>
+            <el-button type="success" plain :disabled="single" @click="handleUpdate()" v-hasPermi="['coresystem:coreSystemAssessmentRecord:edit']"
               ><i-ep-edit />修改</el-button
             >
-            <el-button type="danger" plain :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:coreSystemAssessmentRecord:remove']"
+            <el-button type="danger" plain :disabled="multiple" @click="handleDelete()" v-hasPermi="['coresystem:coreSystemAssessmentRecord:remove']"
               ><i-ep-delete />删除</el-button
             >
-            <el-button type="warning" plain @click="handleExport" v-hasPermi="['system:coreSystemAssessmentRecord:export']"
+            <el-button type="warning" plain @click="handleExport" v-hasPermi="['coresystem:coreSystemAssessmentRecord:export']"
               ><i-ep-download />导出</el-button
             >
             <el-button text type="primary" @click="toggleFieldConfig" class="config-btn">
@@ -107,12 +107,12 @@
         <el-table-column label="操作" align="center" fixed="right" width="120" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" @click="handleUpdate(scope.row)" v-hasPermi="['system:coreSystemAssessmentRecord:edit']"
+              <el-button link type="primary" @click="handleUpdate(scope.row)" v-hasPermi="['coresystem:coreSystemAssessmentRecord:edit']"
                 ><i-ep-edit
               /></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="danger" @click="handleDelete(scope.row)" v-hasPermi="['system:coreSystemAssessmentRecord:remove']"
+              <el-button link type="danger" @click="handleDelete(scope.row)" v-hasPermi="['coresystem:coreSystemAssessmentRecord:remove']"
                 ><i-ep-delete
               /></el-button>
             </el-tooltip>

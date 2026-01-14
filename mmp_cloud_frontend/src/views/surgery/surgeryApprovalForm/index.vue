@@ -185,8 +185,8 @@
 import { ref, reactive, onMounted } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import type { FormInstance, FormRules } from 'element-plus';
-import { submitApproval } from '@/api/system/surgeryApprovalForm';
-import { SurgeryApprovalFormForm } from '@/api/system/surgeryApprovalForm/types';
+import { submitApproval } from '@/api/surgery/surgeryApprovalForm';
+import { SurgeryApprovalFormForm } from '@/api/surgery/surgeryApprovalForm/types';
 import { useUserStore } from '@/store/modules/user';
 import { deptTreeSelect } from '@/api/system/user';
 
