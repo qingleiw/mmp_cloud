@@ -2843,3 +2843,108 @@ export function createDoctorProfessionalRatingSearchConfig() {
   ];
   return new SearchConfigManager('doctorProfessionalRating', fieldGroups);
 }
+
+export function createSurgeryRecordSearchConfig() {
+  const fieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'patient',
+      label: '患者信息',
+      fields: [
+        { prop: 'patientName', label: '患者姓名', type: 'input', visible: true },
+        { prop: 'patientId', label: '患者ID', type: 'input', visible: false }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '主刀医生姓名', type: 'input', visible: true },
+        { prop: 'doctorId', label: '主刀医生ID', type: 'input', visible: false }
+      ]
+    },
+    {
+      name: 'department',
+      label: '科室信息',
+      fields: [
+        { prop: 'departmentName', label: '手术科室名称', type: 'input', visible: true },
+        { prop: 'departmentId', label: '手术科室ID', type: 'input', visible: false }
+      ]
+    },
+    {
+      name: 'surgery',
+      label: '手术信息',
+      fields: [
+        { prop: 'surgeryCode', label: '手术编码', type: 'input', visible: true },
+        { prop: 'surgeryName', label: '手术名称', type: 'input', visible: true },
+        { prop: 'surgeryLevel', label: '手术等级', type: 'input', visible: true },
+        { prop: 'surgeryType', label: '手术类型', type: 'input', visible: true },
+        { prop: 'anesthesiaMethod', label: '麻醉方式', type: 'input', visible: true }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间信息',
+      fields: [
+        {
+          prop: 'surgeryStartTime',
+          label: '手术开始时间',
+          type: 'datetime',
+          visible: true,
+          componentProps: { type: 'datetime', valueFormat: 'YYYY-MM-DD HH:mm:ss', placeholder: '请选择手术开始时间' }
+        },
+        {
+          prop: 'surgeryEndTime',
+          label: '手术结束时间',
+          type: 'datetime',
+          visible: true,
+          componentProps: { type: 'datetime', valueFormat: 'YYYY-MM-DD HH:mm:ss', placeholder: '请选择手术结束时间' }
+        }
+      ]
+    },
+    {
+      name: 'medical',
+      label: '医疗信息',
+      fields: [
+        { prop: 'asaGrade', label: 'ASA分级', type: 'input', visible: true },
+        { prop: 'bloodLoss', label: '失血量(ml)', type: 'input', visible: true },
+        { prop: 'surgeryDuration', label: '手术时长(分钟)', type: 'input', visible: true },
+        {
+          prop: 'complicationFlag',
+          label: '是否有并发症',
+          type: 'select',
+          visible: true,
+          options: [
+            { label: '否', value: 0 },
+            { label: '是', value: 1 }
+          ]
+        },
+        {
+          prop: 'surgeryStatus',
+          label: '手术状态',
+          type: 'input',
+          visible: true
+        }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'input', visible: false },
+        { prop: 'surgeryRecordId', label: '手术记录ID', type: 'input', visible: false },
+        { prop: 'applicationId', label: '手术申请ID', type: 'input', visible: false },
+        {
+          prop: 'delFlag',
+          label: '删除标志',
+          type: 'select',
+          visible: false,
+          options: [
+            { label: '否', value: '0' },
+            { label: '是', value: '1' }
+          ]
+        }
+      ]
+    }
+  ];
+  return new SearchConfigManager('surgeryRecord', fieldGroups);
+}

@@ -2550,66 +2550,6 @@ export function createAnnouncementFieldConfig() {
   return new FieldConfigManager('announcement', fieldGroups);
 }
 
-// 手术记录字段配置
-export function createSurgeryRecordFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'patientName', label: '患者姓名', visible: true, required: true, group: 'basic' },
-        { prop: 'doctorName', label: '主刀医生姓名', visible: true, group: 'basic' },
-        { prop: 'departmentName', label: '手术科室名称', visible: true, group: 'basic' },
-        { prop: 'surgeryCode', label: '手术编码', visible: true, group: 'basic' },
-        { prop: 'surgeryName', label: '手术名称', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'surgery',
-      label: '手术信息',
-      fields: [
-        { prop: 'surgeryLevel', label: '手术等级', visible: true, group: 'surgery' },
-        { prop: 'surgeryType', label: '手术类型', visible: true, group: 'surgery' },
-        { prop: 'anesthesiaMethod', label: '麻醉方式', visible: true, group: 'surgery' },
-        { prop: 'surgeryStartTime', label: '手术开始时间', visible: true, width: '180', group: 'surgery' },
-        { prop: 'surgeryEndTime', label: '手术结束时间', visible: true, width: '180', group: 'surgery' },
-        { prop: 'surgeryDuration', label: '手术时长(分钟)', visible: true, group: 'surgery' }
-      ]
-    },
-    {
-      name: 'medical',
-      label: '医疗信息',
-      fields: [
-        { prop: 'asaGrade', label: 'ASA分级', visible: true, group: 'medical' },
-        { prop: 'bloodLoss', label: '失血量(ml)', visible: true, group: 'medical' },
-        { prop: 'surgeryStatus', label: '手术状态', visible: true, group: 'medical' },
-        { prop: 'complicationFlag', label: '是否有并发症', visible: true, group: 'medical' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [{ prop: 'remark', label: '备注', visible: true, group: 'detail' }]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
-      ]
-    }
-  ];
-
-  return new FieldConfigManager('surgeryRecord', fieldGroups);
-}
-
 // 手术并发症记录字段配置
 export function createSurgeryComplicationRecordFieldConfig() {
   const fieldGroups: FieldGroup[] = [
@@ -3495,4 +3435,75 @@ export function createDoctorHonorFieldConfig() {
   ];
 
   return new FieldConfigManager('doctorHonor', fieldGroups);
+}
+
+// 手术记录字段配置
+export function createSurgeryRecordFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基本信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: false, group: 'basic' },
+        { prop: 'surgeryRecordId', label: '手术记录ID', visible: false, group: 'basic' },
+        { prop: 'applicationId', label: '手术申请ID', visible: false, group: 'basic' },
+        { prop: 'patientId', label: '患者ID', visible: false, group: 'basic' },
+        { prop: 'patientName', label: '患者姓名', visible: true, required: true, group: 'basic' },
+        { prop: 'doctorId', label: '主刀医生ID', visible: false, group: 'basic' },
+        { prop: 'doctorName', label: '主刀医生姓名', visible: true, required: true, group: 'basic' }
+      ]
+    },
+    {
+      name: 'department',
+      label: '科室信息',
+      fields: [
+        { prop: 'departmentId', label: '手术科室ID', visible: false, group: 'department' },
+        { prop: 'departmentName', label: '手术科室名称', visible: true, required: true, group: 'department' }
+      ]
+    },
+    {
+      name: 'surgery',
+      label: '手术信息',
+      fields: [
+        { prop: 'surgeryCode', label: '手术编码', visible: true, required: true, group: 'surgery' },
+        { prop: 'surgeryName', label: '手术名称', visible: true, required: true, group: 'surgery' },
+        { prop: 'surgeryLevel', label: '手术等级', visible: true, group: 'surgery' },
+        { prop: 'surgeryType', label: '手术类型', visible: true, group: 'surgery' },
+        { prop: 'anesthesiaMethod', label: '麻醉方式', visible: true, group: 'surgery' }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间信息',
+      fields: [
+        { prop: 'surgeryStartTime', label: '手术开始时间', visible: true, required: true, width: '180', group: 'time' },
+        { prop: 'surgeryEndTime', label: '手术结束时间', visible: true, width: '180', group: 'time' },
+        { prop: 'surgeryDuration', label: '手术时长(分钟)', visible: true, group: 'time' }
+      ]
+    },
+    {
+      name: 'medical',
+      label: '医疗信息',
+      fields: [
+        { prop: 'asaGrade', label: 'ASA分级', visible: true, group: 'medical' },
+        { prop: 'bloodLoss', label: '失血量(ml)', visible: true, group: 'medical' },
+        { prop: 'surgeryStatus', label: '手术状态', visible: true, group: 'medical' },
+        { prop: 'complicationFlag', label: '是否有并发症', visible: true, group: 'medical' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: false, width: '180', group: 'system' },
+        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: false, width: '180', group: 'system' },
+        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('surgeryRecord', fieldGroups);
 }

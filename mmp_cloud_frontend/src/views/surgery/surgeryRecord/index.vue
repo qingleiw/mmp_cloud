@@ -268,6 +268,7 @@
 </template>
 
 <script setup name="SurgeryRecord" lang="ts">
+import { ref, reactive, computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
 import { listSurgeryRecord, getSurgeryRecord, delSurgeryRecord, addSurgeryRecord, updateSurgeryRecord } from '@/api/surgery/surgeryRecord';
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { SurgeryRecordVO, SurgeryRecordQuery, SurgeryRecordForm } from '@/api/surgery/surgeryRecord/types';
@@ -276,6 +277,9 @@ import { createSurgeryRecordSearchConfig } from '@/utils/mmpSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import type { ElFormInstance } from 'element-plus';
+import type { DialogOption, PageData } from '@/types/global';
+import { parseTime } from '@/utils/ruoyi';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -369,11 +373,18 @@ const { queryParams, form, rules } = toRefs(data);
 
 /** 查询手术记录列表 */
 const getList = async () => {
-  loading.value = true;
-  const res = await listSurgeryRecord(queryParams.value);
-  surgeryRecordList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
+  try {
+    loading.value = true;
+    const res = await listSurgeryRecord(queryParams.value);
+    surgeryRecordList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取手术记录列表失败:', error);
+    surgeryRecordList.value = [];
+    total.value = 0;
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 取消按钮 */
@@ -475,10 +486,11 @@ const handleExport = () => {
 /** 加载医师选项 */
 const loadDoctorOptions = async () => {
   try {
-    const res = await listDoctorInfo({ pageNum: 1, pageSize: 1000 });
+    const res = await listDoctorBasicInfo({ pageNum: 1, pageSize: 1000 });
     doctorOptions.value = res.rows || [];
   } catch (error) {
     console.error('加载医师选项失败:', error);
+    doctorOptions.value = [];
   }
 };
 
