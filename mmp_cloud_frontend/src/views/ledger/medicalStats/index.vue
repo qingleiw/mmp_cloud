@@ -12,11 +12,7 @@
     <!-- 今日概况 -->
     <el-card shadow="hover" class="stats-card mb-4">
       <template #header>
-        <div class="flex items-center justify-between">
-          <span class="card-title">
-            <i-ep-trending-up class="card-icon"></i-ep-trending-up>
-            今日概况
-          </span>
+        <div class="flex items-center gap-3">
           <div class="flex items-center gap-2">
             <el-select v-model="queryParams.deptId" placeholder="请选择科室" clearable size="small" style="width: 150px">
               <el-option v-for="dept in deptOptions" :key="dept.deptId" :label="dept.deptName" :value="dept.deptId" />
@@ -32,9 +28,13 @@
             />
             <el-button type="primary" size="small" icon="Refresh" @click="handleQuery">刷新</el-button>
           </div>
+          <span class="card-title">
+            <i-ep-trend-charts class="card-icon"></i-ep-trend-charts>
+            今日概况
+          </span>
         </div>
       </template>
-      <el-row :gutter="20" v-loading="loading">
+      <el-row :gutter="10" v-loading="loading">
         <!-- 第一行 -->
         <el-col :xs="24" :sm="12" :md="6" :lg="5" :xl="5">
           <div class="stat-card">
@@ -162,9 +162,9 @@
             </div>
             <div v-else class="task-item" v-for="task in todoTasks" :key="task.id">
               <div class="task-content">
-                <div class="task-title">{{ task.taskTitle }}</div>
-                <div class="task-desc">{{ task.taskDescription }}</div>
-                <div class="task-time">{{ task.assignTime }}</div>
+                <div class="task-title">{{ task.businessTitle }}</div>
+                <div class="task-desc">{{ task.nodeName }}</div>
+                <div class="task-time">{{ task.createTime }}</div>
               </div>
               <div class="task-actions">
                 <el-button type="primary" size="small" @click="handleTask(task)">处理</el-button>
@@ -187,11 +187,11 @@
             <div v-if="announcements.length === 0" class="no-data">
               <el-empty description="暂无通知公告"></el-empty>
             </div>
-            <div v-else class="announcement-item" v-for="announcement in announcements" :key="announcement.id">
+            <div v-else class="announcement-item" v-for="announcement in announcements" :key="announcement.noticeId">
               <div class="announcement-content">
-                <div class="announcement-title">{{ announcement.announcementTitle }}</div>
-                <div class="announcement-desc">{{ announcement.announcementContent }}</div>
-                <div class="announcement-time">{{ announcement.publishTime }}</div>
+                <div class="announcement-title">{{ announcement.noticeTitle }}</div>
+                <div class="announcement-desc">{{ announcement.noticeContent }}</div>
+                <div class="announcement-time">{{ announcement.createTime }}</div>
               </div>
               <div class="announcement-actions">
                 <el-button type="primary" size="small" @click="viewAnnouncement(announcement)">查看</el-button>
@@ -208,10 +208,10 @@
 import { ref, reactive, getCurrentInstance, onMounted, watch } from 'vue';
 import { listDept } from '@/api/system/dept';
 import { DeptVO } from '@/api/system/dept/types';
-import { listTodoTask } from '@/api/system/todoTask';
-import { TodoTaskVO } from '@/api/system/todoTask/types';
-import { listAnnouncement } from '@/api/system/announcement';
-import { AnnouncementVO } from '@/api/system/announcement/types';
+import { pageByTaskWait } from '@/api/workflow/task';
+import { FlowTaskVO } from '@/api/workflow/task/types';
+import { listNotice } from '@/api/system/notice';
+import { NoticeVO } from '@/api/system/notice/types';
 import { listMedicalStats } from '@/api/ledger/medicalStats';
 import { MedicalStatsVO } from '@/api/ledger/medicalStats/types';
 
@@ -254,10 +254,10 @@ const medicalStats = reactive({
 });
 
 // 待办任务
-const todoTasks = ref<TodoTaskVO[]>([]);
+const todoTasks = ref<FlowTaskVO[]>([]);
 
 // 通知公告
-const announcements = ref<AnnouncementVO[]>([]);
+const announcements = ref<NoticeVO[]>([]);
 
 /** 加载科室数据 */
 const loadDeptOptions = async () => {
@@ -409,7 +409,7 @@ const loadTodoTasks = async () => {
 
     // 如果选择了科室，可以按科室筛选任务（如果后端支持）
     // 这里暂时不过滤，显示所有任务
-    const res = await listTodoTask(query);
+    const res = await pageByTaskWait(query);
     todoTasks.value = (res as any).rows || [];
   } catch (error) {
     console.error('加载待办任务失败:', error);
@@ -424,7 +424,7 @@ const loadAnnouncements = async () => {
 
     // 如果选择了科室，可以按科室筛选公告（如果后端支持）
     // 这里暂时不过滤，显示所有公告
-    const res = await listAnnouncement(query);
+    const res = await listNotice(query);
     announcements.value = (res as any).rows || [];
   } catch (error) {
     console.error('加载通知公告失败:', error);
@@ -443,14 +443,14 @@ const handleQuery = async () => {
 };
 
 /** 处理任务 */
-const handleTask = (task: TodoTaskVO) => {
+const handleTask = (task: FlowTaskVO) => {
   // 根据任务类型跳转到相应页面
-  proxy?.$router.push('/system/todo-task');
+  proxy?.$router.push('/workflow/task');
 };
 
 /** 查看公告 */
-const viewAnnouncement = (announcement: AnnouncementVO) => {
-  proxy?.$router.push('/system/announcement');
+const viewAnnouncement = (announcement: NoticeVO) => {
+  proxy?.$router.push('/system/notice');
 };
 
 // 监听查询参数变化，自动筛选数据
@@ -649,7 +649,7 @@ onMounted(() => {
 .stat-card {
   background: #fff;
   border-radius: 8px;
-  padding: 12px;
+  padding: 8px;
   text-align: center;
   color: #303133;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -661,12 +661,12 @@ onMounted(() => {
 
   :deep(.el-statistic) {
     .el-statistic__content {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
     }
 
     .el-statistic__title {
-      font-size: 14px;
+      font-size: 12px;
       opacity: 0.9;
     }
   }

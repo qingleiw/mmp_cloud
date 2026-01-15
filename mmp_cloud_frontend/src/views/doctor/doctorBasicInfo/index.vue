@@ -1,53 +1,47 @@
 <template>
-  <div class="app-container">
-    <!-- 页面标题 -->
-    <div class="page-header mb-4">
-      <h2 class="page-title">
-        <i-ep-document class="title-icon"></i-ep-document>
-        医师基本信息管理
-      </h2>
-      <p class="page-description">管理医师的基本信息，包括工号、姓名、联系方式、工作信息等</p>
-    </div>
-
-    <!-- 搜索表单 -->
+  <div class="p-2">
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <el-card v-if="showSearch" shadow="hover" class="search-card mb-4">
-        <template #header>
-          <div class="search-header">
-            <span class="search-title">
-              <i-ep-search class="search-icon"></i-ep-search>
-              搜索条件
-            </span>
-            <div class="search-actions">
-              <el-button type="info" plain icon="Setting" @click="handleSearchConfig" size="small">搜索项配置</el-button>
-            </div>
-          </div>
-        </template>
-        <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
-      </el-card>
+      <div v-show="showSearch" class="mb-[10px]">
+        <el-card shadow="hover">
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
+        </el-card>
+      </div>
     </transition>
 
-    <!-- 数据表格 -->
-    <el-card shadow="never" class="table-card">
+    <el-card shadow="never">
       <template #header>
-        <div class="table-header">
-          <div class="table-title">
-            <i-ep-list class="table-icon"></i-ep-list>
-            <span>医师基本信息列表</span>
-            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
-          </div>
-          <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorBasicInfo:add']" size="small">新增</el-button>
-            <el-button
-              type="success"
-              plain
-              icon="Edit"
-              :disabled="single"
-              @click="handleUpdate()"
-              v-hasPermi="['doctor:doctorBasicInfo:edit']"
-              size="small"
+        <el-row :gutter="10" class="mb8">
+          <el-col :span="1.5">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorBasicInfo:add']">新增</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['doctor:doctorBasicInfo:edit']"
               >修改</el-button
             >
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['doctor:doctorBasicInfo:remove']"
+              >删除</el-button
+            >
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorBasicInfo:export']">导出</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="handleFieldConfig">字段配置</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
+          </el-col>
+          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+        </el-row>
+      </template>
             <el-button
               type="danger"
               plain
@@ -490,86 +484,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-.app-container {
-  padding: 20px;
-}
 
-.page-header {
-  margin-bottom: 20px;
-}
-
-.page-title {
-  margin: 0;
-  color: #333;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.title-icon {
-  margin-right: 8px;
-  color: #409eff;
-}
-
-.page-description {
-  margin: 8px 0 0 0;
-  color: #666;
-  font-size: 14px;
-}
-
-.search-card {
-  border-radius: 8px;
-}
-
-.table-card {
-  border-radius: 8px;
-}
-
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.table-title {
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-}
-
-.table-icon {
-  margin-right: 8px;
-  color: #409eff;
-}
-
-.table-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.search-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.search-title {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-}
-
-.search-icon {
-  margin-right: 6px;
-  color: #409eff;
-}
-
-.search-actions {
-  display: flex;
-  gap: 8px;
-}
-</style>

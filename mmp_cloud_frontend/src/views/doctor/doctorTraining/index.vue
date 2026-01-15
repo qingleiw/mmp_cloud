@@ -1,72 +1,46 @@
 <template>
-  <div class="app-container">
-    <!-- 页面标题 -->
-    <div class="page-header mb-4">
-      <h2 class="page-title">
-        <i-ep-document class="title-icon"></i-ep-document>
-        医师培训管理
-      </h2>
-      <p class="page-description">管理医师继续教育、专科培训、进修学习等培训记录与证书</p>
-    </div>
-
-    <!-- 搜索表单 -->
+  <div class="p-2">
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <el-card v-if="showSearch" shadow="hover" class="search-card mb-4">
-        <template #header>
-          <div class="search-header">
-            <span class="search-title">
-              <i-ep-search class="search-icon"></i-ep-search>
-              搜索条件
-            </span>
-            <div class="search-actions">
-              <el-button type="info" plain icon="Setting" @click="handleSearchConfig" size="small">搜索项配置</el-button>
-            </div>
-          </div>
-        </template>
-        <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
-      </el-card>
+      <div v-show="showSearch" class="mb-[10px]">
+        <el-card shadow="hover">
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
+        </el-card>
+      </div>
     </transition>
 
-    <!-- 数据表格 -->
-    <el-card shadow="never" class="table-card">
+    <el-card shadow="never">
       <template #header>
-        <div class="table-header">
-          <div class="table-title">
-            <i-ep-list class="table-icon"></i-ep-list>
-            <span>培训记录列表</span>
-            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
-          </div>
-          <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorTraining:add']" size="small">新增</el-button>
-            <el-button
-              type="success"
-              plain
-              icon="Edit"
-              :disabled="single"
-              @click="handleUpdate()"
-              v-hasPermi="['doctor:doctorTraining:edit']"
-              size="small"
+        <el-row :gutter="10" class="mb8">
+          <el-col :span="1.5">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorTraining:add']">新增</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['doctor:doctorTraining:edit']"
               >修改</el-button
             >
-            <el-button
-              type="danger"
-              plain
-              icon="Delete"
-              :disabled="multiple"
-              @click="handleDelete()"
-              v-hasPermi="['doctor:doctorTraining:remove']"
-              size="small"
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['doctor:doctorTraining:remove']"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorTraining:export']" size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorTraining:import']" size="small"
-              >导入</el-button
-            >
-            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-          </div>
-        </div>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorTraining:export']">导出</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="handleFieldConfig">字段配置</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
+          </el-col>
+          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+        </el-row>
       </template>
 
       <el-table v-loading="loading" border :data="doctorTrainingList" @selection-change="handleSelectionChange">
@@ -399,186 +373,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.app-container {
-  padding: 20px;
-  background-color: #f5f5f5;
-  min-height: calc(100vh - 84px);
-}
 
-.page-header {
-  margin-bottom: 24px;
-
-  .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    .title-icon {
-      color: #409eff;
-    }
-  }
-
-  .page-description {
-    color: #86909c;
-    font-size: 14px;
-  }
-}
-
-.search-card {
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  .search-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-
-    .search-title {
-      font-weight: 600;
-      color: #1d2129;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-
-      .search-icon {
-        color: #409eff;
-      }
-    }
-
-    .search-actions {
-      .config-btn {
-        font-size: 12px;
-        padding: 4px 8px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
-
-        .btn-icon {
-          margin-right: 4px;
-        }
-      }
-    }
-  }
-}
-
-.table-card {
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  .table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-
-    .table-title {
-      font-weight: 600;
-      color: #1d2129;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      .table-icon {
-        color: #409eff;
-      }
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-
-      .config-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
-
-        .btn-icon {
-          margin-right: 4px;
-        }
-      }
-    }
-  }
-}
-
-.training-table {
-  :deep(.el-table__header) {
-    th {
-      background-color: #fafafa;
-      font-weight: 600;
-      color: #1d2129;
-    }
-  }
-
-  :deep(.el-table__row) {
-    &:hover {
-      background-color: #f5f7fa;
-    }
-  }
-}
-
-.training-dialog {
-  :deep(.el-dialog__body) {
-    padding: 24px;
-  }
-
-  .w-full {
-    width: 100%;
-  }
-}
-
-.dialog-footer {
-  text-align: right;
-  padding-top: 16px;
-  border-top: 1px solid #ebeef5;
-}
-
-// 响应式设计
-@media (max-width: 768px) {
-  .app-container {
-    padding: 12px;
-  }
-
-  .page-header {
-    .page-title {
-      font-size: 20px;
-    }
-  }
-
-  .table-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-
-    .table-actions {
-      width: 100%;
-      justify-content: flex-end;
-    }
-  }
-
-  .training-dialog {
-    :deep(.el-dialog) {
-      width: 95% !important;
-      margin: 5vh auto;
-    }
-  }
-}
-</style>

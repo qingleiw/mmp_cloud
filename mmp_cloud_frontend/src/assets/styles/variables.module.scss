@@ -97,7 +97,7 @@ $base-menu-color: var(--menuColor);
 $base-menu-hover: var(--menuHover);
 $base-menu-color-active: var(--menuActiveText);
 $base-menu-background: var(--menuBg);
-$base-logo-title-color: #ffffff;
+$base-logo-title-color: #1a365d;  // 改为深蓝色，更清晰
 
 $base-menu-light-color: #1a365d;  // 深蓝色文字
 $base-menu-light-background: #f0f9ff;  // 浅蓝色背景
@@ -117,7 +117,7 @@ $--color-warning: #e6a23c;
 $--color-danger: #f56c6c;
 $--color-info: #909399;
 
-$base-sidebar-width: 240px;  // 增加侧边栏宽度，从200px改为240px，提供更好的视觉体验
+$base-sidebar-width: 200px;  // 调窄侧边栏宽度，从240px改为200px，并固定不再收缩
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
