@@ -46,7 +46,13 @@
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['radiation:radiationWorker:remove']"
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['radiation:radiationWorker:remove']"
               >删除</el-button
             >
           </el-col>
@@ -135,7 +141,13 @@
 </template>
 
 <script setup name="RadiationWorker" lang="ts">
-import { listRadiationWorker, getRadiationWorker, delRadiationWorker, addRadiationWorker, updateRadiationWorker } from '@/api/radiation/radiationWorker';
+import {
+  listRadiationWorker,
+  getRadiationWorker,
+  delRadiationWorker,
+  addRadiationWorker,
+  updateRadiationWorker
+} from '@/api/radiation/radiationWorker';
 import { RadiationWorkerVO, RadiationWorkerQuery, RadiationWorkerForm } from '@/api/radiation/radiationWorker/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

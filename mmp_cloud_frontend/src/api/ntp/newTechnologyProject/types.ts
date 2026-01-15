@@ -148,7 +148,6 @@ export interface NewTechnologyProjectVO {
    * 是否删除
    */
   isDeleted: number;
-
 }
 
 export interface NewTechnologyProjectForm extends BaseEntity {
@@ -301,11 +300,9 @@ export interface NewTechnologyProjectForm extends BaseEntity {
    * 是否删除
    */
   isDeleted?: number;
-
 }
 
 export interface NewTechnologyProjectQuery extends PageQuery {
-
   /**
    * 项目编号
    */

@@ -58,7 +58,6 @@ export interface DeathCaseDiscussionVO {
    * 是否删除 0-否 1-是
    */
   isDeleted: number;
-
 }
 
 export interface DeathCaseDiscussionForm extends BaseEntity {
@@ -126,11 +125,9 @@ export interface DeathCaseDiscussionForm extends BaseEntity {
    * 是否删除 0-否 1-是
    */
   isDeleted?: number;
-
 }
 
 export interface DeathCaseDiscussionQuery extends PageQuery {
-
   /**
    * 患者姓名
    */

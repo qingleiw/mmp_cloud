@@ -88,7 +88,12 @@
                   v-hasPermi="['qualification:technicianQualificationCatalog:remove']"
                   >删除</el-button
                 >
-                <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:technicianQualificationCatalog:export']"
+                <el-button
+                  type="warning"
+                  plain
+                  icon="Download"
+                  @click="handleExport"
+                  v-hasPermi="['qualification:technicianQualificationCatalog:export']"
                   >导出</el-button
                 >
                 <el-button type="warning" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
@@ -252,7 +257,7 @@ import {
 import { createTechnicianQualificationCatalogFieldConfig } from '@/utils/fieldConfig';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createTechnicianQualificationCatalogSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createTechnicianQualificationCatalogSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

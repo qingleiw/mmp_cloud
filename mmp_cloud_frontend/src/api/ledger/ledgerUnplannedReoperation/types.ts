@@ -58,7 +58,6 @@ export interface LedgerUnplannedReoperationVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface LedgerUnplannedReoperationForm extends BaseEntity {
@@ -131,11 +130,9 @@ export interface LedgerUnplannedReoperationForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface LedgerUnplannedReoperationQuery extends PageQuery {
-
   /**
    * 患者姓名
    */

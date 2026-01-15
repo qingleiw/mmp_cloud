@@ -272,8 +272,8 @@ import { ref, reactive, computed, onMounted, getCurrentInstance, type ComponentI
 import { listSurgeryRecord, getSurgeryRecord, delSurgeryRecord, addSurgeryRecord, updateSurgeryRecord } from '@/api/surgery/surgeryRecord';
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { SurgeryRecordVO, SurgeryRecordQuery, SurgeryRecordForm } from '@/api/surgery/surgeryRecord/types';
-import { createSurgeryRecordFieldConfig } from '@/utils/mmpFieldConfigs';
-import { createSurgeryRecordSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createSurgeryRecordFieldConfig } from '@/utils/configs/surgery/FieldConfigs';
+import { createSurgeryRecordSearchConfig } from '@/utils/configs/surgery/SearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';

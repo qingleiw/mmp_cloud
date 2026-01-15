@@ -1,99 +1,81 @@
 <template>
-  <div class="p-2">
+  <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-document-copy class="title-icon"></i-ep-document-copy>
+        医师学术成果管理
+      </h2>
+      <p class="page-description">对医师学术论文、著作等出版物进行管理，包括发表信息、引用情况等</p>
+    </div>
+
+    <!-- 搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <DynamicSearchForm
-            ref="queryFormRef"
-            :query="queryParams"
-            :visible-fields="visibleSearchFields"
-            @search="handleQuery"
-            @reset="resetQuery"
-          />
-          <!--
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="医生ID" prop="doctorId">
-              <el-input v-model="queryParams.doctorId" placeholder="请输入医生ID" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="标题" prop="title">
-              <el-input v-model="queryParams.title" placeholder="请输入标题" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="作者" prop="authors">
-              <el-input v-model="queryParams.authors" placeholder="请输入作者" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="作者排序" prop="authorOrder">
-              <el-input v-model="queryParams.authorOrder" placeholder="请输入作者排序" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="期刊名称/出版社" prop="journalName">
-              <el-input v-model="queryParams.journalName" placeholder="请输入期刊名称/出版社" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="发表日期" prop="publishDate">
-              <el-date-picker clearable v-model="queryParams.publishDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择发表日期" />
-            </el-form-item>
-            <el-form-item label="卷号" prop="volume">
-              <el-input v-model="queryParams.volume" placeholder="请输入卷号" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="期号" prop="issue">
-              <el-input v-model="queryParams.issue" placeholder="请输入期号" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="页码" prop="pages">
-              <el-input v-model="queryParams.pages" placeholder="请输入页码" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="DOI" prop="doi">
-              <el-input v-model="queryParams.doi" placeholder="请输入DOI" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="影响因子" prop="impactFactor">
-              <el-input v-model="queryParams.impactFactor" placeholder="请输入影响因子" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="引用次数" prop="citationCount">
-              <el-input v-model="queryParams.citationCount" placeholder="请输入引用次数" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="全文URL" prop="fullTextUrl">
-              <el-input v-model="queryParams.fullTextUrl" placeholder="请输入全文URL" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="是否删除" prop="delFlag">
-              <el-input v-model="queryParams.delFlag" placeholder="请输入是否删除" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
-          -->
-        </el-card>
-      </div>
+      <el-card v-if="showSearch" shadow="hover" class="search-card mb-4">
+        <template #header>
+          <div class="search-header">
+            <span class="search-title">
+              <i-ep-search class="search-icon"></i-ep-search>
+              搜索条件
+            </span>
+            <div class="search-actions">
+              <el-button type="info" plain icon="i-ep-setting" @click="handleSearchConfig" size="small">搜索项配置</el-button>
+            </div>
+          </div>
+        </template>
+        <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
+      </el-card>
     </transition>
 
-    <el-card shadow="never">
+    <!-- 数据表格 -->
+    <el-card shadow="never" class="table-card">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorPublication:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['doctor:doctorPublication:edit']"
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>学术成果列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="i-ep-plus" @click="handleAdd" v-hasPermi="['doctor:doctorPublication:add']" size="small"
+              >新增</el-button
+            >
+            <el-button
+              type="success"
+              plain
+              icon="i-ep-edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['doctor:doctorPublication:edit']"
+              size="small"
               >修改</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['doctor:doctorPublication:remove']"
+            <el-button
+              type="danger"
+              plain
+              icon="i-ep-delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['doctor:doctorPublication:remove']"
+              size="small"
               >删除</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorPublication:export']">导出</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
-          </el-col>
-          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+            <el-button type="warning" plain icon="i-ep-download" @click="handleExport" v-hasPermi="['doctor:doctorPublication:export']" size="small"
+              >导出</el-button
+            >
+            <el-button type="primary" plain icon="i-ep-upload" @click="handleImport" v-hasPermi="['doctor:doctorPublication:import']" size="small"
+              >导入</el-button
+            >
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
       </template>
 
-      <el-table v-loading="loading" border :data="doctorPublicationList" @selection-change="handleSelectionChange">
+      <el-table v-loading="loading" border :data="doctorPublicationList" @selection-change="handleSelectionChange" class="doctor-publication-table">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
           v-for="field in visibleColumns"
@@ -103,33 +85,34 @@
           :prop="field.prop"
           :width="field.width || undefined"
         >
-          <template #default="scope">
-            <span v-if="field.prop === 'publishDate' || field.prop === 'createTime' || field.prop === 'updateTime'">
-              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}:{s}') }}
-            </span>
-            <template v-else-if="field.prop === 'delFlag'">
-              <el-tag :type="scope.row[field.prop] === 0 ? 'success' : 'danger'">
-                {{ scope.row[field.prop] === 0 ? '否' : '是' }}
-              </el-tag>
-            </template>
-            <span v-else-if="field.prop === 'doctorId'">
-              {{ getDoctorName(scope.row[field.prop]) }}
-            </span>
-            <span v-else>
-              {{ scope.row[field.prop] }}
-            </span>
+          <template #default="scope" v-if="field.prop === 'publishDate' || field.prop === 'createTime' || field.prop === 'updateTime'">
+            <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
+          </template>
+          <template #default="scope" v-else-if="field.prop === 'delFlag'">
+            <el-tag :type="scope.row[field.prop] === '0' ? 'success' : 'danger'">
+              {{ scope.row[field.prop] === '0' ? '否' : '是' }}
+            </el-tag>
+          </template>
+          <template #default="scope" v-else>
+            {{ scope.row[field.prop] }}
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['doctor:doctorPublication:edit']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="i-ep-edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['doctor:doctorPublication:edit']"
+              ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
               <el-button
                 link
                 type="primary"
-                icon="Delete"
+                icon="i-ep-delete"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['doctor:doctorPublication:remove']"
               ></el-button>
@@ -140,55 +123,9 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改论文论著对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
-      <el-form ref="doctorPublicationFormRef" :model="form" :rules="rules" label-width="120px">
-        <el-row :gutter="20">
-          <el-col v-for="field in visibleColumns" :key="field.prop" :span="field.formSpan || 24">
-            <el-form-item :label="field.label" :prop="field.prop" v-if="field.prop !== 'createTime' && field.prop !== 'updateTime'">
-              <el-input v-if="field.type === 'input' || !field.type" v-model="form[field.prop]" :placeholder="`请输入${field.label}`" />
-              <el-input
-                v-else-if="field.type === 'textarea'"
-                v-model="form[field.prop]"
-                type="textarea"
-                :placeholder="`请输入${field.label}`"
-                :rows="3"
-              />
-              <el-input-number
-                v-else-if="field.type === 'number'"
-                v-model="form[field.prop]"
-                :min="0"
-                :precision="2"
-                :placeholder="`请输入${field.label}`"
-                style="width: 100%"
-              />
-              <el-date-picker
-                v-else-if="field.type === 'datetime'"
-                clearable
-                v-model="form[field.prop]"
-                type="datetime"
-                value-format="YYYY-MM-DD HH:mm:ss"
-                :placeholder="`请选择${field.label}`"
-                style="width: 100%"
-              />
-              <el-date-picker
-                v-else-if="field.type === 'date'"
-                clearable
-                v-model="form[field.prop]"
-                type="date"
-                value-format="YYYY-MM-DD"
-                :placeholder="`请选择${field.label}`"
-                style="width: 100%"
-              />
-              <el-select v-else-if="field.type === 'select'" v-model="form[field.prop]" :placeholder="`请选择${field.label}`" style="width: 100%">
-                <el-option v-for="option in field.options" :key="option.value" :label="option.label" :value="option.value" />
-              </el-select>
-              <el-switch v-else-if="field.type === 'switch'" v-model="form[field.prop]" active-text="是" inactive-text="否" />
-              <span v-else>{{ form[field.prop] }}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+    <!-- 添加或修改医师学术成果对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <DynamicForm ref="formRef" :form-data="form" :field-config="formFieldConfig" :rules="rules" @submit="submitForm" />
       <template #footer>
         <div class="dialog-footer">
           <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
@@ -214,11 +151,14 @@ import {
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorPublicationVO, DoctorPublicationQuery, DoctorPublicationForm } from '@/api/doctor/doctorPublication/types';
-import { createDoctorPublicationFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createDoctorPublicationFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createDoctorPublicationSearchConfig } from '@/utils/mmpSearchConfigs';
+import RightToolbar from '@/components/RightToolbar/index.vue';
+import Pagination from '@/components/Pagination/index.vue';
+import { createDoctorPublicationSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
+import { parseTime } from '@/utils/ruoyi';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -238,10 +178,21 @@ const doctorPublicationFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
 const fieldConfigManager = createDoctorPublicationFieldConfig();
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
+
+// 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
+fieldConfigManager.clearConfig();
+localStorage.removeItem('doctorPublication_field_config');
+
+// 计算可见列
+const visibleColumns = computed(() => {
+  return fieldConfigManager.getVisibleFields();
+});
 const searchConfigManager = createDoctorPublicationSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 表单字段配置
+const formFieldConfig = computed(() => fieldConfigManager.getFieldGroups().flatMap((group) => group.fields));
 
 const dialog = reactive<DialogOption>({
   visible: false,
@@ -371,20 +322,22 @@ const handleUpdate = async (row?: DoctorPublicationVO) => {
 };
 
 /** 提交按钮 */
-const submitForm = () => {
-  doctorPublicationFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateDoctorPublication(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addDoctorPublication(form.value).finally(() => (buttonLoading.value = false));
-      }
-      proxy?.$modal.msgSuccess('操作成功');
-      dialog.visible = false;
-      await getList();
+const submitForm = async () => {
+  buttonLoading.value = true;
+  try {
+    if (form.value.id) {
+      await updateDoctorPublication(form.value);
+    } else {
+      await addDoctorPublication(form.value);
     }
-  });
+    proxy?.$modal.msgSuccess('操作成功');
+    dialog.visible = false;
+    await getList();
+  } catch (error) {
+    console.error('提交失败:', error);
+  } finally {
+    buttonLoading.value = false;
+  }
 };
 
 /** 删除按钮操作 */
@@ -416,8 +369,19 @@ const handleFieldConfigConfirm = () => {
 const handleSearchConfig = () => {
   searchConfigVisible.value = true;
 };
+
 const handleSearchConfigConfirm = () => {
   searchConfigVisible.value = false;
+};
+
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  showFieldConfig.value = true;
+};
+
+/** 导入按钮操作 */
+const handleImport = () => {
+  proxy?.$modal.msgInfo('导入功能开发中...');
 };
 
 onMounted(() => {
@@ -425,3 +389,192 @@ onMounted(() => {
   getList();
 });
 </script>
+
+<style lang="scss" scoped>
+.app-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 84px);
+}
+
+// 页面标题样式
+.page-header {
+  margin-bottom: 24px;
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d2129;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .title-icon {
+      color: #409eff;
+    }
+  }
+
+  .page-description {
+    color: #86909c;
+    font-size: 14px;
+  }
+}
+
+// 搜索卡片样式
+.search-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .search-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #303133;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .search-icon {
+        color: #409eff;
+        font-size: 18px;
+      }
+    }
+
+    .search-actions {
+      .el-button {
+        font-size: 12px;
+        padding: 4px 8px;
+        height: auto;
+        border: none;
+        color: #86909c;
+
+        &:hover {
+          color: #409eff;
+          background-color: #ecf5ff;
+        }
+      }
+    }
+  }
+
+  :deep(.el-card__header) {
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebeef5;
+    padding: 16px 20px;
+  }
+
+  :deep(.el-card__body) {
+    padding: 20px;
+  }
+}
+
+// 表格卡片样式
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebeef5;
+
+    .table-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #303133;
+
+      .table-icon {
+        color: #67c23a;
+        font-size: 18px;
+      }
+
+      .ml-2 {
+        margin-left: 8px;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+  }
+
+  :deep(.el-card__body) {
+    padding: 0;
+  }
+}
+
+// 表格样式
+:deep(.el-table) {
+  .el-table__header th {
+    background-color: #fafafa;
+    font-weight: 600;
+    color: #1d2129;
+  }
+
+  .el-table__row {
+    &:hover {
+      background-color: #f5f7fa;
+    }
+  }
+}
+
+// 按钮样式
+:deep(.el-button) {
+  border-radius: 4px;
+}
+
+// 表单样式
+:deep(.el-form-item) {
+  margin-bottom: 20px;
+
+  .el-form-item__label {
+    font-weight: 500;
+    color: #606266;
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  .page-header {
+    .page-title {
+      font-size: 20px;
+    }
+  }
+
+  .table-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start !important;
+
+    .table-actions {
+      flex-wrap: wrap;
+      width: 100%;
+
+      .el-button {
+        flex: 1;
+        min-width: 80px;
+      }
+    }
+  }
+
+  .search-card :deep(.el-card__body) {
+    padding: 16px;
+  }
+}
+</style>

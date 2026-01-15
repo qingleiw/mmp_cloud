@@ -46,7 +46,7 @@
                     <el-icon><Search /></el-icon>
                     <span>搜索条件</span>
                   </div>
-                  <el-button type="info" text :icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
+                  <el-button type="info" text icon="i-ep-setting" @click="handleSearchConfig">搜索项配置</el-button>
                 </div>
               </template>
               <DynamicSearchForm
@@ -155,33 +155,8 @@
     </el-row>
 
     <!-- 添加或修改医师资质目录对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="doctorQualificationCatalogFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="资质编码" prop="catalogCode">
-          <el-input v-model="form.catalogCode" placeholder="请输入资质编码" />
-        </el-form-item>
-        <el-form-item label="资质名称" prop="catalogName">
-          <el-input v-model="form.catalogName" placeholder="请输入资质名称" />
-        </el-form-item>
-        <el-form-item label="父级ID" prop="parentId">
-          <el-input v-model="form.parentId" placeholder="请输入父级ID" />
-        </el-form-item>
-        <el-form-item label="目录层级 1-一级 2-二级 3-三级 4-四级" prop="catalogLevel">
-          <el-input v-model="form.catalogLevel" placeholder="请输入目录层级 1-一级 2-二级 3-三级 4-四级" />
-        </el-form-item>
-        <el-form-item label="资质描述" prop="description">
-          <el-input v-model="form.description" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="排序" prop="sortOrder">
-          <el-input v-model="form.sortOrder" placeholder="请输入排序" />
-        </el-form-item>
-        <el-form-item label="是否启用 1-是 0-否" prop="isEnabled">
-          <el-input v-model="form.isEnabled" placeholder="请输入是否启用 1-是 0-否" />
-        </el-form-item>
-        <el-form-item label="是否删除" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入是否删除" />
-        </el-form-item>
-      </el-form>
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <DynamicForm ref="formRef" :form-data="form" :field-config="formFieldConfig" :rules="rules" @submit="submitForm" />
       <template #footer>
         <div class="dialog-footer">
           <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
@@ -210,12 +185,13 @@ import {
   DoctorQualificationCatalogForm
 } from '@/api/doctor/doctorQualificationCatalog/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import { createDoctorQualificationCatalogFieldConfig } from '@/utils/fieldConfig';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createDoctorQualificationCatalogSearchConfig } from '@/utils/mmpSearchConfigs';
-import { Search, Setting } from '@element-plus/icons-vue';
-import { ElMessage } from 'element-plus';
+import RightToolbar from '@/components/RightToolbar/index.vue';
+import Pagination from '@/components/Pagination/index.vue';
+import { createDoctorQualificationCatalogFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { createDoctorQualificationCatalogSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
+import { parseTime } from '@/utils/ruoyi';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -289,15 +265,21 @@ const { queryParams, form, rules } = toRefs(data);
 
 // 字段配置管理器
 const fieldConfigManager = createDoctorQualificationCatalogFieldConfig();
-const fieldConfig = fieldConfigManager;
+
+// 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
+fieldConfigManager.clearConfig();
+localStorage.removeItem('doctorQualificationCatalog_field_config');
 
 // 计算可见列
 const visibleColumns = computed(() => {
-  return fieldConfig.visibleFields;
+  return fieldConfigManager.getVisibleFields();
 });
 const searchConfigManager = createDoctorQualificationCatalogSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 表单字段配置
+const formFieldConfig = computed(() => fieldConfigManager.getFieldGroups().flatMap((group) => group.fields));
 
 /** 获取树形数据 */
 const getTreeData = async () => {
@@ -622,20 +604,23 @@ const handleUpdate = async (row?: DoctorQualificationCatalogVO) => {
 };
 
 /** 提交按钮 */
-const submitForm = () => {
-  doctorQualificationCatalogFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateDoctorQualificationCatalog(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addDoctorQualificationCatalog(form.value).finally(() => (buttonLoading.value = false));
-      }
-      proxy?.$modal.msgSuccess('操作成功');
-      dialog.visible = false;
-      await getList();
+const submitForm = async () => {
+  buttonLoading.value = true;
+  try {
+    if (form.value.id) {
+      await updateDoctorQualificationCatalog(form.value);
+    } else {
+      await addDoctorQualificationCatalog(form.value);
     }
-  });
+    proxy?.$modal.msgSuccess('操作成功');
+    dialog.visible = false;
+    await getList();
+    await getTreeData();
+  } catch (error) {
+    console.error('提交失败:', error);
+  } finally {
+    buttonLoading.value = false;
+  }
 };
 
 /** 删除按钮操作 */
@@ -671,61 +656,221 @@ const handleSearchConfigConfirm = () => {
   searchConfigVisible.value = false;
 };
 
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  showFieldConfig.value = true;
+};
+
+/** 导入按钮操作 */
+const handleImport = () => {
+  proxy?.$modal.msgSuccess('导入功能开发中...');
+};
+
 onMounted(() => {
   getList();
   getTreeData();
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.app-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 84px);
+}
+
+// 页面标题样式
+.page-header {
+  margin-bottom: 24px;
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d2129;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .title-icon {
+      color: #409eff;
+    }
+  }
+
+  .page-description {
+    color: #86909c;
+    font-size: 14px;
+  }
+}
+
+// 搜索卡片样式
+.search-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .search-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #303133;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .search-icon {
+        color: #409eff;
+        font-size: 18px;
+      }
+    }
+
+    .search-actions {
+      .el-button {
+        font-size: 12px;
+        padding: 4px 8px;
+        height: auto;
+        border: none;
+        color: #86909c;
+
+        &:hover {
+          color: #409eff;
+          background-color: #ecf5ff;
+        }
+      }
+    }
+  }
+
+  :deep(.el-card__header) {
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebeef5;
+    padding: 16px 20px;
+  }
+
+  :deep(.el-card__body) {
+    padding: 20px;
+  }
+}
+
+// 表格卡片样式
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebeef5;
+
+    .table-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #303133;
+
+      .table-icon {
+        color: #67c23a;
+        font-size: 18px;
+      }
+
+      .ml-2 {
+        margin-left: 8px;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+  }
+
+  :deep(.el-card__body) {
+    padding: 0;
+  }
+}
+
+// 树形卡片样式
 .tree-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   height: calc(100vh - 140px);
   overflow: hidden;
+
+  :deep(.el-card__body) {
+    height: calc(100% - 60px);
+    overflow-y: auto;
+  }
+
+  :deep(.el-card__header) {
+    background-color: #fafafa;
+    border-bottom: 1px solid #ebeef5;
+  }
 }
 
-.tree-card :deep(.el-card__body) {
-  height: calc(100% - 60px);
-  overflow-y: auto;
+// 表格样式
+:deep(.el-table) {
+  .el-table__header th {
+    background-color: #fafafa;
+    font-weight: 600;
+    color: #1d2129;
+  }
+
+  .el-table__row {
+    &:hover {
+      background-color: #f5f7fa;
+    }
+  }
 }
 
-.tree-node {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 2px 0;
+// 按钮样式
+:deep(.el-button) {
+  border-radius: 4px;
 }
 
-.tree-node .el-tag {
-  flex-shrink: 0;
-  margin-left: 8px;
+// 表单样式
+:deep(.el-form-item) {
+  margin-bottom: 20px;
+
+  .el-form-item__label {
+    font-weight: 500;
+    color: #606266;
+  }
 }
-.table-card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px;
-}
-.table-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 44px;
-  padding: 6px 8px;
-}
-.table-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-.table-actions {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-}
-.table-icon {
-  font-size: 16px;
-  color: #606266;
+
+// 响应式设计
+@media (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  .page-header {
+    .page-title {
+      font-size: 20px;
+    }
+  }
+
+  .table-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start !important;
+
+    .table-actions {
+      flex-wrap: wrap;
+      width: 100%;
+
+      .el-button {
+        flex: 1;
+        min-width: 80px;
+      }
+    }
+  }
 }
 </style>

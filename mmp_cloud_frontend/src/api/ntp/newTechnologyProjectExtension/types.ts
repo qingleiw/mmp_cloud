@@ -33,7 +33,6 @@ export interface NewTechnologyProjectExtensionVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface NewTechnologyProjectExtensionForm extends BaseEntity {
@@ -86,11 +85,9 @@ export interface NewTechnologyProjectExtensionForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface NewTechnologyProjectExtensionQuery extends PageQuery {
-
   /**
    * 申请编号
    */

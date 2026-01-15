@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { ComplaintInvestigationVO, ComplaintInvestigationForm, ComplaintInvestigationQuery } from '@/api/complaindispute/complaintInvestigation/types';
+import {
+  ComplaintInvestigationVO,
+  ComplaintInvestigationForm,
+  ComplaintInvestigationQuery
+} from '@/api/complaindispute/complaintInvestigation/types';
 
 /**
  * 查询投诉调查记录列表

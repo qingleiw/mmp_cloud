@@ -32,7 +32,13 @@
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['supervision:supervisionExpertGroup:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['supervision:supervisionExpertGroup:edit']"
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['supervision:supervisionExpertGroup:edit']"
               >修改</el-button
             >
           </el-col>

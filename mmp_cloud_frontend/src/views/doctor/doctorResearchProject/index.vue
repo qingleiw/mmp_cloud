@@ -19,7 +19,7 @@
               搜索条件
             </span>
             <div class="search-actions">
-              <el-button type="info" plain icon="Setting" @click="handleSearchConfig" size="small">搜索项配置</el-button>
+              <el-button type="info" plain icon="i-ep-setting" @click="handleSearchConfig" size="small">搜索项配置</el-button>
             </div>
           </div>
         </template>
@@ -37,13 +37,13 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorResearchProject:add']" size="small"
+            <el-button type="primary" plain icon="i-ep-plus" @click="handleAdd" v-hasPermi="['doctor:doctorResearchProject:add']" size="small"
               >新增</el-button
             >
             <el-button
               type="success"
               plain
-              icon="Edit"
+              icon="i-ep-edit"
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorResearchProject:edit']"
@@ -53,20 +53,26 @@
             <el-button
               type="danger"
               plain
-              icon="Delete"
+              icon="i-ep-delete"
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorResearchProject:remove']"
               size="small"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorResearchProject:export']" size="small"
+            <el-button
+              type="warning"
+              plain
+              icon="i-ep-download"
+              @click="handleExport"
+              v-hasPermi="['doctor:doctorResearchProject:export']"
+              size="small"
               >导出</el-button
             >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorResearchProject:import']" size="small"
+            <el-button type="primary" plain icon="i-ep-upload" @click="handleImport" v-hasPermi="['doctor:doctorResearchProject:import']" size="small"
               >导入</el-button
             >
-            <el-button type="info" plain icon="Setting" @click="showFieldConfig = true" size="small">字段配置</el-button>
+            <el-button type="info" plain icon="i-ep-setting" @click="showFieldConfig = true" size="small">字段配置</el-button>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
           </div>
         </div>
@@ -102,7 +108,7 @@
               <el-button
                 link
                 type="primary"
-                icon="Edit"
+                icon="i-ep-edit"
                 @click="handleUpdate(scope.row)"
                 v-hasPermi="['doctor:doctorResearchProject:edit']"
               ></el-button>
@@ -111,7 +117,7 @@
               <el-button
                 link
                 type="primary"
-                icon="Delete"
+                icon="i-ep-delete"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['doctor:doctorResearchProject:remove']"
               ></el-button>
@@ -224,11 +230,11 @@ import {
 } from '@/api/doctor/doctorResearchProject';
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorResearchProjectVO, DoctorResearchProjectQuery, DoctorResearchProjectForm } from '@/api/doctor/doctorResearchProject/types';
-import { createDoctorResearchProjectFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createDoctorResearchProjectFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createDoctorResearchProjectSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createDoctorResearchProjectSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -304,7 +310,7 @@ const { queryParams, form, rules } = toRefs(data);
 /** 加载医生选项 */
 const loadDoctorOptions = async () => {
   try {
-    const res = await listDoctorBasicInfo({ pageSize: 1000 });
+    const res = await listDoctorBasicInfo({ pageNum: 1, pageSize: 1000 });
     doctorOptions.value = res.rows || [];
   } catch (error) {
     console.error('加载医生选项失败:', error);
@@ -313,7 +319,7 @@ const loadDoctorOptions = async () => {
 
 /** 获取医生姓名 */
 const getDoctorName = (doctorId: string | number) => {
-  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  const doctor = doctorOptions.value.find((d) => d.id === doctorId);
   return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
@@ -413,13 +419,9 @@ const handleExport = () => {
 
 /** 导入按钮操作 */
 const handleImport = () => {
-  proxy?.$modal.upload({
-    url: 'system/doctorResearchProject/importData',
-    accept: '.xlsx,.xls',
-    onSuccess: () => {
-      proxy?.$modal.msgSuccess('导入成功');
-      getList();
-    }
+  proxy?.$modal.upload('system/doctorResearchProject/importData', '医生研究项目导入', 'xls,xlsx', (response: any) => {
+    proxy?.$modal.msgSuccess('导入成功');
+    getList();
   });
 };
 
@@ -543,16 +545,7 @@ onMounted(() => {
       align-items: center;
 
       .config-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
+        color: #409eff;
 
         .btn-icon {
           margin-right: 4px;

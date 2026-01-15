@@ -43,7 +43,6 @@ export interface NewTechnologyProjectDocumentVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface NewTechnologyProjectDocumentForm extends BaseEntity {
@@ -101,11 +100,9 @@ export interface NewTechnologyProjectDocumentForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface NewTechnologyProjectDocumentQuery extends PageQuery {
-
   /**
    * 文档类型：application-申报书，approval-批复文件，progress-进展报告，final-结题报告
    */

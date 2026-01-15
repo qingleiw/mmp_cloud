@@ -42,7 +42,9 @@
           <span class="font-medium">资质风险监测列表</span>
           <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           <div class="ml-auto flex items-center gap-2">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationRiskMonitor:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationRiskMonitor:add']"
+              >新增</el-button
+            >
             <el-button
               type="success"
               plain
@@ -255,11 +257,15 @@ import {
   addQualificationRiskMonitor,
   updateQualificationRiskMonitor
 } from '@/api/qualification/qualificationRiskMonitor';
-import { QualificationRiskMonitorVO, QualificationRiskMonitorQuery, QualificationRiskMonitorForm } from '@/api/qualification/qualificationRiskMonitor/types';
+import {
+  QualificationRiskMonitorVO,
+  QualificationRiskMonitorQuery,
+  QualificationRiskMonitorForm
+} from '@/api/qualification/qualificationRiskMonitor/types';
 import { FieldConfigManager } from '@/utils/fieldConfigManager';
-import { createQualificationRiskMonitorFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createQualificationRiskMonitorFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
 import { SearchConfigManager } from '@/utils/searchConfig';
-import { createQualificationRiskMonitorSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createQualificationRiskMonitorSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

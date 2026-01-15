@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectAssessmentVO, NewTechnologyProjectAssessmentForm, NewTechnologyProjectAssessmentQuery } from '@/api/ntp/newTechnologyProjectAssessment/types';
+import {
+  NewTechnologyProjectAssessmentVO,
+  NewTechnologyProjectAssessmentForm,
+  NewTechnologyProjectAssessmentQuery
+} from '@/api/ntp/newTechnologyProjectAssessment/types';
 
 /**
  * 查询项目考核评估列表

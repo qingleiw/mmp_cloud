@@ -14,12 +14,7 @@
               <el-input v-model="queryParams.patientGender" placeholder="请输入患者性别：1-男，2-女" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="死亡日期" prop="deathDate">
-              <el-date-picker clearable
-                v-model="queryParams.deathDate"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择死亡日期"
-              />
+              <el-date-picker clearable v-model="queryParams.deathDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择死亡日期" />
             </el-form-item>
             <el-form-item label="死亡原因" prop="deathReason">
               <el-input v-model="queryParams.deathReason" placeholder="请输入死亡原因" clearable @keyup.enter="handleQuery" />
@@ -28,12 +23,7 @@
               <el-input v-model="queryParams.moderatorName" placeholder="请输入讨论主持人姓名" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="讨论日期" prop="discussionDate">
-              <el-date-picker clearable
-                v-model="queryParams.discussionDate"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择讨论日期"
-              />
+              <el-date-picker clearable v-model="queryParams.discussionDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择讨论日期" />
             </el-form-item>
             <el-form-item label="参与讨论的人员名单" prop="participants">
               <el-input v-model="queryParams.participants" placeholder="请输入参与讨论的人员名单" clearable @keyup.enter="handleQuery" />
@@ -60,10 +50,20 @@
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:deathCaseDiscussion:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:deathCaseDiscussion:edit']">修改</el-button>
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:deathCaseDiscussion:edit']"
+              >修改</el-button
+            >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:deathCaseDiscussion:remove']">删除</el-button>
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['system:deathCaseDiscussion:remove']"
+              >删除</el-button
+            >
           </el-col>
           <el-col :span="1.5">
             <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:deathCaseDiscussion:export']">导出</el-button>
@@ -95,13 +95,25 @@
         <el-table-column label="参与人数" align="center" prop="participantCount" />
         <el-table-column label="状态：0-进行中，1-已完成" align="center" prop="status" />
         <el-table-column label="是否删除 0-否 1-是" align="center" prop="isDeleted" />
-        <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:deathCaseDiscussion:edit']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['system:deathCaseDiscussion:edit']"
+              ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['system:deathCaseDiscussion:remove']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['system:deathCaseDiscussion:remove']"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -122,32 +134,24 @@
           <el-input v-model="form.patientGender" placeholder="请输入患者性别：1-男，2-女" />
         </el-form-item>
         <el-form-item label="死亡日期" prop="deathDate">
-          <el-date-picker clearable
-            v-model="form.deathDate"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择死亡日期">
+          <el-date-picker clearable v-model="form.deathDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择死亡日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="死亡原因" prop="deathReason">
-            <el-input v-model="form.deathReason" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.deathReason" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="讨论主持人姓名" prop="moderatorName">
           <el-input v-model="form.moderatorName" placeholder="请输入讨论主持人姓名" />
         </el-form-item>
         <el-form-item label="讨论日期" prop="discussionDate">
-          <el-date-picker clearable
-            v-model="form.discussionDate"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择讨论日期">
+          <el-date-picker clearable v-model="form.discussionDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择讨论日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="讨论内容和结论">
-          <editor v-model="form.discussionContent" :min-height="192"/>
+          <editor v-model="form.discussionContent" :min-height="192" />
         </el-form-item>
         <el-form-item label="参与讨论的人员名单" prop="participants">
-            <el-input v-model="form.participants" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.participants" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="参与人数" prop="participantCount">
           <el-input v-model="form.participantCount" placeholder="请输入参与人数" />
@@ -167,7 +171,13 @@
 </template>
 
 <script setup name="DeathCaseDiscussion" lang="ts">
-import { listDeathCaseDiscussion, getDeathCaseDiscussion, delDeathCaseDiscussion, addDeathCaseDiscussion, updateDeathCaseDiscussion } from '@/api/ledger/deathCaseDiscussion';
+import {
+  listDeathCaseDiscussion,
+  getDeathCaseDiscussion,
+  delDeathCaseDiscussion,
+  addDeathCaseDiscussion,
+  updateDeathCaseDiscussion
+} from '@/api/ledger/deathCaseDiscussion';
 import { DeathCaseDiscussionVO, DeathCaseDiscussionQuery, DeathCaseDiscussionForm } from '@/api/ledger/deathCaseDiscussion/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -202,10 +212,10 @@ const initFormData: DeathCaseDiscussionForm = {
   participants: undefined,
   participantCount: undefined,
   status: undefined,
-  isDeleted: undefined,
-}
+  isDeleted: undefined
+};
 const data = reactive<PageData<DeathCaseDiscussionForm, DeathCaseDiscussionQuery>>({
-  form: {...initFormData},
+  form: { ...initFormData },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
@@ -221,37 +231,18 @@ const data = reactive<PageData<DeathCaseDiscussionForm, DeathCaseDiscussionQuery
     participantCount: undefined,
     status: undefined,
     isDeleted: undefined,
-    params: {
-    }
+    params: {}
   },
   rules: {
-    id: [
-      { required: true, message: "主键ID不能为空", trigger: "blur" }
-    ],
-    patientName: [
-      { required: true, message: "患者姓名不能为空", trigger: "blur" }
-    ],
-    patientAge: [
-      { required: true, message: "患者年龄不能为空", trigger: "blur" }
-    ],
-    patientGender: [
-      { required: true, message: "患者性别：1-男，2-女不能为空", trigger: "blur" }
-    ],
-    deathDate: [
-      { required: true, message: "死亡日期不能为空", trigger: "blur" }
-    ],
-    deathReason: [
-      { required: true, message: "死亡原因不能为空", trigger: "blur" }
-    ],
-    moderatorName: [
-      { required: true, message: "讨论主持人姓名不能为空", trigger: "blur" }
-    ],
-    discussionDate: [
-      { required: true, message: "讨论日期不能为空", trigger: "blur" }
-    ],
-    discussionContent: [
-      { required: true, message: "讨论内容和结论不能为空", trigger: "blur" }
-    ],
+    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
+    patientName: [{ required: true, message: '患者姓名不能为空', trigger: 'blur' }],
+    patientAge: [{ required: true, message: '患者年龄不能为空', trigger: 'blur' }],
+    patientGender: [{ required: true, message: '患者性别：1-男，2-女不能为空', trigger: 'blur' }],
+    deathDate: [{ required: true, message: '死亡日期不能为空', trigger: 'blur' }],
+    deathReason: [{ required: true, message: '死亡原因不能为空', trigger: 'blur' }],
+    moderatorName: [{ required: true, message: '讨论主持人姓名不能为空', trigger: 'blur' }],
+    discussionDate: [{ required: true, message: '讨论日期不能为空', trigger: 'blur' }],
+    discussionContent: [{ required: true, message: '讨论内容和结论不能为空', trigger: 'blur' }]
   }
 });
 
@@ -264,55 +255,55 @@ const getList = async () => {
   deathCaseDiscussionList.value = res.rows;
   total.value = res.total;
   loading.value = false;
-}
+};
 
 /** 取消按钮 */
 const cancel = () => {
   reset();
   dialog.visible = false;
-}
+};
 
 /** 表单重置 */
 const reset = () => {
-  form.value = {...initFormData};
+  form.value = { ...initFormData };
   deathCaseDiscussionFormRef.value?.resetFields();
-}
+};
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
   queryParams.value.pageNum = 1;
   getList();
-}
+};
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
   handleQuery();
-}
+};
 
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: DeathCaseDiscussionVO[]) => {
-  ids.value = selection.map(item => item.id);
+  ids.value = selection.map((item) => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-}
+};
 
 /** 新增按钮操作 */
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = "添加死亡病例讨论";
-}
+  dialog.title = '添加死亡病例讨论';
+};
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: DeathCaseDiscussionVO) => {
   reset();
-  const _id = row?.id || ids.value[0]
+  const _id = row?.id || ids.value[0];
   const res = await getDeathCaseDiscussion(_id);
   Object.assign(form.value, res.data);
   dialog.visible = true;
-  dialog.title = "修改死亡病例讨论";
-}
+  dialog.title = '修改死亡病例讨论';
+};
 
 /** 提交按钮 */
 const submitForm = () => {
@@ -320,32 +311,36 @@ const submitForm = () => {
     if (valid) {
       buttonLoading.value = true;
       if (form.value.id) {
-        await updateDeathCaseDiscussion(form.value).finally(() =>  buttonLoading.value = false);
+        await updateDeathCaseDiscussion(form.value).finally(() => (buttonLoading.value = false));
       } else {
-        await addDeathCaseDiscussion(form.value).finally(() =>  buttonLoading.value = false);
+        await addDeathCaseDiscussion(form.value).finally(() => (buttonLoading.value = false));
       }
-      proxy?.$modal.msgSuccess("操作成功");
+      proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
       await getList();
     }
   });
-}
+};
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: DeathCaseDiscussionVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除死亡病例讨论编号为"' + _ids + '"的数据项？').finally(() => loading.value = false);
+  await proxy?.$modal.confirm('是否确认删除死亡病例讨论编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delDeathCaseDiscussion(_ids);
-  proxy?.$modal.msgSuccess("删除成功");
+  proxy?.$modal.msgSuccess('删除成功');
   await getList();
-}
+};
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download('system/deathCaseDiscussion/export', {
-    ...queryParams.value
-  }, `deathCaseDiscussion_${new Date().getTime()}.xlsx`)
-}
+  proxy?.download(
+    'system/deathCaseDiscussion/export',
+    {
+      ...queryParams.value
+    },
+    `deathCaseDiscussion_${new Date().getTime()}.xlsx`
+  );
+};
 
 onMounted(() => {
   getList();

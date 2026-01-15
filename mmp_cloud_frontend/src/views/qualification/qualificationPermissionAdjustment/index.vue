@@ -51,7 +51,12 @@
             v-hasPermi="['qualification:qualificationPermissionAdjustment:remove']"
             >删除</el-button
           >
-          <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationPermissionAdjustment:export']"
+          <el-button
+            type="warning"
+            plain
+            icon="Download"
+            @click="handleExport"
+            v-hasPermi="['qualification:qualificationPermissionAdjustment:export']"
             >导出</el-button
           >
           <el-button type="info" plain icon="Upload" @click="handleImport" v-hasPermi="['qualification:qualificationPermissionAdjustment:import']"
@@ -237,9 +242,9 @@ import {
 } from '@/api/qualification/qualificationPermissionAdjustment/types';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createQualificationPermissionAdjustmentSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createQualificationPermissionAdjustmentSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import { createQualificationPermissionAdjustmentFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createQualificationPermissionAdjustmentFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
 import { Search, Setting } from '@element-plus/icons-vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

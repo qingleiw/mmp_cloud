@@ -1,9 +1,9 @@
 // 全局SCSS变量
 :root {
-  --menuBg: #e6f4ff;  // 修改为浅蓝色背景，更适合医院管理系统
-  --menuColor: #1a365d;  // 深蓝色文字，更清晰
-  --menuActiveText: #0f766e;  // 青色激活状态
-  --menuHover: #dbeafe;  // 浅蓝色悬停
+  --menuBg: #e6f4ff; // 修改为浅蓝色背景，更适合医院管理系统
+  --menuColor: #1a365d; // 深蓝色文字，更清晰
+  --menuActiveText: #0f766e; // 青色激活状态
+  --menuHover: #dbeafe; // 浅蓝色悬停
 
   --subMenuBg: #f0f9ff;
   --subMenuActiveText: #0f766e;
@@ -28,10 +28,10 @@
 }
 
 html.dark {
-  --menuBg: #1e293b;  // 深色模式使用深蓝色背景
-  --menuColor: #cbd5e1;  // 浅色文字
-  --menuActiveText: #06b6d4;  // 青色激活状态
-  --menuHover: #334155;  // 深灰色悬停
+  --menuBg: #1e293b; // 深色模式使用深蓝色背景
+  --menuColor: #cbd5e1; // 浅色文字
+  --menuActiveText: #06b6d4; // 青色激活状态
+  --menuHover: #334155; // 深灰色悬停
 
   --subMenuBg: #1e293b;
   --subMenuActiveText: #06b6d4;
@@ -97,11 +97,11 @@ $base-menu-color: var(--menuColor);
 $base-menu-hover: var(--menuHover);
 $base-menu-color-active: var(--menuActiveText);
 $base-menu-background: var(--menuBg);
-$base-logo-title-color: #1a365d;  // 改为深蓝色，更清晰
+$base-logo-title-color: #1a365d; // 改为深蓝色，更清晰
 
-$base-menu-light-color: #1a365d;  // 深蓝色文字
-$base-menu-light-background: #f0f9ff;  // 浅蓝色背景
-$base-logo-light-title-color: #0f766e;  // 青色logo文字
+$base-menu-light-color: #1a365d; // 深蓝色文字
+$base-menu-light-background: #f0f9ff; // 浅蓝色背景
+$base-logo-light-title-color: #0f766e; // 青色logo文字
 
 $base-sub-menu-background: var(--subMenuBg);
 $base-sub-menu-hover: var(--subMenuHover);
@@ -117,7 +117,7 @@ $--color-warning: #e6a23c;
 $--color-danger: #f56c6c;
 $--color-info: #909399;
 
-$base-sidebar-width: 200px;  // 调窄侧边栏宽度，从240px改为200px，并固定不再收缩
+$base-sidebar-width: 200px; // 调窄侧边栏宽度，从240px改为200px，并固定不再收缩
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass

@@ -11,20 +11,10 @@
               <el-input v-model="queryParams.reportTitle" placeholder="请输入报告标题" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="报告周期开始" prop="periodStart">
-              <el-date-picker clearable
-                v-model="queryParams.periodStart"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择报告周期开始"
-              />
+              <el-date-picker clearable v-model="queryParams.periodStart" type="date" value-format="YYYY-MM-DD" placeholder="请选择报告周期开始" />
             </el-form-item>
             <el-form-item label="报告周期结束" prop="periodEnd">
-              <el-date-picker clearable
-                v-model="queryParams.periodEnd"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择报告周期结束"
-              />
+              <el-date-picker clearable v-model="queryParams.periodEnd" type="date" value-format="YYYY-MM-DD" placeholder="请选择报告周期结束" />
             </el-form-item>
             <el-form-item label="报告摘要" prop="summary">
               <el-input v-model="queryParams.summary" placeholder="请输入报告摘要" clearable @keyup.enter="handleQuery" />
@@ -33,12 +23,7 @@
               <el-input v-model="queryParams.recommendations" placeholder="请输入建议措施" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="发布时间" prop="publishTime">
-              <el-date-picker clearable
-                v-model="queryParams.publishTime"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择发布时间"
-              />
+              <el-date-picker clearable v-model="queryParams.publishTime" type="date" value-format="YYYY-MM-DD" placeholder="请选择发布时间" />
             </el-form-item>
             <el-form-item label="删除标志" prop="isDeleted">
               <el-input v-model="queryParams.isDeleted" placeholder="请输入删除标志" clearable @keyup.enter="handleQuery" />
@@ -59,10 +44,14 @@
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['tumorqc:tumorQcReport:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['tumorqc:tumorQcReport:edit']">修改</el-button>
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['tumorqc:tumorQcReport:edit']"
+              >修改</el-button
+            >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['tumorqc:tumorQcReport:remove']">删除</el-button>
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['tumorqc:tumorQcReport:remove']"
+              >删除</el-button
+            >
           </el-col>
           <el-col :span="1.5">
             <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['tumorqc:tumorQcReport:export']">导出</el-button>
@@ -97,7 +86,7 @@
           </template>
         </el-table-column>
         <el-table-column label="删除标志" align="center" prop="isDeleted" />
-        <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
               <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['tumorqc:tumorQcReport:edit']"></el-button>
@@ -124,36 +113,24 @@
           <el-input v-model="form.planId" placeholder="请输入关联方案ID" />
         </el-form-item>
         <el-form-item label="报告周期开始" prop="periodStart">
-          <el-date-picker clearable
-            v-model="form.periodStart"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择报告周期开始">
+          <el-date-picker clearable v-model="form.periodStart" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择报告周期开始">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="报告周期结束" prop="periodEnd">
-          <el-date-picker clearable
-            v-model="form.periodEnd"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择报告周期结束">
+          <el-date-picker clearable v-model="form.periodEnd" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择报告周期结束">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="报告内容">
-          <editor v-model="form.reportContent" :min-height="192"/>
+          <editor v-model="form.reportContent" :min-height="192" />
         </el-form-item>
         <el-form-item label="报告摘要" prop="summary">
-            <el-input v-model="form.summary" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.summary" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="建议措施" prop="recommendations">
-            <el-input v-model="form.recommendations" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.recommendations" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="发布时间" prop="publishTime">
-          <el-date-picker clearable
-            v-model="form.publishTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择发布时间">
+          <el-date-picker clearable v-model="form.publishTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择发布时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="删除标志" prop="isDeleted">
@@ -207,9 +184,9 @@ const initFormData: TumorQcReportForm = {
   status: undefined,
   publishTime: undefined,
   isDeleted: undefined
-}
+};
 const data = reactive<PageData<TumorQcReportForm, TumorQcReportQuery>>({
-  form: {...initFormData},
+  form: { ...initFormData },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
@@ -224,19 +201,12 @@ const data = reactive<PageData<TumorQcReportForm, TumorQcReportQuery>>({
     status: undefined,
     publishTime: undefined,
     isDeleted: undefined,
-    params: {
-    }
+    params: {}
   },
   rules: {
-    id: [
-      { required: true, message: "主键ID不能为空", trigger: "blur" }
-    ],
-    reportCode: [
-      { required: true, message: "报告编码不能为空", trigger: "blur" }
-    ],
-    reportTitle: [
-      { required: true, message: "报告标题不能为空", trigger: "blur" }
-    ],
+    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
+    reportCode: [{ required: true, message: '报告编码不能为空', trigger: 'blur' }],
+    reportTitle: [{ required: true, message: '报告标题不能为空', trigger: 'blur' }]
   }
 });
 
@@ -256,55 +226,55 @@ const getList = async () => {
   } finally {
     loading.value = false;
   }
-}
+};
 
 /** 取消按钮 */
 const cancel = () => {
   reset();
   dialog.visible = false;
-}
+};
 
 /** 表单重置 */
 const reset = () => {
-  form.value = {...initFormData};
+  form.value = { ...initFormData };
   tumorQcReportFormRef.value?.resetFields();
-}
+};
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
   queryParams.value.pageNum = 1;
   getList();
-}
+};
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
   handleQuery();
-}
+};
 
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: TumorQcReportVO[]) => {
-  ids.value = selection.map(item => item.id);
+  ids.value = selection.map((item) => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-}
+};
 
 /** 新增按钮操作 */
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = "添加肿瘤质控报告";
-}
+  dialog.title = '添加肿瘤质控报告';
+};
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: TumorQcReportVO) => {
   reset();
-  const _id = row?.id || ids.value[0]
+  const _id = row?.id || ids.value[0];
   const res = await getTumorQcReport(_id);
   Object.assign(form.value, res.data);
   dialog.visible = true;
-  dialog.title = "修改肿瘤质控报告";
-}
+  dialog.title = '修改肿瘤质控报告';
+};
 
 /** 提交按钮 */
 const submitForm = () => {
@@ -312,32 +282,36 @@ const submitForm = () => {
     if (valid) {
       buttonLoading.value = true;
       if (form.value.id) {
-        await updateTumorQcReport(form.value).finally(() =>  buttonLoading.value = false);
+        await updateTumorQcReport(form.value).finally(() => (buttonLoading.value = false));
       } else {
-        await addTumorQcReport(form.value).finally(() =>  buttonLoading.value = false);
+        await addTumorQcReport(form.value).finally(() => (buttonLoading.value = false));
       }
-      proxy?.$modal.msgSuccess("操作成功");
+      proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
       await getList();
     }
   });
-}
+};
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: TumorQcReportVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除肿瘤质控报告编号为"' + _ids + '"的数据项？').finally(() => loading.value = false);
+  await proxy?.$modal.confirm('是否确认删除肿瘤质控报告编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delTumorQcReport(_ids);
-  proxy?.$modal.msgSuccess("删除成功");
+  proxy?.$modal.msgSuccess('删除成功');
   await getList();
-}
+};
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download('system/tumorQcReport/export', {
-    ...queryParams.value
-  }, `tumorQcReport_${new Date().getTime()}.xlsx`)
-}
+  proxy?.download(
+    'system/tumorQcReport/export',
+    {
+      ...queryParams.value
+    },
+    `tumorQcReport_${new Date().getTime()}.xlsx`
+  );
+};
 
 onMounted(() => {
   getList();

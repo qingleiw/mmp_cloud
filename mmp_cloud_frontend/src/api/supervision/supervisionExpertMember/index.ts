@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionExpertMemberVO, SupervisionExpertMemberForm, SupervisionExpertMemberQuery } from '@/api/supervision/supervisionExpertMember/types';
+import {
+  SupervisionExpertMemberVO,
+  SupervisionExpertMemberForm,
+  SupervisionExpertMemberQuery
+} from '@/api/supervision/supervisionExpertMember/types';
 
 /**
  * 查询专家组成员列表

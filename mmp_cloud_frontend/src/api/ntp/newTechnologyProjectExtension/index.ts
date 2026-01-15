@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectExtensionVO, NewTechnologyProjectExtensionForm, NewTechnologyProjectExtensionQuery } from '@/api/ntp/newTechnologyProjectExtension/types';
+import {
+  NewTechnologyProjectExtensionVO,
+  NewTechnologyProjectExtensionForm,
+  NewTechnologyProjectExtensionQuery
+} from '@/api/ntp/newTechnologyProjectExtension/types';
 
 /**
  * 查询新技术延期申请列表

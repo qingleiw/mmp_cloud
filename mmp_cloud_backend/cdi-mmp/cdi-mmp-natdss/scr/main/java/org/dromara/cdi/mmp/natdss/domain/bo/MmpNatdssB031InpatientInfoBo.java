@@ -1,0 +1,139 @@
+package org.dromara.cdi.mmp.natdss.domain.bo;
+
+import org.dromara.cdi.mmp.natdss.domain.MmpNatdssB031InpatientInfo;
+import org.dromara.common.mybatis.core.domain.BaseEntity;
+import org.dromara.common.core.validate.AddGroup;
+import org.dromara.common.core.validate.EditGroup;
+import io.github.linpeilie.annotations.AutoMapper;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import jakarta.validation.constraints.*;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/**
+ * B03-1 住院患者信息业务对象 mmp_natdss_b03_1_inpatient_info
+ *
+ * @author LionLi
+ * @date 2026-01-15
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@AutoMapper(target = MmpNatdssB031InpatientInfo.class, reverseConvertGenerate = false)
+public class MmpNatdssB031InpatientInfoBo extends BaseEntity {
+
+    /**
+     * 系统自增主键
+     */
+    @NotNull(message = "系统自增主键不能为空", groups = { EditGroup.class })
+    private Long id;
+
+    /**
+     * 患者ID
+     */
+    @NotBlank(message = "患者ID不能为空", groups = { AddGroup.class, EditGroup.class })
+    private String patientId;
+
+    /**
+     * 单次就诊唯一标识号
+     */
+    @NotBlank(message = "单次就诊唯一标识号不能为空", groups = { AddGroup.class, EditGroup.class })
+    private String visitSn;
+
+    /**
+     * 就诊卡号
+     */
+    private String visitCardNo;
+
+    /**
+     * 病案号
+     */
+    private String medicalRecordNo;
+
+    /**
+     * 住院号
+     */
+    private String inpatientNo;
+
+    /**
+     * 住院次数
+     */
+    private String hospitalizationTimes;
+
+    /**
+     * 姓名
+     */
+    private String name;
+
+    /**
+     * 入院时间
+     */
+    private Date admissionDatetime;
+
+    /**
+     * 当前科室代码
+     */
+    private String currentDeptCode;
+
+    /**
+     * 当前科室名称
+     */
+    private String currentDeptName;
+
+    /**
+     * 当前病房名称
+     */
+    private String currentWardName;
+
+    /**
+     * 当前床位名称
+     */
+    private String currentBedName;
+
+    /**
+     * 管床医生代码
+     */
+    private String visitDoctorNo;
+
+    /**
+     * 出院时间
+     */
+    private Date dischargeDatetime;
+
+    /**
+     * 出院科室编码
+     */
+    private String dischargeDeptCode;
+
+    /**
+     * 出院科室名称
+     */
+    private String dischargeDeptName;
+
+    /**
+     * 扩展字段1:出院状态
+     */
+    private String extendData1;
+
+    /**
+     * 扩展字段2
+     */
+    private String extendData2;
+
+    /**
+     * 记录状态:1正常 0作废
+     */
+    private Long recordStatus;
+
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updatedTime;
+
+
+}

@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { RadiationDoseAlertRecordVO, RadiationDoseAlertRecordForm, RadiationDoseAlertRecordQuery } from '@/api/radiation/radiationDoseAlertRecord/types';
+import {
+  RadiationDoseAlertRecordVO,
+  RadiationDoseAlertRecordForm,
+  RadiationDoseAlertRecordQuery
+} from '@/api/radiation/radiationDoseAlertRecord/types';
 
 /**
  * 查询剂量异常预警记录列表

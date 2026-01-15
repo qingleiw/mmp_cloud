@@ -1,8 +1,32 @@
 <template>
-  <div class="p-2">
+  <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-document-checked class="title-icon"></i-ep-document-checked>
+        医师保险编码管理
+      </h2>
+      <p class="page-description">管理医师的保险编码、社保信息、医保参保情况等相关数据</p>
+    </div>
+
+    <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
           <DynamicSearchForm
             ref="queryFormRef"
             :query="queryParams"
@@ -14,18 +38,29 @@
       </div>
     </transition>
 
-    <el-card shadow="never">
+    <!-- 数据表格 -->
+    <el-card shadow="never" class="table-card">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorInsuranceCode:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['doctor:doctorInsuranceCode:edit']"
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>保险编码信息列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorInsuranceCode:add']" size="small"
+              >新增</el-button
+            >
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['doctor:doctorInsuranceCode:edit']"
+              size="small"
               >修改</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
             <el-button
               type="danger"
               plain
@@ -33,23 +68,31 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorInsuranceCode:remove']"
+              size="small"
               >删除</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorInsuranceCode:export']">导出</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
-          </el-col>
-          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorInsuranceCode:export']" size="small"
+              >导出</el-button
+            >
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorInsuranceCode:import']" size="small"
+              >导入</el-button
+            >
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
       </template>
 
-      <el-table v-loading="loading" border :data="doctorInsuranceCodeList" @selection-change="handleSelectionChange">
+      <el-table
+        v-loading="loading"
+        border
+        :data="doctorInsuranceCodeList"
+        @selection-change="handleSelectionChange"
+        class="doctor-insurance-code-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
           v-for="field in visibleColumns"
@@ -97,33 +140,39 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改医保医师码对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="doctorInsuranceCodeFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="医生ID" prop="doctorId">
-          <el-input v-model="form.doctorId" placeholder="请输入医生ID" />
-        </el-form-item>
-        <el-form-item label="医保医师码" prop="insuranceCode">
-          <el-input v-model="form.insuranceCode" placeholder="请输入医保医师码" />
-        </el-form-item>
-        <el-form-item label="有效期至" prop="validDate">
-          <el-date-picker clearable v-model="form.validDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择有效期至">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="申请日期" prop="applyDate">
-          <el-date-picker clearable v-model="form.applyDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择申请日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="审批日期" prop="approveDate">
-          <el-date-picker clearable v-model="form.approveDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择审批日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="是否删除" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入是否删除" />
-        </el-form-item>
+
+    <!-- 添加或修改医师保险编码对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <el-form ref="doctorInsuranceCodeFormRef" :model="form" :rules="rules" label-width="120px">
+        <el-row :gutter="20">
+          <el-col v-for="field in visibleColumns" :key="field.prop" :span="field.formSpan || 24">
+            <el-form-item :label="field.label" :prop="field.prop" v-if="field.prop !== 'createTime' && field.prop !== 'updateTime'">
+              <el-input v-if="field.type === 'input' || !field.type" v-model="form[field.prop]" :placeholder="`请输入${field.label}`" />
+              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="`请输入${field.label}`" />
+              <el-date-picker
+                v-else-if="field.type === 'datetime'"
+                clearable
+                v-model="form[field.prop]"
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                :placeholder="`请选择${field.label}`"
+              />
+              <el-date-picker
+                v-else-if="field.type === 'date'"
+                clearable
+                v-model="form[field.prop]"
+                type="date"
+                value-format="YYYY-MM-DD"
+                :placeholder="`请选择${field.label}`"
+              />
+              <el-select v-else-if="field.type === 'select'" v-model="form[field.prop]" :placeholder="`请选择${field.label}`">
+                <el-option v-for="option in field.options" :key="option.value" :label="option.label" :value="option.value" />
+              </el-select>
+              <el-switch v-else-if="field.type === 'switch'" v-model="form[field.prop]" active-text="是" inactive-text="否" />
+              <span v-else>{{ form[field.prop] }}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -150,11 +199,11 @@ import {
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorInsuranceCodeVO, DoctorInsuranceCodeQuery, DoctorInsuranceCodeForm } from '@/api/doctor/doctorInsuranceCode/types';
-import { createDoctorInsuranceCodeFieldConfig } from '@/utils/fieldConfig';
+import { createDoctorInsuranceCodeFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createDoctorInsuranceCodeSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createDoctorInsuranceCodeSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -233,7 +282,7 @@ const getList = async () => {
 /** 加载医生选项 */
 const loadDoctorOptions = async () => {
   try {
-    const res = await listDoctorBasicInfo({ pageSize: 1000 });
+    const res = await listDoctorBasicInfo({ pageNum: 1, pageSize: 1000 });
     doctorOptions.value = res.rows;
   } catch (error) {
     console.error('获取医生列表失败:', error);
@@ -243,7 +292,7 @@ const loadDoctorOptions = async () => {
 
 /** 获取医生姓名 */
 const getDoctorName = (doctorId: string | number) => {
-  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  const doctor = doctorOptions.value.find((d) => d.id === doctorId);
   return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
@@ -332,6 +381,16 @@ const handleExport = () => {
   );
 };
 
+/** 导入按钮操作 */
+const handleImport = () => {
+  proxy?.$modal.msgSuccess('导入功能开发中...');
+};
+
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  showFieldConfig.value = true;
+};
+
 /** 字段配置确认 */
 const handleFieldConfigConfirm = () => {
   // 字段配置更新后刷新列表
@@ -350,3 +409,157 @@ onMounted(() => {
   loadDoctorOptions();
 });
 </script>
+
+<style lang="scss" scoped>
+.app-container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.page-header {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d2129;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .title-icon {
+      color: #409eff;
+      font-size: 28px;
+    }
+  }
+
+  .page-description {
+    color: #86909c;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.search-container {
+  .search-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .search-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #1d2129;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .search-icon {
+          color: #409eff;
+        }
+      }
+
+      .search-actions {
+        display: flex;
+        gap: 8px;
+
+        .config-btn {
+          color: #409eff;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .table-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .table-icon {
+        color: #409eff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+.doctor-insurance-code-table {
+  :deep(.el-table__header) {
+    background-color: #fafafa;
+  }
+
+  :deep(.el-table__row) {
+    &:hover {
+      background-color: #f0f9ff;
+    }
+  }
+}
+
+:deep(.el-dialog) {
+  .el-dialog__header {
+    background-color: #409eff;
+    color: white;
+    margin: 0;
+    padding: 16px 24px;
+
+    .el-dialog__title {
+      color: white;
+      font-weight: 600;
+    }
+
+    .el-dialog__headerbtn {
+      .el-dialog__close {
+        color: white;
+      }
+    }
+  }
+
+  .el-dialog__body {
+    padding: 24px;
+  }
+}
+
+.dialog-footer {
+  text-align: right;
+}
+</style>

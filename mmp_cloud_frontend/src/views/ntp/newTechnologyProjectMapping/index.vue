@@ -1,47 +1,48 @@
 <template>
-  <div class="p-2">
-    <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="源编码" prop="sourceCode">
-              <el-input v-model="queryParams.sourceCode" placeholder="请输入源编码" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="源名称" prop="sourceName">
-              <el-input v-model="queryParams.sourceName" placeholder="请输入源名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="目标系统 HIS/收费系统" prop="targetSystem">
-              <el-input v-model="queryParams.targetSystem" placeholder="请输入目标系统 HIS/收费系统" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </el-card>
-      </div>
-    </transition>
-
-    <el-card shadow="never">
-      <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ntp:newTechnologyProjectMapping:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ntp:newTechnologyProjectMapping:edit']">修改</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['ntp:newTechnologyProjectMapping:remove']">删除</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ntp:newTechnologyProjectMapping:export']">导出</el-button>
-          </el-col>
-          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+  <app-container>
+    <page-header title="新技术项目对码管理">
+      <template #action>
+        <el-button type="primary" icon="Plus" @click="handleAdd" v-hasPermi="['ntp:newTechnologyProjectMapping:add']">新增</el-button>
+        <el-button
+          type="success"
+          plain
+          icon="Edit"
+          :disabled="single"
+          @click="handleUpdate()"
+          v-hasPermi="['ntp:newTechnologyProjectMapping:edit']"
+          >修改</el-button
+        >
+        <el-button
+          type="danger"
+          plain
+          icon="Delete"
+          :disabled="multiple"
+          @click="handleDelete()"
+          v-hasPermi="['ntp:newTechnologyProjectMapping:remove']"
+          >删除</el-button
+        >
+        <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ntp:newTechnologyProjectMapping:export']"
+          >导出</el-button
+        >
       </template>
+    </page-header>
 
-      <el-table v-loading="loading" border :data="newTechnologyProjectMappingList" @selection-change="handleSelectionChange">
+    <search-card v-model:show="showSearch" @search="handleQuery" @reset="resetQuery">
+      <el-form ref="queryFormRef" :model="queryParams" :inline="true">
+        <el-form-item label="源编码" prop="sourceCode">
+          <el-input v-model="queryParams.sourceCode" placeholder="请输入源编码" clearable @keyup.enter="handleQuery" />
+        </el-form-item>
+        <el-form-item label="源名称" prop="sourceName">
+          <el-input v-model="queryParams.sourceName" placeholder="请输入源名称" clearable @keyup.enter="handleQuery" />
+        </el-form-item>
+        <el-form-item label="目标系统 HIS/收费系统" prop="targetSystem">
+          <el-input v-model="queryParams.targetSystem" placeholder="请输入目标系统 HIS/收费系统" clearable @keyup.enter="handleQuery" />
+        </el-form-item>
+      </el-form>
+    </search-card>
+
+    <table-card v-loading="loading" :data="newTechnologyProjectMappingList" @selection-change="handleSelectionChange">
+      <template #columns>
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
         <el-table-column label="对码类型 医嘱项/ICD-9/收费项" align="center" prop="mappingType" />
@@ -49,20 +50,34 @@
         <el-table-column label="源名称" align="center" prop="sourceName" />
         <el-table-column label="目标系统 HIS/收费系统" align="center" prop="targetSystem" />
         <el-table-column label="备注" align="center" prop="remark" />
-        <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['ntp:newTechnologyProjectMapping:edit']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['ntp:newTechnologyProjectMapping:edit']"
+              ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['ntp:newTechnologyProjectMapping:remove']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['ntp:newTechnologyProjectMapping:remove']"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
-      </el-table>
+      </template>
 
-      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
-    </el-card>
+      <template #pagination>
+        <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
+      </template>
+    </table-card>
     <!-- 添加或修改新技术项目对码对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
       <el-form ref="newTechnologyProjectMappingFormRef" :model="form" :rules="rules" label-width="80px">
@@ -79,7 +94,7 @@
           <el-input v-model="form.targetSystem" placeholder="请输入目标系统 HIS/收费系统" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-            <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -93,8 +108,18 @@
 </template>
 
 <script setup name="NewTechnologyProjectMapping" lang="ts">
-import { listNewTechnologyProjectMapping, getNewTechnologyProjectMapping, delNewTechnologyProjectMapping, addNewTechnologyProjectMapping, updateNewTechnologyProjectMapping } from '@/api/ntp/newTechnologyProjectMapping';
-import { NewTechnologyProjectMappingVO, NewTechnologyProjectMappingQuery, NewTechnologyProjectMappingForm } from '@/api/ntp/newTechnologyProjectMapping/types';
+import {
+  listNewTechnologyProjectMapping,
+  getNewTechnologyProjectMapping,
+  delNewTechnologyProjectMapping,
+  addNewTechnologyProjectMapping,
+  updateNewTechnologyProjectMapping
+} from '@/api/ntp/newTechnologyProjectMapping';
+import {
+  NewTechnologyProjectMappingVO,
+  NewTechnologyProjectMappingQuery,
+  NewTechnologyProjectMappingForm
+} from '@/api/ntp/newTechnologyProjectMapping/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -123,9 +148,9 @@ const initFormData: NewTechnologyProjectMappingForm = {
   sourceName: undefined,
   targetSystem: undefined,
   remark: undefined
-}
+};
 const data = reactive<PageData<NewTechnologyProjectMappingForm, NewTechnologyProjectMappingQuery>>({
-  form: {...initFormData},
+  form: { ...initFormData },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
@@ -133,16 +158,11 @@ const data = reactive<PageData<NewTechnologyProjectMappingForm, NewTechnologyPro
     sourceCode: undefined,
     sourceName: undefined,
     targetSystem: undefined,
-    params: {
-    }
+    params: {}
   },
   rules: {
-    id: [
-      { required: true, message: "主键ID不能为空", trigger: "blur" }
-    ],
-    projectId: [
-      { required: true, message: "项目ID不能为空", trigger: "blur" }
-    ],
+    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
+    projectId: [{ required: true, message: '项目ID不能为空', trigger: 'blur' }]
   }
 });
 
@@ -155,55 +175,55 @@ const getList = async () => {
   newTechnologyProjectMappingList.value = res.rows;
   total.value = res.total;
   loading.value = false;
-}
+};
 
 /** 取消按钮 */
 const cancel = () => {
   reset();
   dialog.visible = false;
-}
+};
 
 /** 表单重置 */
 const reset = () => {
-  form.value = {...initFormData};
+  form.value = { ...initFormData };
   newTechnologyProjectMappingFormRef.value?.resetFields();
-}
+};
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
   queryParams.value.pageNum = 1;
   getList();
-}
+};
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
   handleQuery();
-}
+};
 
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: NewTechnologyProjectMappingVO[]) => {
-  ids.value = selection.map(item => item.id);
+  ids.value = selection.map((item) => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-}
+};
 
 /** 新增按钮操作 */
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = "添加新技术项目对码";
-}
+  dialog.title = '添加新技术项目对码';
+};
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: NewTechnologyProjectMappingVO) => {
   reset();
-  const _id = row?.id || ids.value[0]
+  const _id = row?.id || ids.value[0];
   const res = await getNewTechnologyProjectMapping(_id);
   Object.assign(form.value, res.data);
   dialog.visible = true;
-  dialog.title = "修改新技术项目对码";
-}
+  dialog.title = '修改新技术项目对码';
+};
 
 /** 提交按钮 */
 const submitForm = () => {
@@ -211,32 +231,36 @@ const submitForm = () => {
     if (valid) {
       buttonLoading.value = true;
       if (form.value.id) {
-        await updateNewTechnologyProjectMapping(form.value).finally(() =>  buttonLoading.value = false);
+        await updateNewTechnologyProjectMapping(form.value).finally(() => (buttonLoading.value = false));
       } else {
-        await addNewTechnologyProjectMapping(form.value).finally(() =>  buttonLoading.value = false);
+        await addNewTechnologyProjectMapping(form.value).finally(() => (buttonLoading.value = false));
       }
-      proxy?.$modal.msgSuccess("操作成功");
+      proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
       await getList();
     }
   });
-}
+};
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: NewTechnologyProjectMappingVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除新技术项目对码编号为"' + _ids + '"的数据项？').finally(() => loading.value = false);
+  await proxy?.$modal.confirm('是否确认删除新技术项目对码编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delNewTechnologyProjectMapping(_ids);
-  proxy?.$modal.msgSuccess("删除成功");
+  proxy?.$modal.msgSuccess('删除成功');
   await getList();
-}
+};
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download('system/newTechnologyProjectMapping/export', {
-    ...queryParams.value
-  }, `newTechnologyProjectMapping_${new Date().getTime()}.xlsx`)
-}
+  proxy?.download(
+    'system/newTechnologyProjectMapping/export',
+    {
+      ...queryParams.value
+    },
+    `newTechnologyProjectMapping_${new Date().getTime()}.xlsx`
+  );
+};
 
 onMounted(() => {
   getList();

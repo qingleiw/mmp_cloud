@@ -270,11 +270,11 @@ import {
   CoreSystemRectificationRecordQuery,
   CoreSystemRectificationRecordForm
 } from '@/api/coresystem/coreSystemRectificationRecord/types';
-import { createCoreSystemRectificationRecordFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createCoreSystemRectificationRecordFieldConfig } from '@/utils/configs/coresystem/FieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
-import { createCoreSystemRectificationRecordSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createCoreSystemRectificationRecordSearchConfig } from '@/utils/configs/coresystem/SearchConfigs';
 
 // Simple parseTime implementation
 const parseTime = (time: any, pattern?: string) => {
@@ -591,16 +591,7 @@ onMounted(() => {
 
       .search-actions {
         .config-btn {
-          font-size: 12px;
-          padding: 4px 8px;
-          height: auto;
-          border: none;
-          color: #86909c;
-
-          &:hover {
-            color: #409eff;
-            background-color: #ecf5ff;
-          }
+          color: #409eff;
 
           .btn-icon {
             margin-right: 4px;
@@ -639,16 +630,7 @@ onMounted(() => {
       align-items: center;
 
       .config-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
+        color: #409eff;
 
         .btn-icon {
           margin-right: 4px;

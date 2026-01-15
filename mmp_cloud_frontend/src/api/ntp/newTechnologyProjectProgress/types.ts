@@ -88,7 +88,6 @@ export interface NewTechnologyProjectProgressVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface NewTechnologyProjectProgressForm extends BaseEntity {
@@ -196,11 +195,9 @@ export interface NewTechnologyProjectProgressForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface NewTechnologyProjectProgressQuery extends PageQuery {
-
   /**
    * 报告编号
    */

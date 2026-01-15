@@ -337,9 +337,9 @@ import {
 } from '@/api/surgery/surgeryWorkloadStatistics/types';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createSurgeryWorkloadStatisticsSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createSurgeryWorkloadStatisticsSearchConfig } from '@/utils/configs/surgery/SearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import { createSurgeryWorkloadStatisticsFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createSurgeryWorkloadStatisticsFieldConfig } from '@/utils/configs/surgery/FieldConfigs';
 import { Search, Setting, List, Refresh, Plus, Edit, Delete, Download, Check, Close, PieChart } from '@element-plus/icons-vue';
 import * as echarts from 'echarts';
 

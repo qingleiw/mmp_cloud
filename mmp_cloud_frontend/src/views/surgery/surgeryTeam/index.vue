@@ -167,7 +167,7 @@ import { createSurgeryTeamFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
-import { createSurgeryTeamSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createSurgeryTeamSearchConfig } from '@/utils/configs/surgery/SearchConfigs';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

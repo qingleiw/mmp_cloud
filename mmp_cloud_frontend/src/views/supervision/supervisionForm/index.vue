@@ -37,7 +37,13 @@
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['supervision:supervisionForm:remove']"
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['supervision:supervisionForm:remove']"
               >删除</el-button
             >
           </el-col>
@@ -60,7 +66,13 @@
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['supervision:supervisionForm:edit']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['supervision:supervisionForm:edit']"
+              ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
               <el-button
@@ -110,7 +122,13 @@
 </template>
 
 <script setup name="SupervisionForm" lang="ts">
-import { listSupervisionForm, getSupervisionForm, delSupervisionForm, addSupervisionForm, updateSupervisionForm } from '@/api/supervision/supervisionForm';
+import {
+  listSupervisionForm,
+  getSupervisionForm,
+  delSupervisionForm,
+  addSupervisionForm,
+  updateSupervisionForm
+} from '@/api/supervision/supervisionForm';
 import { SupervisionFormVO, SupervisionFormQuery, SupervisionFormForm } from '@/api/supervision/supervisionForm/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

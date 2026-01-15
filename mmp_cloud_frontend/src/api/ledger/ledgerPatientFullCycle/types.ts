@@ -68,7 +68,6 @@ export interface LedgerPatientFullCycleVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface LedgerPatientFullCycleForm extends BaseEntity {
@@ -151,11 +150,9 @@ export interface LedgerPatientFullCycleForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface LedgerPatientFullCycleQuery extends PageQuery {
-
   /**
    * 患者姓名
    */

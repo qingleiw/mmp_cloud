@@ -78,7 +78,6 @@ export interface LedgerMajorSurgeryVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface LedgerMajorSurgeryForm extends BaseEntity {
@@ -171,11 +170,9 @@ export interface LedgerMajorSurgeryForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface LedgerMajorSurgeryQuery extends PageQuery {
-
   /**
    * 患者姓名
    */

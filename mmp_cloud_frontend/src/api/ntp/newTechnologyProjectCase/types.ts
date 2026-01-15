@@ -78,7 +78,6 @@ export interface NewTechnologyProjectCaseVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface NewTechnologyProjectCaseForm extends BaseEntity {
@@ -181,11 +180,9 @@ export interface NewTechnologyProjectCaseForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface NewTechnologyProjectCaseQuery extends PageQuery {
-
   /**
    * 患者姓名
    */

@@ -1,8 +1,32 @@
 <template>
-  <div class="p-2">
+  <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-school class="title-icon"></i-ep-school>
+        医师培训管理
+      </h2>
+      <p class="page-description">管理医师继续教育、培训记录、专业技能提升等信息</p>
+    </div>
+
+    <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
           <DynamicSearchForm
             ref="queryFormRef"
             :query="queryParams"
@@ -14,43 +38,61 @@
       </div>
     </transition>
 
-    <el-card shadow="never">
+    <!-- 数据表格 -->
+    <el-card shadow="never" class="table-card">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorTraining:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['doctor:doctorTraining:edit']"
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>培训记录列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorTraining:add']" size="small">新增</el-button>
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['doctor:doctorTraining:edit']"
+              size="small"
               >修改</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['doctor:doctorTraining:remove']"
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['doctor:doctorTraining:remove']"
+              size="small"
               >删除</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorTraining:export']">导出</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain icon="Setting" @click="handleFieldConfig">字段配置</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
-          </el-col>
-          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorTraining:export']" size="small"
+              >导出</el-button
+            >
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorTraining:import']" size="small"
+              >导入</el-button
+            >
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
       </template>
 
-      <el-table v-loading="loading" border :data="doctorTrainingList" @selection-change="handleSelectionChange">
+      <el-table v-loading="loading" border :data="doctorTrainingList" @selection-change="handleSelectionChange" class="doctor-training-table">
+        <el-table-column type="selection" width="55" align="center" />
         <el-table-column
           v-for="field in visibleColumns"
           :key="field.prop"
           :label="field.label"
           align="center"
           :prop="field.prop"
-          :width="field.width || undefined"
+          :width="field.width"
           :min-width="field.minWidth || 120"
           resizable
         >
@@ -85,8 +127,6 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-
-    <!-- 添加或修改培训记录对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
       <el-form ref="doctorTrainingFormRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
@@ -148,11 +188,11 @@ import { listDoctorTraining, getDoctorTraining, delDoctorTraining, addDoctorTrai
 import { DoctorTrainingVO, DoctorTrainingQuery, DoctorTrainingForm } from '@/api/doctor/doctorTraining/types';
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
-import { createDoctorTrainingFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createDoctorTrainingFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createDoctorTrainingSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createDoctorTrainingSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -248,7 +288,7 @@ const loadDoctorOptions = async () => {
 
 /** 获取医生姓名 */
 const getDoctorName = (doctorId: string | number) => {
-  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  const doctor = doctorOptions.value.find((d) => d.id === doctorId);
   return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
@@ -373,4 +413,147 @@ onMounted(() => {
 });
 </script>
 
+<style lang="scss" scoped>
+.app-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 84px);
+}
 
+.page-header {
+  margin-bottom: 24px;
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d2129;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .title-icon {
+      color: #409eff;
+    }
+  }
+
+  .page-description {
+    color: #86909c;
+    font-size: 14px;
+  }
+}
+
+.search-container {
+  .search-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .search-title {
+        font-weight: 600;
+        color: #1d2129;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .search-icon {
+          color: #409eff;
+        }
+      }
+
+      .search-actions {
+        .config-btn {
+          color: #409eff;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .table-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .table-icon {
+        color: #409eff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+.doctor-training-table {
+  :deep(.el-table__header) {
+    th {
+      background-color: #fafafa;
+      font-weight: 600;
+      color: #1d2129;
+    }
+  }
+
+  :deep(.el-table__row) {
+    &:hover {
+      background-color: #f5f7fa;
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+  }
+
+  .page-header {
+    .page-title {
+      font-size: 20px;
+    }
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .table-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}
+</style>

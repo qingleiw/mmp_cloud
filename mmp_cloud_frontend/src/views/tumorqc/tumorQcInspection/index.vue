@@ -8,12 +8,7 @@
               <el-input v-model="queryParams.inspectionCode" placeholder="请输入检查编码" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="检查日期" prop="inspectionDate">
-              <el-date-picker clearable
-                v-model="queryParams.inspectionDate"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择检查日期"
-              />
+              <el-date-picker clearable v-model="queryParams.inspectionDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择检查日期" />
             </el-form-item>
             <el-form-item label="检查人姓名" prop="inspectorName">
               <el-input v-model="queryParams.inspectorName" placeholder="请输入检查人姓名" clearable @keyup.enter="handleQuery" />
@@ -49,10 +44,20 @@
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['tumorqc:tumorQcInspection:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['tumorqc:tumorQcInspection:edit']">修改</el-button>
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['tumorqc:tumorQcInspection:edit']"
+              >修改</el-button
+            >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['tumorqc:tumorQcInspection:remove']">删除</el-button>
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['tumorqc:tumorQcInspection:remove']"
+              >删除</el-button
+            >
           </el-col>
           <el-col :span="1.5">
             <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['tumorqc:tumorQcInspection:export']">导出</el-button>
@@ -78,13 +83,19 @@
         <el-table-column label="整改建议" align="center" prop="suggestion" />
         <el-table-column label="状态" align="center" prop="status" />
         <el-table-column label="删除标志" align="center" prop="isDeleted" />
-        <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
               <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['tumorqc:tumorQcInspection:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['tumorqc:tumorQcInspection:remove']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['tumorqc:tumorQcInspection:remove']"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -102,11 +113,7 @@
           <el-input v-model="form.planId" placeholder="请输入关联方案ID" />
         </el-form-item>
         <el-form-item label="检查日期" prop="inspectionDate">
-          <el-date-picker clearable
-            v-model="form.inspectionDate"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择检查日期">
+          <el-date-picker clearable v-model="form.inspectionDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择检查日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="检查人ID" prop="inspectorId">
@@ -122,13 +129,13 @@
           <el-input v-model="form.departmentName" placeholder="请输入检查科室名称" />
         </el-form-item>
         <el-form-item label="检查结果" prop="inspectionResult">
-            <el-input v-model="form.inspectionResult" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.inspectionResult" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="问题描述" prop="problemDescription">
-            <el-input v-model="form.problemDescription" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.problemDescription" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="整改建议" prop="suggestion">
-            <el-input v-model="form.suggestion" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.suggestion" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="删除标志" prop="isDeleted">
           <el-input v-model="form.isDeleted" placeholder="请输入删除标志" />
@@ -145,7 +152,13 @@
 </template>
 
 <script setup name="TumorQcInspection" lang="ts">
-import { listTumorQcInspection, getTumorQcInspection, delTumorQcInspection, addTumorQcInspection, updateTumorQcInspection } from '@/api/tumorqc/tumorQcInspection';
+import {
+  listTumorQcInspection,
+  getTumorQcInspection,
+  delTumorQcInspection,
+  addTumorQcInspection,
+  updateTumorQcInspection
+} from '@/api/tumorqc/tumorQcInspection';
 import { TumorQcInspectionVO, TumorQcInspectionQuery, TumorQcInspectionForm } from '@/api/tumorqc/tumorQcInspection/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -182,9 +195,9 @@ const initFormData: TumorQcInspectionForm = {
   suggestion: undefined,
   status: undefined,
   isDeleted: undefined
-}
+};
 const data = reactive<PageData<TumorQcInspectionForm, TumorQcInspectionQuery>>({
-  form: {...initFormData},
+  form: { ...initFormData },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
@@ -198,19 +211,12 @@ const data = reactive<PageData<TumorQcInspectionForm, TumorQcInspectionQuery>>({
     suggestion: undefined,
     status: undefined,
     isDeleted: undefined,
-    params: {
-    }
+    params: {}
   },
   rules: {
-    id: [
-      { required: true, message: "主键ID不能为空", trigger: "blur" }
-    ],
-    inspectionCode: [
-      { required: true, message: "检查编码不能为空", trigger: "blur" }
-    ],
-    inspectionDate: [
-      { required: true, message: "检查日期不能为空", trigger: "blur" }
-    ],
+    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
+    inspectionCode: [{ required: true, message: '检查编码不能为空', trigger: 'blur' }],
+    inspectionDate: [{ required: true, message: '检查日期不能为空', trigger: 'blur' }]
   }
 });
 
@@ -230,55 +236,55 @@ const getList = async () => {
   } finally {
     loading.value = false;
   }
-}
+};
 
 /** 取消按钮 */
 const cancel = () => {
   reset();
   dialog.visible = false;
-}
+};
 
 /** 表单重置 */
 const reset = () => {
-  form.value = {...initFormData};
+  form.value = { ...initFormData };
   tumorQcInspectionFormRef.value?.resetFields();
-}
+};
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
   queryParams.value.pageNum = 1;
   getList();
-}
+};
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
   handleQuery();
-}
+};
 
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: TumorQcInspectionVO[]) => {
-  ids.value = selection.map(item => item.id);
+  ids.value = selection.map((item) => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-}
+};
 
 /** 新增按钮操作 */
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = "添加肿瘤质控检查";
-}
+  dialog.title = '添加肿瘤质控检查';
+};
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: TumorQcInspectionVO) => {
   reset();
-  const _id = row?.id || ids.value[0]
+  const _id = row?.id || ids.value[0];
   const res = await getTumorQcInspection(_id);
   Object.assign(form.value, res.data);
   dialog.visible = true;
-  dialog.title = "修改肿瘤质控检查";
-}
+  dialog.title = '修改肿瘤质控检查';
+};
 
 /** 提交按钮 */
 const submitForm = () => {
@@ -286,32 +292,36 @@ const submitForm = () => {
     if (valid) {
       buttonLoading.value = true;
       if (form.value.id) {
-        await updateTumorQcInspection(form.value).finally(() =>  buttonLoading.value = false);
+        await updateTumorQcInspection(form.value).finally(() => (buttonLoading.value = false));
       } else {
-        await addTumorQcInspection(form.value).finally(() =>  buttonLoading.value = false);
+        await addTumorQcInspection(form.value).finally(() => (buttonLoading.value = false));
       }
-      proxy?.$modal.msgSuccess("操作成功");
+      proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
       await getList();
     }
   });
-}
+};
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: TumorQcInspectionVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除肿瘤质控检查编号为"' + _ids + '"的数据项？').finally(() => loading.value = false);
+  await proxy?.$modal.confirm('是否确认删除肿瘤质控检查编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delTumorQcInspection(_ids);
-  proxy?.$modal.msgSuccess("删除成功");
+  proxy?.$modal.msgSuccess('删除成功');
   await getList();
-}
+};
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download('system/tumorQcInspection/export', {
-    ...queryParams.value
-  }, `tumorQcInspection_${new Date().getTime()}.xlsx`)
-}
+  proxy?.download(
+    'system/tumorQcInspection/export',
+    {
+      ...queryParams.value
+    },
+    `tumorQcInspection_${new Date().getTime()}.xlsx`
+  );
+};
 
 onMounted(() => {
   getList();

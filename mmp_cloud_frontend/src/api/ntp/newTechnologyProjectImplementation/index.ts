@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectImplementationVO, NewTechnologyProjectImplementationForm, NewTechnologyProjectImplementationQuery } from '@/api/ntp/newTechnologyProjectImplementation/types';
+import {
+  NewTechnologyProjectImplementationVO,
+  NewTechnologyProjectImplementationForm,
+  NewTechnologyProjectImplementationQuery
+} from '@/api/ntp/newTechnologyProjectImplementation/types';
 
 /**
  * 查询新技术实施列表
@@ -8,7 +12,9 @@ import { NewTechnologyProjectImplementationVO, NewTechnologyProjectImplementatio
  * @returns {*}
  */
 
-export const listNewTechnologyProjectImplementation = (query?: NewTechnologyProjectImplementationQuery): AxiosPromise<NewTechnologyProjectImplementationVO[]> => {
+export const listNewTechnologyProjectImplementation = (
+  query?: NewTechnologyProjectImplementationQuery
+): AxiosPromise<NewTechnologyProjectImplementationVO[]> => {
   return request({
     url: '/ntp/newTechnologyProjectImplementation/list',
     method: 'get',

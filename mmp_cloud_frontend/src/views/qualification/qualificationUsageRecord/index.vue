@@ -44,7 +44,9 @@
           <span class="font-medium">资质使用记录列表</span>
           <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           <div class="ml-auto flex items-center gap-2">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationUsageRecord:add']">新增</el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationUsageRecord:add']"
+              >新增</el-button
+            >
             <el-button
               type="success"
               plain
@@ -233,9 +235,13 @@ import {
   addQualificationUsageRecord,
   updateQualificationUsageRecord
 } from '@/api/qualification/qualificationUsageRecord';
-import { QualificationUsageRecordVO, QualificationUsageRecordQuery, QualificationUsageRecordForm } from '@/api/qualification/qualificationUsageRecord/types';
-import { createQualificationUsageRecordFieldConfig } from '@/utils/mmpFieldConfigs';
-import { createQualificationUsageRecordSearchConfig } from '@/utils/mmpSearchConfigs';
+import {
+  QualificationUsageRecordVO,
+  QualificationUsageRecordQuery,
+  QualificationUsageRecordForm
+} from '@/api/qualification/qualificationUsageRecord/types';
+import { createQualificationUsageRecordFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
+import { createQualificationUsageRecordSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

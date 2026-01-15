@@ -239,8 +239,8 @@ import {
   QualificationExamQuestionQuery,
   QualificationExamQuestionForm
 } from '@/api/qualification/qualificationExamQuestion/types';
-import { createQualificationExamQuestionFieldConfig } from '@/utils/mmpFieldConfigs';
-import { createQualificationExamQuestionSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createQualificationExamQuestionFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
+import { createQualificationExamQuestionSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

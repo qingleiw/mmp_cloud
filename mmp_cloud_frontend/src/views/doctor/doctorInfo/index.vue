@@ -580,11 +580,11 @@
 <script setup name="DoctorBasicInfo" lang="ts">
 import { listDoctorBasicInfo, getDoctorBasicInfo, delDoctorBasicInfo, addDoctorBasicInfo, updateDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO, DoctorBasicInfoQuery, DoctorBasicInfoForm } from '@/api/doctor/doctorBasicInfo/types';
-import { createDoctorBasicInfoFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createDoctorBasicInfoFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createDoctorBasicInfoSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createDoctorBasicInfoSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
 import { parseTime } from '@/utils/ruoyi';
 import type { FormInstance } from 'element-plus';
 import type { DialogOption, PageData } from '@/types/global';

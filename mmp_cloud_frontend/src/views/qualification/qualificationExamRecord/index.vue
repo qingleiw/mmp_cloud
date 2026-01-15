@@ -249,9 +249,13 @@ import {
   addQualificationExamRecord,
   updateQualificationExamRecord
 } from '@/api/qualification/qualificationExamRecord';
-import { QualificationExamRecordVO, QualificationExamRecordQuery, QualificationExamRecordForm } from '@/api/qualification/qualificationExamRecord/types';
-import { createQualificationExamRecordFieldConfig } from '@/utils/mmpFieldConfigs';
-import { createQualificationExamRecordSearchConfig } from '@/utils/mmpSearchConfigs';
+import {
+  QualificationExamRecordVO,
+  QualificationExamRecordQuery,
+  QualificationExamRecordForm
+} from '@/api/qualification/qualificationExamRecord/types';
+import { createQualificationExamRecordFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
+import { createQualificationExamRecordSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

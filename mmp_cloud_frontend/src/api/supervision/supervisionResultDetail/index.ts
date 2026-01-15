@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { SupervisionResultDetailVO, SupervisionResultDetailForm, SupervisionResultDetailQuery } from '@/api/supervision/supervisionResultDetail/types';
+import {
+  SupervisionResultDetailVO,
+  SupervisionResultDetailForm,
+  SupervisionResultDetailQuery
+} from '@/api/supervision/supervisionResultDetail/types';
 
 /**
  * 查询督查结果明细列表

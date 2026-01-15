@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectDocumentVO, NewTechnologyProjectDocumentForm, NewTechnologyProjectDocumentQuery } from '@/api/ntp/newTechnologyProjectDocument/types';
+import {
+  NewTechnologyProjectDocumentVO,
+  NewTechnologyProjectDocumentForm,
+  NewTechnologyProjectDocumentQuery
+} from '@/api/ntp/newTechnologyProjectDocument/types';
 
 /**
  * 查询项目文档列表

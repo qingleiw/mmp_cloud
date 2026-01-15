@@ -301,7 +301,7 @@ import {
 import { createSurgeryComplicationRecordFieldConfig } from '@/utils/fieldConfig';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createSurgeryComplicationRecordSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createSurgeryComplicationRecordSearchConfig } from '@/utils/configs/surgery/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -547,16 +547,7 @@ onMounted(() => {
 
       .search-actions {
         .config-btn {
-          font-size: 12px;
-          padding: 4px 8px;
-          height: auto;
-          border: none;
-          color: #86909c;
-
-          &:hover {
-            color: #409eff;
-            background-color: #ecf5ff;
-          }
+          color: #409eff;
 
           .btn-icon {
             margin-right: 4px;
@@ -595,16 +586,7 @@ onMounted(() => {
       align-items: center;
 
       .config-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
+        color: #409eff;
 
         .btn-icon {
           margin-right: 4px;

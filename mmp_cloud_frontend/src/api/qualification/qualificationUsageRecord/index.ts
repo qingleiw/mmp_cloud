@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QualificationUsageRecordVO, QualificationUsageRecordForm, QualificationUsageRecordQuery } from '@/api/qualification/qualificationUsageRecord/types';
+import {
+  QualificationUsageRecordVO,
+  QualificationUsageRecordForm,
+  QualificationUsageRecordQuery
+} from '@/api/qualification/qualificationUsageRecord/types';
 
 /**
  * 查询资质使用记录列表

@@ -45,9 +45,27 @@
           </div>
           <div class="table-actions">
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['tumorqc:tumorQcIndicatorDetail:add']">新增</el-button>
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['tumorqc:tumorQcIndicatorDetail:edit']">修改</el-button>
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['tumorqc:tumorQcIndicatorDetail:remove']">删除</el-button>
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['tumorqc:tumorQcIndicatorDetail:export']">导出</el-button>
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['tumorqc:tumorQcIndicatorDetail:edit']"
+              >修改</el-button
+            >
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['tumorqc:tumorQcIndicatorDetail:remove']"
+              >删除</el-button
+            >
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['tumorqc:tumorQcIndicatorDetail:export']"
+              >导出</el-button
+            >
             <el-button type="warning" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
           </div>
@@ -147,9 +165,9 @@ import {
   updateTumorQcIndicatorDetail
 } from '@/api/tumorqc/tumorQcIndicatorDetail';
 import { TumorQcIndicatorDetailVO, TumorQcIndicatorDetailQuery, TumorQcIndicatorDetailForm } from '@/api/tumorqc/tumorQcIndicatorDetail/types';
-import { createTumorQcIndicatorDetailFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createTumorQcIndicatorDetailFieldConfig } from '@/utils/configs/tumorqc/FieldConfigs';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createTumorQcIndicatorDetailSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createTumorQcIndicatorDetailSearchConfig } from '@/utils/configs/tumorqc/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

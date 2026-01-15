@@ -76,8 +76,7 @@
             <div v-for="(room, index) in operatingRooms" :key="index" class="room-item">
               <div class="room-info">
                 <span class="room-name">{{ room.name }}</span>
-                <el-tag :type="room.status === 'occupied' ? 'warning' : room.status === 'available' ? 'success' : 'info'"
-                        size="small">
+                <el-tag :type="room.status === 'occupied' ? 'warning' : room.status === 'available' ? 'success' : 'info'" size="small">
                   {{ room.statusText }}
                 </el-tag>
               </div>
@@ -204,8 +203,7 @@
                 <div class="equipment-name">{{ equipment.name }}</div>
                 <div class="equipment-location">{{ equipment.location }}</div>
               </div>
-              <el-tag :type="equipment.status === 'normal' ? 'success' : equipment.status === 'warning' ? 'warning' : 'danger'"
-                      size="small">
+              <el-tag :type="equipment.status === 'normal' ? 'success' : equipment.status === 'warning' ? 'warning' : 'danger'" size="small">
                 {{ equipment.statusText }}
               </el-tag>
             </div>
@@ -429,7 +427,7 @@ onMounted(() => {
     text-align: center;
 
     h2 {
-      color: #409EFF;
+      color: #409eff;
       font-size: 28px;
       font-weight: 500;
       margin-bottom: 10px;
@@ -468,7 +466,7 @@ onMounted(() => {
           .stats-number {
             font-size: 32px;
             font-weight: bold;
-            color: #409EFF;
+            color: #409eff;
             line-height: 1;
             margin-bottom: 5px;
           }
@@ -533,7 +531,7 @@ onMounted(() => {
 
         .el-icon {
           margin-right: 8px;
-          color: #409EFF;
+          color: #409eff;
         }
 
         span {
@@ -594,12 +592,12 @@ onMounted(() => {
 
             .activity-user {
               font-weight: 500;
-              color: #409EFF;
+              color: #409eff;
             }
 
             .activity-target {
               font-weight: 500;
-              color: #67C23A;
+              color: #67c23a;
             }
           }
 
@@ -624,10 +622,10 @@ onMounted(() => {
         align-items: center;
         gap: 8px;
         font-weight: 600;
-        color: #409EFF;
+        color: #409eff;
 
         .el-icon {
-          color: #409EFF;
+          color: #409eff;
         }
       }
     }
@@ -686,7 +684,7 @@ onMounted(() => {
       .flow-value {
         font-size: 24px;
         font-weight: bold;
-        color: #409EFF;
+        color: #409eff;
         margin-bottom: 4px;
       }
 
@@ -695,15 +693,15 @@ onMounted(() => {
         font-weight: 500;
 
         &.positive {
-          color: #67C23A;
+          color: #67c23a;
         }
 
         &.negative {
-          color: #F56C6C;
+          color: #f56c6c;
         }
 
         &.neutral {
-          color: #E6A23C;
+          color: #e6a23c;
         }
       }
     }
@@ -731,7 +729,7 @@ onMounted(() => {
         min-width: 40px;
         text-align: right;
         font-size: 14px;
-        color: #409EFF;
+        color: #409eff;
         font-weight: 500;
       }
     }
@@ -758,7 +756,7 @@ onMounted(() => {
       .shift-count {
         font-size: 16px;
         font-weight: 500;
-        color: #409EFF;
+        color: #409eff;
       }
     }
   }

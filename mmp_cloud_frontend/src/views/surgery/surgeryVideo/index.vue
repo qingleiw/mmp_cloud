@@ -29,26 +29,21 @@
               <el-input v-model="queryParams.recordingDoctorName" placeholder="请输入录制医生姓名" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="上传时间" prop="uploadTime">
-              <el-date-picker clearable
-                v-model="queryParams.uploadTime"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择上传时间"
-              />
+              <el-date-picker clearable v-model="queryParams.uploadTime" type="date" value-format="YYYY-MM-DD" placeholder="请选择上传时间" />
             </el-form-item>
             <el-form-item label="审核时间" prop="reviewTime">
-              <el-date-picker clearable
-                v-model="queryParams.reviewTime"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择审核时间"
-              />
+              <el-date-picker clearable v-model="queryParams.reviewTime" type="date" value-format="YYYY-MM-DD" placeholder="请选择审核时间" />
             </el-form-item>
             <el-form-item label="审核意见" prop="reviewComment">
               <el-input v-model="queryParams.reviewComment" placeholder="请输入审核意见" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="访问级别 internal-院内 public-公开 restricted-受限" prop="accessLevel">
-              <el-input v-model="queryParams.accessLevel" placeholder="请输入访问级别 internal-院内 public-公开 restricted-受限" clearable @keyup.enter="handleQuery" />
+              <el-input
+                v-model="queryParams.accessLevel"
+                placeholder="请输入访问级别 internal-院内 public-公开 restricted-受限"
+                clearable
+                @keyup.enter="handleQuery"
+              />
             </el-form-item>
             <el-form-item label="删除标志" prop="isDeleted">
               <el-input v-model="queryParams.isDeleted" placeholder="请输入删除标志" clearable @keyup.enter="handleQuery" />
@@ -69,10 +64,14 @@
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:surgeryVideo:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:surgeryVideo:edit']">修改</el-button>
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:surgeryVideo:edit']"
+              >修改</el-button
+            >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:surgeryVideo:remove']">删除</el-button>
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:surgeryVideo:remove']"
+              >删除</el-button
+            >
           </el-col>
           <el-col :span="1.5">
             <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:surgeryVideo:export']">导出</el-button>
@@ -107,7 +106,7 @@
         <el-table-column label="审核意见" align="center" prop="reviewComment" />
         <el-table-column label="访问级别 internal-院内 public-公开 restricted-受限" align="center" prop="accessLevel" />
         <el-table-column label="删除标志" align="center" prop="isDeleted" />
-        <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
               <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:surgeryVideo:edit']"></el-button>
@@ -134,7 +133,7 @@
           <el-input v-model="form.videoTitle" placeholder="请输入视频标题" />
         </el-form-item>
         <el-form-item label="视频URL" prop="videoUrl">
-            <el-input v-model="form.videoUrl" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.videoUrl" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="视频时长(秒)" prop="videoDuration">
           <el-input v-model="form.videoDuration" placeholder="请输入视频时长(秒)" />
@@ -155,26 +154,18 @@
           <el-input v-model="form.recordingDoctorName" placeholder="请输入录制医生姓名" />
         </el-form-item>
         <el-form-item label="上传时间" prop="uploadTime">
-          <el-date-picker clearable
-            v-model="form.uploadTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择上传时间">
+          <el-date-picker clearable v-model="form.uploadTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择上传时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="审核人ID" prop="reviewerId">
           <el-input v-model="form.reviewerId" placeholder="请输入审核人ID" />
         </el-form-item>
         <el-form-item label="审核时间" prop="reviewTime">
-          <el-date-picker clearable
-            v-model="form.reviewTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择审核时间">
+          <el-date-picker clearable v-model="form.reviewTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择审核时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="审核意见" prop="reviewComment">
-            <el-input v-model="form.reviewComment" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.reviewComment" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="访问级别 internal-院内 public-公开 restricted-受限" prop="accessLevel">
           <el-input v-model="form.accessLevel" placeholder="请输入访问级别 internal-院内 public-公开 restricted-受限" />
@@ -235,10 +226,10 @@ const initFormData: SurgeryVideoForm = {
   reviewTime: undefined,
   reviewComment: undefined,
   accessLevel: undefined,
-  isDeleted: undefined,
-}
+  isDeleted: undefined
+};
 const data = reactive<PageData<SurgeryVideoForm, SurgeryVideoQuery>>({
-  form: {...initFormData},
+  form: { ...initFormData },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
@@ -257,22 +248,13 @@ const data = reactive<PageData<SurgeryVideoForm, SurgeryVideoQuery>>({
     reviewComment: undefined,
     accessLevel: undefined,
     isDeleted: undefined,
-    params: {
-    }
+    params: {}
   },
   rules: {
-    id: [
-      { required: true, message: "主键ID不能为空", trigger: "blur" }
-    ],
-    surgeryRecordId: [
-      { required: true, message: "手术记录ID不能为空", trigger: "blur" }
-    ],
-    videoNo: [
-      { required: true, message: "视频编号不能为空", trigger: "blur" }
-    ],
-    videoUrl: [
-      { required: true, message: "视频URL不能为空", trigger: "blur" }
-    ],
+    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
+    surgeryRecordId: [{ required: true, message: '手术记录ID不能为空', trigger: 'blur' }],
+    videoNo: [{ required: true, message: '视频编号不能为空', trigger: 'blur' }],
+    videoUrl: [{ required: true, message: '视频URL不能为空', trigger: 'blur' }]
   }
 });
 
@@ -285,55 +267,55 @@ const getList = async () => {
   surgeryVideoList.value = res.rows;
   total.value = res.total;
   loading.value = false;
-}
+};
 
 /** 取消按钮 */
 const cancel = () => {
   reset();
   dialog.visible = false;
-}
+};
 
 /** 表单重置 */
 const reset = () => {
-  form.value = {...initFormData};
+  form.value = { ...initFormData };
   surgeryVideoFormRef.value?.resetFields();
-}
+};
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
   queryParams.value.pageNum = 1;
   getList();
-}
+};
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
   handleQuery();
-}
+};
 
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: SurgeryVideoVO[]) => {
-  ids.value = selection.map(item => item.id);
+  ids.value = selection.map((item) => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-}
+};
 
 /** 新增按钮操作 */
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = "添加手术视频";
-}
+  dialog.title = '添加手术视频';
+};
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: SurgeryVideoVO) => {
   reset();
-  const _id = row?.id || ids.value[0]
+  const _id = row?.id || ids.value[0];
   const res = await getSurgeryVideo(_id);
   Object.assign(form.value, res.data);
   dialog.visible = true;
-  dialog.title = "修改手术视频";
-}
+  dialog.title = '修改手术视频';
+};
 
 /** 提交按钮 */
 const submitForm = () => {
@@ -341,32 +323,36 @@ const submitForm = () => {
     if (valid) {
       buttonLoading.value = true;
       if (form.value.id) {
-        await updateSurgeryVideo(form.value).finally(() =>  buttonLoading.value = false);
+        await updateSurgeryVideo(form.value).finally(() => (buttonLoading.value = false));
       } else {
-        await addSurgeryVideo(form.value).finally(() =>  buttonLoading.value = false);
+        await addSurgeryVideo(form.value).finally(() => (buttonLoading.value = false));
       }
-      proxy?.$modal.msgSuccess("操作成功");
+      proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
       await getList();
     }
   });
-}
+};
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: SurgeryVideoVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除手术视频编号为"' + _ids + '"的数据项？').finally(() => loading.value = false);
+  await proxy?.$modal.confirm('是否确认删除手术视频编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delSurgeryVideo(_ids);
-  proxy?.$modal.msgSuccess("删除成功");
+  proxy?.$modal.msgSuccess('删除成功');
   await getList();
-}
+};
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download('system/surgeryVideo/export', {
-    ...queryParams.value
-  }, `surgeryVideo_${new Date().getTime()}.xlsx`)
-}
+  proxy?.download(
+    'system/surgeryVideo/export',
+    {
+      ...queryParams.value
+    },
+    `surgeryVideo_${new Date().getTime()}.xlsx`
+  );
+};
 
 onMounted(() => {
   getList();

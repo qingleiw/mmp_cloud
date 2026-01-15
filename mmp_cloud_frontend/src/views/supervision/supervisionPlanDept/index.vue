@@ -26,7 +26,13 @@
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['supervision:supervisionPlanDept:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['supervision:supervisionPlanDept:edit']"
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['supervision:supervisionPlanDept:edit']"
               >修改</el-button
             >
           </el-col>
@@ -42,7 +48,9 @@
             >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['supervision:supervisionPlanDept:export']">导出</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['supervision:supervisionPlanDept:export']"
+              >导出</el-button
+            >
           </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>

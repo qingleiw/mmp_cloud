@@ -51,7 +51,12 @@
               v-hasPermi="['qualification:qualificationAuthorizationRecord:remove']"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationAuthorizationRecord:export']"
+            <el-button
+              type="warning"
+              plain
+              icon="Download"
+              @click="handleExport"
+              v-hasPermi="['qualification:qualificationAuthorizationRecord:export']"
               >导出</el-button
             >
             <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
@@ -181,7 +186,7 @@ import {
 import { createQualificationAuthorizationRecordFieldConfig } from '@/utils/fieldConfig';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createQualificationAuthorizationRecordSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createQualificationAuthorizationRecordSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { Search, Setting, List } from '@element-plus/icons-vue';
 

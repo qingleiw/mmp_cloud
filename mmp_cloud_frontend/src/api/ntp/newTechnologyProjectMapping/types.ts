@@ -23,7 +23,6 @@ export interface NewTechnologyProjectMappingVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface NewTechnologyProjectMappingForm extends BaseEntity {
@@ -61,11 +60,9 @@ export interface NewTechnologyProjectMappingForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface NewTechnologyProjectMappingQuery extends PageQuery {
-
   /**
    * 对码类型 医嘱项/ICD-9/收费项
    */

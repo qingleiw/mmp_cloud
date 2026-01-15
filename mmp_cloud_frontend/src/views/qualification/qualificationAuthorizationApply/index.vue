@@ -102,7 +102,12 @@
               v-hasPermi="['qualification:qualificationAuthorizationApply:remove']"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationAuthorizationApply:export']"
+            <el-button
+              type="warning"
+              plain
+              icon="Download"
+              @click="handleExport"
+              v-hasPermi="['qualification:qualificationAuthorizationApply:export']"
               >导出</el-button
             >
             <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
@@ -228,7 +233,7 @@ import { createQualificationAuthorizationApplyFieldConfig } from '@/utils/fieldC
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createQualificationAuthorizationApplySearchConfig } from '@/utils/mmpSearchConfigs';
+import { createQualificationAuthorizationApplySearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import { Search, Setting, List } from '@element-plus/icons-vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

@@ -48,7 +48,13 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationAdmissionCondition:add']" size="small"
+            <el-button
+              type="primary"
+              plain
+              icon="Plus"
+              @click="handleAdd"
+              v-hasPermi="['qualification:qualificationAdmissionCondition:add']"
+              size="small"
               >新增</el-button
             >
             <el-button
@@ -257,11 +263,11 @@ import {
   QualificationAdmissionConditionQuery,
   QualificationAdmissionConditionForm
 } from '@/api/qualification/qualificationAdmissionCondition/types';
-import { createQualificationAdmissionConditionFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createQualificationAdmissionConditionFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createQualificationAdmissionConditionSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createQualificationAdmissionConditionSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -572,16 +578,7 @@ onMounted(() => {
       align-items: center;
 
       .config-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
+        color: #409eff;
 
         .btn-icon {
           margin-right: 4px;

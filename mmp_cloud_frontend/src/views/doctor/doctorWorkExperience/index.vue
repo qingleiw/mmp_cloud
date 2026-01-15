@@ -211,10 +211,10 @@ import {
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorWorkExperienceVO, DoctorWorkExperienceQuery, DoctorWorkExperienceForm } from '@/api/doctor/doctorWorkExperience/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import { createDoctorWorkExperienceFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createDoctorWorkExperienceFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createDoctorWorkExperienceSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createDoctorWorkExperienceSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
 import { Briefcase, Search, Setting, List, Document } from '@element-plus/icons-vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -287,7 +287,7 @@ const loadDoctorOptions = async () => {
 
 /** 根据医生ID获取医生姓名 */
 const getDoctorName = (doctorId: string | number) => {
-  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  const doctor = doctorOptions.value.find((d) => d.id === doctorId);
   return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
@@ -483,16 +483,7 @@ onMounted(() => {
 
       .search-actions {
         .config-btn {
-          font-size: 12px;
-          padding: 4px 8px;
-          height: auto;
-          border: none;
-          color: #86909c;
-
-          &:hover {
-            color: #409eff;
-            background-color: #ecf5ff;
-          }
+          color: #409eff;
 
           .btn-icon {
             margin-right: 4px;
@@ -531,16 +522,7 @@ onMounted(() => {
       align-items: center;
 
       .config-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
+        color: #409eff;
 
         .btn-icon {
           margin-right: 4px;

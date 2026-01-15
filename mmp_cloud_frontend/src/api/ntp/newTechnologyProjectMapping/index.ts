@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectMappingVO, NewTechnologyProjectMappingForm, NewTechnologyProjectMappingQuery } from '@/api/ntp/newTechnologyProjectMapping/types';
+import {
+  NewTechnologyProjectMappingVO,
+  NewTechnologyProjectMappingForm,
+  NewTechnologyProjectMappingQuery
+} from '@/api/ntp/newTechnologyProjectMapping/types';
 
 /**
  * 查询新技术项目对码列表

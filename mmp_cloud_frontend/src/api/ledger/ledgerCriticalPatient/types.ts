@@ -68,7 +68,6 @@ export interface LedgerCriticalPatientVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface LedgerCriticalPatientForm extends BaseEntity {
@@ -151,11 +150,9 @@ export interface LedgerCriticalPatientForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface LedgerCriticalPatientQuery extends PageQuery {
-
   /**
    * 患者姓名
    */

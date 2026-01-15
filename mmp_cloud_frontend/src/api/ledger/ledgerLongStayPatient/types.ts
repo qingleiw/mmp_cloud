@@ -58,7 +58,6 @@ export interface LedgerLongStayPatientVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface LedgerLongStayPatientForm extends BaseEntity {
@@ -131,11 +130,9 @@ export interface LedgerLongStayPatientForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface LedgerLongStayPatientQuery extends PageQuery {
-
   /**
    * 患者姓名
    */

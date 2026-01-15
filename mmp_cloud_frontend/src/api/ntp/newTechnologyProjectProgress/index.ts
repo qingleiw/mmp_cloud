@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { NewTechnologyProjectProgressVO, NewTechnologyProjectProgressForm, NewTechnologyProjectProgressQuery } from '@/api/ntp/newTechnologyProjectProgress/types';
+import {
+  NewTechnologyProjectProgressVO,
+  NewTechnologyProjectProgressForm,
+  NewTechnologyProjectProgressQuery
+} from '@/api/ntp/newTechnologyProjectProgress/types';
 
 /**
  * 查询新技术进展报告列表

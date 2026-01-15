@@ -440,7 +440,9 @@
                   </el-row>
                   <el-row :gutter="20">
                     <el-col :span="8">
-                      <p style="margin: 4px 0; color: #606266"><strong>评估日期：</strong>{{ parseTime(assessment.assessmentDate, '{y}-{m}-{d}') }}</p>
+                      <p style="margin: 4px 0; color: #606266">
+                        <strong>评估日期：</strong>{{ parseTime(assessment.assessmentDate, '{y}-{m}-{d}') }}
+                      </p>
                     </el-col>
                     <el-col :span="8">
                       <p style="margin: 4px 0; color: #606266"><strong>评估机构：</strong>{{ assessment.assessmentOrganization }}</p>
@@ -474,7 +476,9 @@
                       <p style="margin: 4px 0; color: #606266"><strong>注册机构：</strong>{{ registration.registrationAuthority }}</p>
                     </el-col>
                     <el-col :span="8">
-                      <p style="margin: 4px 0; color: #606266"><strong>注册日期：</strong>{{ parseTime(registration.registrationDate, '{y}-{m}-{d}') }}</p>
+                      <p style="margin: 4px 0; color: #606266">
+                        <strong>注册日期：</strong>{{ parseTime(registration.registrationDate, '{y}-{m}-{d}') }}
+                      </p>
                     </el-col>
                   </el-row>
                   <el-row :gutter="20">
@@ -721,13 +725,13 @@
 <script setup name="DoctorInfo" lang="ts">
 import { listDoctorBasicInfo, getDoctorBasicInfo, delDoctorBasicInfo, addDoctorBasicInfo, updateDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO, DoctorBasicInfoQuery, DoctorBasicInfoForm } from '@/api/doctor/doctorBasicInfo/types';
-// import { createDoctorInfoFieldConfig } from '@/utils/mmpFieldConfigs';
-import { createDoctorBasicInfoFieldConfig } from '@/utils/mmpFieldConfigs';
+// import { createDoctorInfoFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { createDoctorBasicInfoFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-// import { createDoctorInfoSearchConfig } from '@/utils/mmpSearchConfigs';
-import { createDoctorBasicInfoSearchConfig } from '@/utils/mmpSearchConfigs';
+// import { createDoctorInfoSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
+import { createDoctorBasicInfoSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
 import { parseTime } from '@/utils/ruoyi';
 import type { FormInstance } from 'element-plus';
 import type { DialogOption, PageData } from '@/types/global';

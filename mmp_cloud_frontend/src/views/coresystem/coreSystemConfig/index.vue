@@ -393,7 +393,7 @@ const isEnabled = (value: any): boolean => {
 };
 
 /** 获取节点类型对应的颜色 */
-const getNodeTypeColor = (type: string): "warning" | "primary" | "success" | "info" => {
+const getNodeTypeColor = (type: string): 'warning' | 'primary' | 'success' | 'info' => {
   switch (type) {
     case '分类':
       return 'warning';

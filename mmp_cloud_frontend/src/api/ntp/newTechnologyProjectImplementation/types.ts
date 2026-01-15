@@ -38,7 +38,6 @@ export interface NewTechnologyProjectImplementationVO {
    * 是否删除
    */
   isDeleted: number;
-
 }
 
 export interface NewTechnologyProjectImplementationForm extends BaseEntity {
@@ -86,11 +85,9 @@ export interface NewTechnologyProjectImplementationForm extends BaseEntity {
    * 是否删除
    */
   isDeleted?: number;
-
 }
 
 export interface NewTechnologyProjectImplementationQuery extends PageQuery {
-
   /**
    * 项目编号
    */

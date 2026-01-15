@@ -1,6 +1,10 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { QualificationRiskMonitorVO, QualificationRiskMonitorForm, QualificationRiskMonitorQuery } from '@/api/qualification/qualificationRiskMonitor/types';
+import {
+  QualificationRiskMonitorVO,
+  QualificationRiskMonitorForm,
+  QualificationRiskMonitorQuery
+} from '@/api/qualification/qualificationRiskMonitor/types';
 
 /**
  * 查询资质风险监测列表

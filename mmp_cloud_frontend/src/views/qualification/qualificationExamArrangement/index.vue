@@ -30,7 +30,9 @@
         <span class="font-medium">考试安排列表</span>
         <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
         <div class="ml-auto flex items-center gap-2">
-          <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationExamArrangement:add']">新增</el-button>
+          <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationExamArrangement:add']"
+            >新增</el-button
+          >
           <el-button
             type="success"
             plain
@@ -210,8 +212,8 @@ import {
   QualificationExamArrangementQuery,
   QualificationExamArrangementForm
 } from '@/api/qualification/qualificationExamArrangement/types';
-import { createQualificationExamArrangementFieldConfig } from '@/utils/mmpFieldConfigs';
-import { createQualificationExamArrangementSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createQualificationExamArrangementFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
+import { createQualificationExamArrangementSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

@@ -48,7 +48,9 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['coresystem:coreSystemAssessmentRecord:add']"><i-ep-plus />新增</el-button>
+            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['coresystem:coreSystemAssessmentRecord:add']"
+              ><i-ep-plus />新增</el-button
+            >
             <el-button type="success" plain :disabled="single" @click="handleUpdate()" v-hasPermi="['coresystem:coreSystemAssessmentRecord:edit']"
               ><i-ep-edit />修改</el-button
             >
@@ -222,8 +224,8 @@ import {
   CoreSystemAssessmentRecordQuery,
   CoreSystemAssessmentRecordForm
 } from '@/api/coresystem/coreSystemAssessmentRecord/types';
-import { createCoreSystemAssessmentRecordFieldConfig } from '@/utils/mmpFieldConfigs';
-import { createCoreSystemAssessmentRecordSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createCoreSystemAssessmentRecordFieldConfig } from '@/utils/configs/coresystem/FieldConfigs';
+import { createCoreSystemAssessmentRecordSearchConfig } from '@/utils/configs/coresystem/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
@@ -495,16 +497,7 @@ onMounted(() => {
 
       .search-actions {
         .config-btn {
-          font-size: 12px;
-          padding: 4px 8px;
-          height: auto;
-          border: none;
-          color: #86909c;
-
-          &:hover {
-            color: #409eff;
-            background-color: #ecf5ff;
-          }
+          color: #409eff;
 
           .btn-icon {
             margin-right: 4px;
@@ -543,16 +536,7 @@ onMounted(() => {
       align-items: center;
 
       .config-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
+        color: #409eff;
 
         .btn-icon {
           margin-right: 4px;

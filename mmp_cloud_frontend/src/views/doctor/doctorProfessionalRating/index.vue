@@ -19,7 +19,7 @@
               搜索条件
             </span>
             <div class="search-actions">
-              <el-button type="info" plain icon="Setting" @click="handleSearchConfig" size="small">搜索项配置</el-button>
+              <el-button type="info" plain icon="i-ep-setting" @click="handleSearchConfig" size="small">搜索项配置</el-button>
             </div>
           </div>
         </template>
@@ -37,13 +37,13 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorProfessionalRating:add']" size="small"
+            <el-button type="primary" plain icon="i-ep-plus" @click="handleAdd" v-hasPermi="['doctor:doctorProfessionalRating:add']" size="small"
               >新增</el-button
             >
             <el-button
               type="success"
               plain
-              icon="Edit"
+              icon="i-ep-edit"
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorProfessionalRating:edit']"
@@ -53,23 +53,47 @@
             <el-button
               type="danger"
               plain
-              icon="Delete"
+              icon="i-ep-delete"
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorProfessionalRating:remove']"
               size="small"
               >删除</el-button
             >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorProfessionalRating:export']" size="small"
+            <el-button
+              type="warning"
+              plain
+              icon="i-ep-download"
+              @click="handleExport"
+              v-hasPermi="['doctor:doctorProfessionalRating:export']"
+              size="small"
               >导出</el-button
             >
-            <el-button type="info" plain icon="Setting" @click="handleFieldConfig" size="small">字段配置</el-button>
+            <el-button
+              type="primary"
+              plain
+              icon="i-ep-upload"
+              @click="handleImport"
+              v-hasPermi="['doctor:doctorProfessionalRating:import']"
+              size="small"
+              >导入</el-button
+            >
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
           </div>
         </div>
       </template>
 
-      <el-table v-loading="loading" border :data="doctorProfessionalRatingList" @selection-change="handleSelectionChange">
+      <el-table
+        v-loading="loading"
+        border
+        :data="doctorProfessionalRatingList"
+        @selection-change="handleSelectionChange"
+        class="doctor-professional-rating-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
           v-for="field in visibleColumns"
@@ -97,7 +121,7 @@
               <el-button
                 link
                 type="primary"
-                icon="Edit"
+                icon="i-ep-edit"
                 @click="handleUpdate(scope.row)"
                 v-hasPermi="['doctor:doctorProfessionalRating:edit']"
               ></el-button>
@@ -106,7 +130,7 @@
               <el-button
                 link
                 type="primary"
-                icon="Delete"
+                icon="i-ep-delete"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['doctor:doctorProfessionalRating:remove']"
               ></el-button>
@@ -117,101 +141,9 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改医师职业评分对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
-      <el-form ref="doctorProfessionalRatingFormRef" :model="form" :rules="rules" label-width="120px">
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="医生" prop="doctorId">
-              <el-select v-model="form.doctorId" placeholder="请选择医生" filterable clearable style="width: 100%">
-                <el-option v-for="doctor in doctorOptions" :key="doctor.doctorId" :label="doctor.doctorName" :value="doctor.doctorId" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="评分年份" prop="ratingYear">
-              <el-input-number v-model="form.ratingYear" :min="2000" :max="2100" placeholder="请输入评分年份" style="width: 100%" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="评分季度" prop="ratingQuarter">
-              <el-input-number v-model="form.ratingQuarter" :min="1" :max="4" placeholder="请输入评分季度" style="width: 100%" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="基础分数" prop="baseScore">
-              <el-input-number v-model="form.baseScore" :min="0" :max="100" :precision="1" placeholder="请输入基础分数" style="width: 100%" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="投诉扣分" prop="complaintDeduction">
-              <el-input-number
-                v-model="form.complaintDeduction"
-                :min="0"
-                :max="100"
-                :precision="1"
-                placeholder="请输入投诉扣分"
-                style="width: 100%"
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="医疗质量评分" prop="medicalQualityScore">
-              <el-input-number
-                v-model="form.medicalQualityScore"
-                :min="0"
-                :max="100"
-                :precision="1"
-                placeholder="请输入医疗质量评分"
-                style="width: 100%"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="患者满意度" prop="patientSatisfaction">
-              <el-input-number
-                v-model="form.patientSatisfaction"
-                :min="0"
-                :max="100"
-                :precision="1"
-                placeholder="请输入患者满意度"
-                style="width: 100%"
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="最终得分" prop="finalScore">
-              <el-input-number v-model="form.finalScore" :min="0" :max="100" :precision="1" placeholder="请输入最终得分" style="width: 100%" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="评分等级" prop="ratingLevel">
-              <el-select v-model="form.ratingLevel" placeholder="请选择评分等级" style="width: 100%">
-                <el-option label="优秀" value="优秀" />
-                <el-option label="良好" value="良好" />
-                <el-option label="合格" value="合格" />
-                <el-option label="不合格" value="不合格" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="删除标志" prop="delFlag">
-              <el-select v-model="form.delFlag" placeholder="请选择删除标志" style="width: 100%">
-                <el-option label="正常" value="0" />
-                <el-option label="已删除" value="1" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+    <!-- 添加或修改医师专业评级对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <DynamicForm ref="formRef" :form-data="form" :field-config="formFieldConfig" :rules="rules" @submit="submitForm" />
       <template #footer>
         <div class="dialog-footer">
           <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
@@ -236,13 +168,13 @@ import {
 } from '@/api/doctor/doctorProfessionalRating';
 import { listDoctorInfo } from '@/api/doctor/doctorInfo';
 import { DoctorProfessionalRatingVO, DoctorProfessionalRatingQuery, DoctorProfessionalRatingForm } from '@/api/doctor/doctorProfessionalRating/types';
-import { createDoctorProfessionalRatingFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createDoctorProfessionalRatingFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import RightToolbar from '@/components/RightToolbar/index.vue';
 import Pagination from '@/components/Pagination/index.vue';
-import { createDoctorProfessionalRatingSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createDoctorProfessionalRatingSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
 import { parseTime } from '@/utils/ruoyi';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

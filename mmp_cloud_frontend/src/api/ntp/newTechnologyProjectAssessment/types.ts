@@ -48,7 +48,6 @@ export interface NewTechnologyProjectAssessmentVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface NewTechnologyProjectAssessmentForm extends BaseEntity {
@@ -111,11 +110,9 @@ export interface NewTechnologyProjectAssessmentForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface NewTechnologyProjectAssessmentQuery extends PageQuery {
-
   /**
    * 考核年份
    */

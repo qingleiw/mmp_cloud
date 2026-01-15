@@ -261,10 +261,10 @@ import {
   addCoreSystemIndicator,
   updateCoreSystemIndicator
 } from '@/api/coresystem/coreSystemIndicator';
-import { createCoreSystemIndicatorFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createCoreSystemIndicatorFieldConfig } from '@/utils/configs/coresystem/FieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createCoreSystemIndicatorSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createCoreSystemIndicatorSearchConfig } from '@/utils/configs/coresystem/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const coreSystemIndicatorList = ref<CoreSystemIndicatorVO[]>([]);
@@ -514,16 +514,7 @@ onMounted(() => {
 
       .search-actions {
         .config-btn {
-          font-size: 12px;
-          padding: 4px 8px;
-          height: auto;
-          border: none;
-          color: #86909c;
-
-          &:hover {
-            color: #409eff;
-            background-color: #ecf5ff;
-          }
+          color: #409eff;
 
           .btn-icon {
             margin-right: 4px;
@@ -562,16 +553,7 @@ onMounted(() => {
       align-items: center;
 
       .config-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
+        color: #409eff;
 
         .btn-icon {
           margin-right: 4px;

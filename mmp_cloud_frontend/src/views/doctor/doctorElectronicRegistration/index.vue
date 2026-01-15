@@ -1,8 +1,32 @@
 <template>
-  <div class="p-2">
+  <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-document-copy class="title-icon"></i-ep-document-copy>
+        医师电子注册管理
+      </h2>
+      <p class="page-description">管理医师电子注册信息、注册状态、证书编号等相关数据</p>
+    </div>
+
+    <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
           <DynamicSearchForm
             ref="queryFormRef"
             :query="queryParams"
@@ -14,13 +38,19 @@
       </div>
     </transition>
 
-    <el-card shadow="never">
+    <!-- 数据表格 -->
+    <el-card shadow="never" class="table-card">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorElectronicRegistration:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>电子注册信息列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorElectronicRegistration:add']" size="small"
+              >新增</el-button
+            >
             <el-button
               type="success"
               plain
@@ -28,10 +58,9 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorElectronicRegistration:edit']"
+              size="small"
               >修改</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
             <el-button
               type="danger"
               plain
@@ -39,28 +68,43 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorElectronicRegistration:remove']"
+              size="small"
               >删除</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorElectronicRegistration:export']"
+            <el-button
+              type="warning"
+              plain
+              icon="Download"
+              @click="handleExport"
+              v-hasPermi="['doctor:doctorElectronicRegistration:export']"
+              size="small"
               >导出</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="info" plain @click="toggleFieldConfig">
-              <template #icon><i-ep-setting /></template>
+            <el-button
+              type="primary"
+              plain
+              icon="Upload"
+              @click="handleImport"
+              v-hasPermi="['doctor:doctorElectronicRegistration:import']"
+              size="small"
+              >导入</el-button
+            >
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
             </el-button>
-          </el-col>
-          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
       </template>
 
-      <el-table v-loading="loading" border :data="doctorElectronicRegistrationList" @selection-change="handleSelectionChange">
+      <el-table
+        v-loading="loading"
+        border
+        :data="doctorElectronicRegistrationList"
+        @selection-change="handleSelectionChange"
+        class="doctor-electronic-registration-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
           v-for="field in visibleColumns"
@@ -73,11 +117,13 @@
         >
           <template #default="scope">
             <!-- 时间字段 -->
-            <template v-if="field.prop === 'issueDate' || field.prop === 'validDate'">
-              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
+            <template v-if="field.prop === 'issueDate' || field.prop === 'validDate' || field.prop === 'createTime' || field.prop === 'updateTime'">
+              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
             </template>
-            <template v-else-if="field.prop === 'createTime' || field.prop === 'updateTime'">
-              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}</span>
+            <template v-else-if="field.prop === 'delFlag'">
+              <el-tag :type="scope.row[field.prop] === 0 ? 'success' : 'danger'">
+                {{ scope.row[field.prop] === 0 ? '否' : '是' }}
+              </el-tag>
             </template>
             <template v-else-if="field.prop === 'doctorId'">
               <span>{{ getDoctorName(scope.row.doctorId) }}</span>
@@ -114,47 +160,39 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改医师电子化注册对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="doctorElectronicRegistrationFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="医生ID" prop="doctorId">
-          <el-input v-model="form.doctorId" placeholder="请输入医生ID" />
-        </el-form-item>
-        <el-form-item label="注册编号" prop="registrationNo">
-          <el-input v-model="form.registrationNo" placeholder="请输入注册编号" />
-        </el-form-item>
-        <el-form-item label="执业类别" prop="practiceCategory">
-          <el-input v-model="form.practiceCategory" placeholder="请输入执业类别" />
-        </el-form-item>
-        <el-form-item label="执业范围" prop="practiceScope">
-          <el-input v-model="form.practiceScope" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="执业地点" prop="practiceLocation">
-          <el-input v-model="form.practiceLocation" placeholder="请输入执业地点" />
-        </el-form-item>
-        <el-form-item label="发证日期" prop="issueDate">
-          <el-date-picker clearable v-model="form.issueDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择发证日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="有效期至" prop="validDate">
-          <el-date-picker clearable v-model="form.validDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择有效期至">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="注册机关" prop="registrationAuthority">
-          <el-input v-model="form.registrationAuthority" placeholder="请输入注册机关" />
-        </el-form-item>
-        <el-form-item label="是否多机构备案 1-是 0-否" prop="multiInstitutionFlag">
-          <el-input v-model="form.multiInstitutionFlag" placeholder="请输入是否多机构备案 1-是 0-否" />
-        </el-form-item>
-        <el-form-item label="证书附件URL" prop="certificateUrl">
-          <el-input v-model="form.certificateUrl" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="是否删除" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入是否删除" />
-        </el-form-item>
+
+    <!-- 添加或修改医师电子注册对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="600px" append-to-body>
+      <el-form ref="doctorElectronicRegistrationFormRef" :model="form" :rules="rules" label-width="120px">
+        <el-row :gutter="20">
+          <el-col v-for="field in visibleColumns" :key="field.prop" :span="field.formSpan || 24">
+            <el-form-item :label="field.label" :prop="field.prop" v-if="field.prop !== 'createTime' && field.prop !== 'updateTime'">
+              <el-input v-if="field.type === 'input' || !field.type" v-model="form[field.prop]" :placeholder="`请输入${field.label}`" />
+              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="`请输入${field.label}`" />
+              <el-date-picker
+                v-else-if="field.type === 'datetime'"
+                clearable
+                v-model="form[field.prop]"
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                :placeholder="`请选择${field.label}`"
+              />
+              <el-date-picker
+                v-else-if="field.type === 'date'"
+                clearable
+                v-model="form[field.prop]"
+                type="date"
+                value-format="YYYY-MM-DD"
+                :placeholder="`请选择${field.label}`"
+              />
+              <el-select v-else-if="field.type === 'select'" v-model="form[field.prop]" :placeholder="`请选择${field.label}`">
+                <el-option v-for="option in field.options" :key="option.value" :label="option.label" :value="option.value" />
+              </el-select>
+              <el-switch v-else-if="field.type === 'switch'" v-model="form[field.prop]" active-text="是" inactive-text="否" />
+              <span v-else>{{ form[field.prop] }}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -184,8 +222,8 @@ import {
   DoctorElectronicRegistrationQuery,
   DoctorElectronicRegistrationForm
 } from '@/api/doctor/doctorElectronicRegistration/types';
-import { createDoctorElectronicRegistrationSearchConfig } from '@/utils/mmpSearchConfigs';
-import { createDoctorElectronicRegistrationFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createDoctorElectronicRegistrationSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
+import { createDoctorElectronicRegistrationFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 
 // Simple parseTime implementation
@@ -300,7 +338,7 @@ const loadDoctorOptions = async () => {
 
 /** 获取医生姓名 */
 const getDoctorName = (doctorId: string | number) => {
-  const doctor = doctorOptions.value.find(d => d.id === doctorId);
+  const doctor = doctorOptions.value.find((d) => d.id === doctorId);
   return doctor ? doctor.doctorName : `医生ID: ${doctorId}`;
 };
 
@@ -410,3 +448,181 @@ onMounted(() => {
   loadDoctorOptions();
 });
 </script>
+
+<style lang="scss" scoped>
+.app-container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.page-header {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d2129;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .title-icon {
+      color: #409eff;
+      font-size: 28px;
+    }
+  }
+
+  .page-description {
+    color: #86909c;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.search-container {
+  .search-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .search-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #1d2129;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .search-icon {
+          color: #409eff;
+        }
+      }
+
+      .search-actions {
+        display: flex;
+        gap: 8px;
+
+        .config-btn {
+          color: #409eff;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .table-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .table-icon {
+        color: #409eff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+.doctor-electronic-registration-table {
+  .el-table {
+    border-radius: 6px;
+  }
+
+  .el-table th {
+    background-color: #fafafa;
+    color: #1d2129;
+    font-weight: 600;
+  }
+
+  .el-table td {
+    color: #1d2129;
+  }
+
+  .el-table--border {
+    border-radius: 6px;
+  }
+}
+
+.dialog-footer {
+  text-align: right;
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  .page-header {
+    padding: 16px;
+
+    .page-title {
+      font-size: 20px;
+
+      .title-icon {
+        font-size: 24px;
+      }
+    }
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .table-actions {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+
+  .search-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .search-actions {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+}
+</style>

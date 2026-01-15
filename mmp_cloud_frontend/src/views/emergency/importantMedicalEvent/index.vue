@@ -9,7 +9,12 @@
         <el-button type="success" icon="i-ep:Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['emergency:importantMedicalEvent:edit']"
           >修改</el-button
         >
-        <el-button type="danger" icon="i-ep:Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['emergency:importantMedicalEvent:remove']"
+        <el-button
+          type="danger"
+          icon="i-ep:Delete"
+          :disabled="multiple"
+          @click="handleDelete()"
+          v-hasPermi="['emergency:importantMedicalEvent:remove']"
           >删除</el-button
         >
         <el-button type="warning" icon="i-ep:Download" @click="handleExport" v-hasPermi="['emergency:importantMedicalEvent:export']">导出</el-button>
@@ -196,7 +201,11 @@
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="() => (searchConfigVisible = false)" />
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="() => (fieldConfigVisible = false)" />
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :field-config-manager="fieldConfigManager"
+      @confirm="() => (fieldConfigVisible = false)"
+    />
   </div>
 </template>
 
@@ -209,8 +218,8 @@ import {
   updateImportantMedicalEvent
 } from '@/api/emergency/importantMedicalEvent';
 import { ImportantMedicalEventVO, ImportantMedicalEventQuery, ImportantMedicalEventForm } from '@/api/emergency/importantMedicalEvent/types';
-import { createImportantMedicalEventSearchConfig } from '@/utils/mmpSearchConfigs';
-import { createImportantMedicalEventFieldConfig } from '@/utils/mmpFieldConfigs';
+import { createImportantMedicalEventSearchConfig } from '@/utils/configs/emergency/SearchConfigs';
+import { createImportantMedicalEventFieldConfig } from '@/utils/configs/emergency/FieldConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';

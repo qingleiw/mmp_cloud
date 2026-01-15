@@ -8,20 +8,10 @@
               <el-input v-model="queryParams.patientName" placeholder="请输入患者姓名" clearable @keyup.enter="handleQuery" />
             </el-form-item>
             <el-form-item label="入院日期" prop="admissionDate">
-              <el-date-picker clearable
-                v-model="queryParams.admissionDate"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择入院日期"
-              />
+              <el-date-picker clearable v-model="queryParams.admissionDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择入院日期" />
             </el-form-item>
             <el-form-item label="抢救日期" prop="rescueDate">
-              <el-date-picker clearable
-                v-model="queryParams.rescueDate"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择抢救日期"
-              />
+              <el-date-picker clearable v-model="queryParams.rescueDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择抢救日期" />
             </el-form-item>
             <el-form-item label="抢救科室" prop="department">
               <el-input v-model="queryParams.department" placeholder="请输入抢救科室" clearable @keyup.enter="handleQuery" />
@@ -66,13 +56,25 @@
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerCriticalPatient:add']">新增</el-button>
           </el-col>
           <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ledger:ledgerCriticalPatient:edit']">修改</el-button>
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ledger:ledgerCriticalPatient:edit']"
+              >修改</el-button
+            >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['ledger:ledgerCriticalPatient:remove']">删除</el-button>
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['ledger:ledgerCriticalPatient:remove']"
+              >删除</el-button
+            >
           </el-col>
           <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerCriticalPatient:export']">导出</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerCriticalPatient:export']"
+              >导出</el-button
+            >
           </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
@@ -103,13 +105,25 @@
         <el-table-column label="医疗评价" align="center" prop="medicalEvaluation" />
         <el-table-column label="状态" align="center" prop="status" />
         <el-table-column label="备注" align="center" prop="remark" />
-        <el-table-column label="操作" align="center" fixed="right"  class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['ledger:ledgerCriticalPatient:edit']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['ledger:ledgerCriticalPatient:edit']"
+              ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['ledger:ledgerCriticalPatient:remove']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['ledger:ledgerCriticalPatient:remove']"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -127,19 +141,11 @@
           <el-input v-model="form.patientName" placeholder="请输入患者姓名" />
         </el-form-item>
         <el-form-item label="入院日期" prop="admissionDate">
-          <el-date-picker clearable
-            v-model="form.admissionDate"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择入院日期">
+          <el-date-picker clearable v-model="form.admissionDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择入院日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="抢救日期" prop="rescueDate">
-          <el-date-picker clearable
-            v-model="form.rescueDate"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择抢救日期">
+          <el-date-picker clearable v-model="form.rescueDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择抢救日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="抢救科室" prop="department">
@@ -149,13 +155,13 @@
           <el-input v-model="form.rescuePhysician" placeholder="请输入抢救医师" />
         </el-form-item>
         <el-form-item label="诊断" prop="diagnosis">
-            <el-input v-model="form.diagnosis" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.diagnosis" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="抢救原因" prop="rescueReason">
-            <el-input v-model="form.rescueReason" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.rescueReason" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="抢救措施" prop="rescueMeasures">
-            <el-input v-model="form.rescueMeasures" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.rescueMeasures" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="抢救时长(分钟)" prop="rescueDuration">
           <el-input v-model="form.rescueDuration" placeholder="请输入抢救时长(分钟)" />
@@ -164,13 +170,13 @@
           <el-input v-model="form.rescueOutcome" placeholder="请输入抢救结局" />
         </el-form-item>
         <el-form-item label="并发症" prop="complications">
-            <el-input v-model="form.complications" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.complications" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="医疗评价" prop="medicalEvaluation">
-            <el-input v-model="form.medicalEvaluation" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.medicalEvaluation" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-            <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -184,7 +190,13 @@
 </template>
 
 <script setup name="LedgerCriticalPatient" lang="ts">
-import { listLedgerCriticalPatient, getLedgerCriticalPatient, delLedgerCriticalPatient, addLedgerCriticalPatient, updateLedgerCriticalPatient } from '@/api/ledger/ledgerCriticalPatient';
+import {
+  listLedgerCriticalPatient,
+  getLedgerCriticalPatient,
+  delLedgerCriticalPatient,
+  addLedgerCriticalPatient,
+  updateLedgerCriticalPatient
+} from '@/api/ledger/ledgerCriticalPatient';
 import { LedgerCriticalPatientVO, LedgerCriticalPatientQuery, LedgerCriticalPatientForm } from '@/api/ledger/ledgerCriticalPatient/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -223,9 +235,9 @@ const initFormData: LedgerCriticalPatientForm = {
   medicalEvaluation: undefined,
   status: undefined,
   remark: undefined
-}
+};
 const data = reactive<PageData<LedgerCriticalPatientForm, LedgerCriticalPatientQuery>>({
-  form: {...initFormData},
+  form: { ...initFormData },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
@@ -242,25 +254,14 @@ const data = reactive<PageData<LedgerCriticalPatientForm, LedgerCriticalPatientQ
     complications: undefined,
     medicalEvaluation: undefined,
     status: undefined,
-    params: {
-    }
+    params: {}
   },
   rules: {
-    id: [
-      { required: true, message: "主键ID不能为空", trigger: "blur" }
-    ],
-    patientId: [
-      { required: true, message: "患者ID不能为空", trigger: "blur" }
-    ],
-    patientName: [
-      { required: true, message: "患者姓名不能为空", trigger: "blur" }
-    ],
-    admissionDate: [
-      { required: true, message: "入院日期不能为空", trigger: "blur" }
-    ],
-    rescueDate: [
-      { required: true, message: "抢救日期不能为空", trigger: "blur" }
-    ],
+    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
+    patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
+    patientName: [{ required: true, message: '患者姓名不能为空', trigger: 'blur' }],
+    admissionDate: [{ required: true, message: '入院日期不能为空', trigger: 'blur' }],
+    rescueDate: [{ required: true, message: '抢救日期不能为空', trigger: 'blur' }]
   }
 });
 
@@ -273,55 +274,55 @@ const getList = async () => {
   ledgerCriticalPatientList.value = res.rows;
   total.value = res.total;
   loading.value = false;
-}
+};
 
 /** 取消按钮 */
 const cancel = () => {
   reset();
   dialog.visible = false;
-}
+};
 
 /** 表单重置 */
 const reset = () => {
-  form.value = {...initFormData};
+  form.value = { ...initFormData };
   ledgerCriticalPatientFormRef.value?.resetFields();
-}
+};
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
   queryParams.value.pageNum = 1;
   getList();
-}
+};
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
   handleQuery();
-}
+};
 
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: LedgerCriticalPatientVO[]) => {
-  ids.value = selection.map(item => item.id);
+  ids.value = selection.map((item) => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-}
+};
 
 /** 新增按钮操作 */
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = "添加危重病人抢救登记本";
-}
+  dialog.title = '添加危重病人抢救登记本';
+};
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: LedgerCriticalPatientVO) => {
   reset();
-  const _id = row?.id || ids.value[0]
+  const _id = row?.id || ids.value[0];
   const res = await getLedgerCriticalPatient(_id);
   Object.assign(form.value, res.data);
   dialog.visible = true;
-  dialog.title = "修改危重病人抢救登记本";
-}
+  dialog.title = '修改危重病人抢救登记本';
+};
 
 /** 提交按钮 */
 const submitForm = () => {
@@ -329,32 +330,36 @@ const submitForm = () => {
     if (valid) {
       buttonLoading.value = true;
       if (form.value.id) {
-        await updateLedgerCriticalPatient(form.value).finally(() =>  buttonLoading.value = false);
+        await updateLedgerCriticalPatient(form.value).finally(() => (buttonLoading.value = false));
       } else {
-        await addLedgerCriticalPatient(form.value).finally(() =>  buttonLoading.value = false);
+        await addLedgerCriticalPatient(form.value).finally(() => (buttonLoading.value = false));
       }
-      proxy?.$modal.msgSuccess("操作成功");
+      proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
       await getList();
     }
   });
-}
+};
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: LedgerCriticalPatientVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除危重病人抢救登记本编号为"' + _ids + '"的数据项？').finally(() => loading.value = false);
+  await proxy?.$modal.confirm('是否确认删除危重病人抢救登记本编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delLedgerCriticalPatient(_ids);
-  proxy?.$modal.msgSuccess("删除成功");
+  proxy?.$modal.msgSuccess('删除成功');
   await getList();
-}
+};
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download('ledger/ledgerCriticalPatient/export', {
-    ...queryParams.value
-  }, `ledgerCriticalPatient_${new Date().getTime()}.xlsx`)
-}
+  proxy?.download(
+    'ledger/ledgerCriticalPatient/export',
+    {
+      ...queryParams.value
+    },
+    `ledgerCriticalPatient_${new Date().getTime()}.xlsx`
+  );
+};
 
 onMounted(() => {
   getList();

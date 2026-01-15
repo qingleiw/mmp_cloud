@@ -31,7 +31,13 @@
         <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
         <div class="ml-auto flex items-center gap-2">
           <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationExamPaper:add']">新增</el-button>
-          <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['qualification:qualificationExamPaper:edit']"
+          <el-button
+            type="success"
+            plain
+            icon="Edit"
+            :disabled="single"
+            @click="handleUpdate()"
+            v-hasPermi="['qualification:qualificationExamPaper:edit']"
             >修改</el-button
           >
           <el-button
@@ -43,7 +49,9 @@
             v-hasPermi="['qualification:qualificationExamPaper:remove']"
             >删除</el-button
           >
-          <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationExamPaper:export']">导出</el-button>
+          <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationExamPaper:export']"
+            >导出</el-button
+          >
           <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </div>
@@ -192,8 +200,8 @@ import {
 } from '@/api/qualification/qualificationExamPaper';
 import { QualificationExamPaperVO, QualificationExamPaperQuery, QualificationExamPaperForm } from '@/api/qualification/qualificationExamPaper/types';
 import { FieldConfigManager } from '@/utils/fieldConfigManager';
-import { createQualificationExamPaperFieldConfig } from '@/utils/mmpFieldConfigs';
-import { createQualificationExamPaperSearchConfig } from '@/utils/mmpSearchConfigs';
+import { createQualificationExamPaperFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
+import { createQualificationExamPaperSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

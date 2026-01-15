@@ -125,7 +125,11 @@ import {
   addSupervisionResultDetail,
   updateSupervisionResultDetail
 } from '@/api/supervision/supervisionResultDetail';
-import { SupervisionResultDetailVO, SupervisionResultDetailQuery, SupervisionResultDetailForm } from '@/api/supervision/supervisionResultDetail/types';
+import {
+  SupervisionResultDetailVO,
+  SupervisionResultDetailQuery,
+  SupervisionResultDetailForm
+} from '@/api/supervision/supervisionResultDetail/types';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -63,7 +63,6 @@ export interface LedgerBusinessLearningVO {
    * 备注
    */
   remark: string;
-
 }
 
 export interface LedgerBusinessLearningForm extends BaseEntity {
@@ -131,11 +130,9 @@ export interface LedgerBusinessLearningForm extends BaseEntity {
    * 备注
    */
   remark?: string;
-
 }
 
 export interface LedgerBusinessLearningQuery extends PageQuery {
-
   /**
    * 学习日期
    */
