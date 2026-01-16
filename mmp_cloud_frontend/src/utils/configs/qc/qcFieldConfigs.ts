@@ -202,7 +202,7 @@ export function createQcDataCollectionFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager(pageKey, fieldGroups);
+  return fieldGroups;
 }
 
 // 手动数据录入字段配置

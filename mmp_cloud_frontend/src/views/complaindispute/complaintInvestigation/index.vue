@@ -1,204 +1,187 @@
 <template>
   <div class="app-container">
-    <!-- 页面头部 -->
-    <div class="page-header">
-      <h1>投诉调查管理</h1>
-      <p>管理系统中的投诉调查记录，包括调查内容、结果和附件等功能</p>
-      <div class="flex gap-2">
-        <el-button type="primary" icon="i-ep:Plus" @click="handleAdd" v-hasPermi="['system:complaintInvestigation:add']">新增</el-button>
-        <el-button type="success" icon="i-ep:Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['system:complaintInvestigation:edit']"
-          >修改</el-button
-        >
-        <el-button type="danger" icon="i-ep:Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['system:complaintInvestigation:remove']"
-          >删除</el-button
-        >
-        <el-button type="warning" icon="i-ep:Download" @click="handleExport" v-hasPermi="['system:complaintInvestigation:export']">导出</el-button>
-        <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-      </div>
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-setting class="title-icon"></i-ep-setting>
+        投诉调查管理
+      </h2>
+      <p class="page-description">管理系统中的投诉调查记录，包括调查内容、结果和附件等功能</p>
     </div>
 
-    <!-- 搜索区域 -->
-    <div class="search-card" v-show="showSearch">
-      <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-        <el-form-item label="调查人姓名" prop="investigatorName">
-          <el-input v-model="queryParams.investigatorName" placeholder="请输入调查人姓名" clearable @keyup.enter="handleQuery" />
-        </el-form-item>
-        <el-form-item label="调查结果" prop="investigationResult">
-          <el-input v-model="queryParams.investigationResult" placeholder="请输入调查结果" clearable @keyup.enter="handleQuery" />
-        </el-form-item>
-        <el-form-item label="调查时间" prop="investigationTime">
-          <el-date-picker clearable v-model="queryParams.investigationTime" type="date" value-format="YYYY-MM-DD" placeholder="请选择调查时间" />
-        </el-form-item>
-        <el-form-item label="附件" prop="attachments">
-          <el-input v-model="queryParams.attachments" placeholder="请输入附件" clearable @keyup.enter="handleQuery" />
-        </el-form-item>
-        <el-form-item label="删除标志" prop="delFlag">
-          <el-select v-model="queryParams.delFlag" placeholder="请选择删除标志" clearable style="width: 120px">
-            <el-option label="正常" value="0" />
-            <el-option label="已删除" value="1" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="i-ep:Search" @click="handleQuery">搜索</el-button>
-          <el-button icon="i-ep:Refresh" @click="resetQuery">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-
-    <!-- 表格区域 -->
-    <div class="table-card">
-      <el-table v-loading="loading" border :data="complaintInvestigationList" @selection-change="handleSelectionChange" class="modern-table">
-        <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-        <el-table-column label="租户编号" align="center" prop="tenantId" />
-        <el-table-column label="投诉ID" align="center" prop="complaintId" />
-        <el-table-column label="调查人ID" align="center" prop="investigatorId" />
-        <el-table-column label="调查人姓名" align="center" prop="investigatorName" />
-        <el-table-column label="调查内容" align="center" prop="investigationContent" />
-        <el-table-column label="调查结果" align="center" prop="investigationResult" />
-        <el-table-column label="调查时间" align="center" prop="investigationTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.investigationTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="附件" align="center" prop="attachments" />
-        <el-table-column label="是否删除" align="center" prop="delFlag" />
-        <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="创建人" align="center" prop="createBy" />
-        <el-table-column label="创建部门" align="center" prop="createDept" />
-        <el-table-column label="更新时间" align="center" prop="updateTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="更新人" align="center" prop="updateBy" />
-        <el-table-column label="备注" align="center" prop="remark" />
-        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width" width="120">
-          <template #default="scope">
-            <div class="flex items-center justify-center space-x-1">
-              <el-tooltip content="修改" placement="top">
-                <el-button
-                  link
-                  type="primary"
-                  icon="i-ep:Edit"
-                  @click="handleUpdate(scope.row)"
-                  v-hasPermi="['system:complaintInvestigation:edit']"
-                  size="small"
-                ></el-button>
-              </el-tooltip>
-              <el-tooltip content="删除" placement="top">
-                <el-button
-                  link
-                  type="danger"
-                  icon="i-ep:Delete"
-                  @click="handleDelete(scope.row)"
-                  v-hasPermi="['system:complaintInvestigation:remove']"
-                  size="small"
-                ></el-button>
-              </el-tooltip>
+    <!-- 动态搜索表单 -->
+    <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
             </div>
+          </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
+        </el-card>
+      </div>
+    </transition>
+
+    <!-- 数据表格 -->
+    <el-card shadow="never" class="table-card">
+      <template #header>
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>投诉调查列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:complaintInvestigation:add']" size="small"
+              >新增</el-button
+            >
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['system:complaintInvestigation:edit']"
+              size="small"
+              >修改</el-button
+            >
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['system:complaintInvestigation:remove']"
+              size="small"
+              >删除</el-button
+            >
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:complaintInvestigation:export']" size="small"
+              >导出</el-button
+            >
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
+      </template>
+
+      <el-table v-loading="loading" border :data="complaintInvestigationList" @selection-change="handleSelectionChange" class="complaint-investigation-table">
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column
+          v-for="field in fieldConfigManager.getVisibleFields()"
+          :key="field.prop"
+          :label="field.label"
+          align="center"
+          :prop="field.prop"
+          :width="field.width"
+          :min-width="field.minWidth || 120"
+          resizable
+        >
+          <template #default="scope">
+            <!-- 删除标志字段 -->
+            <el-tag v-if="field.prop === 'delFlag'" :type="scope.row.delFlag === '0' ? 'success' : 'danger'">
+              {{ scope.row.delFlag === '0' ? '未删除' : '已删除' }}
+            </el-tag>
+            <!-- 调查时间字段 -->
+            <span v-else-if="field.prop === 'investigationTime'">
+              {{ parseTime(scope.row.investigationTime, '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+            <!-- 创建和更新时间字段 -->
+            <span v-else-if="field.prop === 'createTime' || field.prop === 'updateTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+            <!-- 默认显示 -->
+            <span v-else>{{ scope.row[field.prop] }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+          <template #default="scope">
+            <el-tooltip content="修改" placement="top">
+              <el-button
+                link
+                type="primary"
+                icon="Edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['system:complaintInvestigation:edit']"
+              ></el-button>
+            </el-tooltip>
+            <el-tooltip content="删除" placement="top">
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['system:complaintInvestigation:remove']"
+              ></el-button>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
 
-      <div class="pagination-container mt-4">
-        <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
-      </div>
-    </div>
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
+    </el-card>
 
-    <el-table v-loading="loading" border :data="complaintInvestigationList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-      <el-table-column label="调查人姓名" align="center" prop="investigatorName" />
-      <el-table-column label="调查内容" align="center" prop="investigationContent" />
-      <el-table-column label="调查结果" align="center" prop="investigationResult" />
-      <el-table-column label="调查时间" align="center" prop="investigationTime" width="180">
-        <template #default="scope">
-          <span>{{ parseTime(scope.row.investigationTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="附件" align="center" prop="attachments" />
-      <el-table-column label="删除标志" align="center" prop="delFlag" />
-      <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
-        <template #default="scope">
-          <el-tooltip content="修改" placement="top">
-            <el-button
-              link
-              type="primary"
-              icon="i-ep:Edit"
-              @click="handleUpdate(scope.row)"
-              v-hasPermi="['system:complaintInvestigation:edit']"
-            ></el-button>
-          </el-tooltip>
-          <el-tooltip content="删除" placement="top">
-            <el-button
-              link
-              type="primary"
-              icon="i-ep:Delete"
-              @click="handleDelete(scope.row)"
-              v-hasPermi="['system:complaintInvestigation:remove']"
-            ></el-button>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     <!-- 添加或修改投诉调查记录对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
       <el-form ref="complaintInvestigationFormRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="投诉ID" prop="complaintId">
-              <el-input v-model="form.complaintId" placeholder="请输入投诉ID" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="调查人ID" prop="investigatorId">
-              <el-input v-model="form.investigatorId" placeholder="请输入调查人ID" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="调查人姓名" prop="investigatorName">
-              <el-input v-model="form.investigatorName" placeholder="请输入调查人姓名" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="调查时间" prop="investigationTime">
+          <el-col
+            v-for="field in fieldConfigManager.getFormFields()"
+            :key="field.prop"
+            :span="field.colSpan || 12"
+          >
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules">
+              <!-- 删除标志选择框 -->
+              <el-select v-if="field.prop === 'delFlag'" v-model="form.delFlag" placeholder="请选择删除标志" clearable style="width: 100%">
+                <el-option label="未删除" value="0" />
+                <el-option label="已删除" value="1" />
+              </el-select>
+              <!-- 调查时间选择器 -->
               <el-date-picker
+                v-else-if="field.prop === 'investigationTime'"
                 clearable
                 v-model="form.investigationTime"
                 type="datetime"
                 value-format="YYYY-MM-DD HH:mm:ss"
                 placeholder="请选择调查时间"
                 style="width: 100%"
-              >
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item label="调查内容">
-          <editor v-model="form.investigationContent" :min-height="192" />
-        </el-form-item>
-        <el-form-item label="调查结果" prop="investigationResult">
-          <el-input v-model="form.investigationResult" type="textarea" :rows="3" placeholder="请输入调查结果" />
-        </el-form-item>
-        <el-form-item label="附件" prop="attachments">
-          <el-input v-model="form.attachments" type="textarea" :rows="3" placeholder="请输入附件" />
-        </el-form-item>
-        <el-row :gutter="20">
-          <el-col :span="24">
-            <el-form-item label="删除标志" prop="delFlag">
-              <el-select v-model="form.delFlag" placeholder="请选择删除标志" style="width: 200px">
-                <el-option label="正常" value="0" />
-                <el-option label="已删除" value="1" />
-              </el-select>
+              />
+              <!-- 调查内容富文本编辑器 -->
+              <editor v-else-if="field.prop === 'investigationContent'" v-model="form.investigationContent" :min-height="192" />
+              <!-- 文本域 -->
+              <el-input
+                v-else-if="field.type === 'textarea'"
+                v-model="form[field.prop]"
+                type="textarea"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                :maxlength="field.maxlength"
+                :show-word-limit="field.showWordLimit"
+                :rows="field.rows || 3"
+              />
+              <!-- 默认文本输入框 -->
+              <el-input
+                v-else
+                v-model="form[field.prop]"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -210,10 +193,17 @@
         </div>
       </template>
     </el-dialog>
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
 <script setup name="ComplaintInvestigation" lang="ts">
+import { ref, reactive, toRefs, computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
+import type { FormInstance } from 'element-plus';
 import {
   listComplaintInvestigation,
   getComplaintInvestigation,
@@ -226,6 +216,12 @@ import {
   ComplaintInvestigationQuery,
   ComplaintInvestigationForm
 } from '@/api/complaindispute/complaintInvestigation/types';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { createComplaintInvestigationFieldConfig } from '@/utils/configs/complaindispute/complaintinvestigationFieldConfigs';
+import { createComplaintInvestigationSearchConfig } from '@/utils/configs/complaindispute/complaintinvestigationSearchConfigs';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -238,13 +234,22 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref<ElFormInstance>();
-const complaintInvestigationFormRef = ref<ElFormInstance>();
+const queryFormRef = ref<FormInstance>();
+const complaintInvestigationFormRef = ref<FormInstance>();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 配置管理器
+const fieldConfigManager = new FieldConfigManager('complaintInvestigation', createComplaintInvestigationFieldConfig());
+const searchConfigManager = createComplaintInvestigationSearchConfig();
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 配置对话框状态
+const showFieldConfig = ref(false);
+const searchConfigVisible = ref(false);
 
 const initFormData: ComplaintInvestigationForm = {
   id: undefined,
@@ -257,6 +262,7 @@ const initFormData: ComplaintInvestigationForm = {
   attachments: undefined,
   delFlag: undefined
 };
+
 const data = reactive<PageData<ComplaintInvestigationForm, ComplaintInvestigationQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -375,6 +381,26 @@ const handleExport = () => {
   );
 };
 
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  showFieldConfig.value = true;
+};
+
+/** 搜索配置按钮操作 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  showFieldConfig.value = false;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
+};
+
 onMounted(() => {
   getList();
 });
@@ -388,96 +414,144 @@ onMounted(() => {
 }
 
 .page-header {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
   margin-bottom: 20px;
-}
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-.page-header h1 {
-  color: #1d2129;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+  .page-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
 
-.page-header p {
-  color: #666;
-  margin: 0;
+    .title-icon {
+      color: #409eff;
+      font-size: 20px;
+    }
+  }
+
+  .page-description {
+    margin: 0;
+    color: #86909c;
+    font-size: 14px;
+  }
 }
 
 .search-card {
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
   margin-bottom: 20px;
-  transition: box-shadow 0.3s ease;
-}
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-.search-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .search-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .search-icon {
+        color: #409eff;
+      }
+    }
+
+    .search-actions {
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
 }
 
 .table-card {
-  background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .table-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .table-icon {
+        color: #409eff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
 }
 
-.modern-table {
-  border-radius: 8px;
-  overflow: hidden;
+.complaint-investigation-table {
+  :deep(.el-table__header) {
+    th {
+      background-color: #fafafa;
+      font-weight: 600;
+      color: #1d2129;
+    }
+  }
+
+  :deep(.el-table__row) {
+    &:hover {
+      background-color: #f5f7fa;
+    }
+  }
 }
 
-.modern-table .el-table__header {
-  background-color: #fafafa;
-}
-
-.modern-table .el-table__row {
-  transition: background-color 0.3s ease;
-}
-
-.modern-table .el-table__row:hover {
-  background-color: #f5f5f5;
-}
-
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
-}
-
-/* 响应式设计 */
 @media (max-width: 768px) {
   .app-container {
-    padding: 10px;
+    padding: 12px;
   }
 
   .page-header {
-    text-align: center;
+    .page-title {
+      font-size: 20px;
+    }
   }
 
-  .page-header .flex {
+  .table-header {
     flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
+    align-items: flex-start;
+    gap: 12px;
 
-  .search-form {
-    flex-direction: column;
-  }
-
-  .search-form .el-form-item {
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .app-container {
-    padding: 5px;
-  }
-
-  .page-header h1 {
-    font-size: 1.25rem;
+    .table-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
   }
 }
 </style>

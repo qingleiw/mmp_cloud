@@ -142,7 +142,7 @@ export function createQcDataCollectionSearchConfig() {
     }
   ];
 
-  return new SearchConfigManager(pageKey, searchFieldGroups);
+  return searchFieldGroups;
 }
 
 // 手动数据录入搜索配置

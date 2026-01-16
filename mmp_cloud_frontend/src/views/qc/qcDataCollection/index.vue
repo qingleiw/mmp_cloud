@@ -94,19 +94,24 @@
             align="center"
             v-if="field.visible"
           >
-            <template #default="scope" v-if="field.type === 'datetime'">
-              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}</span>
-            </template>
-            <template #default="scope" v-else-if="field.type === 'date'">
-              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
-            </template>
-            <template #default="scope" v-else-if="field.type === 'select' && field.options">
-              <el-tag :type="getTagType(scope.row[field.prop])" size="small">
+            <template #default="scope">
+              <!-- 日期时间字段 -->
+              <span v-if="field.prop === 'collectionTime' || field.prop === 'reviewTime' || field.prop === 'createTime' || field.prop === 'updateTime'">
+                {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+              </span>
+              
+              <!-- 选择字段 -->
+              <el-tag v-else-if="field.prop === 'dataStatus'" :type="getTagType(scope.row[field.prop])" size="small">
                 {{ getOptionLabel(field.options, scope.row[field.prop]) }}
               </el-tag>
-            </template>
-            <template #default="scope" v-else>
-              <span>{{ scope.row[field.prop] }}</span>
+              
+              <!-- 删除标志字段 -->
+              <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row[field.prop] === '0' ? 'success' : 'danger'" size="small">
+                {{ scope.row[field.prop] === '0' ? '未删除' : '已删除' }}
+              </el-tag>
+              
+              <!-- 默认显示 -->
+              <span v-else>{{ scope.row[field.prop] }}</span>
             </template>
           </el-table-column>
         </template>
