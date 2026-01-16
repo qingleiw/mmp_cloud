@@ -372,3 +372,105 @@ export function createCoreSystemRectificationRecordFieldConfig() {
 
   return fieldGroups;
 }
+
+// æ ¸å¿ƒåˆ¶åº¦é…ç½®å­—æ®µé…ç½®
+export function createCoreSystemConfigFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: 'åŸºç¡€ä¿¡æ¯',
+      fields: [
+        { prop: 'id', label: 'ä¸»é”®ID', visible: true, group: 'basic' },
+        { prop: 'systemCode', label: 'åˆ¶åº¦ç¼–ç ', visible: true, required: true, group: 'basic' },
+        { prop: 'systemName', label: 'åˆ¶åº¦åç§°', visible: true, required: true, group: 'basic' },
+        { prop: 'systemType', label: 'åˆ¶åº¦ç±»å‹', visible: true, group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: 'è¯¦ç»†ä¿¡æ¯',
+      fields: [
+        { prop: 'systemDescription', label: 'åˆ¶åº¦æè¿°', visible: true, group: 'detail' },
+        { prop: 'totalScore', label: 'åˆ¶åº¦æ€»åˆ†', visible: true, group: 'detail' },
+        { prop: 'weight', label: 'æƒé‡', visible: true, group: 'detail' }
+      ]
+    },
+    {
+      name: 'status',
+      label: 'çŠ¶æ€ä¿¡æ¯',
+      fields: [
+        { prop: 'isEnabled', label: 'æ˜¯å¦å¯ç”¨', visible: true, group: 'status' },
+        { prop: 'isCustom', label: 'æ˜¯å¦è‡ªå®šä¹‰', visible: true, group: 'status' }
+      ]
+    },
+    {
+      name: 'system',
+      label: 'ç³»ç»Ÿå­—æ®µ',
+      fields: [
+        { prop: 'delFlag', label: 'åˆ é™¤æ ‡å¿—', visible: false, group: 'system' },
+        { prop: 'createTime', label: 'åˆ›å»ºæ—¶é—´', visible: false, group: 'system' },
+        { prop: 'createBy', label: 'åˆ›å»ºè€…', visible: false, group: 'system' },
+        { prop: 'createDept', label: 'åˆ›å»ºéƒ¨é—¨', visible: false, group: 'system' },
+        { prop: 'updateTime', label: 'æ›´æ–°æ—¶é—´', visible: false, group: 'system' },
+        { prop: 'updateBy', label: 'æ›´æ–°è€…', visible: false, group: 'system' }
+      ]
+    }
+  ];
+
+  return fieldGroups;
+}
+ 
+ / /   8hÃ_6R¦^Àhåg°‹U_W[µkM‘n
+ e x p o r t   f u n c t i o n   c r e a t e C o r e S y s t e m I n s p e c t i o n R e c o r d F i e l d C o n f i g ( )   { 
+     c o n s t   f i e l d G r o u p s :   F i e l d G r o u p [ ]   =   [ 
+         { 
+             n a m e :   " b a s i c " , 
+             l a b e l :   " úW@xáOo`" , 
+             f i e l d s :   [ 
+                 {   p r o p :   " i d " ,   l a b e l :   " ÀhågI D " ,   v i s i b l e :   t r u e ,   g r o u p :   " b a s i c "   } , 
+                 {   p r o p :   " s y s t e m N a m e " ,   l a b e l :   " 6R¦^Tğy" ,   v i s i b l e :   t r u e ,   r e q u i r e d :   t r u e ,   g r o u p :   " b a s i c "   } , 
+                 {   p r o p :   " i n s p e c t o r N a m e " ,   l a b e l :   " ÀhågºNÓYT" ,   v i s i b l e :   t r u e ,   r e q u i r e d :   t r u e ,   g r o u p :   " b a s i c "   } 
+             ] 
+         } , 
+         { 
+             n a m e :   " a s s o c i a t i o n " , 
+             l a b e l :   " sQT€áOo`" , 
+             f i e l d s :   [ 
+                 {   p r o p :   " s y s t e m I d " ,   l a b e l :   " 6R¦^I D " ,   v i s i b l e :   f a l s e ,   r e q u i r e d :   t r u e ,   g r o u p :   " a s s o c i a t i o n "   } , 
+                 {   p r o p :   " i n s p e c t o r I d " ,   l a b e l :   " ÀhågºNI D " ,   v i s i b l e :   f a l s e ,   r e q u i r e d :   t r u e ,   g r o u p :   " a s s o c i a t i o n "   } 
+             ] 
+         } , 
+         { 
+             n a m e :   " i n s p e c t i o n " , 
+             l a b e l :   " ÀhågáOo`" , 
+             f i e l d s :   [ 
+                 {   p r o p :   " i n s p e c t i o n T i m e " ,   l a b e l :   " Àhågöeô•" ,   v i s i b l e :   t r u e ,   w i d t h :   " 1 8 0 " ,   g r o u p :   " i n s p e c t i o n "   } , 
+                 {   p r o p :   " i n s p e c t i o n R e s u l t " ,   l a b e l :   " ÀhågÓ~œg" ,   v i s i b l e :   t r u e ,   g r o u p :   " i n s p e c t i o n "   } , 
+                 {   p r o p :   " i n s p e c t i o n C o n t e n t " ,   l a b e l :   " Àhåg…Q¹[" ,   v i s i b l e :   t r u e ,   g r o u p :   " i n s p e c t i o n "   } 
+             ] 
+         } , 
+         { 
+             n a m e :   " p r o b l e m " , 
+             l a b e l :   " î•˜˜áOo`" , 
+             f i e l d s :   [ 
+                 {   p r o p :   " p r o b l e m D e s c r i p t i o n " ,   l a b e l :   " î•˜˜Ïcğ" ,   v i s i b l e :   t r u e ,   g r o u p :   " p r o b l e m "   } , 
+                 {   p r o p :   " r e c t i f i c a t i o n S u g g e s t i o n " ,   l a b e l :   " te9eú^®‹" ,   v i s i b l e :   t r u e ,   g r o u p :   " p r o b l e m "   } 
+             ] 
+         } , 
+         { 
+             n a m e :   " s y s t e m " , 
+             l a b e l :   " û|ß~W[µk" , 
+             f i e l d s :   [ 
+                 {   p r o p :   " d e l F l a g " ,   l a b e l :   "  Rd–h×_" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " c r e a t e T i m e " ,   l a b e l :   " Rú^öeô•" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " c r e a t e B y " ,   l a b e l :   " Rú^€" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " c r e a t e D e p t " ,   l a b e l :   " Rú^èè•" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " u p d a t e T i m e " ,   l a b e l :   " ôf°eöeô•" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " u p d a t e B y " ,   l a b e l :   " ôf°e€" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } 
+             ] 
+         } 
+     ] ; 
+ 
+     r e t u r n   f i e l d G r o u p s ; 
+ }  
+ 

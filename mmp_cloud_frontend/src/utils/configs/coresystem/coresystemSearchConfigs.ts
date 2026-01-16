@@ -272,3 +272,38 @@ export function createCoreSystemRectificationRecordSearchConfig() {
 
   return new SearchConfigManager('coreSystemRectificationRecord', searchFieldGroups);
 }
+
+// 核心制度配置搜索配置
+export function createCoreSystemConfigSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'systemCode', label: '制度编码', type: 'input', placeholder: '请输入制度编码' },
+        { prop: 'systemName', label: '制度名称', type: 'input', placeholder: '请输入制度名称' },
+        { prop: 'systemType', label: '制度类型', type: 'select', placeholder: '请选择制度类型' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'systemDescription', label: '制度描述', type: 'input', placeholder: '请输入制度描述' },
+        { prop: 'totalScore', label: '制度总分', type: 'numberrange', placeholder: '请输入制度总分范围' },
+        { prop: 'weight', label: '权重', type: 'numberrange', placeholder: '请输入权重范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信息',
+      fields: [
+        { prop: 'isEnabled', label: '是否启用', type: 'select', placeholder: '请选择启用状态' },
+        { prop: 'isCustom', label: '是否自定义', type: 'select', placeholder: '请选择自定义状态' },
+        { prop: 'delFlag', label: '删除标志', type: 'select', placeholder: '请选择删除状态' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('coreSystemConfig', searchFieldGroups);
+}
