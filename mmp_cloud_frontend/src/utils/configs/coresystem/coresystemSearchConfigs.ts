@@ -181,6 +181,13 @@ export function createCoreSystemExecutionRecordSearchConfig() {
       fields: [
         { prop: 'executionTime', label: '执行时间', type: 'daterange', placeholder: '请选择执行时间范围' }
       ]
+    },
+    {
+      name: 'status',
+      label: '状态信息',
+      fields: [
+        { prop: 'delFlag', label: '删除标志', type: 'select', placeholder: '请选择删除状态' }
+      ]
     }
   ];
 

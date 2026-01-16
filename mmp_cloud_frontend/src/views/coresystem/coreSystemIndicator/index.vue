@@ -74,10 +74,7 @@
             <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['coresystem:coreSystemIndicator:export']" size="small"
               >导出</el-button
             >
-            <el-button type="info" plain icon="Upload" @click="handleImport" v-hasPermi="['coresystem:coreSystemIndicator:import']" size="small"
-              >导入</el-button
-            >
-            <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
             </el-button>
@@ -86,31 +83,46 @@
         </div>
       </template>
 
-      <el-table v-loading="loading" border :data="coreSystemIndicatorList" @selection-change="handleSelectionChange">
+      <el-table
+        v-loading="loading"
+        border
+        :data="coreSystemIndicatorList"
+        @selection-change="handleSelectionChange"
+        class="indicator-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
           v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
+          align="center"
           :prop="field.prop"
           :width="field.width"
           :min-width="field.minWidth || 120"
           resizable
-          align="center"
         >
           <template #default="scope">
-            <el-tag v-if="field.prop === 'isReverse'" :type="scope.row[field.prop] === '1' ? 'warning' : 'success'">
-              {{ scope.row[field.prop] === '1' ? '是' : '否' }}
+            <!-- 是否反向指标标签 -->
+            <el-tag v-if="field.prop === 'isReverse'" :type="scope.row.isReverse === '1' ? 'warning' : 'success'" size="small">
+              {{ scope.row.isReverse === '1' ? '是' : '否' }}
             </el-tag>
-            <el-tag v-else-if="field.prop === 'isEnabled'" :type="scope.row[field.prop] === '1' ? 'success' : 'danger'">
-              {{ scope.row[field.prop] === '1' ? '启用' : '禁用' }}
+            <!-- 是否启用标签 -->
+            <el-tag v-else-if="field.prop === 'isEnabled'" :type="scope.row.isEnabled === '1' ? 'success' : 'danger'" size="small">
+              {{ scope.row.isEnabled === '1' ? '启用' : '禁用' }}
             </el-tag>
-            <el-tag v-else-if="field.prop === 'isCustom'" :type="scope.row[field.prop] === '1' ? 'info' : 'success'">
-              {{ scope.row[field.prop] === '1' ? '是' : '否' }}
+            <!-- 是否自定义标签 -->
+            <el-tag v-else-if="field.prop === 'isCustom'" :type="scope.row.isCustom === '1' ? 'info' : 'success'" size="small">
+              {{ scope.row.isCustom === '1' ? '是' : '否' }}
             </el-tag>
-            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row[field.prop] === '0' ? 'success' : 'danger'">
-              {{ scope.row[field.prop] === '0' ? '正常' : '已删除' }}
+            <!-- 删除标志字段 -->
+            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row.delFlag === '0' ? 'success' : 'danger'" size="small">
+              {{ scope.row.delFlag === '0' ? '未删除' : '已删除' }}
             </el-tag>
+            <!-- 创建和更新时间字段 -->
+            <span v-else-if="field.prop === 'createTime' || field.prop === 'updateTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+            <!-- 默认显示 -->
             <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
@@ -140,105 +152,75 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
+
     <!-- 添加或修改核心制度指标对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
       <el-form ref="coreSystemIndicatorFormRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="指标编码" prop="indicatorCode">
-              <el-input v-model="form.indicatorCode" placeholder="请输入指标编码" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="指标名称" prop="indicatorName">
-              <el-input v-model="form.indicatorName" placeholder="请输入指标名称" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="所属制度ID" prop="systemId">
-              <el-input v-model="form.systemId" placeholder="请输入所属制度ID" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="父指标ID" prop="parentId">
-              <el-input v-model="form.parentId" placeholder="请输入父指标ID" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="计算周期" prop="calculationCycle">
-              <el-select v-model="form.calculationCycle" placeholder="请选择计算周期" style="width: 100%">
+          <el-col
+            v-for="field in fieldConfigManager.getFormFields()"
+            :key="field.prop"
+            :span="field.colSpan || 12"
+          >
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules">
+              <!-- 计算周期选择框 -->
+              <el-select v-if="field.prop === 'calculationCycle'" v-model="form.calculationCycle" placeholder="请选择计算周期" clearable style="width: 100%">
                 <el-option label="日" value="日" />
                 <el-option label="周" value="周" />
                 <el-option label="月" value="月" />
                 <el-option label="季度" value="季度" />
                 <el-option label="年" value="年" />
               </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="目标值" prop="targetValue">
-              <el-input-number v-model="form.targetValue" :precision="2" :min="0" placeholder="请输入目标值" style="width: 100%" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="指标分值" prop="indicatorScore">
-              <el-input-number v-model="form.indicatorScore" :precision="1" :min="0" :max="100" placeholder="请输入指标分值" style="width: 100%" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="预警阈值" prop="alertThreshold">
-              <el-input-number v-model="form.alertThreshold" :precision="2" :min="0" :max="100" placeholder="请输入预警阈值" style="width: 100%" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-form-item label="是否反向指标" prop="isReverse">
-              <el-select v-model="form.isReverse" placeholder="请选择是否反向指标" style="width: 100%">
+              <!-- 是否反向指标选择框 -->
+              <el-select v-else-if="field.prop === 'isReverse'" v-model="form.isReverse" placeholder="请选择是否反向指标" clearable style="width: 100%">
                 <el-option label="是" value="1" />
                 <el-option label="否" value="0" />
               </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="是否启用" prop="isEnabled">
-              <el-select v-model="form.isEnabled" placeholder="请选择是否启用" style="width: 100%">
+              <!-- 是否启用选择框 -->
+              <el-select v-else-if="field.prop === 'isEnabled'" v-model="form.isEnabled" placeholder="请选择是否启用" clearable style="width: 100%">
                 <el-option label="是" value="1" />
                 <el-option label="否" value="0" />
               </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="是否自定义" prop="isCustom">
-              <el-select v-model="form.isCustom" placeholder="请选择是否自定义" style="width: 100%">
+              <!-- 是否自定义选择框 -->
+              <el-select v-else-if="field.prop === 'isCustom'" v-model="form.isCustom" placeholder="请选择是否自定义" clearable style="width: 100%">
                 <el-option label="是" value="1" />
                 <el-option label="否" value="0" />
               </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="24">
-            <el-form-item label="是否删除" prop="delFlag">
-              <el-select v-model="form.delFlag" placeholder="请选择是否删除" style="width: 200px">
-                <el-option label="正常" value="0" />
+              <!-- 删除标志选择框 -->
+              <el-select v-else-if="field.prop === 'delFlag'" v-model="form.delFlag" placeholder="请选择状态" clearable style="width: 100%">
+                <el-option label="未删除" value="0" />
                 <el-option label="已删除" value="1" />
               </el-select>
+              <!-- 数字输入框 -->
+              <el-input-number
+                v-else-if="field.type === 'number'"
+                v-model="form[field.prop]"
+                :min="field.min || 0"
+                :max="field.max || 999999"
+                :precision="field.precision || 2"
+                controls-position="right"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                style="width: 100%"
+              />
+              <!-- 文本域 -->
+              <el-input
+                v-else-if="field.type === 'textarea'"
+                v-model="form[field.prop]"
+                type="textarea"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                :maxlength="field.maxlength"
+                :show-word-limit="field.showWordLimit"
+                :rows="field.rows || 3"
+              />
+              <!-- 默认文本输入框 -->
+              <el-input
+                v-else
+                v-model="form[field.prop]"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+              />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="计算公式" prop="calculationFormula">
-          <el-input v-model="form.calculationFormula" type="textarea" :rows="3" placeholder="请输入计算公式" />
-        </el-form-item>
-        <el-form-item label="数据来源" prop="dataSource">
-          <el-input v-model="form.dataSource" type="textarea" :rows="3" placeholder="请输入数据来源" />
-        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -248,12 +230,16 @@
       </template>
     </el-dialog>
 
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
 <script setup name="CoreSystemIndicator" lang="ts">
+import { ref, reactive, toRefs, computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
+import type { FormInstance } from 'element-plus';
 import {
   listCoreSystemIndicator,
   getCoreSystemIndicator,
@@ -261,34 +247,45 @@ import {
   addCoreSystemIndicator,
   updateCoreSystemIndicator
 } from '@/api/coresystem/coreSystemIndicator';
+import {
+  CoreSystemIndicatorVO,
+  CoreSystemIndicatorQuery,
+  CoreSystemIndicatorForm
+} from '@/api/coresystem/coreSystemIndicator/types';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import { createCoreSystemIndicatorFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
-import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createCoreSystemIndicatorSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+
+const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
 const coreSystemIndicatorList = ref<CoreSystemIndicatorVO[]>([]);
 const buttonLoading = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
-const showFieldConfig = ref(false);
-const searchConfigVisible = ref(false);
 const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const fieldConfigManager = createCoreSystemIndicatorFieldConfig();
-const searchConfigManager = createCoreSystemIndicatorSearchConfig();
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
-
-const queryFormRef = ref();
-const coreSystemIndicatorFormRef = ref<ElFormInstance>();
+const queryFormRef = ref<FormInstance>();
+const coreSystemIndicatorFormRef = ref<FormInstance>();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 配置管理器
+const fieldConfigManager = new FieldConfigManager('coreSystemIndicator', createCoreSystemIndicatorFieldConfig());
+const searchConfigManager = createCoreSystemIndicatorSearchConfig();
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
 
 const initFormData: CoreSystemIndicatorForm = {
   id: undefined,
@@ -308,6 +305,7 @@ const initFormData: CoreSystemIndicatorForm = {
   isCustom: undefined,
   delFlag: undefined
 };
+
 const data = reactive<PageData<CoreSystemIndicatorForm, CoreSystemIndicatorQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -372,14 +370,6 @@ const resetQuery = () => {
   handleQuery();
 };
 
-const handleSearchConfig = () => {
-  searchConfigVisible.value = true;
-};
-
-const handleSearchConfigConfirm = () => {
-  searchConfigVisible.value = false;
-};
-
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: CoreSystemIndicatorVO[]) => {
   ids.value = selection.map((item) => item.id);
@@ -441,17 +431,24 @@ const handleExport = () => {
   );
 };
 
-/** 导入按钮操作 */
-const handleImport = () => {
-  proxy?.$modal.upload('system/coreSystemIndicator/importData', '核心制度指标导入', 'xls,xlsx', (response: any) => {
-    proxy?.$modal.msgSuccess('导入成功');
-    getList();
-  });
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+/** 搜索配置按钮操作 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
 };
 
 /** 字段配置确认 */
 const handleFieldConfigConfirm = () => {
-  showFieldConfig.value = false;
+  fieldConfigVisible.value = false;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
 };
 
 onMounted(() => {
@@ -459,66 +456,72 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .app-container {
-  padding: 20px;
   background-color: #f5f5f5;
-  min-height: calc(100vh - 84px);
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .page-header {
-  margin-bottom: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
 
     .title-icon {
       color: #409eff;
+      font-size: 20px;
     }
   }
 
   .page-description {
+    margin: 0;
     color: #86909c;
     font-size: 14px;
   }
 }
 
-.search-container {
-  .search-card {
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.search-card {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-    .search-header {
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .search-title {
+      font-weight: 600;
+      color: #1d2129;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      gap: 6px;
 
-      .search-title {
-        font-weight: 600;
-        color: #1d2129;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-
-        .search-icon {
-          color: #409eff;
-        }
+      .search-icon {
+        color: #409eff;
       }
+    }
 
-      .search-actions {
-        .config-btn {
-          color: #409eff;
+    .search-actions {
+      .config-btn {
+        color: #409eff;
 
-          .btn-icon {
-            margin-right: 4px;
-          }
+        .btn-icon {
+          margin-right: 4px;
         }
       }
     }
@@ -579,23 +582,6 @@ onMounted(() => {
   }
 }
 
-.indicator-dialog {
-  :deep(.el-dialog__body) {
-    padding: 24px;
-  }
-
-  .w-full {
-    width: 100%;
-  }
-}
-
-.dialog-footer {
-  text-align: right;
-  padding-top: 16px;
-  border-top: 1px solid #ebeef5;
-}
-
-// 响应式设计
 @media (max-width: 768px) {
   .app-container {
     padding: 12px;
@@ -615,13 +601,6 @@ onMounted(() => {
     .table-actions {
       width: 100%;
       justify-content: flex-end;
-    }
-  }
-
-  .indicator-dialog {
-    :deep(.el-dialog) {
-      width: 95% !important;
-      margin: 5vh auto;
     }
   }
 }

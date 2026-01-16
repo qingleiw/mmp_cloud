@@ -80,7 +80,7 @@ export function createSystemIndicatorMonitorRecordFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager('systemIndicatorMonitorRecord', fieldGroups);
+  return fieldGroups;
 }
 
 // 质控指标采集配置字段配置
@@ -115,7 +115,7 @@ export function createQcIndicatorCollectionConfigFieldConfig() {
       ]
     }
   ];
-  return new FieldConfigManager('qcIndicatorCollectionConfig', fieldGroups);
+  return fieldGroups;
 }
 
 // 核心制度指标字段配置
@@ -167,7 +167,7 @@ export function createCoreSystemIndicatorFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager('coreSystemIndicator', fieldGroups);
+  return fieldGroups;
 }
 
 // 核心制度考核记录字段配置
@@ -213,7 +213,7 @@ export function createCoreSystemAssessmentRecordFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager('coreSystemAssessmentRecord', fieldGroups);
+  return fieldGroups;
 }
 
 // 核心制度执行记录字段配置
@@ -224,11 +224,16 @@ export function createCoreSystemExecutionRecordFieldConfig() {
       label: '基础信息',
       fields: [
         { prop: 'id', label: '执行ID', visible: true, group: 'basic' },
-        { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'systemId', label: '制度ID', visible: true, required: true, group: 'basic' },
         { prop: 'systemName', label: '制度名称', visible: true, required: true, group: 'basic' },
-        { prop: 'executorId', label: '执行人ID', visible: true, required: true, group: 'basic' },
         { prop: 'executorName', label: '执行人姓名', visible: true, required: true, group: 'basic' }
+      ]
+    },
+    {
+      name: 'association',
+      label: '关联信息',
+      fields: [
+        { prop: 'systemId', label: '制度ID', visible: false, required: true, group: 'association' },
+        { prop: 'executorId', label: '执行人ID', visible: false, required: true, group: 'association' }
       ]
     },
     {
@@ -237,25 +242,24 @@ export function createCoreSystemExecutionRecordFieldConfig() {
       fields: [
         { prop: 'executionTime', label: '执行时间', visible: true, width: '180', group: 'execution' },
         { prop: 'executionResult', label: '执行结果', visible: true, group: 'execution' },
-        { prop: 'executionContent', label: '执行内容', visible: true, group: 'execution' },
-        { prop: 'executionRemark', label: '执行备注', visible: true, group: 'execution' }
+        { prop: 'remark', label: '备注', visible: true, group: 'execution' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
+        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
+        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
+        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
       ]
     }
   ];
 
-  return new FieldConfigManager('coreSystemExecutionRecord', fieldGroups);
+  return fieldGroups;
 }
 
 // 核心制度检查记录字段配置
@@ -302,7 +306,7 @@ export function createCoreSystemInspectionRecordFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager('coreSystemInspectionRecord', fieldGroups);
+  return fieldGroups;
 }
 
 // 核心制度整改记录字段配置
@@ -361,5 +365,5 @@ export function createCoreSystemRectificationRecordFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager('coreSystemRectificationRecord', fieldGroups);
+  return fieldGroups;
 }
