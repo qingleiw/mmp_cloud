@@ -7,9 +7,7 @@ export function createSystemIndicatorMonitorRecordFieldConfig() {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'indicatorId', label: '指标ID', visible: true, group: 'basic' },
+        { prop: 'id', label: '监控ID', visible: false, group: 'basic' },
         { prop: 'indicatorName', label: '指标名称', visible: true, required: true, group: 'basic' },
         { prop: 'recordDate', label: '记录日期', visible: true, width: '120', group: 'basic' },
         { prop: 'calculationCycle', label: '计算周期', visible: true, group: 'basic' }
@@ -177,7 +175,7 @@ export function createCoreSystemAssessmentRecordFieldConfig() {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
+        { prop: 'id', label: '评估ID', visible: false, group: 'basic' },
         { prop: 'systemName', label: '制度名称', visible: true, required: true, group: 'basic' },
         { prop: 'assessorName', label: '考核人名称', visible: true, required: true, group: 'basic' }
       ]
@@ -223,7 +221,7 @@ export function createCoreSystemExecutionRecordFieldConfig() {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '执行ID', visible: true, group: 'basic' },
+        { prop: 'id', label: '执行ID', visible: false, group: 'basic' },
         { prop: 'systemName', label: '制度名称', visible: true, required: true, group: 'basic' },
         { prop: 'executorName', label: '执行人姓名', visible: true, required: true, group: 'basic' }
       ]
@@ -269,12 +267,17 @@ export function createCoreSystemInspectionRecordFieldConfig() {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'systemId', label: '制度ID', visible: true, required: true, group: 'basic' },
+        { prop: 'id', label: '检查ID', visible: false, group: 'basic' },
         { prop: 'systemName', label: '制度名称', visible: true, required: true, group: 'basic' },
-        { prop: 'inspectorId', label: '检查人ID', visible: true, required: true, group: 'basic' },
         { prop: 'inspectorName', label: '检查人姓名', visible: true, required: true, group: 'basic' }
+      ]
+    },
+    {
+      name: 'association',
+      label: '关联信息',
+      fields: [
+        { prop: 'systemId', label: '制度ID', visible: false, required: true, group: 'association' },
+        { prop: 'inspectorId', label: '检查人ID', visible: false, required: true, group: 'association' }
       ]
     },
     {
@@ -283,25 +286,27 @@ export function createCoreSystemInspectionRecordFieldConfig() {
       fields: [
         { prop: 'inspectionTime', label: '检查时间', visible: true, width: '180', group: 'inspection' },
         { prop: 'inspectionResult', label: '检查结果', visible: true, group: 'inspection' },
-        { prop: 'problemDescription', label: '问题描述', visible: true, group: 'inspection' },
-        { prop: 'rectificationSuggestion', label: '整改建议', visible: true, group: 'inspection' }
+        { prop: 'inspectionContent', label: '检查内容', visible: true, group: 'inspection' }
       ]
     },
     {
-      name: 'detail',
-      label: '详细信息',
-      fields: [{ prop: 'remark', label: '备注', visible: true, group: 'detail' }]
+      name: 'problem',
+      label: '问题信息',
+      fields: [
+        { prop: 'problemDescription', label: '问题描述', visible: true, group: 'problem' },
+        { prop: 'rectificationSuggestion', label: '整改建议', visible: true, group: 'problem' }
+      ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
+        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
+        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
+        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
       ]
     }
   ];
@@ -316,7 +321,7 @@ export function createCoreSystemRectificationRecordFieldConfig() {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
+        { prop: 'id', label: '整改ID', visible: false, group: 'basic' },
         { prop: 'rectificationId', label: '整改编号', visible: true, required: true, group: 'basic' },
         { prop: 'systemName', label: '制度名称', visible: true, required: true, group: 'basic' },
         { prop: 'rectifierName', label: '整改人名称', visible: true, required: true, group: 'basic' }
@@ -380,7 +385,7 @@ export function createCoreSystemConfigFieldConfig() {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
+        { prop: 'id', label: '配置ID', visible: false, group: 'basic' },
         { prop: 'systemCode', label: '制度编码', visible: true, required: true, group: 'basic' },
         { prop: 'systemName', label: '制度名称', visible: true, required: true, group: 'basic' },
         { prop: 'systemType', label: '制度类型', visible: true, group: 'basic' }
@@ -420,57 +425,60 @@ export function createCoreSystemConfigFieldConfig() {
   return fieldGroups;
 }
  
- / /   8h�_6R�^�h�g��U_W[�kM�n
+ / /   8h�_6R�^�h�g��U_W[�kM�n
  e x p o r t   f u n c t i o n   c r e a t e C o r e S y s t e m I n s p e c t i o n R e c o r d F i e l d C o n f i g ( )   { 
      c o n s t   f i e l d G r o u p s :   F i e l d G r o u p [ ]   =   [ 
          { 
              n a m e :   " b a s i c " , 
-             l a b e l :   " �W@x�Oo`" , 
+             l a b e l :   " �W@x�Oo`" , 
              f i e l d s :   [ 
-                 {   p r o p :   " i d " ,   l a b e l :   " �h�gI D " ,   v i s i b l e :   t r u e ,   g r o u p :   " b a s i c "   } , 
-                 {   p r o p :   " s y s t e m N a m e " ,   l a b e l :   " 6R�^T�y" ,   v i s i b l e :   t r u e ,   r e q u i r e d :   t r u e ,   g r o u p :   " b a s i c "   } , 
-                 {   p r o p :   " i n s p e c t o r N a m e " ,   l a b e l :   " �h�g�N�YT" ,   v i s i b l e :   t r u e ,   r e q u i r e d :   t r u e ,   g r o u p :   " b a s i c "   } 
+                 {   p r o p :   " i d " ,   l a b e l :   " �h�gI D " ,   v i s i b l e :   t r u e ,   g r o u p :   " b a s i c "   } , 
+                 {   p r o p :   " s y s t e m N a m e " ,   l a b e l :   " 6R�^
+T�y" ,   v i s i b l e :   t r u e ,   r e q u i r e d :   t r u e ,   g r o u p :   " b a s i c "   } , 
+                 {   p r o p :   " i n s p e c t o r N a m e " ,   l a b e l :   " �h�g�N�Y
+T" ,   v i s i b l e :   t r u e ,   r e q u i r e d :   t r u e ,   g r o u p :   " b a s i c "   } 
              ] 
          } , 
          { 
              n a m e :   " a s s o c i a t i o n " , 
-             l a b e l :   " sQT��Oo`" , 
+             l a b e l :   " sQT��Oo`" , 
              f i e l d s :   [ 
-                 {   p r o p :   " s y s t e m I d " ,   l a b e l :   " 6R�^I D " ,   v i s i b l e :   f a l s e ,   r e q u i r e d :   t r u e ,   g r o u p :   " a s s o c i a t i o n "   } , 
-                 {   p r o p :   " i n s p e c t o r I d " ,   l a b e l :   " �h�g�NI D " ,   v i s i b l e :   f a l s e ,   r e q u i r e d :   t r u e ,   g r o u p :   " a s s o c i a t i o n "   } 
+                 {   p r o p :   " s y s t e m I d " ,   l a b e l :   " 6R�^I D " ,   v i s i b l e :   f a l s e ,   r e q u i r e d :   t r u e ,   g r o u p :   " a s s o c i a t i o n "   } , 
+                 {   p r o p :   " i n s p e c t o r I d " ,   l a b e l :   " �h�g�NI D " ,   v i s i b l e :   f a l s e ,   r e q u i r e d :   t r u e ,   g r o u p :   " a s s o c i a t i o n "   } 
              ] 
          } , 
          { 
              n a m e :   " i n s p e c t i o n " , 
-             l a b e l :   " �h�g�Oo`" , 
+             l a b e l :   " �h�g�Oo`" , 
              f i e l d s :   [ 
-                 {   p r o p :   " i n s p e c t i o n T i m e " ,   l a b e l :   " �h�g�e��" ,   v i s i b l e :   t r u e ,   w i d t h :   " 1 8 0 " ,   g r o u p :   " i n s p e c t i o n "   } , 
-                 {   p r o p :   " i n s p e c t i o n R e s u l t " ,   l a b e l :   " �h�g�~�g" ,   v i s i b l e :   t r u e ,   g r o u p :   " i n s p e c t i o n "   } , 
-                 {   p r o p :   " i n s p e c t i o n C o n t e n t " ,   l a b e l :   " �h�g�Q�[" ,   v i s i b l e :   t r u e ,   g r o u p :   " i n s p e c t i o n "   } 
+                 {   p r o p :   " i n s p e c t i o n T i m e " ,   l a b e l :   " �h�g�e��" ,   v i s i b l e :   t r u e ,   w i d t h :   " 1 8 0 " ,   g r o u p :   " i n s p e c t i o n "   } , 
+                 {   p r o p :   " i n s p e c t i o n R e s u l t " ,   l a b e l :   " �h�g�~�g" ,   v i s i b l e :   t r u e ,   g r o u p :   " i n s p e c t i o n "   } , 
+                 {   p r o p :   " i n s p e c t i o n C o n t e n t " ,   l a b e l :   " �h�g�Q�[" ,   v i s i b l e :   t r u e ,   g r o u p :   " i n s p e c t i o n "   } 
              ] 
          } , 
          { 
              n a m e :   " p r o b l e m " , 
-             l a b e l :   " ��Oo`" , 
+             l a b e l :   " ��Oo`" , 
              f i e l d s :   [ 
-                 {   p r o p :   " p r o b l e m D e s c r i p t i o n " ,   l a b e l :   " ��c��" ,   v i s i b l e :   t r u e ,   g r o u p :   " p r o b l e m "   } , 
-                 {   p r o p :   " r e c t i f i c a t i o n S u g g e s t i o n " ,   l a b e l :   " te9e�^��" ,   v i s i b l e :   t r u e ,   g r o u p :   " p r o b l e m "   } 
+                 {   p r o p :   " p r o b l e m D e s c r i p t i o n " ,   l a b e l :   " ��c��" ,   v i s i b l e :   t r u e ,   g r o u p :   " p r o b l e m "   } , 
+                 {   p r o p :   " r e c t i f i c a t i o n S u g g e s t i o n " ,   l a b e l :   " te9e�^��" ,   v i s i b l e :   t r u e ,   g r o u p :   " p r o b l e m "   } 
              ] 
          } , 
          { 
              n a m e :   " s y s t e m " , 
-             l a b e l :   " �|�~W[�k" , 
+             l a b e l :   " �|�~W[�k" , 
              f i e l d s :   [ 
-                 {   p r o p :   " d e l F l a g " ,   l a b e l :   "  Rd�h�_" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
-                 {   p r o p :   " c r e a t e T i m e " ,   l a b e l :   " R�^�e��" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
-                 {   p r o p :   " c r e a t e B y " ,   l a b e l :   " R�^�" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
-                 {   p r o p :   " c r e a t e D e p t " ,   l a b e l :   " R�^��" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
-                 {   p r o p :   " u p d a t e T i m e " ,   l a b e l :   " �f�e�e��" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
-                 {   p r o p :   " u p d a t e B y " ,   l a b e l :   " �f�e�" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } 
+                 {   p r o p :   " d e l F l a g " ,   l a b e l :   "  Rd�h�_" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " c r e a t e T i m e " ,   l a b e l :   " R�^�e��" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " c r e a t e B y " ,   l a b e l :   " R�^�" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " c r e a t e D e p t " ,   l a b e l :   " R�^��" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " u p d a t e T i m e " ,   l a b e l :   " �f�e�e��" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } , 
+                 {   p r o p :   " u p d a t e B y " ,   l a b e l :   " �f�e�" ,   v i s i b l e :   f a l s e ,   g r o u p :   " s y s t e m "   } 
              ] 
          } 
      ] ; 
  
      r e t u r n   f i e l d G r o u p s ; 
- }  
+ } 
+ 
  
