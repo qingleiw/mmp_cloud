@@ -56,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorBasicInfo:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -66,15 +64,9 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorBasicInfo:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorBasicInfo:export']" size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorBasicInfo:import']" size="small"
-              >导入</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorBasicInfo:export']" size="small">导出</el-button>
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorBasicInfo:import']" size="small">导入</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -87,7 +79,7 @@
       <el-table v-loading="loading" border :data="doctorInfoList" @selection-change="handleSelectionChange" class="doctor-basic-info-table">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
           align="center"
@@ -254,8 +246,9 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -263,6 +256,7 @@
 import { listDoctorBasicInfo, getDoctorBasicInfo, delDoctorBasicInfo, addDoctorBasicInfo, updateDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO, DoctorBasicInfoQuery, DoctorBasicInfoForm } from '@/api/doctor/doctorBasicInfo/types';
 import { createDoctorBasicInfoFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
@@ -292,7 +286,8 @@ const dialog = reactive<DialogOption>({
 });
 
 // 字段配置相关变量
-const fieldConfigManager = createDoctorBasicInfoFieldConfig();
+const fieldGroups = createDoctorBasicInfoFieldConfig();
+const fieldConfigManager = new FieldConfigManager('doctorBasicInfo', fieldGroups);
 
 // 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
 fieldConfigManager.clearConfig();
@@ -301,9 +296,6 @@ const showFieldConfig = ref(false);
 const searchConfigManager = createDoctorBasicInfoSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
-
-// 计算属性：可见列
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: DoctorBasicInfoForm = {
   id: undefined,
@@ -516,23 +508,29 @@ onMounted(() => {
 }
 
 .page-header {
-  margin-bottom: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
 
     .title-icon {
       color: #409eff;
+      font-size: 20px;
     }
   }
 
   .page-description {
+    margin: 0;
     color: #86909c;
     font-size: 14px;
   }

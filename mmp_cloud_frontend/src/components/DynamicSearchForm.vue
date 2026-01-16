@@ -19,7 +19,8 @@
         v-model="query[field.prop]"
         type="daterange"
         :value-format="field.componentProps?.valueFormat"
-        :placeholder="field.componentProps?.placeholder || ['开始日期', '结束日期']"
+        :start-placeholder="field.startPlaceholder || '开始日期'"
+        :end-placeholder="field.endPlaceholder || '结束日期'"
         clearable
       />
       <el-select

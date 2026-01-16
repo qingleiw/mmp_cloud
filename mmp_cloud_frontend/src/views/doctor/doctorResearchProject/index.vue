@@ -9,9 +9,10 @@
       <p class="page-description">管理医师科研项目申报与执行情况，包括项目申报、经费管理、成果产出等</p>
     </div>
 
-    <!-- 搜索表单 -->
+    <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <el-card v-if="showSearch" shadow="hover" class="search-card mb-4">
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
         <template #header>
           <div class="search-header">
             <span class="search-title">
@@ -19,12 +20,15 @@
               搜索条件
             </span>
             <div class="search-actions">
-              <el-button type="info" plain icon="i-ep-setting" @click="handleSearchConfig" size="small">搜索项配置</el-button>
+              <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                <i-ep-setting class="btn-icon"></i-ep-setting>
+                搜索配置
+              </el-button>
             </div>
           </div>
         </template>
-        <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
-      </el-card>
+        </el-card>
+      </div>
     </transition>
 
     <!-- 数据表格 -->
@@ -37,42 +41,29 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="i-ep-plus" @click="handleAdd" v-hasPermi="['doctor:doctorResearchProject:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorResearchProject:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
-              icon="i-ep-edit"
+              icon="Edit"
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorResearchProject:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
-              icon="i-ep-delete"
+              icon="Delete"
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorResearchProject:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button
-              type="warning"
-              plain
-              icon="i-ep-download"
-              @click="handleExport"
-              v-hasPermi="['doctor:doctorResearchProject:export']"
-              size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="i-ep-upload" @click="handleImport" v-hasPermi="['doctor:doctorResearchProject:import']" size="small"
-              >导入</el-button
-            >
-            <el-button type="info" plain icon="i-ep-setting" @click="showFieldConfig = true" size="small">字段配置</el-button>
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorResearchProject:export']" size="small">导出</el-button>
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorResearchProject:import']" size="small">导入</el-button>
+            <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
           </div>
         </div>
@@ -81,12 +72,12 @@
       <el-table v-loading="loading" border :data="doctorResearchProjectList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
           align="center"
           :prop="field.prop"
-          :width="field.width || undefined"
+          :width="field.width"
           :min-width="field.minWidth || 120"
           resizable
         >
@@ -108,7 +99,7 @@
               <el-button
                 link
                 type="primary"
-                icon="i-ep-edit"
+                icon="Edit"
                 @click="handleUpdate(scope.row)"
                 v-hasPermi="['doctor:doctorResearchProject:edit']"
               ></el-button>
@@ -117,7 +108,7 @@
               <el-button
                 link
                 type="primary"
-                icon="i-ep-delete"
+                icon="Delete"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['doctor:doctorResearchProject:remove']"
               ></el-button>
@@ -217,7 +208,8 @@
 
   <!-- 字段配置对话框 -->
   <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-  <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+  <!-- 搜索配置对话框 -->
+  <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
 </template>
 
 <script setup name="DoctorResearchProject" lang="ts">
@@ -231,6 +223,7 @@ import {
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorResearchProjectVO, DoctorResearchProjectQuery, DoctorResearchProjectForm } from '@/api/doctor/doctorResearchProject/types';
 import { createDoctorResearchProjectFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
@@ -255,8 +248,8 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorResearchProjectFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldConfigManager = createDoctorResearchProjectFieldConfig();
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
+const fieldGroups = createDoctorResearchProjectFieldConfig();
+const fieldConfigManager = new FieldConfigManager('doctorResearchProject', fieldGroups);
 const searchConfigManager = createDoctorResearchProjectSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
@@ -346,7 +339,24 @@ const reset = () => {
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.startDate && Array.isArray(queryParams.startDate)) {
+    queryParams.startDateStart = queryParams.startDate[0];
+    queryParams.startDateEnd = queryParams.startDate[1];
+  } else {
+    queryParams.startDateStart = undefined;
+    queryParams.startDateEnd = undefined;
+  }
+
+  if (queryParams.endDate && Array.isArray(queryParams.endDate)) {
+    queryParams.endDateStart = queryParams.endDate[0];
+    queryParams.endDateEnd = queryParams.endDate[1];
+  } else {
+    queryParams.endDateStart = undefined;
+    queryParams.endDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 
@@ -452,23 +462,29 @@ onMounted(() => {
 }
 
 .page-header {
-  margin-bottom: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
 
     .title-icon {
       color: #409eff;
+      font-size: 20px;
     }
   }
 
   .page-description {
+    margin: 0;
     color: #86909c;
     font-size: 14px;
   }
@@ -498,16 +514,7 @@ onMounted(() => {
 
     .search-actions {
       .config-btn {
-        font-size: 12px;
-        padding: 4px 8px;
-        height: auto;
-        border: none;
-        color: #86909c;
-
-        &:hover {
-          color: #409eff;
-          background-color: #ecf5ff;
-        }
+        color: #409eff;
 
         .btn-icon {
           margin-right: 4px;

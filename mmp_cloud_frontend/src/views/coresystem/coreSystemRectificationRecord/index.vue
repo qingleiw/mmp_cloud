@@ -251,6 +251,7 @@ import {
   CoreSystemRectificationRecordForm
 } from '@/api/coresystem/coreSystemRectificationRecord/types';
 import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { createCoreSystemRectificationRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import { createCoreSystemRectificationRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -278,7 +279,7 @@ const dialog = reactive<DialogOption>({
 
 // 配置管理器
 const fieldConfigManager = new FieldConfigManager('coreSystemRectificationRecord', createCoreSystemRectificationRecordFieldConfig());
-const searchConfigManager = createCoreSystemRectificationRecordSearchConfig();
+const searchConfigManager = new SearchConfigManager('coreSystemRectificationRecord', createCoreSystemRectificationRecordSearchConfig());
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 // 配置对话框状态

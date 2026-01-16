@@ -48,9 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorAcademicPosition:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorAcademicPosition:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -58,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorAcademicPosition:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -68,15 +64,9 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorAcademicPosition:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorAcademicPosition:export']" size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorAcademicPosition:import']" size="small"
-              >导入</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorAcademicPosition:export']" size="small">导出</el-button>
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorAcademicPosition:import']" size="small">导入</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -95,34 +85,34 @@
       >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
-          :prop="field.prop"
-          :width="field.width || undefined"
           align="center"
+          :prop="field.prop"
+          :width="field.width"
+          :min-width="field.minWidth || 120"
+          resizable
         >
-          <template
-            #default="scope"
-            v-if="field.prop === 'startDate' || field.prop === 'endDate' || field.prop === 'createTime' || field.prop === 'updateTime'"
-          >
-            <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-          </template>
-          <template #default="scope" v-else-if="field.prop === 'delFlag'">
-            <el-tag :type="scope.row[field.prop] === 0 ? 'success' : 'danger'">
-              {{ scope.row[field.prop] === 0 ? '否' : '是' }}
+          <template #default="scope">
+            <!-- 日期字段格式化 -->
+            <span v-if="field.prop === 'startDate' || field.prop === 'endDate' || field.prop === 'createTime' || field.prop === 'updateTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}:{s}') }}
+            </span>
+            <!-- 删除标志字段 -->
+            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row[field.prop] === 0 ? 'success' : 'danger'">
+              {{ scope.row[field.prop] === 0 ? '未删除' : '已删除' }}
             </el-tag>
-          </template>
-          <template #default="scope" v-else-if="field.prop === 'isCurrent'">
-            <el-tag :type="scope.row[field.prop] === 1 ? 'success' : 'info'">
+            <!-- 是否当前字段 -->
+            <el-tag v-else-if="field.prop === 'isCurrent'" :type="scope.row[field.prop] === 1 ? 'success' : 'info'">
               {{ scope.row[field.prop] === 1 ? '是' : '否' }}
             </el-tag>
-          </template>
-          <template #default="scope" v-else-if="field.prop === 'doctorId'">
-            <span>{{ getDoctorName(scope.row.doctorId) }}</span>
-          </template>
-          <template #default="scope" v-else>
-            {{ scope.row[field.prop] }}
+            <!-- 医生ID字段 -->
+            <span v-else-if="field.prop === 'doctorId'">
+              {{ getDoctorName(scope.row.doctorId) }}
+            </span>
+            <!-- 默认显示 -->
+            <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
@@ -151,35 +141,66 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改学术任职对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="600px" append-to-body>
+
+    <!-- 添加或修改医师学术职称对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
       <el-form ref="doctorAcademicPositionFormRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col v-for="field in visibleColumns" :key="field.prop" :span="field.formSpan || 24">
-            <el-form-item :label="field.label" :prop="field.prop" v-if="field.prop !== 'createTime' && field.prop !== 'updateTime'">
-              <el-input v-if="field.type === 'input' || !field.type" v-model="form[field.prop]" :placeholder="`请输入${field.label}`" />
-              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="`请输入${field.label}`" />
+          <el-col :span="12">
+            <el-form-item label="医生ID" prop="doctorId">
+              <el-select v-model="form.doctorId" placeholder="请选择医生" filterable>
+                <el-option v-for="doctor in doctorOptions" :key="doctor.id" :label="doctor.doctorName" :value="doctor.id" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="任职机构" prop="organization">
+              <el-input v-model="form.organization" placeholder="请输入任职机构" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="学术职务" prop="position">
+              <el-input v-model="form.position" placeholder="请输入学术职务" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="职务级别" prop="positionLevel">
+              <el-input v-model="form.positionLevel" placeholder="请输入职务级别" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="开始日期" prop="startDate">
               <el-date-picker
-                v-else-if="field.type === 'datetime'"
-                clearable
-                v-model="form[field.prop]"
-                type="datetime"
-                value-format="YYYY-MM-DD HH:mm:ss"
-                :placeholder="`请选择${field.label}`"
-              />
-              <el-date-picker
-                v-else-if="field.type === 'date'"
-                clearable
-                v-model="form[field.prop]"
+                v-model="form.startDate"
                 type="date"
                 value-format="YYYY-MM-DD"
-                :placeholder="`请选择${field.label}`"
+                placeholder="请选择开始日期"
               />
-              <el-select v-else-if="field.type === 'select'" v-model="form[field.prop]" :placeholder="`请选择${field.label}`">
-                <el-option v-for="option in field.options" :key="option.value" :label="option.label" :value="option.value" />
-              </el-select>
-              <el-switch v-else-if="field.type === 'switch'" v-model="form[field.prop]" active-text="是" inactive-text="否" />
-              <span v-else>{{ form[field.prop] }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="结束日期" prop="endDate">
+              <el-date-picker
+                v-model="form.endDate"
+                type="date"
+                value-format="YYYY-MM-DD"
+                placeholder="请选择结束日期"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="是否当前" prop="isCurrent">
+              <el-switch v-model="form.isCurrent" active-text="是" inactive-text="否" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="任命文件URL" prop="appointmentUrl">
+              <el-input v-model="form.appointmentUrl" placeholder="请输入任命文件URL" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="备注" prop="remark">
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -193,8 +214,9 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <field-config-dialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -209,14 +231,15 @@ import {
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorAcademicPositionVO, DoctorAcademicPositionQuery, DoctorAcademicPositionForm } from '@/api/doctor/doctorAcademicPosition/types';
-import { createDoctorAcademicPositionFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import { createDoctorAcademicPositionFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import RightToolbar from '@/components/RightToolbar/index.vue';
 import Pagination from '@/components/Pagination/index.vue';
 import { createDoctorAcademicPositionSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
-import { parseTime } from '@/utils/ruoyi';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -224,29 +247,13 @@ const doctorAcademicPositionList = ref<DoctorAcademicPositionVO[]>([]);
 const buttonLoading = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
-const showFieldConfig = ref(false);
 const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-// 医生选项
-const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
-
 const queryFormRef = ref<ElFormInstance>();
 const doctorAcademicPositionFormRef = ref<ElFormInstance>();
-
-// 字段配置管理器
-const fieldConfigManager = createDoctorAcademicPositionFieldConfig();
-
-// 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
-fieldConfigManager.clearConfig();
-localStorage.removeItem('doctorAcademicPosition_field_config');
-
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
-const searchConfigManager = createDoctorAcademicPositionSearchConfig();
-const searchConfigVisible = ref(false);
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 const dialog = reactive<DialogOption>({
   visible: false,
@@ -267,31 +274,44 @@ const initFormData: DoctorAcademicPositionForm = {
   delFlag: undefined,
   tenantId: undefined
 };
-const data = reactive<PageData<DoctorAcademicPositionForm, DoctorAcademicPositionQuery>>({
-  form: { ...initFormData },
-  queryParams: {
-    pageNum: 1,
-    pageSize: 10,
-    doctorId: undefined,
-    organization: undefined,
-    position: undefined,
-    positionLevel: undefined,
-    startDate: undefined,
-    endDate: undefined,
-    isCurrent: undefined,
-    appointmentUrl: undefined,
-    delFlag: undefined,
-    params: {}
-  },
-  rules: {}
+
+const queryParams = reactive<DoctorAcademicPositionQuery>({
+  pageNum: 1,
+  pageSize: 10,
+  doctorId: undefined,
+  organization: undefined,
+  position: undefined,
+  positionLevel: undefined,
+  startDate: undefined,
+  endDate: undefined,
+  isCurrent: undefined,
+  appointmentUrl: undefined,
+  delFlag: undefined,
+  params: {}
 });
 
-const { queryParams, form, rules } = toRefs(data);
+const form = reactive<DoctorAcademicPositionForm>({ ...initFormData });
 
-/** 查询学术任职列表 */
+const rules = {
+  doctorId: [{ required: true, message: '医生ID不能为空', trigger: 'change' }]
+};
+
+// 医生选项
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
+
+// 字段配置管理器
+const fieldConfigManager = new FieldConfigManager('doctorAcademicPosition', createDoctorAcademicPositionFieldConfig());
+const searchConfigManager = createDoctorAcademicPositionSearchConfig();
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
+
+/** 查询医师学术职称列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listDoctorAcademicPosition(queryParams.value);
+  const res = await listDoctorAcademicPosition(queryParams);
   doctorAcademicPositionList.value = res.rows;
   total.value = res.total;
   loading.value = false;
@@ -322,13 +342,22 @@ const cancel = () => {
 
 /** 表单重置 */
 const reset = () => {
-  form.value = { ...initFormData };
+  Object.assign(form, initFormData);
   doctorAcademicPositionFormRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.startDate && Array.isArray(queryParams.startDate)) {
+    queryParams.startDateStart = queryParams.startDate[0];
+    queryParams.startDateEnd = queryParams.startDate[1];
+  } else {
+    queryParams.startDateStart = undefined;
+    queryParams.startDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 
@@ -349,7 +378,7 @@ const handleSelectionChange = (selection: DoctorAcademicPositionVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加学术任职';
+  dialog.title = '添加医师学术职称';
 };
 
 /** 修改按钮操作 */
@@ -357,9 +386,9 @@ const handleUpdate = async (row?: DoctorAcademicPositionVO) => {
   reset();
   const _id = row?.id || ids.value[0];
   const res = await getDoctorAcademicPosition(_id);
-  Object.assign(form.value, res.data);
+  Object.assign(form, res.data);
   dialog.visible = true;
-  dialog.title = '修改学术任职';
+  dialog.title = '修改医师学术职称';
 };
 
 /** 提交按钮 */
@@ -367,10 +396,10 @@ const submitForm = () => {
   doctorAcademicPositionFormRef.value?.validate(async (valid: boolean) => {
     if (valid) {
       buttonLoading.value = true;
-      if (form.value.id) {
-        await updateDoctorAcademicPosition(form.value).finally(() => (buttonLoading.value = false));
+      if (form.id) {
+        await updateDoctorAcademicPosition(form).finally(() => (buttonLoading.value = false));
       } else {
-        await addDoctorAcademicPosition(form.value).finally(() => (buttonLoading.value = false));
+        await addDoctorAcademicPosition(form).finally(() => (buttonLoading.value = false));
       }
       proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
@@ -382,7 +411,7 @@ const submitForm = () => {
 /** 删除按钮操作 */
 const handleDelete = async (row?: DoctorAcademicPositionVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除学术任职编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
+  await proxy?.$modal.confirm('是否确认删除医师学术职称编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delDoctorAcademicPosition(_ids);
   proxy?.$modal.msgSuccess('删除成功');
   await getList();
@@ -393,25 +422,35 @@ const handleExport = () => {
   proxy?.download(
     'system/doctorAcademicPosition/export',
     {
-      ...queryParams.value
+      ...queryParams
     },
     `doctorAcademicPosition_${new Date().getTime()}.xlsx`
   );
 };
 
+/** 导入按钮操作 */
+const handleImport = () => {
+  // 导入逻辑
+};
+
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+/** 搜索配置按钮操作 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
 /** 字段配置确认 */
 const handleFieldConfigConfirm = () => {
-  showFieldConfig.value = false;
+  fieldConfigVisible.value = false;
 };
 
 /** 搜索配置确认 */
 const handleSearchConfigConfirm = () => {
   searchConfigVisible.value = false;
-};
-
-/** 搜索配置 */
-const handleSearchConfig = () => {
-  searchConfigVisible.value = true;
 };
 
 onMounted(() => {
@@ -420,7 +459,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .app-container {
   background-color: #f5f5f5;
   min-height: 100vh;
@@ -429,7 +468,7 @@ onMounted(() => {
 
 .page-header {
   background: white;
-  padding: 24px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
@@ -487,7 +526,7 @@ onMounted(() => {
 
           .btn-icon {
             margin-right: 4px;
-          }
+        }
         }
       }
     }
@@ -556,7 +595,7 @@ onMounted(() => {
   text-align: right;
 }
 
-// 响应式设计
+/*  响应式设计 */
 @media (max-width: 768px) {
   .app-container {
     padding: 10px;

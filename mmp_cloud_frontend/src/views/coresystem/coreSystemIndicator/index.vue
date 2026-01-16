@@ -253,6 +253,7 @@ import {
   CoreSystemIndicatorForm
 } from '@/api/coresystem/coreSystemIndicator/types';
 import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { createCoreSystemIndicatorFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import { createCoreSystemIndicatorSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -280,7 +281,7 @@ const dialog = reactive<DialogOption>({
 
 // 配置管理器
 const fieldConfigManager = new FieldConfigManager('coreSystemIndicator', createCoreSystemIndicatorFieldConfig());
-const searchConfigManager = createCoreSystemIndicatorSearchConfig();
+const searchConfigManager = new SearchConfigManager('coreSystemIndicator', createCoreSystemIndicatorSearchConfig());
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 // 配置对话框状态

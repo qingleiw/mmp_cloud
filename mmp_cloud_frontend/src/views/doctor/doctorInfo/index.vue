@@ -580,11 +580,13 @@
 <script setup name="DoctorBasicInfo" lang="ts">
 import { listDoctorBasicInfo, getDoctorBasicInfo, delDoctorBasicInfo, addDoctorBasicInfo, updateDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO, DoctorBasicInfoQuery, DoctorBasicInfoForm } from '@/api/doctor/doctorBasicInfo/types';
-import { createDoctorBasicInfoFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { createDoctorInfoFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createDoctorBasicInfoSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { parseTime } from '@/utils/ruoyi';
 import type { FormInstance } from 'element-plus';
 import type { DialogOption, PageData } from '@/types/global';
@@ -630,13 +632,20 @@ const dialog = reactive<DialogOption>({
 });
 
 // 字段配置相关变量
-const fieldConfigManager = createDoctorBasicInfoFieldConfig();
+const fieldGroups = createDoctorInfoFieldConfig();
+const fieldConfigManager = new FieldConfigManager('doctorInfo', fieldGroups);
 
 // 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
 fieldConfigManager.clearConfig();
 localStorage.removeItem('doctorBasicInfo_field_config');
 const showFieldConfig = ref(false);
-const searchConfigManager = createDoctorBasicInfoSearchConfig();
+const searchFieldGroups = createDoctorInfoSearchConfig();
+const searchConfigManager = new SearchConfigManager('doctorInfo', searchFieldGroups);
+
+// 初始化时清除之前的搜索配置和localStorage缓存，确保新配置生效
+searchConfigManager.clearConfig();
+localStorage.removeItem('doctorInfo_search_config');
+
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
@@ -772,7 +781,32 @@ const reset = () => {
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.entryDate && Array.isArray(queryParams.entryDate)) {
+    queryParams.entryDateStart = queryParams.entryDate[0];
+    queryParams.entryDateEnd = queryParams.entryDate[1];
+  } else {
+    queryParams.entryDateStart = undefined;
+    queryParams.entryDateEnd = undefined;
+  }
+
+  if (queryParams.birthDate && Array.isArray(queryParams.birthDate)) {
+    queryParams.birthDateStart = queryParams.birthDate[0];
+    queryParams.birthDateEnd = queryParams.birthDate[1];
+  } else {
+    queryParams.birthDateStart = undefined;
+    queryParams.birthDateEnd = undefined;
+  }
+
+  if (queryParams.graduationDate && Array.isArray(queryParams.graduationDate)) {
+    queryParams.graduationDateStart = queryParams.graduationDate[0];
+    queryParams.graduationDateEnd = queryParams.graduationDate[1];
+  } else {
+    queryParams.graduationDateStart = undefined;
+    queryParams.graduationDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 

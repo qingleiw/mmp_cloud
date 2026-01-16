@@ -1,0 +1,794 @@
+import { SearchFieldGroup } from '../searchConfigManager';
+
+// 医生基本信息搜索配置
+export function createDoctorBasicInfoSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'doctorCode', label: '医生工号', type: 'input', visible: true, placeholder: '请输入医生工�? },
+        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓�? },
+        { prop: 'gender', label: '性别', type: 'select', visible: true, placeholder: '请选择性别' },
+        { prop: 'idCard', label: '身份证号', type: 'input', visible: true, placeholder: '请输入身份证�? }
+      ]
+    },
+    {
+      name: 'contact',
+      label: '联系信息',
+      fields: [
+        { prop: 'phone', label: '联系电话', type: 'input', visible: true, placeholder: '请输入联系电�? },
+        { prop: 'email', label: '电子邮箱', type: 'input', visible: true, placeholder: '请输入电子邮�? }
+      ]
+    },
+    {
+      name: 'department',
+      label: '科室信息',
+      fields: [
+        { prop: 'departmentName', label: '科室名称', type: 'input', visible: true, placeholder: '请输入科室名�? }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'title', label: '职称', type: 'select', visible: true, placeholder: '请选择职称' },
+        { prop: 'titleLevel', label: '职称级别', type: 'select', visible: true, placeholder: '请选择职称级别' },
+        { prop: 'status', label: '工作状�?, type: 'select', visible: true, placeholder: '请选择工作状�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'entryDate', label: '入职日期', type: 'daterange', visible: true, placeholder: '请选择入职日期范围' },
+        { prop: 'birthDate', label: '出生日期', type: 'daterange', visible: true, placeholder: '请选择出生日期范围' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生工作经验搜索配置
+export function createDoctorWorkExperienceSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'companyName', label: '工作单位', type: 'input', visible: true, placeholder: '请输入工作单�? },
+        { prop: 'department', label: '科室/部门', type: 'input', visible: true, placeholder: '请输入科�?部门' },
+        { prop: 'position', label: '职位', type: 'input', visible: true, placeholder: '请输入职�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'startDate', label: '开始日�?, type: 'daterange', visible: true, placeholder: '请选择开始日期范�? },
+        { prop: 'endDate', label: '结束日期', type: 'daterange', visible: true, placeholder: '请选择结束日期范围' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生学历信息搜索配置
+export function createDoctorEducationSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'educationLevel', label: '学历层次', type: 'select', visible: true, placeholder: '请选择学历层次' },
+        { prop: 'degree', label: '学位', type: 'select', visible: true, placeholder: '请选择学位' },
+        { prop: 'major', label: '专业', type: 'input', visible: true, placeholder: '请输入专�? },
+        { prop: 'schoolName', label: '学校名称', type: 'input', visible: true, placeholder: '请输入学校名�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'enrollmentDate', label: '入学日期', type: 'daterange', visible: true, placeholder: '请选择入学日期范围' },
+        { prop: 'graduationDate', label: '毕业日期', type: 'daterange', visible: true, placeholder: '请选择毕业日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'isHighest', label: '是否最高学�?, type: 'select', visible: true, placeholder: '请选择是否最高学�? },
+        { prop: 'verificationStatus', label: '验证状�?, type: 'select', visible: true, placeholder: '请选择验证状�? }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生培训记录搜索配置
+export function createDoctorTrainingSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'trainingName', label: '培训名称', type: 'input', visible: true, placeholder: '请输入培训名�? },
+        { prop: 'trainingType', label: '培训类型', type: 'select', visible: true, placeholder: '请选择培训类型' },
+        { prop: 'trainingInstitution', label: '培训机构', type: 'input', visible: true, placeholder: '请输入培训机�? },
+        { prop: 'trainingLocation', label: '培训地点', type: 'input', visible: true, placeholder: '请输入培训地�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'startDate', label: '开始日�?, type: 'daterange', visible: true, placeholder: '请选择开始日期范�? },
+        { prop: 'endDate', label: '结束日期', type: 'daterange', visible: true, placeholder: '请选择结束日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'completionStatus', label: '完成状�?, type: 'select', visible: true, placeholder: '请选择完成状�? },
+        { prop: 'assessmentResult', label: '考核结果', type: 'select', visible: true, placeholder: '请选择考核结果' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生证书信息搜索配置
+export function createDoctorCertificateSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'certificateName', label: '证书名称', type: '', visible: true, placeholder: '请输入证书名�? },
+        { prop: 'certificateType', label: '证书类型', type: '', visible: true, placeholder: '请选择证书类型' },
+        { prop: 'certificateNo', label: '证书编号', type: '', visible: true, placeholder: '请输入证书编�? },
+        { prop: 'issuingAuthority', label: '发证机构', type: '', visible: true, placeholder: '请输入发证机�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'issueDate', label: '发证日期', type: '', visible: true, placeholder: '请选择发证日期范围' },
+        { prop: 'expiryDate', label: '到期日期', type: '', visible: true, placeholder: '请选择到期日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '证书状�?, type: '', visible: true, placeholder: '请选择证书状�? },
+        { prop: 'isValid', label: '是否有效', type: '', visible: true, placeholder: '请选择是否有效' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生学术职位搜索配置
+export function createDoctorAcademicPositionSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'positionName', label: '职位名称', type: '', visible: true, placeholder: '请输入职位名�? },
+        { prop: 'positionLevel', label: '职位级别', type: '', visible: true, placeholder: '请选择职位级别' },
+        { prop: 'organizationName', label: '所属机�?, type: '', visible: true, placeholder: '请输入所属机�? },
+        { prop: 'department', label: '所属部�?, type: '', visible: true, placeholder: '请输入所属部�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'startDate', label: '任职开始日�?, type: '', visible: true, placeholder: '请选择任职开始日期范�? },
+        { prop: 'endDate', label: '任职结束日期', type: '', visible: true, placeholder: '请选择任职结束日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '职位状�?, type: '', visible: true, placeholder: '请选择职位状�? },
+        { prop: 'isCurrent', label: '是否现任', type: '', visible: true, placeholder: '请选择是否现任' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生荣誉信息搜索配置
+export function createDoctorHonorSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'honorName', label: '荣誉名称', type: '', visible: true, placeholder: '请输入荣誉名�? },
+        { prop: 'honorType', label: '荣誉类型', type: '', visible: true, placeholder: '请选择荣誉类型' },
+        { prop: 'honorLevel', label: '荣誉等级', type: '', visible: true, placeholder: '请选择荣誉等级' },
+        { prop: 'issuingAuthority', label: '颁发机构', type: '', visible: true, placeholder: '请输入颁发机�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'awardDate', label: '获奖日期', type: '', visible: true, placeholder: '请选择获奖日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '荣誉状�?, type: '', visible: true, placeholder: '请选择荣誉状�? }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生科研项目搜索配置
+export function createDoctorResearchProjectSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'projectName', label: '项目名称', type: '', visible: true, placeholder: '请输入项目名�? },
+        { prop: 'projectType', label: '项目类型', type: '', visible: true, placeholder: '请选择项目类型' },
+        { prop: 'projectLevel', label: '项目等级', type: '', visible: true, placeholder: '请选择项目等级' },
+        { prop: 'projectNo', label: '项目编号', type: '', visible: true, placeholder: '请输入项目编�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'organization',
+      label: '机构信息',
+      fields: [
+        { prop: 'organizationName', label: '承担单位', type: '', visible: true, placeholder: '请输入承担单�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'startDate', label: '开始日�?, type: '', visible: true, placeholder: '请选择开始日期范�? },
+        { prop: 'endDate', label: '结束日期', type: '', visible: true, placeholder: '请选择结束日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'projectStatus', label: '项目状�?, type: '', visible: true, placeholder: '请选择项目状�? },
+        { prop: 'approvalStatus', label: '审批状�?, type: '', visible: true, placeholder: '请选择审批状�? }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生论文发表搜索配置
+export function createDoctorPublicationSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'title', label: '论文标题', type: '', visible: true, placeholder: '请输入论文标�? },
+        { prop: 'publicationType', label: '发表类型', type: '', visible: true, placeholder: '请选择发表类型' },
+        { prop: 'journalName', label: '期刊名称', type: '', visible: true, placeholder: '请输入期刊名�? },
+        { prop: 'publicationNo', label: '发表�?, type: '', visible: true, placeholder: '请输入发表号' }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? },
+        { prop: 'correspondingAuthor', label: '通讯作�?, type: '', visible: true, placeholder: '请输入通讯作�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'publicationDate', label: '发表日期', type: '', visible: true, placeholder: '请选择发表日期范围' },
+        { prop: 'acceptanceDate', label: '接收日期', type: '', visible: true, placeholder: '请选择接收日期范围' }
+      ]
+    },
+    {
+      name: 'metrics',
+      label: '指标信息',
+      fields: [
+        { prop: 'citationCount', label: '引用次数', type: '', visible: true, placeholder: '请输入引用次数范�? },
+        { prop: 'impactFactor', label: '影响因子', type: '', visible: true, placeholder: '请输入影响因子范�? }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'publicationStatus', label: '发表状�?, type: '', visible: true, placeholder: '请选择发表状�? },
+        { prop: 'peerReviewStatus', label: '同行评审状�?, type: '', visible: true, placeholder: '请选择同行评审状�? }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生能力评估搜索配置
+export function createDoctorAbilityAssessmentSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'assessmentName', label: '评估名称', type: '', visible: true, placeholder: '请输入评估名�? },
+        { prop: 'assessmentType', label: '评估类型', type: '', visible: true, placeholder: '请选择评估类型' },
+        { prop: 'assessmentPeriod', label: '评估周期', type: '', visible: true, placeholder: '请选择评估周期' }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'assessor',
+      label: '评估人信�?,
+      fields: [
+        { prop: 'assessorName', label: '评估人姓�?, type: '', visible: true, placeholder: '请输入评估人姓名' }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'assessmentDate', label: '评估日期', type: '', visible: true, placeholder: '请选择评估日期范围' }
+      ]
+    },
+    {
+      name: 'score',
+      label: '评分信息',
+      fields: [
+        { prop: 'score', label: '得分', type: '', visible: true, placeholder: '请输入得分范�? },
+        { prop: 'grade', label: '等级', type: '', visible: true, placeholder: '请选择等级' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '评估状�?, type: '', visible: true, placeholder: '请选择评估状�? }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生职业资格搜索配置
+export function createDoctorQualificationCatalogSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'qualificationName', label: '资格名称', type: '', visible: true, placeholder: '请输入资格名�? },
+        { prop: 'qualificationType', label: '资格类型', type: '', visible: true, placeholder: '请选择资格类型' },
+        { prop: 'qualificationLevel', label: '资格等级', type: '', visible: true, placeholder: '请选择资格等级' },
+        { prop: 'qualificationNo', label: '资格编号', type: '', visible: true, placeholder: '请输入资格编�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'authority',
+      label: '机构信息',
+      fields: [
+        { prop: 'issuingAuthority', label: '发证机构', type: '', visible: true, placeholder: '请输入发证机�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'issueDate', label: '发证日期', type: '', visible: true, placeholder: '请选择发证日期范围' },
+        { prop: 'expiryDate', label: '到期日期', type: '', visible: true, placeholder: '请选择到期日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '资格状�?, type: '', visible: true, placeholder: '请选择资格状�? },
+        { prop: 'isValid', label: '是否有效', type: '', visible: true, placeholder: '请选择是否有效' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生专业评分搜索配置
+export function createDoctorProfessionalRatingSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'ratingName', label: '评分名称', type: '', visible: true, placeholder: '请输入评分名�? },
+        { prop: 'ratingType', label: '评分类型', type: '', visible: true, placeholder: '请选择评分类型' },
+        { prop: 'ratingPeriod', label: '评分周期', type: '', visible: true, placeholder: '请选择评分周期' }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'rater',
+      label: '评分人信�?,
+      fields: [
+        { prop: 'raterName', label: '评分人姓�?, type: '', visible: true, placeholder: '请输入评分人姓名' }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'ratingDate', label: '评分日期', type: '', visible: true, placeholder: '请选择评分日期范围' }
+      ]
+    },
+    {
+      name: 'score',
+      label: '评分信息',
+      fields: [
+        { prop: 'totalScore', label: '总分', type: '', visible: true, placeholder: '请输入总分范围' },
+        { prop: 'grade', label: '等级', type: '', visible: true, placeholder: '请选择等级' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '评分状�?, type: '', visible: true, placeholder: '请选择评分状�? }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生不良记录搜索配置
+export function createDoctorAdverseRecordSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'recordType', label: '记录类型', type: '', visible: true, placeholder: '请选择记录类型' },
+        { prop: 'incidentDescription', label: '事件描述', type: '', visible: true, placeholder: '请输入事件描�? },
+        { prop: 'severityLevel', label: '严重程度', type: '', visible: true, placeholder: '请选择严重程度' }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'reporter',
+      label: '报告人信�?,
+      fields: [
+        { prop: 'reporterName', label: '报告人姓�?, type: '', visible: true, placeholder: '请输入报告人姓名' }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'incidentDate', label: '事件日期', type: '', visible: true, placeholder: '请选择事件日期范围' },
+        { prop: 'reportDate', label: '报告日期', type: '', visible: true, placeholder: '请选择报告日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '处理状�?, type: '', visible: true, placeholder: '请选择处理状�? },
+        { prop: 'investigationResult', label: '调查结果', type: '', visible: true, placeholder: '请选择调查结果' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生伦理评估搜索配置
+export function createDoctorEthicsEvaluationSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'evaluationName', label: '评估名称', type: '', visible: true, placeholder: '请输入评估名�? },
+        { prop: 'evaluationType', label: '评估类型', type: '', visible: true, placeholder: '请选择评估类型' },
+        { prop: 'evaluationPeriod', label: '评估周期', type: '', visible: true, placeholder: '请选择评估周期' }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'evaluator',
+      label: '评估人信�?,
+      fields: [
+        { prop: 'evaluatorName', label: '评估人姓�?, type: '', visible: true, placeholder: '请输入评估人姓名' }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'evaluationDate', label: '评估日期', type: '', visible: true, placeholder: '请选择评估日期范围' }
+      ]
+    },
+    {
+      name: 'score',
+      label: '评分信息',
+      fields: [
+        { prop: 'score', label: '得分', type: '', visible: true, placeholder: '请输入得分范�? },
+        { prop: 'grade', label: '等级', type: '', visible: true, placeholder: '请选择等级' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '评估状�?, type: '', visible: true, placeholder: '请选择评估状�? }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生电子注册搜索配置
+export function createDoctorElectronicRegistrationSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'registrationNo', label: '注册编号', type: '', visible: true, placeholder: '请输入注册编�? },
+        { prop: 'registrationType', label: '注册类型', type: '', visible: true, placeholder: '请选择注册类型' },
+        { prop: 'registrationLevel', label: '注册等级', type: '', visible: true, placeholder: '请选择注册等级' }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'authority',
+      label: '机构信息',
+      fields: [
+        { prop: 'registrationAuthority', label: '注册机构', type: '', visible: true, placeholder: '请输入注册机�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'registrationDate', label: '注册日期', type: '', visible: true, placeholder: '请选择注册日期范围' },
+        { prop: 'expiryDate', label: '到期日期', type: '', visible: true, placeholder: '请选择到期日期范围' },
+        { prop: 'renewalDate', label: '续展日期', type: '', visible: true, placeholder: '请选择续展日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '注册状�?, type: '', visible: true, placeholder: '请选择注册状�? },
+        { prop: 'isValid', label: '是否有效', type: '', visible: true, placeholder: '请选择是否有效' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生保险代码搜索配置
+export function createDoctorInsuranceCodeSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'insuranceType', label: '保险类型', type: '', visible: true, placeholder: '请选择保险类型' },
+        { prop: 'insuranceCode', label: '保险代码', type: '', visible: true, placeholder: '请输入保险代�? },
+        { prop: 'insuranceName', label: '保险名称', type: '', visible: true, placeholder: '请输入保险名�? }
+      ]
+    },
+    {
+      name: 'doctor',
+      label: '医生信息',
+      fields: [
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? }
+      ]
+    },
+    {
+      name: 'company',
+      label: '保险公司信息',
+      fields: [
+        { prop: 'insuranceCompany', label: '保险公司', type: '', visible: true, placeholder: '请输入保险公�? }
+      ]
+    },
+    {
+      name: 'amount',
+      label: '金额信息',
+      fields: [
+        { prop: 'coverageAmount', label: '保额', type: '', visible: true, placeholder: '请输入保额范�? },
+        { prop: 'premiumAmount', label: '保费', type: '', visible: true, placeholder: '请输入保费范�? }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'effectiveDate', label: '生效日期', type: '', visible: true, placeholder: '请选择生效日期范围' },
+        { prop: 'expiryDate', label: '到期日期', type: '', visible: true, placeholder: '请选择到期日期范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'status', label: '保险状�?, type: '', visible: true, placeholder: '请选择保险状�? },
+        { prop: 'isActive', label: '是否激�?, type: '', visible: true, placeholder: '请选择是否激�? }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}
+
+// 医生信息搜索配置
+export function createDoctorInfoSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'doctorCode', label: '医生工号', type: '', visible: true, placeholder: '请输入医生工�? },
+        { prop: 'doctorName', label: '医生姓名', type: '', visible: true, placeholder: '请输入医生姓�? },
+        { prop: 'gender', label: '性别', type: '', visible: true, placeholder: '请选择性别' },
+        { prop: 'idCard', label: '身份证号', type: '', visible: true, placeholder: '请输入身份证�? }
+      ]
+    },
+    {
+      name: 'contact',
+      label: '联系信息',
+      fields: [
+        { prop: 'phone', label: '联系电话', type: '', visible: true, placeholder: '请输入联系电�? },
+        { prop: 'email', label: '电子邮箱', type: '', visible: true, placeholder: '请输入电子邮�? }
+      ]
+    },
+    {
+      name: 'department',
+      label: '科室信息',
+      fields: [
+        { prop: 'departmentName', label: '科室名称', type: '', visible: true, placeholder: '请输入科室名�? }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信�?,
+      fields: [
+        { prop: 'title', label: '职称', type: '', visible: true, placeholder: '请选择职称' },
+        { prop: 'titleLevel', label: '职称级别', type: '', visible: true, placeholder: '请选择职称级别' },
+        { prop: 'status', label: '工作状�?, type: '', visible: true, placeholder: '请选择工作状�? },
+        { prop: 'maritalStatus', label: '婚姻状况', type: '', visible: true, placeholder: '请选择婚姻状况' },
+        { prop: 'politicalStatus', label: '政治面貌', type: '', visible: true, placeholder: '请选择政治面貌' }
+      ]
+    },
+    {
+      name: 'time',
+      label: '时间范围',
+      fields: [
+        { prop: 'entryDate', label: '入职日期', type: '', visible: true, placeholder: '请选择入职日期范围' },
+        { prop: 'birthDate', label: '出生日期', type: '', visible: true, placeholder: '请选择出生日期范围' },
+        { prop: 'graduationDate', label: '毕业日期', type: '', visible: true, placeholder: '请选择毕业日期范围' }
+      ]
+    }
+  ];
+
+  return searchFieldGroups;
+}

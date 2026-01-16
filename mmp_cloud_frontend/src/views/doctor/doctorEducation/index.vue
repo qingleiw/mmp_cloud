@@ -56,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorEducation:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -66,15 +64,9 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorEducation:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorEducation:export']" size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorEducation:import']" size="small"
-              >导入</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorEducation:export']" size="small">导出</el-button>
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorEducation:import']" size="small">导入</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -87,7 +79,7 @@
       <el-table v-loading="loading" border :data="doctorEducationList" @selection-change="handleSelectionChange" class="doctor-education-table">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
           align="center"
@@ -213,7 +205,8 @@
     </el-dialog>
     <!-- 字段配置对话框 -->
     <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -222,14 +215,15 @@ import { listDoctorEducation, getDoctorEducation, delDoctorEducation, addDoctorE
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorEducationVO, DoctorEducationQuery, DoctorEducationForm } from '@/api/doctor/doctorEducation/types';
-import { createDoctorEducationFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import { createDoctorEducationFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import RightToolbar from '@/components/RightToolbar/index.vue';
 import Pagination from '@/components/Pagination/index.vue';
 import { createDoctorEducationSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
-import { parseTime } from '@/utils/ruoyi';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -241,9 +235,6 @@ const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
-
-// 医生选项
-const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 const queryFormRef = ref<ElFormInstance>();
 const doctorEducationFormRef = ref<ElFormInstance>();
@@ -268,52 +259,54 @@ const initFormData: DoctorEducationForm = {
   remark: undefined,
   delFlag: undefined
 };
-const data = reactive<PageData<DoctorEducationForm, DoctorEducationQuery>>({
-  form: { ...initFormData },
-  queryParams: {
-    pageNum: 1,
-    pageSize: 10,
-    doctorId: undefined,
-    schoolName: undefined,
-    major: undefined,
-    educationLevel: undefined,
-    degree: undefined,
-    startDate: undefined,
-    endDate: undefined,
-    isFullTime: undefined,
-    certificateNo: undefined,
-    certificateUrl: undefined,
-    delFlag: undefined,
-    params: {}
-  },
-  rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
-    doctorId: [{ required: true, message: '医生ID不能为空', trigger: 'blur' }]
-  }
+
+const queryParams = reactive<DoctorEducationQuery>({
+  pageNum: 1,
+  pageSize: 10,
+  doctorId: undefined,
+  schoolName: undefined,
+  major: undefined,
+  educationLevel: undefined,
+  degree: undefined,
+  startDate: undefined,
+  endDate: undefined,
+  isFullTime: undefined,
+  certificateNo: undefined,
+  certificateUrl: undefined,
+  delFlag: undefined,
+  params: {}
 });
 
-const { queryParams, form, rules } = toRefs(data);
+const form = reactive<DoctorEducationForm>({ ...initFormData });
 
-// 字段配置相关
-const fieldConfigManager = createDoctorEducationFieldConfig();
+const rules = {
+  doctorId: [{ required: true, message: '医生ID不能为空', trigger: 'change' }]
+};
 
-// 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
-fieldConfigManager.clearConfig();
-localStorage.removeItem('doctorEducation_field_config');
+// 医生选项
+const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
-const fieldConfigVisible = ref(false);
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
+// 字段配置管理器
+const fieldConfigManager = new FieldConfigManager('doctorEducation', createDoctorEducationFieldConfig());
 const searchConfigManager = createDoctorEducationSearchConfig();
-const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
-/** 查询教育经历列表 */
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
+
+/** 查询医师学历列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listDoctorEducation(queryParams.value);
-  doctorEducationList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
+  try {
+    const res = await listDoctorEducation(queryParams);
+    doctorEducationList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取教育经历列表失败:', error);
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 加载医生选项 */
@@ -341,13 +334,30 @@ const cancel = () => {
 
 /** 表单重置 */
 const reset = () => {
-  form.value = { ...initFormData };
+  Object.assign(form, initFormData);
   doctorEducationFormRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.startDate && Array.isArray(queryParams.startDate)) {
+    queryParams.startDateStart = queryParams.startDate[0];
+    queryParams.startDateEnd = queryParams.startDate[1];
+  } else {
+    queryParams.startDateStart = undefined;
+    queryParams.startDateEnd = undefined;
+  }
+
+  if (queryParams.endDate && Array.isArray(queryParams.endDate)) {
+    queryParams.endDateStart = queryParams.endDate[0];
+    queryParams.endDateEnd = queryParams.endDate[1];
+  } else {
+    queryParams.endDateStart = undefined;
+    queryParams.endDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 
@@ -368,7 +378,7 @@ const handleSelectionChange = (selection: DoctorEducationVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加教育经历';
+  dialog.title = '添加医师学历';
 };
 
 /** 修改按钮操作 */
@@ -376,9 +386,9 @@ const handleUpdate = async (row?: DoctorEducationVO) => {
   reset();
   const _id = row?.id || ids.value[0];
   const res = await getDoctorEducation(_id);
-  Object.assign(form.value, res.data);
+  Object.assign(form, res.data);
   dialog.visible = true;
-  dialog.title = '修改教育经历';
+  dialog.title = '修改医师学历';
 };
 
 /** 提交按钮 */
@@ -386,10 +396,10 @@ const submitForm = () => {
   doctorEducationFormRef.value?.validate(async (valid: boolean) => {
     if (valid) {
       buttonLoading.value = true;
-      if (form.value.id) {
-        await updateDoctorEducation(form.value).finally(() => (buttonLoading.value = false));
+      if (form.id) {
+        await updateDoctorEducation(form).finally(() => (buttonLoading.value = false));
       } else {
-        await addDoctorEducation(form.value).finally(() => (buttonLoading.value = false));
+        await addDoctorEducation(form).finally(() => (buttonLoading.value = false));
       }
       proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
@@ -401,7 +411,7 @@ const submitForm = () => {
 /** 删除按钮操作 */
 const handleDelete = async (row?: DoctorEducationVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除教育经历编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
+  await proxy?.$modal.confirm('是否确认删除医师学历编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delDoctorEducation(_ids);
   proxy?.$modal.msgSuccess('删除成功');
   await getList();
@@ -412,10 +422,15 @@ const handleExport = () => {
   proxy?.download(
     'system/doctorEducation/export',
     {
-      ...queryParams.value
+      ...queryParams
     },
     `doctorEducation_${new Date().getTime()}.xlsx`
   );
+};
+
+/** 导入按钮操作 */
+const handleImport = () => {
+  // 导入逻辑
 };
 
 /** 字段配置按钮操作 */
@@ -423,25 +438,19 @@ const handleFieldConfig = () => {
   fieldConfigVisible.value = true;
 };
 
-/** 字段配置确认操作 */
-const handleFieldConfigConfirm = () => {
-  fieldConfigVisible.value = false;
-  // 配置更新后可以在这里添加额外的逻辑，比如重新获取数据等
-};
-
+/** 搜索配置按钮操作 */
 const handleSearchConfig = () => {
   searchConfigVisible.value = true;
 };
-const handleSearchConfigConfirm = () => {
-  searchConfigVisible.value = false;
+
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  fieldConfigVisible.value = false;
 };
 
-/** 重置字段配置 */
-const handleFieldConfigReset = () => {
-  fieldConfigManager.clearConfig();
-  // 同时清除localStorage中的缓存
-  localStorage.removeItem('doctorEducation_field_config');
-  proxy?.$modal.msgSuccess('字段配置已重置，请刷新页面');
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
 };
 
 onMounted(() => {
@@ -458,23 +467,29 @@ onMounted(() => {
 }
 
 .page-header {
-  margin-bottom: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
 
     .title-icon {
       color: #409eff;
+      font-size: 20px;
     }
   }
 
   .page-description {
+    margin: 0;
     color: #86909c;
     font-size: 14px;
   }

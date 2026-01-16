@@ -56,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorHonor:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -66,15 +64,9 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorHonor:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorHonor:export']" size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorHonor:import']" size="small"
-              >导入</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorHonor:export']" size="small">导出</el-button>
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorHonor:import']" size="small">导入</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -87,7 +79,7 @@
       <el-table v-loading="loading" border :data="doctorHonorList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
           align="center"
@@ -166,7 +158,8 @@
 
     <!-- 字段配置对话框 -->
     <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -176,6 +169,7 @@ import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorHonorVO, DoctorHonorQuery, DoctorHonorForm } from '@/api/doctor/doctorHonor/types';
 import { createDoctorHonorFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
@@ -203,7 +197,8 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorHonorFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldConfigManager = createDoctorHonorFieldConfig();
+const fieldGroups = createDoctorHonorFieldConfig();
+const fieldConfigManager = new FieldConfigManager('doctorHonor', fieldGroups);
 
 // 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
 fieldConfigManager.clearConfig();
@@ -211,6 +206,7 @@ localStorage.removeItem('doctorHonor_field_config');
 
 const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
 const searchConfigManager = createDoctorHonorSearchConfig();
+
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
@@ -292,7 +288,16 @@ const reset = () => {
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.awardDate && Array.isArray(queryParams.awardDate)) {
+    queryParams.awardDateStart = queryParams.awardDate[0];
+    queryParams.awardDateEnd = queryParams.awardDate[1];
+  } else {
+    queryParams.awardDateStart = undefined;
+    queryParams.awardDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 
@@ -400,7 +405,7 @@ onMounted(() => {
 
 .page-header {
   background: white;
-  padding: 24px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 

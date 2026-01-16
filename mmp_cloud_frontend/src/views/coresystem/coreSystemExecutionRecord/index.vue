@@ -236,6 +236,7 @@ import {
   CoreSystemExecutionRecordForm
 } from '@/api/coresystem/coreSystemExecutionRecord/types';
 import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { createCoreSystemExecutionRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import { createCoreSystemExecutionRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -263,7 +264,7 @@ const dialog = reactive<DialogOption>({
 
 // 配置管理器
 const fieldConfigManager = new FieldConfigManager('coreSystemExecutionRecord', createCoreSystemExecutionRecordFieldConfig());
-const searchConfigManager = createCoreSystemExecutionRecordSearchConfig();
+const searchConfigManager = new SearchConfigManager('coreSystemExecutionRecord', createCoreSystemExecutionRecordSearchConfig());
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 // 配置对话框状态

@@ -9,6 +9,8 @@ export interface SearchFieldDefinition {
   visible: boolean;
   placeholder?: string;
   startProp?: string;
+  startPlaceholder?: string;  
+  endPlaceholder?: string;    
   endProp?: string;
   group?: string;
   required?: boolean;

@@ -46,7 +46,10 @@
                     <el-icon><Search /></el-icon>
                     <span>搜索条件</span>
                   </div>
-                  <el-button type="info" text icon="i-ep-setting" @click="handleSearchConfig">搜索项配置</el-button>
+                  <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                    <i-ep-setting class="btn-icon"></i-ep-setting>
+                    搜索配置
+                  </el-button>
                 </div>
               </template>
               <DynamicSearchForm
@@ -76,21 +79,15 @@
                   icon="Edit"
                   :disabled="single"
                   @click="handleUpdate()"
-                  v-hasPermi="['doctor:doctorQualificationCatalog:edit']"
-                  >修改</el-button
-                >
+                  v-hasPermi="['doctor:doctorQualificationCatalog:edit']">修改</el-button>
                 <el-button
                   type="danger"
                   plain
                   icon="Delete"
                   :disabled="multiple"
                   @click="handleDelete()"
-                  v-hasPermi="['doctor:doctorQualificationCatalog:remove']"
-                  >删除</el-button
-                >
-                <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorQualificationCatalog:export']"
-                  >导出</el-button
-                >
+                  v-hasPermi="['doctor:doctorQualificationCatalog:remove']">删除</el-button>
+                <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorQualificationCatalog:export']">导出</el-button>
                 <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
                   <i-ep-setting class="btn-icon"></i-ep-setting>
                   字段配置
@@ -103,7 +100,7 @@
           <el-table v-loading="loading" border :data="doctorQualificationCatalogList" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55" align="center" />
             <el-table-column
-              v-for="column in visibleColumns"
+              v-for="column in fieldConfigManager.getVisibleFields()"
               :key="column.prop"
               :label="column.label"
               align="center"
@@ -167,7 +164,8 @@
 
     <!-- 字段配置对话框 -->
     <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -184,13 +182,15 @@ import {
   DoctorQualificationCatalogQuery,
   DoctorQualificationCatalogForm
 } from '@/api/doctor/doctorQualificationCatalog/types';
+import { createDoctorQualificationCatalogFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import RightToolbar from '@/components/RightToolbar/index.vue';
 import Pagination from '@/components/Pagination/index.vue';
-import { createDoctorQualificationCatalogFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import { createDoctorQualificationCatalogSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { parseTime } from '@/utils/ruoyi';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -264,16 +264,14 @@ const data = reactive<PageData<DoctorQualificationCatalogForm, DoctorQualificati
 const { queryParams, form, rules } = toRefs(data);
 
 // 字段配置管理器
-const fieldConfigManager = createDoctorQualificationCatalogFieldConfig();
+const fieldGroups = createDoctorQualificationCatalogFieldConfig();
+const fieldConfigManager = new FieldConfigManager('doctorQualificationCatalog', fieldGroups);
 
 // 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
 fieldConfigManager.clearConfig();
 localStorage.removeItem('doctorQualificationCatalog_field_config');
 
 // 计算可见列
-const visibleColumns = computed(() => {
-  return fieldConfigManager.getVisibleFields();
-});
 const searchConfigManager = createDoctorQualificationCatalogSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
@@ -569,7 +567,24 @@ const reset = () => {
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.issueDate && Array.isArray(queryParams.issueDate)) {
+    queryParams.issueDateStart = queryParams.issueDate[0];
+    queryParams.issueDateEnd = queryParams.issueDate[1];
+  } else {
+    queryParams.issueDateStart = undefined;
+    queryParams.issueDateEnd = undefined;
+  }
+
+  if (queryParams.expiryDate && Array.isArray(queryParams.expiryDate)) {
+    queryParams.expiryDateStart = queryParams.expiryDate[0];
+    queryParams.expiryDateEnd = queryParams.expiryDate[1];
+  } else {
+    queryParams.expiryDateStart = undefined;
+    queryParams.expiryDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 

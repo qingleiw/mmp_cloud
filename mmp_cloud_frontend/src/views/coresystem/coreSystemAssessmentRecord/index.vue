@@ -255,6 +255,7 @@ import {
   CoreSystemAssessmentRecordForm
 } from '@/api/coresystem/coreSystemAssessmentRecord/types';
 import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { createCoreSystemAssessmentRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import { createCoreSystemAssessmentRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -283,7 +284,7 @@ const dialog = reactive<DialogOption>({
 
 // 配置管理器
 const fieldConfigManager = new FieldConfigManager('coreSystemAssessmentRecord', createCoreSystemAssessmentRecordFieldConfig());
-const searchConfigManager = createCoreSystemAssessmentRecordSearchConfig();
+const searchConfigManager = new SearchConfigManager('coreSystemAssessmentRecord', createCoreSystemAssessmentRecordSearchConfig());
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 // 配置对话框状态

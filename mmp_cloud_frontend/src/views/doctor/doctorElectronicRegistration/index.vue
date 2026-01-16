@@ -48,9 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorElectronicRegistration:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorElectronicRegistration:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -58,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorElectronicRegistration:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -68,27 +64,21 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorElectronicRegistration:remove']"
-              size="small"
-              >删除</el-button
-            >
+              size="small">删除</el-button>
             <el-button
               type="warning"
               plain
               icon="Download"
               @click="handleExport"
               v-hasPermi="['doctor:doctorElectronicRegistration:export']"
-              size="small"
-              >导出</el-button
-            >
+              size="small">导出</el-button>
             <el-button
               type="primary"
               plain
               icon="Upload"
               @click="handleImport"
               v-hasPermi="['doctor:doctorElectronicRegistration:import']"
-              size="small"
-              >导入</el-button
-            >
+              size="small">导入</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -107,7 +97,7 @@
       >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :prop="field.prop"
           :label="field.label"
@@ -202,7 +192,8 @@
       </template>
     </el-dialog>
     <!-- 字段配置对话框 -->
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
     <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
   </div>
 </template>
@@ -224,7 +215,12 @@ import {
 } from '@/api/doctor/doctorElectronicRegistration/types';
 import { createDoctorElectronicRegistrationSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
 import { createDoctorElectronicRegistrationFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import RightToolbar from '@/components/RightToolbar/index.vue';
+import Pagination from '@/components/Pagination/index.vue';
 
 // Simple parseTime implementation
 const parseTime = (time: any, pattern?: string) => {
@@ -305,11 +301,10 @@ const data = reactive<PageData<DoctorElectronicRegistrationForm, DoctorElectroni
 });
 
 // 字段配置相关变量
-const fieldConfigManager = createDoctorElectronicRegistrationFieldConfig();
+const fieldGroups = createDoctorElectronicRegistrationFieldConfig();
+const fieldConfigManager = new FieldConfigManager('doctorElectronicRegistration', fieldGroups);
 const fieldConfigVisible = ref(false);
 
-// 计算属性：可见列
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
 const searchConfigManager = createDoctorElectronicRegistrationSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
@@ -364,7 +359,14 @@ const handleFieldConfigConfirm = () => {
 };
 
 /** 搜索按钮操作 */
-const handleQuery = () => {
+const handleQuery = () => {  // 处理daterange字段
+  if (queryParams.registrationDate && Array.isArray(queryParams.registrationDate)) {
+    queryParams.registrationDateStart = queryParams.registrationDate[0];
+    queryParams.registrationDateEnd = queryParams.registrationDate[1];
+  } else {
+    queryParams.registrationDateStart = undefined;
+    queryParams.registrationDateEnd = undefined;
+  }
   queryParams.value.pageNum = 1;
   getList();
 };
@@ -458,7 +460,7 @@ onMounted(() => {
 
 .page-header {
   background: white;
-  padding: 24px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 

@@ -48,9 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorEthicsEvaluation:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorEthicsEvaluation:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -58,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorEthicsEvaluation:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -68,15 +64,9 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorEthicsEvaluation:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorEthicsEvaluation:export']" size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorEthicsEvaluation:import']" size="small"
-              >导入</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorEthicsEvaluation:export']" size="small">导出</el-button>
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorEthicsEvaluation:import']" size="small">导入</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -95,7 +85,7 @@
       >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
           align="center"
@@ -186,7 +176,8 @@
 
     <!-- 字段配置对话框 -->
     <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -202,6 +193,7 @@ import { DoctorEthicsEvaluationVO, DoctorEthicsEvaluationQuery, DoctorEthicsEval
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { createDoctorEthicsEvaluationFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
@@ -224,7 +216,8 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorEthicsEvaluationFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldConfigManager = createDoctorEthicsEvaluationFieldConfig();
+const fieldGroups = createDoctorEthicsEvaluationFieldConfig();
+const fieldConfigManager = new FieldConfigManager('doctorEthicsEvaluation', fieldGroups);
 const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
 const searchConfigManager = createDoctorEthicsEvaluationSearchConfig();
 const searchConfigVisible = ref(false);
@@ -342,7 +335,16 @@ const reset = () => {
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.evaluationDate && Array.isArray(queryParams.evaluationDate)) {
+    queryParams.evaluationDateStart = queryParams.evaluationDate[0];
+    queryParams.evaluationDateEnd = queryParams.evaluationDate[1];
+  } else {
+    queryParams.evaluationDateStart = undefined;
+    queryParams.evaluationDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 
@@ -441,7 +443,7 @@ onMounted(() => {
 
 .page-header {
   background: white;
-  padding: 24px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 

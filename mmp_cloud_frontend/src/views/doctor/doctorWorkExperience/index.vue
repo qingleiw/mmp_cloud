@@ -48,9 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorWorkExperience:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorWorkExperience:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -58,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorWorkExperience:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -68,15 +64,9 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorWorkExperience:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorWorkExperience:export']" size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorWorkExperience:import']" size="small"
-              >导入</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorWorkExperience:export']" size="small">导出</el-button>
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorWorkExperience:import']" size="small">导入</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -89,7 +79,7 @@
       <el-table v-loading="loading" border :data="doctorWorkExperienceList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
           align="center"
@@ -146,7 +136,7 @@
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
       <el-form ref="doctorWorkExperienceFormRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col v-for="field in visibleColumns" :key="field.prop" :span="field.formSpan || 24">
+          <el-col :span="12">
             <el-form-item :label="field.label" :prop="field.prop" v-if="field.prop !== 'createTime' && field.prop !== 'updateTime'">
               <el-select v-if="field.prop === 'doctorId'" v-model="form.doctorId" placeholder="请选择医生" filterable clearable style="width: 100%">
                 <el-option v-for="doctor in doctorOptions" :key="doctor.id" :label="doctor.doctorName" :value="doctor.id" />
@@ -196,7 +186,8 @@
 
     <!-- 字段配置对话框 -->
     <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -212,9 +203,11 @@ import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorWorkExperienceVO, DoctorWorkExperienceQuery, DoctorWorkExperienceForm } from '@/api/doctor/doctorWorkExperience/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createDoctorWorkExperienceFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createDoctorWorkExperienceSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { Briefcase, Search, Setting, List, Document } from '@element-plus/icons-vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -292,8 +285,8 @@ const getDoctorName = (doctorId: string | number) => {
 };
 
 // 字段配置管理器
-const fieldConfigManager = createDoctorWorkExperienceFieldConfig();
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
+const fieldGroups = createDoctorWorkExperienceFieldConfig();
+const fieldConfigManager = new FieldConfigManager('doctorWorkExperience', fieldGroups);
 const searchConfigManager = createDoctorWorkExperienceSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
@@ -321,7 +314,24 @@ const reset = () => {
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.startDate && Array.isArray(queryParams.startDate)) {
+    queryParams.startDateStart = queryParams.startDate[0];
+    queryParams.startDateEnd = queryParams.startDate[1];
+  } else {
+    queryParams.startDateStart = undefined;
+    queryParams.startDateEnd = undefined;
+  }
+
+  if (queryParams.endDate && Array.isArray(queryParams.endDate)) {
+    queryParams.endDateStart = queryParams.endDate[0];
+    queryParams.endDateEnd = queryParams.endDate[1];
+  } else {
+    queryParams.endDateStart = undefined;
+    queryParams.endDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 
@@ -436,23 +446,29 @@ onMounted(() => {
 }
 
 .page-header {
-  margin-bottom: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
 
     .title-icon {
       color: #409eff;
+      font-size: 20px;
     }
   }
 
   .page-description {
+    margin: 0;
     color: #86909c;
     font-size: 14px;
   }

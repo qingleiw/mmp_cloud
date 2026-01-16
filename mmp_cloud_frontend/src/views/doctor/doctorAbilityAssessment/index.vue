@@ -48,9 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorAbilityAssessment:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['doctor:doctorAbilityAssessment:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -58,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['doctor:doctorAbilityAssessment:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -68,15 +64,9 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['doctor:doctorAbilityAssessment:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorAbilityAssessment:export']" size="small"
-              >导出</el-button
-            >
-            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorAbilityAssessment:import']" size="small"
-              >导入</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['doctor:doctorAbilityAssessment:export']" size="small">导出</el-button>
+            <el-button type="primary" plain icon="Upload" @click="handleImport" v-hasPermi="['doctor:doctorAbilityAssessment:import']" size="small">导入</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -95,26 +85,30 @@
       >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
           align="center"
           :prop="field.prop"
-          :width="field.width || undefined"
+          :width="field.width"
+          :min-width="field.minWidth || 120"
+          resizable
         >
-          <template #default="scope" v-if="field.prop === 'assessmentDate' || field.prop === 'createTime' || field.prop === 'updateTime'">
-            <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
-          </template>
-          <template #default="scope" v-else-if="field.prop === 'delFlag'">
-            <el-tag :type="scope.row[field.prop] === 0 ? 'success' : 'danger'">
-              {{ scope.row[field.prop] === 0 ? '否' : '是' }}
+          <template #default="scope">
+            <!-- 日期字段格式化 -->
+            <span v-if="field.prop === 'assessmentDate' || field.prop === 'createTime' || field.prop === 'updateTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}:{s}') }}
+            </span>
+            <!-- 删除标志字段 -->
+            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row[field.prop] === 0 ? 'success' : 'danger'">
+              {{ scope.row[field.prop] === 0 ? '未删除' : '已删除' }}
             </el-tag>
-          </template>
-          <template #default="scope" v-else-if="field.prop === 'doctorId'">
-            <span>{{ getDoctorName(scope.row.doctorId) }}</span>
-          </template>
-          <template #default="scope" v-else>
-            {{ scope.row[field.prop] }}
+            <!-- 医生ID字段 -->
+            <span v-else-if="field.prop === 'doctorId'">
+              {{ getDoctorName(scope.row.doctorId) }}
+            </span>
+            <!-- 默认显示 -->
+            <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
@@ -143,35 +137,76 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
+
     <!-- 添加或修改医师能力评估对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="600px" append-to-body>
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
       <el-form ref="doctorAbilityAssessmentFormRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col v-for="field in visibleColumns" :key="field.prop" :span="field.formSpan || 24">
-            <el-form-item :label="field.label" :prop="field.prop" v-if="field.prop !== 'createTime' && field.prop !== 'updateTime'">
-              <el-input v-if="field.type === 'input' || !field.type" v-model="form[field.prop]" :placeholder="`请输入${field.label}`" />
-              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="`请输入${field.label}`" />
+          <el-col :span="12">
+            <el-form-item label="医生ID" prop="doctorId">
+              <el-select v-model="form.doctorId" placeholder="请选择医生" filterable>
+                <el-option v-for="doctor in doctorOptions" :key="doctor.id" :label="doctor.doctorName" :value="doctor.id" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="评估年份" prop="assessmentYear">
+              <el-input v-model="form.assessmentYear" placeholder="请输入评估年份" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="评估类型" prop="assessmentType">
+              <el-input v-model="form.assessmentType" placeholder="请输入评估类型" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="临床能力得分" prop="clinicalAbilityScore">
+              <el-input-number v-model="form.clinicalAbilityScore" :precision="2" :min="0" :max="100" placeholder="请输入临床能力得分" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="教学能力得分" prop="teachingAbilityScore">
+              <el-input-number v-model="form.teachingAbilityScore" :precision="2" :min="0" :max="100" placeholder="请输入教学能力得分" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="科研能力得分" prop="researchAbilityScore">
+              <el-input-number v-model="form.researchAbilityScore" :precision="2" :min="0" :max="100" placeholder="请输入科研能力得分" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="管理能力得分" prop="managementAbilityScore">
+              <el-input-number v-model="form.managementAbilityScore" :precision="2" :min="0" :max="100" placeholder="请输入管理能力得分" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="总得分" prop="totalScore">
+              <el-input-number v-model="form.totalScore" :precision="2" :min="0" :max="100" placeholder="请输入总得分" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="评估结果" prop="assessmentResult">
+              <el-input v-model="form.assessmentResult" placeholder="请输入评估结果" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="评估人" prop="assessor">
+              <el-input v-model="form.assessor" placeholder="请输入评估人" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="评估日期" prop="assessmentDate">
               <el-date-picker
-                v-else-if="field.type === 'datetime'"
-                clearable
-                v-model="form[field.prop]"
-                type="datetime"
-                value-format="YYYY-MM-DD HH:mm:ss"
-                :placeholder="`请选择${field.label}`"
-              />
-              <el-date-picker
-                v-else-if="field.type === 'date'"
-                clearable
-                v-model="form[field.prop]"
+                v-model="form.assessmentDate"
                 type="date"
                 value-format="YYYY-MM-DD"
-                :placeholder="`请选择${field.label}`"
+                placeholder="请选择评估日期"
               />
-              <el-select v-else-if="field.type === 'select'" v-model="form[field.prop]" :placeholder="`请选择${field.label}`">
-                <el-option v-for="option in field.options" :key="option.value" :label="option.label" :value="option.value" />
-              </el-select>
-              <el-switch v-else-if="field.type === 'switch'" v-model="form[field.prop]" active-text="是" inactive-text="否" />
-              <span v-else>{{ form[field.prop] }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="备注" prop="remark">
+              <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -185,8 +220,9 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -203,11 +239,16 @@ import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
 import { DoctorAbilityAssessmentVO, DoctorAbilityAssessmentQuery, DoctorAbilityAssessmentForm } from '@/api/doctor/doctorAbilityAssessment/types';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createDoctorAbilityAssessmentFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import RightToolbar from '@/components/RightToolbar/index.vue';
 import Pagination from '@/components/Pagination/index.vue';
 import { createDoctorAbilityAssessmentSearchConfig } from '@/utils/configs/doctor/doctorSearchConfigs';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
+import { parseTime } from '@/utils/ruoyi';
+import { getCurrentInstance, type ComponentInternalInstance, onMounted, ref, reactive, computed } from 'vue';
+import type { FormInstance as ElFormInstance } from 'element-plus';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -215,7 +256,6 @@ const doctorAbilityAssessmentList = ref<DoctorAbilityAssessmentVO[]>([]);
 const buttonLoading = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
-const showFieldConfig = ref(false);
 const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
@@ -245,55 +285,47 @@ const initFormData: DoctorAbilityAssessmentForm = {
   remark: undefined,
   delFlag: undefined
 };
-const data = reactive<PageData<DoctorAbilityAssessmentForm, DoctorAbilityAssessmentQuery>>({
-  form: { ...initFormData },
-  queryParams: {
-    pageNum: 1,
-    pageSize: 10,
-    doctorId: undefined,
-    assessmentYear: undefined,
-    assessmentType: undefined,
-    clinicalAbilityScore: undefined,
-    teachingAbilityScore: undefined,
-    researchAbilityScore: undefined,
-    managementAbilityScore: undefined,
-    totalScore: undefined,
-    assessmentResult: undefined,
-    assessor: undefined,
-    assessmentDate: undefined,
-    delFlag: undefined,
-    params: {}
-  },
-  rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
-    doctorId: [{ required: true, message: '医生ID不能为空', trigger: 'blur' }]
-  }
+
+const queryParams = reactive<DoctorAbilityAssessmentQuery>({
+  pageNum: 1,
+  pageSize: 10,
+  doctorId: undefined,
+  assessmentYear: undefined,
+  assessmentType: undefined,
+  clinicalAbilityScore: undefined,
+  teachingAbilityScore: undefined,
+  researchAbilityScore: undefined,
+  managementAbilityScore: undefined,
+  totalScore: undefined,
+  assessmentResult: undefined,
+  assessor: undefined,
+  assessmentDate: undefined,
+  delFlag: undefined,
+  params: {}
 });
 
-const { queryParams, form, rules } = toRefs(data);
+const form = reactive<DoctorAbilityAssessmentForm>({ ...initFormData });
+
+const rules = {
+  doctorId: [{ required: true, message: '医生ID不能为空', trigger: 'change' }]
+};
 
 // 医生选项
 const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 // 字段配置管理器
-const fieldConfigManager = createDoctorAbilityAssessmentFieldConfig();
-
-// 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
-fieldConfigManager.clearConfig();
-localStorage.removeItem('doctorAbilityAssessment_field_config');
-
-// 计算可见列
-const visibleColumns = computed(() => {
-  return fieldConfigManager.getVisibleFields();
-});
+const fieldConfigManager = new FieldConfigManager('doctorAbilityAssessment', createDoctorAbilityAssessmentFieldConfig());
 const searchConfigManager = createDoctorAbilityAssessmentSearchConfig();
-const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
 
 /** 查询医师能力评估列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listDoctorAbilityAssessment(queryParams.value);
+  const res = await listDoctorAbilityAssessment(queryParams);
   doctorAbilityAssessmentList.value = res.rows;
   total.value = res.total;
   loading.value = false;
@@ -324,13 +356,22 @@ const cancel = () => {
 
 /** 表单重置 */
 const reset = () => {
-  form.value = { ...initFormData };
+  Object.assign(form, initFormData);
   doctorAbilityAssessmentFormRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  // 处理daterange字段
+  if (queryParams.assessmentDate && Array.isArray(queryParams.assessmentDate)) {
+    queryParams.assessmentDateStart = queryParams.assessmentDate[0];
+    queryParams.assessmentDateEnd = queryParams.assessmentDate[1];
+  } else {
+    queryParams.assessmentDateStart = undefined;
+    queryParams.assessmentDateEnd = undefined;
+  }
+
+  queryParams.pageNum = 1;
   getList();
 };
 
@@ -359,7 +400,7 @@ const handleUpdate = async (row?: DoctorAbilityAssessmentVO) => {
   reset();
   const _id = row?.id || ids.value[0];
   const res = await getDoctorAbilityAssessment(_id);
-  Object.assign(form.value, res.data);
+  Object.assign(form, res.data);
   dialog.visible = true;
   dialog.title = '修改医师能力评估';
 };
@@ -369,10 +410,10 @@ const submitForm = () => {
   doctorAbilityAssessmentFormRef.value?.validate(async (valid: boolean) => {
     if (valid) {
       buttonLoading.value = true;
-      if (form.value.id) {
-        await updateDoctorAbilityAssessment(form.value).finally(() => (buttonLoading.value = false));
+      if (form.id) {
+        await updateDoctorAbilityAssessment(form).finally(() => (buttonLoading.value = false));
       } else {
-        await addDoctorAbilityAssessment(form.value).finally(() => (buttonLoading.value = false));
+        await addDoctorAbilityAssessment(form).finally(() => (buttonLoading.value = false));
       }
       proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
@@ -395,32 +436,35 @@ const handleExport = () => {
   proxy?.download(
     'system/doctorAbilityAssessment/export',
     {
-      ...queryParams.value
+      ...queryParams
     },
     `doctorAbilityAssessment_${new Date().getTime()}.xlsx`
   );
 };
 
-/** 字段配置确认 */
-const handleFieldConfigConfirm = (config: any) => {
-  fieldConfigManager.saveConfig(config);
-  showFieldConfig.value = false;
+/** 导入按钮操作 */
+const handleImport = () => {
+  // 导入逻辑
 };
 
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+/** 搜索配置按钮操作 */
 const handleSearchConfig = () => {
   searchConfigVisible.value = true;
 };
 
-const handleSearchConfigConfirm = () => {
-  searchConfigVisible.value = false;
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  fieldConfigVisible.value = false;
 };
 
-/** 重置字段配置 */
-const handleFieldConfigReset = () => {
-  fieldConfigManager.clearConfig();
-  // 同时清除localStorage中的缓存
-  localStorage.removeItem('doctorAbilityAssessment_field_config');
-  proxy?.$modal.msgSuccess('字段配置已重置，请刷新页面');
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
 };
 
 onMounted(() => {
@@ -429,7 +473,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .app-container {
   background-color: #f5f5f5;
   min-height: 100vh;
@@ -438,7 +482,7 @@ onMounted(() => {
 
 .page-header {
   background: white;
-  padding: 24px;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
@@ -489,8 +533,7 @@ onMounted(() => {
 
       .search-actions {
         display: flex;
-        gap: 8px;
-
+    gap: 8px;
         .config-btn {
           color: #409eff;
 
@@ -565,7 +608,7 @@ onMounted(() => {
   text-align: right;
 }
 
-// 响应式设计
+/* 响应式设计*/
 @media (max-width: 768px) {
   .app-container {
     padding: 10px;
