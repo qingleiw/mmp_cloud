@@ -178,11 +178,7 @@ export function createCoreSystemAssessmentRecordFieldConfig() {
       label: '基础信息',
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'tenantId', label: '租户ID', visible: true, group: 'basic' },
-        { prop: 'assessmentId', label: '考核ID', visible: true, required: true, group: 'basic' },
-        { prop: 'systemId', label: '制度ID', visible: true, required: true, group: 'basic' },
         { prop: 'systemName', label: '制度名称', visible: true, required: true, group: 'basic' },
-        { prop: 'assessorId', label: '考核人ID', visible: true, required: true, group: 'basic' },
         { prop: 'assessorName', label: '考核人名称', visible: true, required: true, group: 'basic' }
       ]
     },

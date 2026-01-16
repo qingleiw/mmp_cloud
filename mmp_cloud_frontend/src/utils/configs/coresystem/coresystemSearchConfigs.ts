@@ -123,7 +123,6 @@ export function createCoreSystemAssessmentRecordSearchConfig() {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'assessmentId', label: '考核ID', type: 'input', placeholder: '请输入考核ID' },
         { prop: 'systemName', label: '制度名称', type: 'input', placeholder: '请输入制度名称' },
         { prop: 'assessorName', label: '考核人名称', type: 'input', placeholder: '请输入考核人名称' }
       ]
@@ -135,7 +134,8 @@ export function createCoreSystemAssessmentRecordSearchConfig() {
         { prop: 'assessmentCycle', label: '考核周期', type: 'select', placeholder: '请选择考核周期' },
         { prop: 'assessmentScore', label: '考核分数', type: 'numberrange', placeholder: '请输入考核分数范围' },
         { prop: 'assessmentGrade', label: '考核等级', type: 'select', placeholder: '请选择考核等级' },
-        { prop: 'assessmentResult', label: '考核结果', type: 'select', placeholder: '请选择考核结果' }
+        { prop: 'assessmentResult', label: '考核结果', type: 'select', placeholder: '请选择考核结果' },
+        { prop: 'assessmentOpinion', label: '考核意见', type: 'input', placeholder: '请输入考核意见' }
       ]
     },
     {
@@ -143,6 +143,13 @@ export function createCoreSystemAssessmentRecordSearchConfig() {
       label: '时间范围',
       fields: [
         { prop: 'assessmentTime', label: '考核时间', type: 'daterange', placeholder: '请选择考核时间范围' }
+      ]
+    },
+    {
+      name: 'status',
+      label: '状态信息',
+      fields: [
+        { prop: 'delFlag', label: '删除标志', type: 'select', placeholder: '请选择删除状态' }
       ]
     }
   ];

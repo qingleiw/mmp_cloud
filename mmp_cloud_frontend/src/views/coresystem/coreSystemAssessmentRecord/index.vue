@@ -20,7 +20,7 @@
                 搜索条件
               </span>
               <div class="search-actions">
-                <el-button text type="primary" @click="toggleSearchConfig" class="config-btn">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
                   <i-ep-setting class="btn-icon"></i-ep-setting>
                   搜索配置
                 </el-button>
@@ -30,7 +30,7 @@
           <DynamicSearchForm
             ref="searchFormRef"
             :query="queryParams"
-            :visibleFields="searchConfig.getVisibleFields()"
+            :visible-fields="visibleSearchFields"
             @search="handleQuery"
             @reset="resetQuery"
           />
@@ -48,19 +48,33 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain @click="handleAdd" v-hasPermi="['coresystem:coreSystemAssessmentRecord:add']"
-              ><i-ep-plus />新增</el-button
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['coresystem:coreSystemAssessmentRecord:add']" size="small"
+              >新增</el-button
             >
-            <el-button type="success" plain :disabled="single" @click="handleUpdate()" v-hasPermi="['coresystem:coreSystemAssessmentRecord:edit']"
-              ><i-ep-edit />修改</el-button
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['coresystem:coreSystemAssessmentRecord:edit']"
+              size="small"
+              >修改</el-button
             >
-            <el-button type="danger" plain :disabled="multiple" @click="handleDelete()" v-hasPermi="['coresystem:coreSystemAssessmentRecord:remove']"
-              ><i-ep-delete />删除</el-button
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['coresystem:coreSystemAssessmentRecord:remove']"
+              size="small"
+              >删除</el-button
             >
-            <el-button type="warning" plain @click="handleExport" v-hasPermi="['coresystem:coreSystemAssessmentRecord:export']"
-              ><i-ep-download />导出</el-button
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['coresystem:coreSystemAssessmentRecord:export']" size="small"
+              >导出</el-button
             >
-            <el-button text type="primary" @click="toggleFieldConfig" class="config-btn">
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
             </el-button>
@@ -79,44 +93,59 @@
       >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleFields"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
+          align="center"
           :prop="field.prop"
           :width="field.width"
-          :align="field.align || 'center'"
-          :show-overflow-tooltip="field.showOverflowTooltip"
-          :sortable="field.sortable"
-          :resizable="true"
+          :min-width="field.minWidth || 120"
+          resizable
         >
           <template #default="scope">
             <!-- 考核时间格式化 -->
             <span v-if="field.prop === 'assessmentTime'">
               {{ parseTime(scope.row.assessmentTime, '{y}-{m}-{d}') }}
             </span>
-            <!-- 考核等级状态标签 -->
+            <!-- 考核等级标签 -->
             <el-tag v-else-if="field.prop === 'assessmentGrade'" :type="getGradeTagType(scope.row.assessmentGrade)" size="small">
-              {{ getGradeLabel(scope.row.assessmentGrade) }}
+              {{ scope.row.assessmentGrade || '未评定' }}
             </el-tag>
-            <!-- 删除标志状态标签 -->
-            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row.delFlag === 0 ? 'success' : 'danger'" size="small">
-              {{ scope.row.delFlag === 0 ? '正常' : '已删除' }}
+            <!-- 考核周期标签 -->
+            <el-tag v-else-if="field.prop === 'assessmentCycle'" :type="getCycleTagType(scope.row.assessmentCycle)" size="small">
+              {{ scope.row.assessmentCycle }}
             </el-tag>
+            <!-- 删除标志字段 -->
+            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row.delFlag === '0' ? 'success' : 'danger'" size="small">
+              {{ scope.row.delFlag === '0' ? '未删除' : '已删除' }}
+            </el-tag>
+            <!-- 创建和更新时间字段 -->
+            <span v-else-if="field.prop === 'createTime' || field.prop === 'updateTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
             <!-- 默认显示 -->
             <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" fixed="right" width="120" class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" @click="handleUpdate(scope.row)" v-hasPermi="['coresystem:coreSystemAssessmentRecord:edit']"
-                ><i-ep-edit
-              /></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['coresystem:coreSystemAssessmentRecord:edit']"
+              ></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="danger" @click="handleDelete(scope.row)" v-hasPermi="['coresystem:coreSystemAssessmentRecord:remove']"
-                ><i-ep-delete
-              /></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['coresystem:coreSystemAssessmentRecord:remove']"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -126,92 +155,93 @@
     </el-card>
 
     <!-- 添加或修改制度考核记录对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="600px" append-to-body class="assessment-dialog">
-      <el-form ref="coreSystemAssessmentRecordFormRef" :model="form" :rules="rules" label-width="100px">
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
+      <el-form ref="coreSystemAssessmentRecordFormRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="制度名称" prop="systemName">
-              <el-input v-model="form.systemName" placeholder="请输入制度名称" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="考核人名称" prop="assessorName">
-              <el-input v-model="form.assessorName" placeholder="请输入考核人名称" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="考核时间" prop="assessmentTime">
+          <el-col
+            v-for="field in fieldConfigManager.getFormFields()"
+            :key="field.prop"
+            :span="field.colSpan || 12"
+          >
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules">
+              <!-- 考核周期选择框 -->
+              <el-select v-if="field.prop === 'assessmentCycle'" v-model="form.assessmentCycle" placeholder="请选择考核周期" clearable style="width: 100%">
+                <el-option label="月度" value="月度" />
+                <el-option label="季度" value="季度" />
+                <el-option label="半年度" value="半年度" />
+                <el-option label="年度" value="年度" />
+              </el-select>
+              <!-- 考核等级选择框 -->
+              <el-select v-else-if="field.prop === 'assessmentGrade'" v-model="form.assessmentGrade" placeholder="请选择考核等级" clearable style="width: 100%">
+                <el-option label="优秀" value="优秀" />
+                <el-option label="良好" value="良好" />
+                <el-option label="合格" value="合格" />
+                <el-option label="不合格" value="不合格" />
+              </el-select>
+              <!-- 删除标志选择框 -->
+              <el-select v-else-if="field.prop === 'delFlag'" v-model="form.delFlag" placeholder="请选择删除标志" clearable style="width: 100%">
+                <el-option label="未删除" value="0" />
+                <el-option label="已删除" value="1" />
+              </el-select>
+              <!-- 考核时间选择器 -->
               <el-date-picker
+                v-else-if="field.prop === 'assessmentTime'"
                 clearable
                 v-model="form.assessmentTime"
                 type="datetime"
                 value-format="YYYY-MM-DD HH:mm:ss"
                 placeholder="请选择考核时间"
-                class="w-full"
+                style="width: 100%"
               />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="考核周期" prop="assessmentCycle">
-              <el-select v-model="form.assessmentCycle" placeholder="请选择考核周期" class="w-full">
-                <el-option label="月度" value="月度" />
-                <el-option label="季度" value="季度" />
-                <el-option label="年度" value="年度" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="考核分数" prop="assessmentScore">
+              <!-- 考核分数输入框 -->
               <el-input-number
+                v-else-if="field.prop === 'assessmentScore'"
                 v-model="form.assessmentScore"
                 :min="0"
                 :max="100"
                 :precision="1"
                 controls-position="right"
                 placeholder="请输入考核分数"
-                class="w-full"
+                style="width: 100%"
+              />
+              <!-- 文本域 -->
+              <el-input
+                v-else-if="field.type === 'textarea'"
+                v-model="form[field.prop]"
+                type="textarea"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                :maxlength="field.maxlength"
+                :show-word-limit="field.showWordLimit"
+                :rows="field.rows || 3"
+              />
+              <!-- 默认文本输入框 -->
+              <el-input
+                v-else
+                v-model="form[field.prop]"
+                :placeholder="field.placeholder || `请输入${field.label}`"
               />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="考核等级" prop="assessmentGrade">
-              <el-select v-model="form.assessmentGrade" placeholder="请选择考核等级" class="w-full">
-                <el-option label="优秀" value="优秀" />
-                <el-option label="良好" value="良好" />
-                <el-option label="合格" value="合格" />
-                <el-option label="不合格" value="不合格" />
-              </el-select>
-            </el-form-item>
-          </el-col>
         </el-row>
-        <el-form-item label="考核结果" prop="assessmentResult">
-          <el-input v-model="form.assessmentResult" type="textarea" :rows="3" placeholder="请输入考核结果" />
-        </el-form-item>
-        <el-form-item label="考核意见" prop="assessmentOpinion">
-          <el-input v-model="form.assessmentOpinion" type="textarea" :rows="3" placeholder="请输入考核意见" />
-        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm"><i-ep-check />确 定</el-button>
-          <el-button @click="cancel"><i-ep-close />取 消</el-button>
+          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="fieldConfigVisible" :fieldConfigManager="fieldConfig" @confirm="handleFieldConfigConfirm" />
-
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <!-- 搜索配置对话框 -->
-    <SearchConfigDialog v-model="searchConfigVisible" :searchConfigManager="searchConfig" @confirm="handleSearchConfigConfirm" />
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
 <script setup name="CoreSystemAssessmentRecord" lang="ts">
+import { ref, reactive, toRefs, computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
+import type { FormInstance } from 'element-plus';
 import {
   listCoreSystemAssessmentRecord,
   getCoreSystemAssessmentRecord,
@@ -224,10 +254,11 @@ import {
   CoreSystemAssessmentRecordQuery,
   CoreSystemAssessmentRecordForm
 } from '@/api/coresystem/coreSystemAssessmentRecord/types';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import { createCoreSystemAssessmentRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import { createCoreSystemAssessmentRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
-import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -241,21 +272,23 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-// 字段配置和搜索配置
-const fieldConfigVisible = ref(false);
-const searchConfigVisible = ref(false);
-const fieldConfig = createCoreSystemAssessmentRecordFieldConfig();
-const searchConfig = createCoreSystemAssessmentRecordSearchConfig();
-const visibleFields = computed(() => fieldConfig.getVisibleFields());
-
-const queryFormRef = ref<ElFormInstance>();
-const coreSystemAssessmentRecordFormRef = ref<ElFormInstance>();
+const queryFormRef = ref<FormInstance>();
+const coreSystemAssessmentRecordFormRef = ref<FormInstance>();
 const searchFormRef = ref();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 配置管理器
+const fieldConfigManager = new FieldConfigManager('coreSystemAssessmentRecord', createCoreSystemAssessmentRecordFieldConfig());
+const searchConfigManager = createCoreSystemAssessmentRecordSearchConfig();
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
 
 const initFormData: CoreSystemAssessmentRecordForm = {
   id: undefined,
@@ -272,6 +305,7 @@ const initFormData: CoreSystemAssessmentRecordForm = {
   assessmentOpinion: undefined,
   delFlag: undefined
 };
+
 const data = reactive<PageData<CoreSystemAssessmentRecordForm, CoreSystemAssessmentRecordQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -296,9 +330,9 @@ const data = reactive<PageData<CoreSystemAssessmentRecordForm, CoreSystemAssessm
     assessorId: [{ required: true, message: '考核人ID不能为空', trigger: 'blur' }],
     assessorName: [{ required: true, message: '考核人名称不能为空', trigger: 'blur' }],
     assessmentTime: [{ required: true, message: '考核时间不能为空', trigger: 'blur' }],
-    assessmentCycle: [{ required: true, message: '考核周期(monthly:月度,quarterly:季度,half-yearly:半年度,yearly:年度)不能为空', trigger: 'blur' }],
+    assessmentCycle: [{ required: true, message: '考核周期不能为空', trigger: 'blur' }],
     assessmentScore: [{ required: true, message: '考核分数不能为空', trigger: 'blur' }],
-    assessmentGrade: [{ required: true, message: '考核等级(A:优秀,B:良好,C:合格,D:不合格)不能为空', trigger: 'blur' }],
+    assessmentGrade: [{ required: true, message: '考核等级不能为空', trigger: 'blur' }],
     assessmentResult: [{ required: true, message: '考核结果不能为空', trigger: 'blur' }]
   }
 });
@@ -343,44 +377,6 @@ const handleSelectionChange = (selection: CoreSystemAssessmentRecordVO[]) => {
   ids.value = selection.map((item) => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-};
-
-/** 字段配置相关函数 */
-const toggleFieldConfig = () => {
-  fieldConfigVisible.value = true;
-};
-
-const handleFieldConfigConfirm = () => {
-  fieldConfigVisible.value = false;
-};
-
-/** 搜索配置相关函数 */
-const toggleSearchConfig = () => {
-  searchConfigVisible.value = true;
-};
-
-const handleSearchConfigConfirm = () => {
-  searchConfigVisible.value = false;
-};
-
-/** 考核等级标签相关函数 */
-const getGradeTagType = (grade: string) => {
-  switch (grade) {
-    case '优秀':
-      return 'success';
-    case '良好':
-      return 'info';
-    case '合格':
-      return 'warning';
-    case '不合格':
-      return 'danger';
-    default:
-      return 'primary';
-  }
-};
-
-const getGradeLabel = (grade: string) => {
-  return grade || '未评定';
 };
 
 /** 新增按钮操作 */
@@ -437,71 +433,119 @@ const handleExport = () => {
   );
 };
 
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+/** 搜索配置按钮操作 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  fieldConfigVisible.value = false;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
+};
+
+/** 获取考核等级标签类型 */
+const getGradeTagType = (grade: string) => {
+  const gradeMap: Record<string, string> = {
+    '优秀': 'success',
+    '良好': 'primary',
+    '合格': 'warning',
+    '不合格': 'danger'
+  };
+  return gradeMap[grade] || 'info';
+};
+
+/** 获取考核周期标签类型 */
+const getCycleTagType = (cycle: string) => {
+  const cycleMap: Record<string, string> = {
+    '月度': 'primary',
+    '季度': 'success',
+    '半年度': 'warning',
+    '年度': 'danger'
+  };
+  return cycleMap[cycle] || 'info';
+};
+
 onMounted(() => {
   getList();
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .app-container {
-  padding: 20px;
   background-color: #f5f5f5;
-  min-height: calc(100vh - 84px);
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .page-header {
-  margin-bottom: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
 
     .title-icon {
       color: #409eff;
+      font-size: 20px;
     }
   }
 
   .page-description {
+    margin: 0;
     color: #86909c;
     font-size: 14px;
   }
 }
 
-.search-container {
-  .search-card {
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.search-card {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-    .search-header {
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .search-title {
+      font-weight: 600;
+      color: #1d2129;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      gap: 6px;
 
-      .search-title {
-        font-weight: 600;
-        color: #1d2129;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-
-        .search-icon {
-          color: #409eff;
-        }
+      .search-icon {
+        color: #409eff;
       }
+    }
 
-      .search-actions {
-        .config-btn {
-          color: #409eff;
+    .search-actions {
+      .config-btn {
+        color: #409eff;
 
-          .btn-icon {
-            margin-right: 4px;
-          }
+        .btn-icon {
+          margin-right: 4px;
         }
       }
     }
@@ -562,23 +606,6 @@ onMounted(() => {
   }
 }
 
-.assessment-dialog {
-  :deep(.el-dialog__body) {
-    padding: 24px;
-  }
-
-  .w-full {
-    width: 100%;
-  }
-}
-
-.dialog-footer {
-  text-align: right;
-  padding-top: 16px;
-  border-top: 1px solid #ebeef5;
-}
-
-// 响应式设计
 @media (max-width: 768px) {
   .app-container {
     padding: 12px;
@@ -598,13 +625,6 @@ onMounted(() => {
     .table-actions {
       width: 100%;
       justify-content: flex-end;
-    }
-  }
-
-  .assessment-dialog {
-    :deep(.el-dialog) {
-      width: 95% !important;
-      margin: 5vh auto;
     }
   }
 }
