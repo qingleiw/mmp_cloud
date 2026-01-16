@@ -26,7 +26,7 @@ export * from './coresystem';
 export * from './ntp';
 
 // 投诉纠纷模块配置导出
-export * from './complaindispute';
+export * from './ComplaintDispute';
 
 // 台账模块配置导出
 export * from './ledger';

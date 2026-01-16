@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { ComplaintDisputeVO, ComplaintDisputeForm, ComplaintDisputeQuery } from '@/api/complaindispute/complaintDispute/types';
+import { ComplaintDisputeVO, ComplaintDisputeForm, ComplaintDisputeQuery } from '@/api/complaintdispute/complaintDispute/types';
 
 /**
  * 查询投诉纠纷主列表
@@ -10,7 +10,7 @@ import { ComplaintDisputeVO, ComplaintDisputeForm, ComplaintDisputeQuery } from 
 
 export const listComplaintDispute = (query?: ComplaintDisputeQuery): AxiosPromise<ComplaintDisputeVO[]> => {
   return request({
-    url: '/complaindispute/complaintDispute/list',
+    url: '/complaintdispute/complaintDispute/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listComplaintDispute = (query?: ComplaintDisputeQuery): AxiosPromis
  */
 export const getComplaintDispute = (id: string | number): AxiosPromise<ComplaintDisputeVO> => {
   return request({
-    url: '/complaindispute/complaintDispute/' + id,
+    url: '/complaintdispute/complaintDispute/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getComplaintDispute = (id: string | number): AxiosPromise<Complaint
  */
 export const addComplaintDispute = (data: ComplaintDisputeForm) => {
   return request({
-    url: '/complaindispute/complaintDispute',
+    url: '/complaintdispute/complaintDispute',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addComplaintDispute = (data: ComplaintDisputeForm) => {
  */
 export const updateComplaintDispute = (data: ComplaintDisputeForm) => {
   return request({
-    url: '/complaindispute/complaintDispute',
+    url: '/complaintdispute/complaintDispute',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateComplaintDispute = (data: ComplaintDisputeForm) => {
  */
 export const delComplaintDispute = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/complaindispute/complaintDispute/' + id,
+    url: '/complaintdispute/complaintDispute/' + id,
     method: 'delete'
   });
 };

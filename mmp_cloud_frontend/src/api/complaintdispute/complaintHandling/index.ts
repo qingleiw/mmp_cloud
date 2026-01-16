@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { ComplaintHandlingVO, ComplaintHandlingForm, ComplaintHandlingQuery } from '@/api/complaindispute/complaintHandling/types';
+import { ComplaintHandlingVO, ComplaintHandlingForm, ComplaintHandlingQuery } from '@/api/complaintdispute/complaintHandling/types';
 
 /**
  * 查询投诉处理记录列表
@@ -10,7 +10,7 @@ import { ComplaintHandlingVO, ComplaintHandlingForm, ComplaintHandlingQuery } fr
 
 export const listComplaintHandling = (query?: ComplaintHandlingQuery): AxiosPromise<ComplaintHandlingVO[]> => {
   return request({
-    url: '/complaindispute/complaintHandling/list',
+    url: '/complaintdispute/complaintHandling/list',
     method: 'get',
     params: query
   });
@@ -22,7 +22,7 @@ export const listComplaintHandling = (query?: ComplaintHandlingQuery): AxiosProm
  */
 export const getComplaintHandling = (id: string | number): AxiosPromise<ComplaintHandlingVO> => {
   return request({
-    url: '/complaindispute/complaintHandling/' + id,
+    url: '/complaintdispute/complaintHandling/' + id,
     method: 'get'
   });
 };
@@ -33,7 +33,7 @@ export const getComplaintHandling = (id: string | number): AxiosPromise<Complain
  */
 export const addComplaintHandling = (data: ComplaintHandlingForm) => {
   return request({
-    url: '/complaindispute/complaintHandling',
+    url: '/complaintdispute/complaintHandling',
     method: 'post',
     data: data
   });
@@ -45,7 +45,7 @@ export const addComplaintHandling = (data: ComplaintHandlingForm) => {
  */
 export const updateComplaintHandling = (data: ComplaintHandlingForm) => {
   return request({
-    url: '/complaindispute/complaintHandling',
+    url: '/complaintdispute/complaintHandling',
     method: 'put',
     data: data
   });
@@ -57,7 +57,7 @@ export const updateComplaintHandling = (data: ComplaintHandlingForm) => {
  */
 export const delComplaintHandling = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/complaindispute/complaintHandling/' + id,
+    url: '/complaintdispute/complaintHandling/' + id,
     method: 'delete'
   });
 };

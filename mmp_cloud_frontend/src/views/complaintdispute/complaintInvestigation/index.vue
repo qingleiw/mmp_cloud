@@ -210,15 +210,15 @@ import {
   delComplaintInvestigation,
   addComplaintInvestigation,
   updateComplaintInvestigation
-} from '@/api/complaindispute/complaintInvestigation';
+} from '@/api/complaintdispute/complaintInvestigation';
 import {
   ComplaintInvestigationVO,
   ComplaintInvestigationQuery,
   ComplaintInvestigationForm
-} from '@/api/complaindispute/complaintInvestigation/types';
+} from '@/api/complaintdispute/complaintInvestigation/types';
 import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
-import { createComplaintInvestigationFieldConfig } from '@/utils/configs/complaindispute/complaintinvestigationFieldConfigs';
-import { createComplaintInvestigationSearchConfig } from '@/utils/configs/complaindispute/complaintinvestigationSearchConfigs';
+import { createComplaintInvestigationFieldConfig } from '@/utils/configs/complaintdispute/complaintinvestigationFieldConfigs';
+import { createComplaintInvestigationSearchConfig } from '@/utils/configs/complaintdispute/complaintinvestigationSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

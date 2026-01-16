@@ -4,7 +4,7 @@ import {
   ComplaintInvestigationVO,
   ComplaintInvestigationForm,
   ComplaintInvestigationQuery
-} from '@/api/complaindispute/complaintInvestigation/types';
+} from '@/api/complaintdispute/complaintInvestigation/types';
 
 /**
  * 查询投诉调查记录列表
@@ -14,7 +14,7 @@ import {
 
 export const listComplaintInvestigation = (query?: ComplaintInvestigationQuery): AxiosPromise<ComplaintInvestigationVO[]> => {
   return request({
-    url: '/complaindispute/complaintInvestigation/list',
+    url: '/complaintdispute/complaintInvestigation/list',
     method: 'get',
     params: query
   });
@@ -26,7 +26,7 @@ export const listComplaintInvestigation = (query?: ComplaintInvestigationQuery):
  */
 export const getComplaintInvestigation = (id: string | number): AxiosPromise<ComplaintInvestigationVO> => {
   return request({
-    url: '/complaindispute/complaintInvestigation/' + id,
+    url: '/complaintdispute/complaintInvestigation/' + id,
     method: 'get'
   });
 };
@@ -37,7 +37,7 @@ export const getComplaintInvestigation = (id: string | number): AxiosPromise<Com
  */
 export const addComplaintInvestigation = (data: ComplaintInvestigationForm) => {
   return request({
-    url: '/complaindispute/complaintInvestigation',
+    url: '/complaintdispute/complaintInvestigation',
     method: 'post',
     data: data
   });
@@ -49,7 +49,7 @@ export const addComplaintInvestigation = (data: ComplaintInvestigationForm) => {
  */
 export const updateComplaintInvestigation = (data: ComplaintInvestigationForm) => {
   return request({
-    url: '/complaindispute/complaintInvestigation',
+    url: '/complaintdispute/complaintInvestigation',
     method: 'put',
     data: data
   });
@@ -61,7 +61,7 @@ export const updateComplaintInvestigation = (data: ComplaintInvestigationForm) =
  */
 export const delComplaintInvestigation = (id: string | number | Array<string | number>) => {
   return request({
-    url: '/complaindispute/complaintInvestigation/' + id,
+    url: '/complaintdispute/complaintInvestigation/' + id,
     method: 'delete'
   });
 };

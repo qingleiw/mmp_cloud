@@ -63,7 +63,7 @@ export function createComplaintDisputeFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager(fieldGroups);
+  return fieldGroups;
 }
 
 // 投诉处理字段配置
@@ -109,7 +109,7 @@ export function createComplaintHandlingFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager(fieldGroups);
+  return fieldGroups;
 }
 
 // 投诉调查字段配置
@@ -148,5 +148,5 @@ export function createComplaintInvestigationFieldConfig() {
     }
   ];
 
-  return new FieldConfigManager(fieldGroups);
+  return fieldGroups;
 }
