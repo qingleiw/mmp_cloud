@@ -1,4 +1,4 @@
-import { SearchConfigManager, SearchFieldGroup } from '../../searchConfig';
+import { SearchConfigManager, SearchFieldGroup } from '../searchConfigManager';
 
 // 科室资格目录搜索配置
 export function createDepartmentQualificationDirectorySearchConfig() {

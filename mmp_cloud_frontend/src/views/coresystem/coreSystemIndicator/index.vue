@@ -261,10 +261,10 @@ import {
   addCoreSystemIndicator,
   updateCoreSystemIndicator
 } from '@/api/coresystem/coreSystemIndicator';
-import { createCoreSystemIndicatorFieldConfig } from '@/utils/configs/coresystem/FieldConfigs';
+import { createCoreSystemIndicatorFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createCoreSystemIndicatorSearchConfig } from '@/utils/configs/coresystem/SearchConfigs';
+import { createCoreSystemIndicatorSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const coreSystemIndicatorList = ref<CoreSystemIndicatorVO[]>([]);

@@ -262,10 +262,10 @@ import {
   QualificationRiskMonitorQuery,
   QualificationRiskMonitorForm
 } from '@/api/qualification/qualificationRiskMonitor/types';
-import { FieldConfigManager } from '@/utils/fieldConfigManager';
-import { createQualificationRiskMonitorFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
-import { SearchConfigManager } from '@/utils/searchConfig';
-import { createQualificationRiskMonitorSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { createQualificationRiskMonitorFieldConfig } from '@/utils/configs/qualification/qualificationFieldConfigs';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
+import { createQualificationRiskMonitorSearchConfig } from '@/utils/configs/qualification/qualificationSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

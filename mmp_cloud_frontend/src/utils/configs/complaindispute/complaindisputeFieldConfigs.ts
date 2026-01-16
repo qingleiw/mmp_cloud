@@ -1,4 +1,4 @@
-import { FieldConfigManager, FieldGroup } from '../../fieldConfigManager';
+import { FieldConfigManager, FieldGroup } from '../fieldConfigManager';
 
 // 投诉纠纷字段配置
 export function createComplaintDisputeFieldConfig() {
@@ -8,29 +8,29 @@ export function createComplaintDisputeFieldConfig() {
       label: '基础信息',
       fields: [
         { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'complaintNo', label: '投诉编号', visible: true, required: true, group: 'basic' },
-        { prop: 'complaintType', label: '投诉类型', visible: true, required: true, group: 'basic' },
-        { prop: 'complaintSource', label: '投诉来源', visible: true, group: 'basic' },
-        { prop: 'complaintTime', label: '投诉时间', visible: true, width: '160', group: 'basic' },
-        { prop: 'currentStatus', label: '当前状态', visible: true, group: 'basic' },
-        { prop: 'priorityLevel', label: '优先级', visible: true, group: 'basic' }
+        { prop: 'complaintNo', label: '投诉编号', visible: true, required: true, type: 'input', group: 'basic' },
+        { prop: 'complaintType', label: '投诉类型', visible: true, required: true, type: 'select', group: 'basic' },
+        { prop: 'complaintSource', label: '投诉来源', visible: true, type: 'input', group: 'basic' },
+        { prop: 'complaintTime', label: '投诉时间', visible: true, type: 'datetime', width: '160', group: 'basic' },
+        { prop: 'currentStatus', label: '当前状态', visible: true, type: 'select', group: 'basic' },
+        { prop: 'priorityLevel', label: '优先级', visible: true, type: 'select', group: 'basic' }
       ]
     },
     {
       name: 'complainant',
       label: '投诉人信息',
       fields: [
-        { prop: 'complainantName', label: '投诉人姓名', visible: true, required: true, group: 'complainant' },
-        { prop: 'complainantContact', label: '投诉人联系方式', visible: true, group: 'complainant' }
+        { prop: 'complainantName', label: '投诉人姓名', visible: true, required: true, type: 'input', group: 'complainant' },
+        { prop: 'complainantContact', label: '投诉人联系方式', visible: true, type: 'input', group: 'complainant' }
       ]
     },
     {
       name: 'patient',
       label: '患者信息',
       fields: [
-        { prop: 'patientName', label: '患者姓名', visible: true, group: 'patient' },
-        { prop: 'doctorName', label: '涉及医师姓名', visible: true, group: 'patient' },
-        { prop: 'departmentName', label: '涉及科室名称', visible: true, group: 'patient' }
+        { prop: 'patientName', label: '患者姓名', visible: true, type: 'input', group: 'patient' },
+        { prop: 'doctorName', label: '涉及医师姓名', visible: true, type: 'input', group: 'patient' },
+        { prop: 'departmentName', label: '涉及科室名称', visible: true, type: 'input', group: 'patient' }
       ]
     },
     {
@@ -44,7 +44,7 @@ export function createComplaintDisputeFieldConfig() {
       name: 'dispute',
       label: '纠纷信息',
       fields: [
-        { prop: 'isDispute', label: '是否构成纠纷', visible: true, group: 'dispute' },
+        { prop: 'isDispute', label: '是否构成纠纷', visible: true, type: 'select', group: 'dispute' },
         { prop: 'disputeConfirmation', label: '纠纷确认说明', visible: true, type: 'textarea', group: 'dispute' },
         { prop: 'finalResult', label: '最终处理结果', visible: true, type: 'textarea', group: 'dispute' }
       ]

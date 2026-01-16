@@ -1,4 +1,4 @@
-import { SearchConfigManager, SearchFieldGroup } from '../../searchConfig';
+import { SearchConfigManager, SearchFieldGroup } from '../searchConfigManager';
 
 // 重大手术申请搜索配置
 export function createMajorSurgeryApplicationSearchConfig() {

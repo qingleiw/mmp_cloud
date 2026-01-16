@@ -270,11 +270,11 @@ import {
   CoreSystemRectificationRecordQuery,
   CoreSystemRectificationRecordForm
 } from '@/api/coresystem/coreSystemRectificationRecord/types';
-import { createCoreSystemRectificationRecordFieldConfig } from '@/utils/configs/coresystem/FieldConfigs';
+import { createCoreSystemRectificationRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
-import { createCoreSystemRectificationRecordSearchConfig } from '@/utils/configs/coresystem/SearchConfigs';
+import { createCoreSystemRectificationRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 
 // Simple parseTime implementation
 const parseTime = (time: any, pattern?: string) => {

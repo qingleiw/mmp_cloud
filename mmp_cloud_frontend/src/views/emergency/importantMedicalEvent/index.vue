@@ -26,7 +26,13 @@
 
     <!-- 搜索区域 -->
     <div class="search-card" v-show="showSearch">
-      <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
+      <DynamicSearchForm
+        ref="searchFormRef"
+        :search-config="searchConfig"
+        :query-params="queryParams"
+        @search="handleQuery"
+        @reset="resetQuery"
+      />
     </div>
 
     <!-- 表格区域 -->
@@ -34,25 +40,17 @@
       <el-table v-loading="loading" border :data="importantMedicalEventList" @selection-change="handleSelectionChange" class="modern-table">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in fieldConfigManager.getVisibleFields()"
+          v-for="field in fieldConfig.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
+          :align="'center'"
           :prop="field.prop"
           :width="field.width"
-          align="center"
-          :resizable="true"
+          v-show="field.visible"
         >
-          <template #default="scope" v-if="field.prop === 'eventTime'">
-            <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
-          </template>
-          <template #default="scope" v-else-if="field.prop === 'eventType'">
-            <span>{{ getEventTypeLabel(scope.row[field.prop]) }}</span>
-          </template>
-          <template #default="scope" v-else-if="field.prop === 'notifyUsers'">
-            <span>{{ formatNotifyUsers(scope.row[field.prop]) }}</span>
-          </template>
-          <template #default="scope" v-else>
-            <span>{{ scope.row[field.prop] }}</span>
+          <template #default="scope">
+            <span v-if="field.type === 'datetime'">{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
+            <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width" width="120">
@@ -142,60 +140,15 @@
 
     <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     <!-- 添加或修改重要医疗事件对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="importantMedicalEventFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="事件编号" prop="eventNo">
-          <el-input v-model="form.eventNo" placeholder="请输入事件编号" />
-        </el-form-item>
-        <el-form-item label="患者ID" prop="patientId">
-          <el-input v-model="form.patientId" placeholder="请输入患者ID" />
-        </el-form-item>
-        <el-form-item label="患者姓名" prop="patientName">
-          <el-input v-model="form.patientName" placeholder="请输入患者姓名" />
-        </el-form-item>
-        <el-form-item label="就诊号" prop="visitNo">
-          <el-input v-model="form.visitNo" placeholder="请输入就诊号" />
-        </el-form-item>
-        <el-form-item label="科室ID" prop="departmentId">
-          <el-input v-model="form.departmentId" placeholder="请输入科室ID" />
-        </el-form-item>
-        <el-form-item label="科室名称" prop="departmentName">
-          <el-input v-model="form.departmentName" placeholder="请输入科室名称" />
-        </el-form-item>
-        <el-form-item label="责任医生" prop="responsibleDoctor">
-          <el-input v-model="form.responsibleDoctor" placeholder="请输入责任医生" />
-        </el-form-item>
-        <el-form-item label="事件时间" prop="eventTime">
-          <el-date-picker clearable v-model="form.eventTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择事件时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="事件描述" prop="eventDescription">
-          <el-input v-model="form.eventDescription" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="事件级别" prop="eventLevel">
-          <el-input v-model="form.eventLevel" placeholder="请输入事件级别" />
-        </el-form-item>
-        <el-form-item label="通知人员列表JSON" prop="notifyUsers">
-          <el-input v-model="form.notifyUsers" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="来源系统" prop="sourceSystem">
-          <el-input v-model="form.sourceSystem" placeholder="请输入来源系统" />
-        </el-form-item>
-        <el-form-item label="是否已通知 1-是 0-否" prop="isNotified">
-          <el-input v-model="form.isNotified" placeholder="请输入是否已通知 1-是 0-否" />
-        </el-form-item>
-        <el-form-item label="通知时间" prop="notifyTime">
-          <el-date-picker clearable v-model="form.notifyTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择通知时间">
-          </el-date-picker>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
-          <el-button @click="cancel">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <FieldConfigDialog
+      v-model="dialog.visible"
+      :title="dialog.title"
+      :field-config="fieldConfig"
+      :form-data="form"
+      :loading="buttonLoading"
+      @confirm="submitForm"
+      @cancel="cancel"
+    />
 
     <!-- 搜索项配置对话框 -->
     <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="() => (searchConfigVisible = false)" />
@@ -218,20 +171,24 @@ import {
   updateImportantMedicalEvent
 } from '@/api/emergency/importantMedicalEvent';
 import { ImportantMedicalEventVO, ImportantMedicalEventQuery, ImportantMedicalEventForm } from '@/api/emergency/importantMedicalEvent/types';
-import { createImportantMedicalEventSearchConfig } from '@/utils/configs/emergency/SearchConfigs';
-import { createImportantMedicalEventFieldConfig } from '@/utils/configs/emergency/FieldConfigs';
+import { getImportantMedicalEventFieldConfig } from '@/utils/configs/emergency/emergencyFieldConfigs';
+import { getImportantMedicalEventSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import FieldConfigDialog from '@/components/DynamicForm/FieldConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
-// 搜索项配置管理器
+// 初始化动态配置
+const fieldConfig = getImportantMedicalEventFieldConfig();
+const searchConfig = getImportantMedicalEventSearchConfig();
+
+// 搜索项配置管理器 (保留原有配置对话框功能)
 const searchConfigManager = createImportantMedicalEventSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 const searchConfigVisible = ref(false);
 
-// 字段配置管理器
+// 字段配置管理器 (保留原有配置对话框功能)
 const fieldConfigManager = createImportantMedicalEventFieldConfig();
 const fieldConfigVisible = ref(false);
 
@@ -251,44 +208,13 @@ const dialog = reactive<DialogOption>({
   title: ''
 });
 
-const initFormData: ImportantMedicalEventForm = {
-  id: undefined,
-  eventNo: undefined,
-  eventType: undefined,
-  patientId: undefined,
-  patientName: undefined,
-  visitNo: undefined,
-  departmentId: undefined,
-  departmentName: undefined,
-  responsibleDoctor: undefined,
-  eventTime: undefined,
-  eventDescription: undefined,
-  eventLevel: undefined,
-  notifyUsers: undefined,
-  sourceSystem: undefined,
-  isNotified: undefined,
-  notifyTime: undefined
-};
+const initFormData: ImportantMedicalEventForm = fieldConfig.getDefaultFormData();
 const data = reactive<PageData<ImportantMedicalEventForm, ImportantMedicalEventQuery>>({
   form: { ...initFormData },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
-    eventNo: undefined,
-    eventType: undefined,
-    patientId: undefined,
-    patientName: undefined,
-    visitNo: undefined,
-    departmentId: undefined,
-    departmentName: undefined,
-    responsibleDoctor: undefined,
-    eventTime: undefined,
-    eventDescription: undefined,
-    eventLevel: undefined,
-    notifyUsers: undefined,
-    sourceSystem: undefined,
-    isNotified: undefined,
-    notifyTime: undefined,
+    ...searchConfig.getDefaultSearchParams(),
     params: {}
   },
   rules: {
@@ -384,20 +310,20 @@ const handleUpdate = async (row?: ImportantMedicalEventVO) => {
 };
 
 /** 提交按钮 */
-const submitForm = () => {
-  importantMedicalEventFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateImportantMedicalEvent(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addImportantMedicalEvent(form.value).finally(() => (buttonLoading.value = false));
-      }
-      proxy?.$modal.msgSuccess('操作成功');
-      dialog.visible = false;
-      await getList();
+const submitForm = async () => {
+  buttonLoading.value = true;
+  try {
+    if (form.value.id) {
+      await updateImportantMedicalEvent(form.value);
+    } else {
+      await addImportantMedicalEvent(form.value);
     }
-  });
+    proxy?.$modal.msgSuccess('操作成功');
+    dialog.visible = false;
+    await getList();
+  } finally {
+    buttonLoading.value = false;
+  }
 };
 
 /** 删除按钮操作 */

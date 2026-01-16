@@ -224,8 +224,8 @@ import {
   CoreSystemAssessmentRecordQuery,
   CoreSystemAssessmentRecordForm
 } from '@/api/coresystem/coreSystemAssessmentRecord/types';
-import { createCoreSystemAssessmentRecordFieldConfig } from '@/utils/configs/coresystem/FieldConfigs';
-import { createCoreSystemAssessmentRecordSearchConfig } from '@/utils/configs/coresystem/SearchConfigs';
+import { createCoreSystemAssessmentRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
+import { createCoreSystemAssessmentRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

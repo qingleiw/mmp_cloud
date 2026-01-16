@@ -200,7 +200,7 @@ import {
 import { DoctorAdverseRecordVO, DoctorAdverseRecordQuery, DoctorAdverseRecordForm } from '@/api/doctor/doctorAdverseRecord/types';
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
-import { createDoctorAdverseRecordFieldConfig } from '@/utils/fieldConfig';
+import { createDoctorAdverseRecordFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

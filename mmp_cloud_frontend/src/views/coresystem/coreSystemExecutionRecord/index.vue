@@ -234,10 +234,10 @@ import {
   CoreSystemExecutionRecordQuery,
   CoreSystemExecutionRecordForm
 } from '@/api/coresystem/coreSystemExecutionRecord/types';
-import { createCoreSystemExecutionRecordFieldConfig } from '@/utils/configs/coresystem/FieldConfigs';
+import { createCoreSystemExecutionRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createCoreSystemExecutionRecordSearchConfig } from '@/utils/configs/coresystem/SearchConfigs';
+import { createCoreSystemExecutionRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

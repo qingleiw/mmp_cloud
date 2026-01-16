@@ -1,4 +1,9 @@
-export interface NewTechnologyProjectProgressVO {
+export interface NewTechnologyProjectProgressVO extends BaseEntity {
+  /**
+   * 主键ID
+   */
+  id: string | number;
+
   /**
    * 报告编号
    */

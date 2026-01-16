@@ -1,4 +1,4 @@
-import { FieldConfigManager, FieldGroup } from '../../fieldConfigManager';
+import { FieldConfigManager, FieldGroup } from '../fieldConfigManager';
 
 // 重大手术申请字段配置
 export function createMajorSurgeryApplicationFieldConfig() {

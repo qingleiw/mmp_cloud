@@ -254,10 +254,10 @@ import {
   TechnicianQualificationCatalogQuery,
   TechnicianQualificationCatalogForm
 } from '@/api/qualification/technicianQualificationCatalog/types';
-import { createTechnicianQualificationCatalogFieldConfig } from '@/utils/fieldConfig';
+import { createTechnicianQualificationCatalogFieldConfig } from '@/utils/configs/qualification/qualificationFieldConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createTechnicianQualificationCatalogSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
+import { createTechnicianQualificationCatalogSearchConfig } from '@/utils/configs/qualification/qualificationSearchConfigs';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

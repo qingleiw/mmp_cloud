@@ -1,178 +1,206 @@
 <template>
-  <div class="p-2">
+  <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-data-analysis class="title-icon"></i-ep-data-analysis>
+        数据采集管理
+      </h2>
+      <p class="page-description">管理系统数据采集记录，包括指标数据录入、审核等功能</p>
+    </div>
+
+    <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="统计周期：monthly-月度，quarterly-季度，yearly-年度" prop="collectionPeriod">
-              <el-input
-                v-model="queryParams.collectionPeriod"
-                placeholder="请输入统计周期：monthly-月度，quarterly-季度，yearly-年度"
-                clearable
-                @keyup.enter="handleQuery"
-              />
-            </el-form-item>
-            <el-form-item label="统计年份" prop="collectionYear">
-              <el-input v-model="queryParams.collectionYear" placeholder="请输入统计年份" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="统计月份" prop="collectionMonth">
-              <el-input v-model="queryParams.collectionMonth" placeholder="请输入统计月份" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="统计季度" prop="collectionQuarter">
-              <el-input v-model="queryParams.collectionQuarter" placeholder="请输入统计季度" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="科室名称" prop="departmentName">
-              <el-input v-model="queryParams.departmentName" placeholder="请输入科室名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="分子值" prop="numeratorValue">
-              <el-input v-model="queryParams.numeratorValue" placeholder="请输入分子值" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="分母值" prop="denominatorValue">
-              <el-input v-model="queryParams.denominatorValue" placeholder="请输入分母值" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="指标值" prop="indicatorValue">
-              <el-input v-model="queryParams.indicatorValue" placeholder="请输入指标值" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="采集人" prop="collector">
-              <el-input v-model="queryParams.collector" placeholder="请输入采集人" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="审核人" prop="reviewer">
-              <el-input v-model="queryParams.reviewer" placeholder="请输入审核人" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="采集时间" prop="collectionTime">
-              <el-date-picker clearable v-model="queryParams.collectionTime" type="date" value-format="YYYY-MM-DD" placeholder="请选择采集时间" />
-            </el-form-item>
-            <el-form-item label="审核时间" prop="reviewTime">
-              <el-date-picker clearable v-model="queryParams.reviewTime" type="date" value-format="YYYY-MM-DD" placeholder="请选择审核时间" />
-            </el-form-item>
-            <el-form-item label="是否删除" prop="delFlag">
-              <el-input v-model="queryParams.delFlag" placeholder="请输入是否删除" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
 
-    <el-card shadow="never">
+    <!-- 数据表格 -->
+    <el-card shadow="never" class="table-card">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qc:qcDataCollection:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['qc:qcDataCollection:edit']"
-              >修改</el-button
-            >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['qc:qcDataCollection:remove']"
-              >删除</el-button
-            >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qc:qcDataCollection:export']">导出</el-button>
-          </el-col>
-          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>数据采集列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" icon="Plus" @click="handleAdd" class="action-btn">
+              <i-ep-plus class="btn-icon"></i-ep-plus>
+              新增
+            </el-button>
+            <el-button type="success" icon="Edit" :disabled="single" @click="handleUpdate()" class="action-btn">
+              <i-ep-edit class="btn-icon"></i-ep-edit>
+              修改
+            </el-button>
+            <el-button type="danger" icon="Delete" :disabled="multiple" @click="handleDelete()" class="action-btn">
+              <i-ep-delete class="btn-icon"></i-ep-delete>
+              删除
+            </el-button>
+            <el-button type="warning" icon="Download" @click="handleExport" class="action-btn">
+              <i-ep-download class="btn-icon"></i-ep-download>
+              导出
+            </el-button>
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <el-button text type="primary" @click="toggleSearch" class="config-btn">
+              <i-ep-search v-if="!showSearch" class="btn-icon"></i-ep-search>
+              <i-ep-fold v-else class="btn-icon"></i-ep-fold>
+              {{ showSearch ? '隐藏搜索' : '显示搜索' }}
+            </el-button>
+          </div>
+        </div>
       </template>
 
-      <el-table v-loading="loading" border :data="qcDataCollectionList" @selection-change="handleSelectionChange">
+      <el-table
+        v-loading="loading"
+        border
+        :data="qcDataCollectionList"
+        @selection-change="handleSelectionChange"
+        class="data-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-        <el-table-column label="统计周期：monthly-月度，quarterly-季度，yearly-年度" align="center" prop="collectionPeriod" />
-        <el-table-column label="统计年份" align="center" prop="collectionYear" />
-        <el-table-column label="统计月份" align="center" prop="collectionMonth" />
-        <el-table-column label="统计季度" align="center" prop="collectionQuarter" />
-        <el-table-column label="科室名称" align="center" prop="departmentName" />
-        <el-table-column label="分子值" align="center" prop="numeratorValue" />
-        <el-table-column label="分母值" align="center" prop="denominatorValue" />
-        <el-table-column label="指标值" align="center" prop="indicatorValue" />
-        <el-table-column label="数据状态：0-草稿，1-已提交，2-已审核" align="center" prop="dataStatus" />
-        <el-table-column label="采集人" align="center" prop="collector" />
-        <el-table-column label="审核人" align="center" prop="reviewer" />
-        <el-table-column label="采集时间" align="center" prop="collectionTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.collectionTime, '{y}-{m}-{d}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="审核时间" align="center" prop="reviewTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.reviewTime, '{y}-{m}-{d}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="备注" align="center" prop="remark" />
-        <el-table-column label="是否删除" align="center" prop="delFlag" />
-        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+        <template v-for="field in visibleTableFields" :key="field.prop">
+          <el-table-column
+            :label="field.label"
+            :prop="field.prop"
+            :width="field.width"
+            :min-width="field.minWidth"
+            align="center"
+            v-if="field.visible"
+          >
+            <template #default="scope" v-if="field.type === 'datetime'">
+              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}</span>
+            </template>
+            <template #default="scope" v-else-if="field.type === 'date'">
+              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
+            </template>
+            <template #default="scope" v-else-if="field.type === 'select' && field.options">
+              <el-tag :type="getTagType(scope.row[field.prop])" size="small">
+                {{ getOptionLabel(field.options, scope.row[field.prop]) }}
+              </el-tag>
+            </template>
+            <template #default="scope" v-else>
+              <span>{{ scope.row[field.prop] }}</span>
+            </template>
+          </el-table-column>
+        </template>
+        <el-table-column label="操作" align="center" fixed="right" width="120" class-name="small-padding">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['qc:qcDataCollection:edit']"></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['qc:qcDataCollection:remove']"></el-button>
+              <el-button link type="danger" icon="Delete" @click="handleDelete(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
 
-      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
+      <pagination
+        v-show="total > 0"
+        :total="total"
+        v-model:page="queryParams.pageNum"
+        v-model:limit="queryParams.pageSize"
+        @pagination="getList"
+        class="pagination-wrapper"
+      />
     </el-card>
+
     <!-- 添加或修改数据采集记录对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="qcDataCollectionFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="指标ID" prop="indicatorId">
-          <el-input v-model="form.indicatorId" placeholder="请输入指标ID" />
-        </el-form-item>
-        <el-form-item label="统计周期：monthly-月度，quarterly-季度，yearly-年度" prop="collectionPeriod">
-          <el-input v-model="form.collectionPeriod" placeholder="请输入统计周期：monthly-月度，quarterly-季度，yearly-年度" />
-        </el-form-item>
-        <el-form-item label="统计年份" prop="collectionYear">
-          <el-input v-model="form.collectionYear" placeholder="请输入统计年份" />
-        </el-form-item>
-        <el-form-item label="统计月份" prop="collectionMonth">
-          <el-input v-model="form.collectionMonth" placeholder="请输入统计月份" />
-        </el-form-item>
-        <el-form-item label="统计季度" prop="collectionQuarter">
-          <el-input v-model="form.collectionQuarter" placeholder="请输入统计季度" />
-        </el-form-item>
-        <el-form-item label="科室ID" prop="departmentId">
-          <el-input v-model="form.departmentId" placeholder="请输入科室ID" />
-        </el-form-item>
-        <el-form-item label="科室名称" prop="departmentName">
-          <el-input v-model="form.departmentName" placeholder="请输入科室名称" />
-        </el-form-item>
-        <el-form-item label="分子值" prop="numeratorValue">
-          <el-input v-model="form.numeratorValue" placeholder="请输入分子值" />
-        </el-form-item>
-        <el-form-item label="分母值" prop="denominatorValue">
-          <el-input v-model="form.denominatorValue" placeholder="请输入分母值" />
-        </el-form-item>
-        <el-form-item label="指标值" prop="indicatorValue">
-          <el-input v-model="form.indicatorValue" placeholder="请输入指标值" />
-        </el-form-item>
-        <el-form-item label="采集人" prop="collector">
-          <el-input v-model="form.collector" placeholder="请输入采集人" />
-        </el-form-item>
-        <el-form-item label="审核人" prop="reviewer">
-          <el-input v-model="form.reviewer" placeholder="请输入审核人" />
-        </el-form-item>
-        <el-form-item label="采集时间" prop="collectionTime">
-          <el-date-picker clearable v-model="form.collectionTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择采集时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="审核时间" prop="reviewTime">
-          <el-date-picker clearable v-model="form.reviewTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择审核时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="是否删除" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入是否删除" />
-        </el-form-item>
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="600px" append-to-body class="form-dialog">
+      <el-form ref="qcDataCollectionFormRef" :model="form" :rules="rules" label-width="100px" class="form-content">
+        <el-row :gutter="20">
+          <template v-for="field in visibleFormFields" :key="field.prop">
+            <el-col :span="field.type === 'textarea' ? 24 : 12" v-if="field.formVisible">
+              <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules">
+                <!-- 文本输入框 -->
+                <el-input
+                  v-if="field.type === 'input'"
+                  v-model="form[field.prop]"
+                  :placeholder="field.placeholder || `请输入${field.label}`"
+                  style="width: 100%"
+                />
+                <!-- 数字输入框 -->
+                <el-input-number
+                  v-else-if="field.type === 'number'"
+                  v-model="form[field.prop]"
+                  :placeholder="field.placeholder || `请输入${field.label}`"
+                  style="width: 100%"
+                />
+                <!-- 下拉选择框 -->
+                <el-select
+                  v-else-if="field.type === 'select'"
+                  v-model="form[field.prop]"
+                  :placeholder="field.placeholder || `请选择${field.label}`"
+                  clearable
+                  style="width: 100%"
+                  v-bind="field.componentProps"
+                >
+                  <el-option
+                    v-for="opt in field.options || []"
+                    :key="opt.value"
+                    :label="opt.label"
+                    :value="opt.value"
+                  />
+                </el-select>
+                <!-- 日期选择器 -->
+                <el-date-picker
+                  v-else-if="field.type === 'date' || field.type === 'datetime'"
+                  v-model="form[field.prop]"
+                  :type="field.componentProps?.type || (field.type === 'datetime' ? 'datetime' : 'date')"
+                  :value-format="field.componentProps?.valueFormat"
+                  :placeholder="field.placeholder || `请选择${field.label}`"
+                  clearable
+                  style="width: 100%"
+                />
+                <!-- 文本域 -->
+                <el-input
+                  v-else-if="field.type === 'textarea'"
+                  v-model="form[field.prop]"
+                  type="textarea"
+                  :placeholder="field.placeholder || `请输入${field.label}`"
+                  :maxlength="field.maxlength"
+                  :show-word-limit="field.showWordLimit"
+                  :rows="field.rows || 3"
+                  style="width: 100%"
+                />
+                <!-- 默认文本输入框 -->
+                <el-input
+                  v-else
+                  v-model="form[field.prop]"
+                  :placeholder="field.placeholder || `请输入${field.label}`"
+                  style="width: 100%"
+                />
+              </el-form-item>
+            </el-col>
+          </template>
+        </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -181,6 +209,22 @@
         </div>
       </template>
     </el-dialog>
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      :visible="showFieldConfig"
+      :field-config-manager="fieldConfigManager"
+      @update:visible="showFieldConfig = $event"
+      @confirm="handleFieldConfigConfirm"
+    />
+
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      :visible="showSearchConfig"
+      :search-config-manager="searchConfigManager"
+      @update:visible="showSearchConfig = $event"
+      @confirm="handleSearchConfigConfirm"
+    />
   </div>
 </template>
 
@@ -193,13 +237,31 @@ import {
   updateQcDataCollection
 } from '@/api/qc/qcDataCollection';
 import { QcDataCollectionVO, QcDataCollectionQuery, QcDataCollectionForm } from '@/api/qc/qcDataCollection/types';
+import { createQcDataCollectionFieldConfig } from '@/utils/configs/qc/qcFieldConfigs';
+import { createQcDataCollectionSearchConfig } from '@/utils/configs/qc/qcSearchConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
+
+// 动态配置管理器
+const fieldConfigManager = new FieldConfigManager('qcDataCollection', createQcDataCollectionFieldConfig());
+const searchConfigManager = createQcDataCollectionSearchConfig();
+
+// 计算属性
+const visibleTableFields = computed(() => fieldConfigManager.getVisibleFields());
+const visibleFormFields = computed(() => fieldConfigManager.getFormFields());
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 const qcDataCollectionList = ref<QcDataCollectionVO[]>([]);
 const buttonLoading = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
+const showFieldConfig = ref(false);
+const showSearchConfig = ref(false);
 const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
@@ -233,6 +295,7 @@ const initFormData: QcDataCollectionForm = {
   remark: undefined,
   delFlag: undefined
 };
+
 const data = reactive<PageData<QcDataCollectionForm, QcDataCollectionQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -255,22 +318,41 @@ const data = reactive<PageData<QcDataCollectionForm, QcDataCollectionQuery>>({
     params: {}
   },
   rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
     indicatorId: [{ required: true, message: '指标ID不能为空', trigger: 'blur' }],
-    collectionPeriod: [{ required: true, message: '统计周期：monthly-月度，quarterly-季度，yearly-年度不能为空', trigger: 'blur' }],
-    collectionYear: [{ required: true, message: '统计年份不能为空', trigger: 'blur' }]
+    collectionPeriod: [{ required: true, message: '统计周期不能为空', trigger: 'blur' }],
+    collectionYear: [{ required: true, message: '统计年份不能为空', trigger: 'blur' }],
+    departmentName: [{ required: true, message: '科室名称不能为空', trigger: 'blur' }]
   }
 });
 
 const { queryParams, form, rules } = toRefs(data);
 
+// 工具函数
+const getTagType = (value: any): string => {
+  if (value === '0' || value === 0) return 'warning';
+  if (value === '1' || value === 1) return 'success';
+  if (value === '2' || value === 2) return 'info';
+  return 'info';
+};
+
+const getOptionLabel = (options: any[], value: any): string => {
+  const option = options.find(opt => opt.value === value);
+  return option ? option.label : value;
+};
+
 /** 查询数据采集记录列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listQcDataCollection(queryParams.value);
-  qcDataCollectionList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
+  try {
+    const res = await listQcDataCollection(queryParams.value);
+    qcDataCollectionList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取数据采集记录列表失败:', error);
+    proxy?.$modal.msgError('获取数据失败');
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 取消按钮 */
@@ -315,10 +397,15 @@ const handleAdd = () => {
 const handleUpdate = async (row?: QcDataCollectionVO) => {
   reset();
   const _id = row?.id || ids.value[0];
-  const res = await getQcDataCollection(_id);
-  Object.assign(form.value, res.data);
-  dialog.visible = true;
-  dialog.title = '修改数据采集记录';
+  try {
+    const res = await getQcDataCollection(_id);
+    Object.assign(form.value, res.data);
+    dialog.visible = true;
+    dialog.title = '修改数据采集记录';
+  } catch (error) {
+    console.error('获取数据采集记录详情失败:', error);
+    proxy?.$modal.msgError('获取数据失败');
+  }
 };
 
 /** 提交按钮 */
@@ -326,14 +413,22 @@ const submitForm = () => {
   qcDataCollectionFormRef.value?.validate(async (valid: boolean) => {
     if (valid) {
       buttonLoading.value = true;
-      if (form.value.id) {
-        await updateQcDataCollection(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addQcDataCollection(form.value).finally(() => (buttonLoading.value = false));
+      try {
+        if (form.value.id) {
+          await updateQcDataCollection(form.value);
+          proxy?.$modal.msgSuccess('修改成功');
+        } else {
+          await addQcDataCollection(form.value);
+          proxy?.$modal.msgSuccess('新增成功');
+        }
+        dialog.visible = false;
+        await getList();
+      } catch (error) {
+        console.error('提交数据采集记录失败:', error);
+        proxy?.$modal.msgError('操作失败');
+      } finally {
+        buttonLoading.value = false;
       }
-      proxy?.$modal.msgSuccess('操作成功');
-      dialog.visible = false;
-      await getList();
     }
   });
 };
@@ -341,24 +436,249 @@ const submitForm = () => {
 /** 删除按钮操作 */
 const handleDelete = async (row?: QcDataCollectionVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除数据采集记录编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
-  await delQcDataCollection(_ids);
-  proxy?.$modal.msgSuccess('删除成功');
-  await getList();
+  try {
+    await proxy?.$modal.confirm('是否确认删除选中的数据采集记录？');
+    await delQcDataCollection(_ids);
+    proxy?.$modal.msgSuccess('删除成功');
+    await getList();
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除数据采集记录失败:', error);
+      proxy?.$modal.msgError('删除失败');
+    }
+  }
 };
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download(
-    'system/qcDataCollection/export',
-    {
-      ...queryParams.value
-    },
-    `qcDataCollection_${new Date().getTime()}.xlsx`
-  );
+  try {
+    proxy?.download(
+      'system/qcDataCollection/export',
+      {
+        ...queryParams.value
+      },
+      `qcDataCollection_${new Date().getTime()}.xlsx`
+    );
+  } catch (error) {
+    console.error('导出数据采集记录失败:', error);
+    proxy?.$modal.msgError('导出失败');
+  }
+};
+
+/** 字段配置 */
+const handleFieldConfig = () => {
+  showFieldConfig.value = true;
+};
+
+const handleFieldConfigConfirm = () => {
+  showFieldConfig.value = false;
+  // 配置已自动保存到localStorage
+};
+
+/** 搜索配置 */
+const handleSearchConfig = () => {
+  showSearchConfig.value = true;
+};
+
+const handleSearchConfigConfirm = () => {
+  showSearchConfig.value = false;
+  // 配置已自动保存到localStorage
+};
+
+/** 切换搜索显示 */
+const toggleSearch = () => {
+  showSearch.value = !showSearch.value;
 };
 
 onMounted(() => {
   getList();
 });
 </script>
+
+<style lang="scss" scoped>
+.app-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 84px);
+}
+
+.page-header {
+  margin-bottom: 20px;
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d2129;
+    margin-bottom: 8px;
+
+    .title-icon {
+      margin-right: 8px;
+      color: #1890ff;
+    }
+  }
+
+  .page-description {
+    color: #86909c;
+    font-size: 14px;
+  }
+}
+
+.search-container {
+  .search-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+    .search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .search-title {
+        font-weight: 600;
+        color: #1d2129;
+
+        .search-icon {
+          margin-right: 6px;
+          color: #1890ff;
+        }
+      }
+
+      .search-actions {
+        .config-btn {
+          font-size: 12px;
+          padding: 4px 8px;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    .table-title {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      color: #1d2129;
+
+      .table-icon {
+        margin-right: 8px;
+        color: #1890ff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+
+      .action-btn {
+        .btn-icon {
+          margin-right: 6px;
+        }
+      }
+
+      .config-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+.data-table {
+  border-radius: 6px;
+  overflow: hidden;
+
+  :deep(.el-table__header-wrapper) {
+    background-color: #fafafa;
+  }
+
+  :deep(.el-table__row) {
+    &:hover {
+      background-color: #f0f9ff;
+    }
+  }
+}
+
+.pagination-wrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-dialog {
+  .form-content {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .dialog-footer {
+    text-align: right;
+    padding-top: 20px;
+    border-top: 1px solid #ebeef5;
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+  }
+
+  .page-header {
+    .page-title {
+      font-size: 20px;
+    }
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: stretch;
+
+    .table-actions {
+      justify-content: center;
+    }
+  }
+
+  .search-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+}
+
+// 动画效果
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-container,
+.table-card {
+  animation: fadeIn 0.3s ease-out;
+}
+</style>

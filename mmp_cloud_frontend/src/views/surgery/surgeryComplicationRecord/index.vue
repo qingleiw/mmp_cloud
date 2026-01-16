@@ -298,10 +298,10 @@ import {
   SurgeryComplicationRecordQuery,
   SurgeryComplicationRecordForm
 } from '@/api/surgery/surgeryComplicationRecord/types';
-import { createSurgeryComplicationRecordFieldConfig } from '@/utils/fieldConfig';
+import { createSurgeryComplicationRecordFieldConfig } from '@/utils/configs/surgery/surgeryFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createSurgeryComplicationRecordSearchConfig } from '@/utils/configs/surgery/SearchConfigs';
+import { createSurgeryComplicationRecordSearchConfig } from '@/utils/configs/surgery/surgerySearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -388,6 +388,12 @@ const cancel = () => {
   dialog.visible = false;
 };
 
+/** 表单重置 */
+const reset = () => {
+  form.value = { ...initFormData };
+  surgeryComplicationRecordFormRef.value?.resetFields();
+};
+
 const handleSearchConfig = () => {
   searchConfigVisible.value = true;
 };
@@ -456,7 +462,7 @@ const handleDelete = async (row?: SurgeryComplicationRecordVO) => {
 
 /** 导入按钮操作 */
 const handleImport = () => {
-  proxy.$modal.upload({
+  (proxy.$modal as any).upload({
     url: '/dev-api/surgery/surgeryComplicationRecord/importData',
     success: () => {
       proxy.$modal.msgSuccess('导入成功');

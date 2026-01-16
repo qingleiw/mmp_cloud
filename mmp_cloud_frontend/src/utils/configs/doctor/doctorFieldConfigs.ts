@@ -1,4 +1,4 @@
-import { FieldConfigManager, FieldGroup } from '../../fieldConfigManager';
+import { FieldConfigManager, FieldGroup } from '../fieldConfigManager';
 
 // 医生基本信息字段配置
 export function createDoctorBasicInfoFieldConfig() {

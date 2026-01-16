@@ -1,4 +1,4 @@
-import { SearchConfigManager, type SearchFieldGroup } from '../../searchConfig';
+import { SearchConfigManager, type SearchFieldGroup } from '../searchConfigManager';
 
 // 医生基本信息搜索配置
 export function createDoctorBasicInfoSearchConfig() {

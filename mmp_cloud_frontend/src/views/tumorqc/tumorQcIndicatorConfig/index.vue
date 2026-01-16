@@ -287,10 +287,10 @@ import {
   updateTumorQcIndicatorConfig
 } from '@/api/tumorqc/tumorQcIndicatorConfig';
 import { TumorQcIndicatorConfigVO, TumorQcIndicatorConfigQuery, TumorQcIndicatorConfigForm } from '@/api/tumorqc/tumorQcIndicatorConfig/types';
-import { createTumorQcIndicatorConfigFieldConfig } from '@/utils/configs/tumorqc/FieldConfigs';
+import { createTumorQcIndicatorConfigFieldConfig } from '@/utils/configs/tumorqc/tumorqcFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createTumorQcIndicatorConfigSearchConfig } from '@/utils/configs/tumorqc/SearchConfigs';
+import { createTumorQcIndicatorConfigSearchConfig } from '@/utils/configs/tumorqc/tumorqcSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

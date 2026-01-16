@@ -1,91 +1,99 @@
 <template>
-  <div class="p-2">
+  <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-setting class="title-icon"></i-ep-setting>
+        质量指标管理
+      </h2>
+      <p class="page-description">管理系统质量指标的定义、计算公式、标准值等信息</p>
+    </div>
+
+    <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="指标编码" prop="indicatorCode">
-              <el-input v-model="queryParams.indicatorCode" placeholder="请输入指标编码" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="指标名称" prop="indicatorName">
-              <el-input v-model="queryParams.indicatorName" placeholder="请输入指标名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="指标层级" prop="indicatorLevel">
-              <el-input v-model="queryParams.indicatorLevel" placeholder="请输入指标层级" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="定义" prop="definition">
-              <el-input v-model="queryParams.definition" placeholder="请输入定义" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="计算公式" prop="formula">
-              <el-input v-model="queryParams.formula" placeholder="请输入计算公式" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="意义" prop="significance">
-              <el-input v-model="queryParams.significance" placeholder="请输入意义" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="单位" prop="unit">
-              <el-input v-model="queryParams.unit" placeholder="请输入单位" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="标准值" prop="standardValue">
-              <el-input v-model="queryParams.standardValue" placeholder="请输入标准值" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="满分分值" prop="maxScore">
-              <el-input v-model="queryParams.maxScore" placeholder="请输入满分分值" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="排序" prop="sortOrder">
-              <el-input v-model="queryParams.sortOrder" placeholder="请输入排序" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="是否删除" prop="delFlag">
-              <el-input v-model="queryParams.delFlag" placeholder="请输入是否删除" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
 
-    <el-card shadow="never">
+    <!-- 数据表格 -->
+    <el-card shadow="never" class="table-card">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qc:qcQualityIndicator:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['qc:qcQualityIndicator:edit']"
-              >修改</el-button
-            >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['qc:qcQualityIndicator:remove']"
-              >删除</el-button
-            >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qc:qcQualityIndicator:export']">导出</el-button>
-          </el-col>
-          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>质量指标列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qc:qcQualityIndicator:add']" size="small">新增</el-button>
+            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['qc:qcQualityIndicator:edit']" size="small">修改</el-button>
+            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['qc:qcQualityIndicator:remove']" size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qc:qcQualityIndicator:export']" size="small">导出</el-button>
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
       </template>
 
-      <el-table v-loading="loading" border :data="qcQualityIndicatorList" @selection-change="handleSelectionChange">
+      <el-table v-loading="loading" border :data="qcQualityIndicatorList" @selection-change="handleSelectionChange" class="qc-quality-indicator-table">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-        <el-table-column label="指标编码" align="center" prop="indicatorCode" />
-        <el-table-column label="指标名称" align="center" prop="indicatorName" />
-        <el-table-column label="指标层级" align="center" prop="indicatorLevel" />
-        <el-table-column label="定义" align="center" prop="definition" />
-        <el-table-column label="计算公式" align="center" prop="formula" />
-        <el-table-column label="意义" align="center" prop="significance" />
-        <el-table-column label="说明" align="center" prop="remark" />
-        <el-table-column label="单位" align="center" prop="unit" />
-        <el-table-column label="数据类型：rate-比率，count-计数，ratio-比值" align="center" prop="dataType" />
-        <el-table-column label="标准值" align="center" prop="standardValue" />
-        <el-table-column label="满分分值" align="center" prop="maxScore" />
-        <el-table-column label="排序" align="center" prop="sortOrder" />
-        <el-table-column label="状态：1-启用，0-禁用" align="center" prop="status" />
-        <el-table-column label="是否删除" align="center" prop="delFlag" />
+        <el-table-column
+          v-for="field in fieldConfigManager.getVisibleFields()"
+          :key="field.prop"
+          :label="field.label"
+          align="center"
+          :prop="field.prop"
+          :width="field.width"
+          :min-width="field.minWidth || 120"
+          resizable
+        >
+          <template #default="scope">
+            <!-- 时间字段格式化 -->
+            <span v-if="field.prop === 'createTime' || field.prop === 'updateTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+            <!-- 状态标签 -->
+            <el-tag v-else-if="field.prop === 'status'" :type="scope.row.status === 1 ? 'success' : 'danger'">
+              {{ scope.row.status === 1 ? '启用' : '禁用' }}
+            </el-tag>
+            <!-- 删除标志标签 -->
+            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row.delFlag === '0' ? 'success' : 'danger'">
+              {{ scope.row.delFlag === '0' ? '未删除' : '已删除' }}
+            </el-tag>
+            <!-- 数据类型标签 -->
+            <el-tag v-else-if="field.prop === 'dataType'" :type="getDataTypeTagType(scope.row.dataType)">
+              {{ getDataTypeLabel(scope.row.dataType) }}
+            </el-tag>
+            <!-- 默认显示 -->
+            <span v-else>{{ scope.row[field.prop] }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
@@ -101,50 +109,64 @@
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
     <!-- 添加或修改质量指标对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="qcQualityIndicatorFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="指标编码" prop="indicatorCode">
-          <el-input v-model="form.indicatorCode" placeholder="请输入指标编码" />
-        </el-form-item>
-        <el-form-item label="指标名称" prop="indicatorName">
-          <el-input v-model="form.indicatorName" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="所属专业ID" prop="categoryId">
-          <el-input v-model="form.categoryId" placeholder="请输入所属专业ID" />
-        </el-form-item>
-        <el-form-item label="父指标ID" prop="parentId">
-          <el-input v-model="form.parentId" placeholder="请输入父指标ID" />
-        </el-form-item>
-        <el-form-item label="指标层级" prop="indicatorLevel">
-          <el-input v-model="form.indicatorLevel" placeholder="请输入指标层级" />
-        </el-form-item>
-        <el-form-item label="定义" prop="definition">
-          <el-input v-model="form.definition" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="计算公式" prop="formula">
-          <el-input v-model="form.formula" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="意义" prop="significance">
-          <el-input v-model="form.significance" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="说明" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="单位" prop="unit">
-          <el-input v-model="form.unit" placeholder="请输入单位" />
-        </el-form-item>
-        <el-form-item label="标准值" prop="standardValue">
-          <el-input v-model="form.standardValue" placeholder="请输入标准值" />
-        </el-form-item>
-        <el-form-item label="满分分值" prop="maxScore">
-          <el-input v-model="form.maxScore" placeholder="请输入满分分值" />
-        </el-form-item>
-        <el-form-item label="排序" prop="sortOrder">
-          <el-input v-model="form.sortOrder" placeholder="请输入排序" />
-        </el-form-item>
-        <el-form-item label="是否删除" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入是否删除" />
-        </el-form-item>
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
+      <el-form ref="qcQualityIndicatorFormRef" :model="form" :rules="rules" label-width="100px">
+        <el-row :gutter="20">
+          <el-col :span="field.type === 'textarea' ? 24 : 12" v-for="field in fieldConfigManager.getFormFields()" :key="field.prop">
+            <!-- 下拉选择框 -->
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-if="field.prop === 'dataType'">
+              <el-select v-model="form.dataType" placeholder="请选择数据类型" clearable style="width: 100%">
+                <el-option label="比率" value="rate" />
+                <el-option label="计数" value="count" />
+                <el-option label="比值" value="ratio" />
+              </el-select>
+            </el-form-item>
+            <!-- 状态选择 -->
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else-if="field.prop === 'status'">
+              <el-select v-model="form.status" placeholder="请选择状态" clearable style="width: 100%">
+                <el-option label="禁用" :value="0" />
+                <el-option label="启用" :value="1" />
+              </el-select>
+            </el-form-item>
+            <!-- 删除标志选择 -->
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else-if="field.prop === 'delFlag'">
+              <el-select v-model="form.delFlag" placeholder="请选择删除标志" clearable style="width: 100%">
+                <el-option label="未删除" value="0" />
+                <el-option label="已删除" value="1" />
+              </el-select>
+            </el-form-item>
+            <!-- 数字输入框 -->
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else-if="field.type === 'number'">
+              <el-input-number
+                v-model="form[field.prop]"
+                :min="field.min || 0"
+                :max="field.max || 99999"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                style="width: 100%"
+              />
+            </el-form-item>
+            <!-- 文本域 -->
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else-if="field.type === 'textarea'">
+              <el-input
+                v-model="form[field.prop]"
+                type="textarea"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                :maxlength="field.maxlength"
+                :show-word-limit="field.showWordLimit"
+                :rows="field.rows || 3"
+                style="width: 100%"
+              />
+            </el-form-item>
+            <!-- 默认文本输入框 -->
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else>
+              <el-input
+                v-model="form[field.prop]"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                style="width: 100%"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -153,6 +175,22 @@
         </div>
       </template>
     </el-dialog>
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      :visible="showFieldConfig"
+      :field-config-manager="fieldConfigManager"
+      @update:visible="showFieldConfig = $event"
+      @confirm="handleFieldConfigConfirm"
+    />
+
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      :visible="showSearchConfig"
+      :search-config-manager="searchConfigManager"
+      @update:visible="showSearchConfig = $event"
+      @confirm="handleSearchConfigConfirm"
+    />
   </div>
 </template>
 
@@ -165,6 +203,14 @@ import {
   updateQcQualityIndicator
 } from '@/api/qc/qcQualityIndicator';
 import { QcQualityIndicatorVO, QcQualityIndicatorQuery, QcQualityIndicatorForm } from '@/api/qc/qcQualityIndicator/types';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { createQcQualityIndicatorFieldConfig } from '@/utils/configs/qc/qcFieldConfigs';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
+import { createQcQualityIndicatorSearchConfig } from '@/utils/configs/qc/qcSearchConfigs';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import { Search, Setting, List } from '@element-plus/icons-vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -172,6 +218,8 @@ const qcQualityIndicatorList = ref<QcQualityIndicatorVO[]>([]);
 const buttonLoading = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
+const showFieldConfig = ref(false);
+const showSearchConfig = ref(false);
 const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
@@ -179,6 +227,13 @@ const total = ref(0);
 
 const queryFormRef = ref<ElFormInstance>();
 const qcQualityIndicatorFormRef = ref<ElFormInstance>();
+
+// 初始化字段配置管理器
+const fieldConfigManager = new FieldConfigManager('qcQualityIndicator', createQcQualityIndicatorFieldConfig());
+// 初始化搜索配置管理器
+const searchConfigManager = createQcQualityIndicatorSearchConfig();
+// 获取可见搜索字段
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 const dialog = reactive<DialogOption>({
   visible: false,
@@ -328,7 +383,200 @@ const handleExport = () => {
   );
 };
 
+/** 字段配置 */
+const handleFieldConfig = () => {
+  showFieldConfig.value = true;
+};
+
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  showFieldConfig.value = false;
+  // 重新获取列表以应用新的字段配置
+  getList();
+};
+
+/** 搜索配置 */
+const handleSearchConfig = () => {
+  showSearchConfig.value = true;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  showSearchConfig.value = false;
+};
+
+/** 获取数据类型标签类型 */
+const getDataTypeTagType = (dataType: string) => {
+  const typeMap: Record<string, 'primary' | 'success' | 'warning' | 'info' | 'danger'> = {
+    'rate': 'primary',
+    'count': 'success',
+    'ratio': 'warning'
+  };
+  return typeMap[dataType] || 'info';
+};
+
+/** 获取数据类型标签文本 */
+const getDataTypeLabel = (dataType: string) => {
+  const labelMap: Record<string, string> = {
+    'rate': '比率',
+    'count': '计数',
+    'ratio': '比值'
+  };
+  return labelMap[dataType] || dataType;
+};
+
 onMounted(() => {
   getList();
 });
 </script>
+
+<style scoped>
+.app-container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.page-header {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .page-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
+
+    .title-icon {
+      color: #409eff;
+      font-size: 20px;
+    }
+  }
+
+  .page-description {
+    margin: 0;
+    color: #86909c;
+    font-size: 14px;
+  }
+}
+
+.search-card {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .search-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .search-icon {
+        color: #409eff;
+      }
+    }
+
+    .search-actions {
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .table-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .table-icon {
+        color: #409eff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+/* 表格样式 */
+.qc-quality-indicator-table {
+  :deep(.el-table__header) {
+    th {
+      background-color: #fafafa;
+      font-weight: 600;
+      color: #1d2129;
+    }
+  }
+
+  :deep(.el-table__row) {
+    &:hover {
+      background-color: #f5f7fa;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+  }
+
+  .page-header {
+    .page-title {
+      font-size: 20px;
+    }
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .table-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}
+</style>

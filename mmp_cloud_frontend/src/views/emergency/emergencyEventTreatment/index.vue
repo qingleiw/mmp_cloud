@@ -3,30 +3,13 @@
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
         <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="患者姓名" prop="patientName">
-              <el-input v-model="queryParams.patientName" placeholder="请输入患者姓名" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="诊断" prop="diagnosis">
-              <el-input v-model="queryParams.diagnosis" placeholder="请输入诊断" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="救治措施" prop="treatmentMeasures">
-              <el-input v-model="queryParams.treatmentMeasures" placeholder="请输入救治措施" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="救治结果" prop="treatmentResult">
-              <el-input v-model="queryParams.treatmentResult" placeholder="请输入救治结果" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="救治医师" prop="treatingPhysician">
-              <el-input v-model="queryParams.treatingPhysician" placeholder="请输入救治医师" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="救治时间" prop="treatmentTime">
-              <el-date-picker clearable v-model="queryParams.treatmentTime" type="date" value-format="YYYY-MM-DD" placeholder="请选择救治时间" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+          <DynamicSearchForm
+            ref="searchFormRef"
+            :search-config="searchConfig"
+            :query-params="queryParams"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
@@ -64,24 +47,32 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="fieldConfigVisible = true">字段配置</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="searchConfigVisible = true">搜索项配置</el-button>
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
 
       <el-table v-loading="loading" border :data="emergencyEventTreatmentList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-        <el-table-column label="患者姓名" align="center" prop="patientName" />
-        <el-table-column label="诊断" align="center" prop="diagnosis" />
-        <el-table-column label="救治措施" align="center" prop="treatmentMeasures" />
-        <el-table-column label="救治结果" align="center" prop="treatmentResult" />
-        <el-table-column label="救治医师" align="center" prop="treatingPhysician" />
-        <el-table-column label="救治时间" align="center" prop="treatmentTime" width="180">
+        <el-table-column
+          v-for="field in fieldConfig.getVisibleFields()"
+          :key="field.prop"
+          :label="field.label"
+          :align="'center'"
+          :prop="field.prop"
+          :width="field.width"
+          v-show="field.visible"
+        >
           <template #default="scope">
-            <span>{{ parseTime(scope.row.treatmentTime, '{y}-{m}-{d}') }}</span>
+            <span v-if="field.type === 'datetime'">{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
+            <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="备注" align="center" prop="remark" />
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
@@ -108,45 +99,33 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改突发事件救治对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="emergencyEventTreatmentFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="事件ID" prop="eventId">
-          <el-input v-model="form.eventId" placeholder="请输入事件ID" />
-        </el-form-item>
-        <el-form-item label="患者ID" prop="patientId">
-          <el-input v-model="form.patientId" placeholder="请输入患者ID" />
-        </el-form-item>
-        <el-form-item label="患者姓名" prop="patientName">
-          <el-input v-model="form.patientName" placeholder="请输入患者姓名" />
-        </el-form-item>
-        <el-form-item label="诊断" prop="diagnosis">
-          <el-input v-model="form.diagnosis" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="救治措施" prop="treatmentMeasures">
-          <el-input v-model="form.treatmentMeasures" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="救治结果" prop="treatmentResult">
-          <el-input v-model="form.treatmentResult" placeholder="请输入救治结果" />
-        </el-form-item>
-        <el-form-item label="救治医师" prop="treatingPhysician">
-          <el-input v-model="form.treatingPhysician" placeholder="请输入救治医师" />
-        </el-form-item>
-        <el-form-item label="救治时间" prop="treatmentTime">
-          <el-date-picker clearable v-model="form.treatmentTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择救治时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
-          <el-button @click="cancel">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <!-- 添加或修改突发事件治疗对话框 -->
+    <FieldConfigDialog
+      :title="dialog.title"
+      v-model="dialog.visible"
+      :field-config="fieldConfig"
+      :form-data="form"
+      :rules="rules"
+      :loading="buttonLoading"
+      @confirm="submitForm"
+      @cancel="cancel"
+    />
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model="fieldConfigVisible"
+      title="字段配置"
+      :field-config="fieldConfig"
+      :is-config-mode="true"
+      @confirm="() => (fieldConfigVisible = false)"
+    />
+
+    <!-- 搜索项配置对话框 -->
+    <SearchConfigDialog
+      v-model="searchConfigVisible"
+      :search-config="searchConfig"
+      @confirm="() => (searchConfigVisible = false)"
+    />
   </div>
 </template>
 
@@ -159,6 +138,11 @@ import {
   updateEmergencyEventTreatment
 } from '@/api/emergency/emergencyEventTreatment';
 import { EmergencyEventTreatmentVO, EmergencyEventTreatmentQuery, EmergencyEventTreatmentForm } from '@/api/emergency/emergencyEventTreatment/types';
+import { createEmergencyEventTreatmentFieldConfig } from '@/utils/configs/emergency/emergencyFieldConfigs';
+import { createEmergencyEventTreatmentSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import FieldConfigDialog from '@/components/DynamicForm/FieldConfigDialog.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -171,13 +155,18 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref<ElFormInstance>();
-const emergencyEventTreatmentFormRef = ref<ElFormInstance>();
+const searchFormRef = ref();
+const fieldConfig = createEmergencyEventTreatmentFieldConfig();
+const searchConfig = createEmergencyEventTreatmentSearchConfig();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
 
 const initFormData: EmergencyEventTreatmentForm = {
   id: undefined,
@@ -191,6 +180,7 @@ const initFormData: EmergencyEventTreatmentForm = {
   treatmentTime: undefined,
   remark: undefined
 };
+
 const data = reactive<PageData<EmergencyEventTreatmentForm, EmergencyEventTreatmentQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -205,14 +195,14 @@ const data = reactive<PageData<EmergencyEventTreatmentForm, EmergencyEventTreatm
     params: {}
   },
   rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
-    eventId: [{ required: true, message: '事件ID不能为空', trigger: 'blur' }]
+    eventId: [{ required: true, message: '事件ID不能为空', trigger: 'blur' }],
+    patientName: [{ required: true, message: '患者姓名不能为空', trigger: 'blur' }]
   }
 });
 
 const { queryParams, form, rules } = toRefs(data);
 
-/** 查询突发事件救治列表 */
+/** 查询突发事件治疗列表 */
 const getList = async () => {
   loading.value = true;
   const res = await listEmergencyEventTreatment(queryParams.value);
@@ -230,7 +220,6 @@ const cancel = () => {
 /** 表单重置 */
 const reset = () => {
   form.value = { ...initFormData };
-  emergencyEventTreatmentFormRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
@@ -241,7 +230,7 @@ const handleQuery = () => {
 
 /** 重置按钮操作 */
 const resetQuery = () => {
-  queryFormRef.value?.resetFields();
+  searchFormRef.value?.resetFields();
   handleQuery();
 };
 
@@ -256,7 +245,7 @@ const handleSelectionChange = (selection: EmergencyEventTreatmentVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加突发事件救治';
+  dialog.title = '添加突发事件治疗';
 };
 
 /** 修改按钮操作 */
@@ -266,30 +255,30 @@ const handleUpdate = async (row?: EmergencyEventTreatmentVO) => {
   const res = await getEmergencyEventTreatment(_id);
   Object.assign(form.value, res.data);
   dialog.visible = true;
-  dialog.title = '修改突发事件救治';
+  dialog.title = '修改突发事件治疗';
 };
 
 /** 提交按钮 */
 const submitForm = () => {
-  emergencyEventTreatmentFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateEmergencyEventTreatment(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addEmergencyEventTreatment(form.value).finally(() => (buttonLoading.value = false));
-      }
+  if (form.value.id) {
+    updateEmergencyEventTreatment(form.value).then(() => {
       proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
-      await getList();
-    }
-  });
+      getList();
+    });
+  } else {
+    addEmergencyEventTreatment(form.value).then(() => {
+      proxy?.$modal.msgSuccess('操作成功');
+      dialog.visible = false;
+      getList();
+    });
+  }
 };
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: EmergencyEventTreatmentVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除突发事件救治编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
+  await proxy?.$modal.confirm('是否确认删除突发事件治疗编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
   await delEmergencyEventTreatment(_ids);
   proxy?.$modal.msgSuccess('删除成功');
   await getList();

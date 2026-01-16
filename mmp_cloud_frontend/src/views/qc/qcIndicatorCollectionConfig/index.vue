@@ -162,9 +162,9 @@ import {
   QcIndicatorCollectionConfigForm
 } from '@/api/qc/qcIndicatorCollectionConfig/types';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createQcIndicatorCollectionConfigSearchConfig } from '@/utils/configs/qc/SearchConfigs';
+import { createQcIndicatorCollectionConfigSearchConfig } from '@/utils/configs/qc/qcSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import { createQcIndicatorCollectionConfigFieldConfig } from '@/utils/configs/qc/FieldConfigs';
+import { createQcIndicatorCollectionConfigFieldConfig } from '@/utils/configs/qc/qcFieldConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

@@ -201,7 +201,7 @@ import {
 import { DoctorEthicsEvaluationVO, DoctorEthicsEvaluationQuery, DoctorEthicsEvaluationForm } from '@/api/doctor/doctorEthicsEvaluation/types';
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { DoctorBasicInfoVO } from '@/api/doctor/doctorBasicInfo/types';
-import { createDoctorEthicsEvaluationFieldConfig } from '@/utils/fieldConfig';
+import { createDoctorEthicsEvaluationFieldConfig } from '@/utils/configs/doctor/doctorFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

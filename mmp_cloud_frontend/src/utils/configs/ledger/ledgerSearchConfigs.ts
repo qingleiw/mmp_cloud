@@ -1,4 +1,4 @@
-import { SearchConfigManager, SearchFieldGroup } from '../../searchConfig';
+import { SearchConfigManager, SearchFieldGroup } from '../searchConfigManager';
 
 // 死亡病例讨论搜索配置
 export function createDeathCaseDiscussionSearchConfig() {

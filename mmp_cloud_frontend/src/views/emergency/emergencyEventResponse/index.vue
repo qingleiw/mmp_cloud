@@ -3,39 +3,13 @@
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
         <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="响应队伍" prop="responseTeam">
-              <el-input v-model="queryParams.responseTeam" placeholder="请输入响应队伍" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="响应开始时间" prop="responseStartTime">
-              <el-date-picker
-                clearable
-                v-model="queryParams.responseStartTime"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择响应开始时间"
-              />
-            </el-form-item>
-            <el-form-item label="响应结束时间" prop="responseEndTime">
-              <el-date-picker
-                clearable
-                v-model="queryParams.responseEndTime"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择响应结束时间"
-              />
-            </el-form-item>
-            <el-form-item label="响应措施" prop="responseMeasures">
-              <el-input v-model="queryParams.responseMeasures" placeholder="请输入响应措施" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="责任人" prop="responsiblePerson">
-              <el-input v-model="queryParams.responsiblePerson" placeholder="请输入责任人" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+          <DynamicSearchForm
+            ref="searchFormRef"
+            :search-config="searchConfig"
+            :query-params="queryParams"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
@@ -73,27 +47,32 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="fieldConfigVisible = true">字段配置</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="searchConfigVisible = true">搜索项配置</el-button>
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
 
       <el-table v-loading="loading" border :data="emergencyEventResponseList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-        <el-table-column label="响应队伍" align="center" prop="responseTeam" />
-        <el-table-column label="响应开始时间" align="center" prop="responseStartTime" width="180">
+        <el-table-column
+          v-for="field in fieldConfig.getVisibleFields()"
+          :key="field.prop"
+          :label="field.label"
+          :align="'center'"
+          :prop="field.prop"
+          :width="field.width"
+          v-show="field.visible"
+        >
           <template #default="scope">
-            <span>{{ parseTime(scope.row.responseStartTime, '{y}-{m}-{d}') }}</span>
+            <span v-if="field.type === 'datetime'">{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
+            <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="响应结束时间" align="center" prop="responseEndTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.responseEndTime, '{y}-{m}-{d}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="响应措施" align="center" prop="responseMeasures" />
-        <el-table-column label="责任人" align="center" prop="responsiblePerson" />
-        <el-table-column label="备注" align="center" prop="remark" />
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
@@ -120,52 +99,34 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
+
     <!-- 添加或修改突发事件响应对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="emergencyEventResponseFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="事件ID" prop="eventId">
-          <el-input v-model="form.eventId" placeholder="请输入事件ID" />
-        </el-form-item>
-        <el-form-item label="响应队伍" prop="responseTeam">
-          <el-input v-model="form.responseTeam" placeholder="请输入响应队伍" />
-        </el-form-item>
-        <el-form-item label="响应开始时间" prop="responseStartTime">
-          <el-date-picker
-            clearable
-            v-model="form.responseStartTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择响应开始时间"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="响应结束时间" prop="responseEndTime">
-          <el-date-picker
-            clearable
-            v-model="form.responseEndTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择响应结束时间"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="响应措施" prop="responseMeasures">
-          <el-input v-model="form.responseMeasures" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="责任人" prop="responsiblePerson">
-          <el-input v-model="form.responsiblePerson" placeholder="请输入责任人" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
-          <el-button @click="cancel">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <FieldConfigDialog
+      :title="dialog.title"
+      v-model="dialog.visible"
+      :field-config="fieldConfig"
+      :form-data="form"
+      :rules="rules"
+      :loading="buttonLoading"
+      @confirm="submitForm"
+      @cancel="cancel"
+    />
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model="fieldConfigVisible"
+      title="字段配置"
+      :field-config="fieldConfig"
+      :is-config-mode="true"
+      @confirm="() => (fieldConfigVisible = false)"
+    />
+
+    <!-- 搜索项配置对话框 -->
+    <SearchConfigDialog
+      v-model="searchConfigVisible"
+      :search-config="searchConfig"
+      @confirm="() => (searchConfigVisible = false)"
+    />
   </div>
 </template>
 
@@ -178,6 +139,11 @@ import {
   updateEmergencyEventResponse
 } from '@/api/emergency/emergencyEventResponse';
 import { EmergencyEventResponseVO, EmergencyEventResponseQuery, EmergencyEventResponseForm } from '@/api/emergency/emergencyEventResponse/types';
+import { createEmergencyEventResponseFieldConfig } from '@/utils/configs/emergency/emergencyFieldConfigs';
+import { createEmergencyEventResponseSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import FieldConfigDialog from '@/components/DynamicForm/FieldConfigDialog.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -190,13 +156,18 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref<ElFormInstance>();
-const emergencyEventResponseFormRef = ref<ElFormInstance>();
+const searchFormRef = ref();
+const fieldConfig = createEmergencyEventResponseFieldConfig();
+const searchConfig = createEmergencyEventResponseSearchConfig();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
 
 const initFormData: EmergencyEventResponseForm = {
   id: undefined,
@@ -208,6 +179,7 @@ const initFormData: EmergencyEventResponseForm = {
   responsiblePerson: undefined,
   remark: undefined
 };
+
 const data = reactive<PageData<EmergencyEventResponseForm, EmergencyEventResponseQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -221,8 +193,8 @@ const data = reactive<PageData<EmergencyEventResponseForm, EmergencyEventRespons
     params: {}
   },
   rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
-    eventId: [{ required: true, message: '事件ID不能为空', trigger: 'blur' }]
+    eventId: [{ required: true, message: '事件ID不能为空', trigger: 'blur' }],
+    responseTeam: [{ required: true, message: '响应队伍不能为空', trigger: 'blur' }]
   }
 });
 
@@ -246,7 +218,6 @@ const cancel = () => {
 /** 表单重置 */
 const reset = () => {
   form.value = { ...initFormData };
-  emergencyEventResponseFormRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
@@ -257,7 +228,7 @@ const handleQuery = () => {
 
 /** 重置按钮操作 */
 const resetQuery = () => {
-  queryFormRef.value?.resetFields();
+  searchFormRef.value?.resetFields();
   handleQuery();
 };
 
@@ -287,19 +258,19 @@ const handleUpdate = async (row?: EmergencyEventResponseVO) => {
 
 /** 提交按钮 */
 const submitForm = () => {
-  emergencyEventResponseFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateEmergencyEventResponse(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addEmergencyEventResponse(form.value).finally(() => (buttonLoading.value = false));
-      }
+  if (form.value.id) {
+    updateEmergencyEventResponse(form.value).then(() => {
       proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
-      await getList();
-    }
-  });
+      getList();
+    });
+  } else {
+    addEmergencyEventResponse(form.value).then(() => {
+      proxy?.$modal.msgSuccess('操作成功');
+      dialog.visible = false;
+      getList();
+    });
+  }
 };
 
 /** 删除按钮操作 */

@@ -183,10 +183,10 @@ import {
   QualificationAuthorizationRecordQuery,
   QualificationAuthorizationRecordForm
 } from '@/api/qualification/qualificationAuthorizationRecord/types';
-import { createQualificationAuthorizationRecordFieldConfig } from '@/utils/fieldConfig';
+import { createQualificationAuthorizationRecordFieldConfig } from '@/utils/configs/qualification/qualificationFieldConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createQualificationAuthorizationRecordSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
+import { createQualificationAuthorizationRecordSearchConfig } from '@/utils/configs/qualification/qualificationSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { Search, Setting, List } from '@element-plus/icons-vue';
 

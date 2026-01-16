@@ -1,4 +1,4 @@
-import { FieldConfigManager, FieldGroup } from '../../fieldConfigManager';
+import { FieldConfigManager, FieldGroup } from '../fieldConfigManager';
 
 // 科室资格目录字段配置
 export function createDepartmentQualificationDirectoryFieldConfig() {

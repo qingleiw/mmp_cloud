@@ -1,4 +1,9 @@
-export interface SurgeryComplicationRecordVO {
+export interface SurgeryComplicationRecordVO extends BaseEntity {
+  /**
+   * 主键ID
+   */
+  id: string | number;
+
   /**
    * 医师姓名
    */

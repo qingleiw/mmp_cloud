@@ -1,4 +1,4 @@
-import { SearchConfigManager, SearchFieldGroup } from '../../searchConfig';
+import { SearchConfigManager, SearchFieldGroup } from '../searchConfigManager';
 
 // 投诉纠纷搜索配置
 export function createComplaintDisputeSearchConfig() {

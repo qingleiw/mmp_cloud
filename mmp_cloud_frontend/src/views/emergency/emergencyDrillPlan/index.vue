@@ -3,51 +3,13 @@
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
         <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="计划编码" prop="planCode">
-              <el-input v-model="queryParams.planCode" placeholder="请输入计划编码" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="计划名称" prop="planName">
-              <el-input v-model="queryParams.planName" placeholder="请输入计划名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="演练场景" prop="drillScenario">
-              <el-input v-model="queryParams.drillScenario" placeholder="请输入演练场景" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="计划日期" prop="plannedDate">
-              <el-date-picker clearable v-model="queryParams.plannedDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择计划日期" />
-            </el-form-item>
-            <el-form-item label="实际日期" prop="actualDate">
-              <el-date-picker clearable v-model="queryParams.actualDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择实际日期" />
-            </el-form-item>
-            <el-form-item label="演练地点" prop="location">
-              <el-input v-model="queryParams.location" placeholder="请输入演练地点" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="组织者" prop="organizer">
-              <el-input v-model="queryParams.organizer" placeholder="请输入组织者" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="参与人员" prop="participants">
-              <el-input v-model="queryParams.participants" placeholder="请输入参与人员" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="演练目标" prop="objectives">
-              <el-input v-model="queryParams.objectives" placeholder="请输入演练目标" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="演练流程" prop="procedures">
-              <el-input v-model="queryParams.procedures" placeholder="请输入演练流程" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="评估标准" prop="evaluationCriteria">
-              <el-input v-model="queryParams.evaluationCriteria" placeholder="请输入评估标准" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="演练结果" prop="drillResult">
-              <el-input v-model="queryParams.drillResult" placeholder="请输入演练结果" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="经验教训" prop="lessonsLearned">
-              <el-input v-model="queryParams.lessonsLearned" placeholder="请输入经验教训" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+          <DynamicSearchForm
+            ref="searchFormRef"
+            :search-config="searchConfig"
+            :query-params="queryParams"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
@@ -79,37 +41,32 @@
               >导出</el-button
             >
           </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="fieldConfigVisible = true">字段配置</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="searchConfigVisible = true">搜索项配置</el-button>
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
 
       <el-table v-loading="loading" border :data="emergencyDrillPlanList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-        <el-table-column label="计划编码" align="center" prop="planCode" />
-        <el-table-column label="计划名称" align="center" prop="planName" />
-        <el-table-column label="演练类型" align="center" prop="drillType" />
-        <el-table-column label="演练场景" align="center" prop="drillScenario" />
-        <el-table-column label="计划日期" align="center" prop="plannedDate" width="180">
+        <el-table-column
+          v-for="field in fieldConfig.getVisibleFields()"
+          :key="field.prop"
+          :label="field.label"
+          :align="'center'"
+          :prop="field.prop"
+          :width="field.width"
+          v-show="field.visible"
+        >
           <template #default="scope">
-            <span>{{ parseTime(scope.row.plannedDate, '{y}-{m}-{d}') }}</span>
+            <span v-if="field.type === 'datetime'">{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
+            <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="实际日期" align="center" prop="actualDate" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.actualDate, '{y}-{m}-{d}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="演练地点" align="center" prop="location" />
-        <el-table-column label="组织者" align="center" prop="organizer" />
-        <el-table-column label="参与人员" align="center" prop="participants" />
-        <el-table-column label="演练目标" align="center" prop="objectives" />
-        <el-table-column label="演练流程" align="center" prop="procedures" />
-        <el-table-column label="评估标准" align="center" prop="evaluationCriteria" />
-        <el-table-column label="状态：planned-已计划，executing-执行中，completed-已完成" align="center" prop="status" />
-        <el-table-column label="演练结果" align="center" prop="drillResult" />
-        <el-table-column label="经验教训" align="center" prop="lessonsLearned" />
-        <el-table-column label="备注" align="center" prop="remark" />
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
@@ -136,61 +93,34 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
+
     <!-- 添加或修改应急演练计划对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="emergencyDrillPlanFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="计划编码" prop="planCode">
-          <el-input v-model="form.planCode" placeholder="请输入计划编码" />
-        </el-form-item>
-        <el-form-item label="计划名称" prop="planName">
-          <el-input v-model="form.planName" placeholder="请输入计划名称" />
-        </el-form-item>
-        <el-form-item label="演练场景" prop="drillScenario">
-          <el-input v-model="form.drillScenario" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="计划日期" prop="plannedDate">
-          <el-date-picker clearable v-model="form.plannedDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择计划日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="实际日期" prop="actualDate">
-          <el-date-picker clearable v-model="form.actualDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择实际日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="演练地点" prop="location">
-          <el-input v-model="form.location" placeholder="请输入演练地点" />
-        </el-form-item>
-        <el-form-item label="组织者" prop="organizer">
-          <el-input v-model="form.organizer" placeholder="请输入组织者" />
-        </el-form-item>
-        <el-form-item label="参与人员" prop="participants">
-          <el-input v-model="form.participants" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="演练目标" prop="objectives">
-          <el-input v-model="form.objectives" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="演练流程" prop="procedures">
-          <el-input v-model="form.procedures" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="评估标准" prop="evaluationCriteria">
-          <el-input v-model="form.evaluationCriteria" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="演练结果" prop="drillResult">
-          <el-input v-model="form.drillResult" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="经验教训" prop="lessonsLearned">
-          <el-input v-model="form.lessonsLearned" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
-          <el-button @click="cancel">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <FieldConfigDialog
+      :title="dialog.title"
+      v-model="dialog.visible"
+      :field-config="fieldConfig"
+      :form-data="form"
+      :rules="rules"
+      :loading="buttonLoading"
+      @confirm="submitForm"
+      @cancel="cancel"
+    />
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model="fieldConfigVisible"
+      title="字段配置"
+      :field-config="fieldConfig"
+      :is-config-mode="true"
+      @confirm="() => (fieldConfigVisible = false)"
+    />
+
+    <!-- 搜索项配置对话框 -->
+    <SearchConfigDialog
+      v-model="searchConfigVisible"
+      :search-config="searchConfig"
+      @confirm="() => (searchConfigVisible = false)"
+    />
   </div>
 </template>
 
@@ -203,6 +133,11 @@ import {
   updateEmergencyDrillPlan
 } from '@/api/emergency/emergencyDrillPlan';
 import { EmergencyDrillPlanVO, EmergencyDrillPlanQuery, EmergencyDrillPlanForm } from '@/api/emergency/emergencyDrillPlan/types';
+import { createEmergencyDrillPlanFieldConfig } from '@/utils/configs/emergency/emergencyFieldConfigs';
+import { createEmergencyDrillPlanSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -215,13 +150,18 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref<ElFormInstance>();
-const emergencyDrillPlanFormRef = ref<ElFormInstance>();
+const searchFormRef = ref();
+const fieldConfig = createEmergencyDrillPlanFieldConfig();
+const searchConfig = createEmergencyDrillPlanSearchConfig();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
 
 const initFormData: EmergencyDrillPlanForm = {
   id: undefined,
@@ -242,6 +182,7 @@ const initFormData: EmergencyDrillPlanForm = {
   lessonsLearned: undefined,
   remark: undefined
 };
+
 const data = reactive<PageData<EmergencyDrillPlanForm, EmergencyDrillPlanQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -265,7 +206,6 @@ const data = reactive<PageData<EmergencyDrillPlanForm, EmergencyDrillPlanQuery>>
     params: {}
   },
   rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
     planCode: [{ required: true, message: '计划编码不能为空', trigger: 'blur' }],
     planName: [{ required: true, message: '计划名称不能为空', trigger: 'blur' }]
   }
@@ -291,7 +231,6 @@ const cancel = () => {
 /** 表单重置 */
 const reset = () => {
   form.value = { ...initFormData };
-  emergencyDrillPlanFormRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
@@ -302,7 +241,7 @@ const handleQuery = () => {
 
 /** 重置按钮操作 */
 const resetQuery = () => {
-  queryFormRef.value?.resetFields();
+  searchFormRef.value?.resetFields();
   handleQuery();
 };
 
@@ -332,19 +271,19 @@ const handleUpdate = async (row?: EmergencyDrillPlanVO) => {
 
 /** 提交按钮 */
 const submitForm = () => {
-  emergencyDrillPlanFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateEmergencyDrillPlan(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addEmergencyDrillPlan(form.value).finally(() => (buttonLoading.value = false));
-      }
+  if (form.value.id) {
+    updateEmergencyDrillPlan(form.value).then(() => {
       proxy?.$modal.msgSuccess('操作成功');
       dialog.visible = false;
-      await getList();
-    }
-  });
+      getList();
+    });
+  } else {
+    addEmergencyDrillPlan(form.value).then(() => {
+      proxy?.$modal.msgSuccess('操作成功');
+      dialog.visible = false;
+      getList();
+    });
+  }
 };
 
 /** 删除按钮操作 */

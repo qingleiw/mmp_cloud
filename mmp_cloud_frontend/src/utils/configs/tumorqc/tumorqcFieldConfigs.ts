@@ -1,4 +1,4 @@
-import { FieldConfigManager, FieldGroup } from '../../fieldConfigManager';
+import { FieldConfigManager, FieldGroup } from '../fieldConfigManager';
 
 // 肿瘤质控指标记录字段配置
 export function createTumorQcIndicatorRecordFieldConfig() {

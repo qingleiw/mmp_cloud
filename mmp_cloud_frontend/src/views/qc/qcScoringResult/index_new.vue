@@ -248,8 +248,8 @@ import DynamicSearchForm from '@/components/DynamicSearchForm/index.vue';
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
 // 动态配置管理器
-const fieldConfigManager = new FieldConfigManager('qcScoringResult', createQcScoringResultFieldConfig());
-const searchConfigManager = createQcScoringResultSearchConfig();
+const fieldConfigManager = new FieldConfigManager(createQcScoringResultFieldConfig('qcScoringResult'));
+const searchConfigManager = new SearchConfigManager(createQcScoringResultSearchConfig('qcScoringResult'));
 
 // 计算属性
 const visibleTableFields = computed(() => fieldConfigManager.getVisibleFields());

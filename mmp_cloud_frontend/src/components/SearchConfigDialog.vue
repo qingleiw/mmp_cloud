@@ -25,14 +25,16 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import type { SearchConfigManager } from '@/utils/searchConfig';
+import type { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 
 const props = defineProps<{
-  modelValue: boolean;
+  visible?: boolean;
+  modelValue?: boolean;
   searchConfigManager: SearchConfigManager;
 }>();
 
 const emit = defineEmits<{
+  'update:visible': [value: boolean];
   'update:modelValue': [value: boolean];
   'confirm': [];
 }>();
@@ -40,13 +42,17 @@ const emit = defineEmits<{
 const visible = ref(false);
 
 watch(
-  () => props.modelValue,
+  () => props.visible ?? props.modelValue,
   (newVal) => {
-    visible.value = newVal;
-  }
+    if (newVal !== undefined) {
+      visible.value = newVal;
+    }
+  },
+  { immediate: true }
 );
 
 watch(visible, (newVal) => {
+  emit('update:visible', newVal);
   emit('update:modelValue', newVal);
 });
 

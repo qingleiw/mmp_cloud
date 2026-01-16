@@ -1,4 +1,4 @@
-import { SearchConfigManager, SearchFieldGroup } from '../../searchConfig';
+import { SearchConfigManager, SearchFieldGroup } from '../searchConfigManager';
 
 // 监管检查记录搜索配置
 export function createSupervisionInspectionRecordSearchConfig() {

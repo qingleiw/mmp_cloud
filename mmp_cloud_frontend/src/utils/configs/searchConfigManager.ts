@@ -1,12 +1,16 @@
 import { reactive } from 'vue';
 
-export type SearchFieldType = 'input' | 'number' | 'select' | 'date' | 'datetime';
+export type SearchFieldType = 'input' | 'number' | 'select' | 'date' | 'datetime' | 'numberrange' | 'daterange';
 
 export interface SearchFieldDefinition {
   prop: string;
   label: string;
   type: SearchFieldType;
   visible: boolean;
+  placeholder?: string;
+  startProp?: string;
+  endProp?: string;
+  group?: string;
   required?: boolean;
   options?: Array<{ label: string; value: any }>;
   componentProps?: Record<string, any>;

@@ -1,4 +1,9 @@
-export interface NewTechnologyProjectMappingVO {
+export interface NewTechnologyProjectMappingVO extends BaseEntity {
+  /**
+   * 主键ID
+   */
+  id: string | number;
+
   /**
    * 对码类型 医嘱项/ICD-9/收费项
    */

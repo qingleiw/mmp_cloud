@@ -229,11 +229,11 @@ import {
   QualificationAuthorizationApplyQuery,
   QualificationAuthorizationApplyForm
 } from '@/api/qualification/qualificationAuthorizationApply/types';
-import { createQualificationAuthorizationApplyFieldConfig } from '@/utils/fieldConfig';
+import { createQualificationAuthorizationApplyFieldConfig } from '@/utils/configs/qualification/qualificationFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createQualificationAuthorizationApplySearchConfig } from '@/utils/configs/qualification/SearchConfigs';
+import { createQualificationAuthorizationApplySearchConfig } from '@/utils/configs/qualification/qualificationSearchConfigs';
 import { Search, Setting, List } from '@element-plus/icons-vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;

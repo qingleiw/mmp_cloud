@@ -199,9 +199,9 @@ import {
   updateQualificationExamPaper
 } from '@/api/qualification/qualificationExamPaper';
 import { QualificationExamPaperVO, QualificationExamPaperQuery, QualificationExamPaperForm } from '@/api/qualification/qualificationExamPaper/types';
-import { FieldConfigManager } from '@/utils/fieldConfigManager';
-import { createQualificationExamPaperFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
-import { createQualificationExamPaperSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { createQualificationExamPaperFieldConfig } from '@/utils/configs/qualification/qualificationFieldConfigs';
+import { createQualificationExamPaperSearchConfig } from '@/utils/configs/qualification/qualificationSearchConfigs';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';

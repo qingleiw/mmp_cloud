@@ -3,30 +3,13 @@
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
         <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="队伍编码" prop="teamCode">
-              <el-input v-model="queryParams.teamCode" placeholder="请输入队伍编码" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="队伍名称" prop="teamName">
-              <el-input v-model="queryParams.teamName" placeholder="请输入队伍名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="专业特长" prop="specialty">
-              <el-input v-model="queryParams.specialty" placeholder="请输入专业特长" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="队长" prop="leader">
-              <el-input v-model="queryParams.leader" placeholder="请输入队长" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="联系方式" prop="contactInfo">
-              <el-input v-model="queryParams.contactInfo" placeholder="请输入联系方式" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="成员数量" prop="memberCount">
-              <el-input v-model="queryParams.memberCount" placeholder="请输入成员数量" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+          <DynamicSearchForm
+            ref="searchFormRef"
+            :search-config="searchConfig"
+            :query-params="queryParams"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
@@ -50,22 +33,32 @@
           <el-col :span="1.5">
             <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['emergency:emergencyTeam:export']">导出</el-button>
           </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="fieldConfigVisible = true">字段配置</el-button>
+          </el-col>
+          <el-col :span="1.5">
+            <el-button type="info" plain icon="Setting" @click="searchConfigVisible = true">搜索项配置</el-button>
+          </el-col>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
         </el-row>
       </template>
 
       <el-table v-loading="loading" border :data="emergencyTeamList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-        <el-table-column label="队伍编码" align="center" prop="teamCode" />
-        <el-table-column label="队伍名称" align="center" prop="teamName" />
-        <el-table-column label="队伍类型" align="center" prop="teamType" />
-        <el-table-column label="专业特长" align="center" prop="specialty" />
-        <el-table-column label="队长" align="center" prop="leader" />
-        <el-table-column label="联系方式" align="center" prop="contactInfo" />
-        <el-table-column label="成员数量" align="center" prop="memberCount" />
-        <el-table-column label="状态" align="center" prop="status" />
-        <el-table-column label="备注" align="center" prop="remark" />
+        <el-table-column
+          v-for="field in fieldConfig.getVisibleFields()"
+          :key="field.prop"
+          :label="field.label"
+          :align="'center'"
+          :prop="field.prop"
+          :width="field.width"
+          v-show="field.visible"
+        >
+          <template #default="scope">
+            <span v-if="field.type === 'datetime'">{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
+            <span v-else>{{ scope.row[field.prop] }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
@@ -87,43 +80,41 @@
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
     <!-- 添加或修改应急队伍对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="emergencyTeamFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="队伍编码" prop="teamCode">
-          <el-input v-model="form.teamCode" placeholder="请输入队伍编码" />
-        </el-form-item>
-        <el-form-item label="队伍名称" prop="teamName">
-          <el-input v-model="form.teamName" placeholder="请输入队伍名称" />
-        </el-form-item>
-        <el-form-item label="专业特长" prop="specialty">
-          <el-input v-model="form.specialty" placeholder="请输入专业特长" />
-        </el-form-item>
-        <el-form-item label="队长" prop="leader">
-          <el-input v-model="form.leader" placeholder="请输入队长" />
-        </el-form-item>
-        <el-form-item label="联系方式" prop="contactInfo">
-          <el-input v-model="form.contactInfo" placeholder="请输入联系方式" />
-        </el-form-item>
-        <el-form-item label="成员数量" prop="memberCount">
-          <el-input v-model="form.memberCount" placeholder="请输入成员数量" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
-          <el-button @click="cancel">取 消</el-button>
-        </div>
-      </template>
-    </el-dialog>
+    <FieldConfigDialog
+      v-model="dialog.visible"
+      :title="dialog.title"
+      :field-config="fieldConfig"
+      :form-data="form"
+      :loading="buttonLoading"
+      @confirm="submitForm"
+      @cancel="cancel"
+    />
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model="fieldConfigVisible"
+      title="字段配置"
+      :field-config="fieldConfig"
+      :is-config-mode="true"
+      @confirm="() => (fieldConfigVisible = false)"
+    />
+
+    <!-- 搜索项配置对话框 -->
+    <SearchConfigDialog
+      v-model="searchConfigVisible"
+      :search-config="searchConfig"
+      @confirm="() => (searchConfigVisible = false)"
+    />
   </div>
 </template>
 
 <script setup name="EmergencyTeam" lang="ts">
 import { listEmergencyTeam, getEmergencyTeam, delEmergencyTeam, addEmergencyTeam, updateEmergencyTeam } from '@/api/emergency/emergencyTeam';
 import { EmergencyTeamVO, EmergencyTeamQuery, EmergencyTeamForm } from '@/api/emergency/emergencyTeam/types';
+import { createEmergencyTeamFieldConfig } from '@/utils/configs/emergency/emergencyFieldConfigs';
+import { createEmergencyTeamSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
+import FieldConfigDialog from '@/components/DynamicForm/FieldConfigDialog.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -144,38 +135,24 @@ const dialog = reactive<DialogOption>({
   title: ''
 });
 
-const initFormData: EmergencyTeamForm = {
-  id: undefined,
-  teamCode: undefined,
-  teamName: undefined,
-  teamType: undefined,
-  specialty: undefined,
-  leader: undefined,
-  contactInfo: undefined,
-  memberCount: undefined,
-  status: undefined,
-  remark: undefined
-};
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
+
+// 初始化动态配置
+const fieldConfig = createEmergencyTeamFieldConfig();
+const searchConfig = createEmergencyTeamSearchConfig();
+
+const initFormData: EmergencyTeamForm = fieldConfig.getDefaultFormData();
 const data = reactive<PageData<EmergencyTeamForm, EmergencyTeamQuery>>({
   form: { ...initFormData },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
-    teamCode: undefined,
-    teamName: undefined,
-    teamType: undefined,
-    specialty: undefined,
-    leader: undefined,
-    contactInfo: undefined,
-    memberCount: undefined,
-    status: undefined,
+    ...searchConfig.getDefaultSearchParams(),
     params: {}
   },
-  rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
-    teamCode: [{ required: true, message: '队伍编码不能为空', trigger: 'blur' }],
-    teamName: [{ required: true, message: '队伍名称不能为空', trigger: 'blur' }]
-  }
+  rules: fieldConfig.getValidationRules()
 });
 
 const { queryParams, form, rules } = toRefs(data);
@@ -238,20 +215,20 @@ const handleUpdate = async (row?: EmergencyTeamVO) => {
 };
 
 /** 提交按钮 */
-const submitForm = () => {
-  emergencyTeamFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateEmergencyTeam(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addEmergencyTeam(form.value).finally(() => (buttonLoading.value = false));
-      }
-      proxy?.$modal.msgSuccess('操作成功');
-      dialog.visible = false;
-      await getList();
+const submitForm = async () => {
+  buttonLoading.value = true;
+  try {
+    if (form.value.id) {
+      await updateEmergencyTeam(form.value);
+    } else {
+      await addEmergencyTeam(form.value);
     }
-  });
+    proxy?.$modal.msgSuccess('操作成功');
+    dialog.visible = false;
+    await getList();
+  } finally {
+    buttonLoading.value = false;
+  }
 };
 
 /** 删除按钮操作 */

@@ -163,11 +163,11 @@
 import { listSurgeryTeam, getSurgeryTeam, delSurgeryTeam, addSurgeryTeam, updateSurgeryTeam } from '@/api/surgery/surgeryTeam';
 import { listDoctorBasicInfo } from '@/api/doctor/doctorBasicInfo';
 import { SurgeryTeamVO, SurgeryTeamQuery, SurgeryTeamForm } from '@/api/surgery/surgeryTeam/types';
-import { createSurgeryTeamFieldConfig } from '@/utils/fieldConfig';
+import { createSurgeryTeamFieldConfig } from '@/utils/configs/surgery/surgeryFieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
-import { createSurgeryTeamSearchConfig } from '@/utils/configs/surgery/SearchConfigs';
+import { createSurgeryTeamSearchConfig } from '@/utils/configs/surgery/surgerySearchConfigs';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

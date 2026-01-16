@@ -344,21 +344,21 @@
     <!-- 字段配置对话框 -->
     <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <!-- 搜索配置对话框 -->
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" />
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" />
   </div>
 </template>
 
 <script setup name="NewTechnologyProject" lang="ts">
 import { listNewTechnologyProject, getNewTechnologyProject, delNewTechnologyProject, addNewTechnologyProject, updateNewTechnologyProject } from '@/api/ntp/newTechnologyProject';
 import { NewTechnologyProjectVO, NewTechnologyProjectQuery, NewTechnologyProjectForm } from '@/api/ntp/newTechnologyProject/types';
-import { createNewTechnologyProjectFieldConfig } from '@/utils/configs/ntp/fieldConfigs';
+import { createNewTechnologyProjectFieldConfig } from '@/utils/configs/ntp/ntpfieldConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createNewTechnologyProjectSearchConfig } from '@/utils/configs/ntp/searchConfigs';
+import { createNewTechnologyProjectSearchConfig } from '@/utils/configs/ntp/ntpsearchConfigs';
 import type { FormInstance } from 'element-plus';
 import type { DialogOption } from '@/types/global';
-import { FieldConfigManager } from '@/utils/fieldConfigManager';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -461,7 +461,8 @@ const rules = {
   projectName: [{ required: true, message: '项目名称不能为空', trigger: 'blur' }]
 };
 
-const { queryParams: queryParamsRef, form: formRef, rules: rulesRef } = toRefs({ queryParams, form, rules });
+const { queryParams: queryParamsRef, form: formRef } = toRefs(reactive({ queryParams, form }));
+const rulesRef = rules;
 
 /** 查询新技术项目基本信息列表 */
 const getList = async () => {

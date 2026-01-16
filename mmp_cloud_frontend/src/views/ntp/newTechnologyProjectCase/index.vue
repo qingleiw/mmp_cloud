@@ -85,35 +85,51 @@
 
       <el-table v-loading="loading" border :data="newTechnologyProjectCaseList" @selection-change="handleSelectionChange" class="new-technology-project-case-table">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="主键ID" align="center" prop="id" v-if="false" />
-        <el-table-column label="患者姓名" align="center" prop="patientName" />
-        <el-table-column label="就诊类型" align="center" prop="visitType" />
-        <el-table-column label="就诊号" align="center" prop="visitNo" />
-        <el-table-column label="就诊日期" align="center" prop="visitDate" width="180">
+        <el-table-column
+          v-for="field in fieldConfigManager.getVisibleFields()"
+          :key="field.prop"
+          :label="field.label"
+          align="center"
+          :prop="field.prop"
+          :width="field.width"
+          :min-width="field.minWidth || 120"
+          resizable
+        >
           <template #default="scope">
-            <span>{{ parseTime(scope.row.visitDate, '{y}-{m}-{d}') }}</span>
+            <!-- 日期字段格式化 -->
+            <span v-if="field.prop === 'visitDate' || field.prop === 'operationDate'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
+            </span>
+
+            <!-- 时间字段格式化 -->
+            <span v-else-if="field.prop === 'createTime' || field.prop === 'updateTime' || field.prop === 'reportTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+
+            <!-- 就诊类型标签 -->
+            <el-tag v-else-if="field.prop === 'visitType'" :type="getVisitTypeTagType(scope.row[field.prop])">
+              {{ getVisitTypeLabel(scope.row[field.prop]) }}
+            </el-tag>
+
+            <!-- 随访状态标签 -->
+            <el-tag v-else-if="field.prop === 'followUpStatus'" :type="getFollowUpStatusTagType(scope.row[field.prop])">
+              {{ getFollowUpStatusLabel(scope.row[field.prop]) }}
+            </el-tag>
+
+            <!-- 是否已报备标签 -->
+            <el-tag v-else-if="field.prop === 'isReported'" :type="scope.row[field.prop] === 1 ? 'success' : 'warning'">
+              {{ scope.row[field.prop] === 1 ? '已报备' : '未报备' }}
+            </el-tag>
+
+            <!-- 删除标志字段 -->
+            <el-tag v-else-if="field.prop === 'isDeleted'" :type="scope.row[field.prop] === '0' ? 'success' : 'danger'">
+              {{ scope.row[field.prop] === '0' ? '未删除' : '已删除' }}
+            </el-tag>
+
+            <!-- 默认显示 -->
+            <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="就诊科室名称" align="center" prop="visitDepartmentName" />
-        <el-table-column label="诊断" align="center" prop="diagnosis" />
-        <el-table-column label="操作医生" align="center" prop="operator" />
-        <el-table-column label="操作时间" align="center" prop="operationDate" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.operationDate, '{y}-{m}-{d}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="效果评价" align="center" prop="effectEvaluation" />
-        <el-table-column label="并发症" align="center" prop="complication" />
-        <el-table-column label="不良反应" align="center" prop="adverseReaction" />
-        <el-table-column label="随访状态" align="center" prop="followUpStatus" />
-        <el-table-column label="随访结果" align="center" prop="followUpResult" />
-        <el-table-column label="是否已报备" align="center" prop="isReported" />
-        <el-table-column label="报备时间" align="center" prop="reportTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.reportTime, '{y}-{m}-{d}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="备注" align="center" prop="remark" />
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
@@ -149,69 +165,129 @@
     />
 
     <!-- 搜索配置对话框 -->
-    <FieldConfigDialog
+    <SearchConfigDialog
       v-model:visible="showSearchConfig"
-      :field-config-manager="searchConfigManager"
+      :search-config-manager="searchConfigManager"
       @confirm="handleSearchConfigConfirm"
     />
 
     <!-- 添加或修改新技术病例登记对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="newTechnologyProjectCaseFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="项目ID" prop="projectId">
-          <el-input v-model="form.projectId" placeholder="请输入项目ID" />
-        </el-form-item>
-        <el-form-item label="患者ID" prop="patientId">
-          <el-input v-model="form.patientId" placeholder="请输入患者ID" />
-        </el-form-item>
-        <el-form-item label="患者姓名" prop="patientName">
-          <el-input v-model="form.patientName" placeholder="请输入患者姓名" />
-        </el-form-item>
-        <el-form-item label="就诊号" prop="visitNo">
-          <el-input v-model="form.visitNo" placeholder="请输入就诊号" />
-        </el-form-item>
-        <el-form-item label="就诊日期" prop="visitDate">
-          <el-date-picker clearable v-model="form.visitDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择就诊日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="就诊科室ID" prop="visitDepartmentId">
-          <el-input v-model="form.visitDepartmentId" placeholder="请输入就诊科室ID" />
-        </el-form-item>
-        <el-form-item label="就诊科室名称" prop="visitDepartmentName">
-          <el-input v-model="form.visitDepartmentName" placeholder="请输入就诊科室名称" />
-        </el-form-item>
-        <el-form-item label="诊断" prop="diagnosis">
-          <el-input v-model="form.diagnosis" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="操作医生" prop="operator">
-          <el-input v-model="form.operator" placeholder="请输入操作医生" />
-        </el-form-item>
-        <el-form-item label="操作时间" prop="operationDate">
-          <el-date-picker clearable v-model="form.operationDate" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择操作时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="效果评价" prop="effectEvaluation">
-          <el-input v-model="form.effectEvaluation" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="并发症" prop="complication">
-          <el-input v-model="form.complication" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="不良反应" prop="adverseReaction">
-          <el-input v-model="form.adverseReaction" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="随访结果" prop="followUpResult">
-          <el-input v-model="form.followUpResult" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="是否已报备 1-是 0-否" prop="isReported">
-          <el-input v-model="form.isReported" placeholder="请输入是否已报备 1-是 0-否" />
-        </el-form-item>
-        <el-form-item label="报备时间" prop="reportTime">
-          <el-date-picker clearable v-model="form.reportTime" type="datetime" value-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择报备时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
+      <el-form ref="newTechnologyProjectCaseFormRef" :model="form" :rules="rules" label-width="100px">
+        <el-row :gutter="20">
+          <el-col
+            v-for="field in fieldConfigManager.getVisibleFields()"
+            :key="field.prop"
+            :span="field.type === 'textarea' ? 24 : 12"
+          >
+            <el-form-item :label="field.label" :prop="field.prop" v-if="field.prop !== 'createTime' && field.prop !== 'updateTime'">
+              <!-- 下拉选择框 -->
+              <el-select v-if="field.prop === 'visitType'" v-model="form.visitType" placeholder="请选择就诊类型" style="width: 100%">
+                <el-option label="门诊" value="outpatient" />
+                <el-option label="住院" value="inpatient" />
+              </el-select>
+              <el-select v-else-if="field.prop === 'followUpStatus'" v-model="form.followUpStatus" placeholder="请选择随访状态" style="width: 100%">
+                <el-option label="未随访" value="not_followed" />
+                <el-option label="随访中" value="following" />
+                <el-option label="已完成" value="completed" />
+              </el-select>
+              <el-select v-else-if="field.prop === 'isReported'" v-model="form.isReported" placeholder="请选择报备状态" style="width: 100%">
+                <el-option label="未报备" :value="0" />
+                <el-option label="已报备" :value="1" />
+              </el-select>
+
+              <!-- 日期选择器 -->
+              <el-date-picker
+                v-else-if="field.prop === 'visitDate'"
+                clearable
+                v-model="form.visitDate"
+                type="date"
+                value-format="YYYY-MM-DD"
+                placeholder="请选择就诊日期"
+                style="width: 100%"
+              />
+              <el-date-picker
+                v-else-if="field.prop === 'operationDate'"
+                clearable
+                v-model="form.operationDate"
+                type="date"
+                value-format="YYYY-MM-DD"
+                placeholder="请选择操作时间"
+                style="width: 100%"
+              />
+
+              <!-- 文本域 -->
+              <el-input
+                v-else-if="field.prop === 'diagnosis'"
+                v-model="form.diagnosis"
+                type="textarea"
+                placeholder="请输入诊断"
+                :maxlength="500"
+                :show-word-limit="true"
+                :rows="3"
+                style="width: 100%"
+              />
+              <el-input
+                v-else-if="field.prop === 'effectEvaluation'"
+                v-model="form.effectEvaluation"
+                type="textarea"
+                placeholder="请输入效果评价"
+                :maxlength="500"
+                :show-word-limit="true"
+                :rows="3"
+                style="width: 100%"
+              />
+              <el-input
+                v-else-if="field.prop === 'complication'"
+                v-model="form.complication"
+                type="textarea"
+                placeholder="请输入并发症"
+                :maxlength="500"
+                :show-word-limit="true"
+                :rows="3"
+                style="width: 100%"
+              />
+              <el-input
+                v-else-if="field.prop === 'adverseReaction'"
+                v-model="form.adverseReaction"
+                type="textarea"
+                placeholder="请输入不良反应"
+                :maxlength="500"
+                :show-word-limit="true"
+                :rows="3"
+                style="width: 100%"
+              />
+              <el-input
+                v-else-if="field.prop === 'followUpResult'"
+                v-model="form.followUpResult"
+                type="textarea"
+                placeholder="请输入随访结果"
+                :maxlength="500"
+                :show-word-limit="true"
+                :rows="3"
+                style="width: 100%"
+              />
+              <el-input
+                v-else-if="field.prop === 'remark'"
+                v-model="form.remark"
+                type="textarea"
+                placeholder="请输入备注"
+                :maxlength="200"
+                :show-word-limit="true"
+                :rows="2"
+                style="width: 100%"
+              />
+
+              <!-- 默认文本输入框 -->
+              <el-input
+                v-else
+                v-model="form[field.prop]"
+                :placeholder="`请输入${field.label}`"
+                style="width: 100%"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -232,18 +308,19 @@ import {
   updateNewTechnologyProjectCase
 } from '@/api/ntp/newTechnologyProjectCase';
 import { NewTechnologyProjectCaseVO, NewTechnologyProjectCaseQuery, NewTechnologyProjectCaseForm } from '@/api/ntp/newTechnologyProjectCase/types';
-import { createNewTechnologyCaseFieldConfig } from '@/utils/configs/ntp/fieldConfigs'
-import { createNewTechnologyCaseSearchConfig } from '@/utils/configs/ntp/searchConfigs'
-import { FieldConfigManager } from '@/utils/fieldConfigManager'
-import { SearchConfigManager } from '@/utils/searchConfig'
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
+import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
+import { createNewTechnologyProjectCaseFieldConfig } from '@/utils/configs/ntp/ntpFieldConfigs'
+import { createNewTechnologyProjectCaseSearchConfig } from '@/utils/configs/ntp/ntpSearchConfigs'
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue'
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue'
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue'
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
 // 字段配置管理器
-const fieldConfigManager = new FieldConfigManager('newTechnologyCase', createNewTechnologyCaseFieldConfig())
-const searchConfigManager = new SearchConfigManager(createNewTechnologyCaseSearchConfig())
+const fieldConfigManager = new FieldConfigManager('newTechnologyProjectCase', createNewTechnologyProjectCaseFieldConfig());
+const searchConfigManager = createNewTechnologyProjectCaseSearchConfig()
 
 // 可见字段配置
 const visibleFields = ref(fieldConfigManager.getVisibleFields())
@@ -437,178 +514,209 @@ const handleSearchConfigConfirm = () => {
   visibleSearchFields.value = searchConfigManager.getVisibleFields()
 }
 
+/** 获取随访状态标签类型 */
+const getFollowUpStatusTagType = (status: string) => {
+  switch (status) {
+    case 'completed':
+      return 'success';
+    case 'following':
+      return 'primary';
+    case 'not_followed':
+      return 'warning';
+    default:
+      return 'info';
+  }
+};
+
+/** 获取随访状态标签文本 */
+const getFollowUpStatusLabel = (status: string) => {
+  switch (status) {
+    case 'completed':
+      return '已完成';
+    case 'following':
+      return '随访中';
+    case 'not_followed':
+      return '未随访';
+    default:
+      return status;
+  }
+};
+
+/** 获取就诊类型标签类型 */
+const getVisitTypeTagType = (type: string) => {
+  switch (type) {
+    case 'outpatient':
+      return 'info';
+    case 'inpatient':
+      return 'primary';
+    default:
+      return 'info';
+  }
+};
+
+/** 获取就诊类型标签文本 */
+const getVisitTypeLabel = (type: string) => {
+  switch (type) {
+    case 'outpatient':
+      return '门诊';
+    case 'inpatient':
+      return '住院';
+    default:
+      return type;
+  }
+};
+
 onMounted(() => {
   getList();
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .app-container {
   background-color: #f5f5f5;
   min-height: 100vh;
   padding: 20px;
+}
 
-  .page-header {
-    margin-bottom: 20px;
+.page-header {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-    .page-title {
-      font-size: 24px;
+  .page-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
+
+    .title-icon {
+      color: #409eff;
+      font-size: 20px;
+    }
+  }
+
+  .page-description {
+    margin: 0;
+    color: #86909c;
+    font-size: 14px;
+  }
+}
+
+.search-card {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .search-title {
       font-weight: 600;
       color: #1d2129;
-      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
 
-      .title-icon {
+      .search-icon {
         color: #409eff;
-        font-size: 28px;
       }
     }
 
-    .page-description {
-      color: #86909c;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-  }
+    .search-actions {
+      .config-btn {
+        color: #409eff;
 
-  .search-container {
-    margin-bottom: 20px;
-
-    .search-card {
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-      .search-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .search-title {
-          font-size: 16px;
-          font-weight: 500;
-          color: #1d2129;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-
-          .search-icon {
-            color: #409eff;
-            font-size: 18px;
-          }
-        }
-
-        .search-actions {
-          .config-btn {
-            font-size: 14px;
-            padding: 6px 12px;
-
-            .btn-icon {
-              font-size: 16px;
-              margin-right: 4px;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .table-card {
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-    .table-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-
-      .table-title {
-        font-size: 16px;
-        font-weight: 500;
-        color: #1d2129;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-
-        .table-icon {
-          color: #409eff;
-          font-size: 18px;
-        }
-      }
-
-      .table-actions {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-
-        .config-btn {
-          font-size: 14px;
-          padding: 6px 12px;
-
-          .btn-icon {
-            font-size: 16px;
-            margin-right: 4px;
-          }
-        }
-      }
-    }
-
-    .new-technology-project-case-table {
-      :deep(.el-table__header) {
-        background-color: #fafafa;
-      }
-
-      :deep(.el-table__row) {
-        &:hover {
-          background-color: #f0f9ff;
+        .btn-icon {
+          margin-right: 4px;
         }
       }
     }
   }
 }
 
-// 响应式设计
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .table-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .table-icon {
+        color: #409eff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+/* 表格样式 */
+.new-technology-project-case-table {
+  :deep(.el-table__header) {
+    th {
+      background-color: #fafafa;
+      font-weight: 600;
+      color: #1d2129;
+    }
+  }
+
+  :deep(.el-table__row) {
+    &:hover {
+      background-color: #f5f7fa;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .app-container {
-    padding: 10px;
+    padding: 12px;
+  }
 
-    .page-header {
-      .page-title {
-        font-size: 20px;
-
-        .title-icon {
-          font-size: 24px;
-        }
-      }
+  .page-header {
+    .page-title {
+      font-size: 20px;
     }
+  }
 
-    .search-container {
-      .search-card {
-        .search-header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
 
-          .search-actions {
-            align-self: flex-end;
-          }
-        }
-      }
-    }
-
-    .table-card {
-      .table-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-
-        .table-actions {
-          flex-wrap: wrap;
-          justify-content: flex-start;
-        }
-      }
+    .table-actions {
+      width: 100%;
+      justify-content: flex-end;
     }
   }
 }
