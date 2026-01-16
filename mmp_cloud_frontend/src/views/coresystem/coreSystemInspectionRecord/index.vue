@@ -80,13 +80,22 @@
               size="small"
               >导出</el-button
             >
-            <el-button type="info" plain icon="Setting" @click="handleFieldConfig" size="small">字段配置</el-button>
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
           </div>
         </div>
       </template>
 
-      <el-table v-loading="loading" border :data="coreSystemInspectionRecordList" @selection-change="handleSelectionChange">
+      <el-table
+        v-loading="loading"
+        border
+        :data="coreSystemInspectionRecordList"
+        @selection-change="handleSelectionChange"
+        class="inspection-record-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
           v-for="field in fieldConfigManager.getVisibleFields()"
@@ -99,19 +108,19 @@
           resizable
         >
           <template #default="scope">
-            <!-- 日期字段格式化 -->
+            <!-- 检查时间字段 -->
             <span v-if="field.prop === 'inspectionTime'">
-              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
+              {{ parseTime(scope.row.inspectionTime, '{y}-{m}-{d} {h}:{i}') }}
             </span>
-            <!-- 检查结果字段 -->
-            <el-tag v-else-if="field.prop === 'inspectionResult'" :type="scope.row[field.prop] === '1' ? 'success' : 'danger'">
-              {{ scope.row[field.prop] === '1' ? '合格' : '不合格' }}
+            <!-- 检查结果标签 -->
+            <el-tag v-else-if="field.prop === 'inspectionResult'" :type="scope.row.inspectionResult === '1' ? 'success' : 'danger'" size="small">
+              {{ scope.row.inspectionResult === '1' ? '合格' : '不合格' }}
             </el-tag>
             <!-- 删除标志字段 -->
-            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row[field.prop] === '0' ? 'success' : 'danger'">
-              {{ scope.row[field.prop] === '0' ? '未删除' : '已删除' }}
+            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row.delFlag === '0' ? 'success' : 'danger'" size="small">
+              {{ scope.row.delFlag === '0' ? '未删除' : '已删除' }}
             </el-tag>
-            <!-- 时间字段格式化 -->
+            <!-- 创建和更新时间字段 -->
             <span v-else-if="field.prop === 'createTime' || field.prop === 'updateTime'">
               {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
             </span>
@@ -145,75 +154,53 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
+
     <!-- 添加或修改制度检查记录对话框 -->
     <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
-      <el-form ref="coreSystemInspectionRecordFormRef" :model="form" :rules="rules" label-width="100px">
+      <el-form ref="coreSystemInspectionRecordFormRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="制度ID" prop="systemId">
-              <el-input v-model="form.systemId" placeholder="请输入制度ID" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="制度名称" prop="systemName">
-              <el-input v-model="form.systemName" placeholder="请输入制度名称" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="检查人ID" prop="inspectorId">
-              <el-input v-model="form.inspectorId" placeholder="请输入检查人ID" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="检查人姓名" prop="inspectorName">
-              <el-input v-model="form.inspectorName" placeholder="请输入检查人姓名" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="检查时间" prop="inspectionTime">
+          <el-col
+            v-for="field in fieldConfigManager.getFormFields()"
+            :key="field.prop"
+            :span="field.colSpan || 12"
+          >
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules">
+              <!-- 检查结果选择框 -->
+              <el-select v-if="field.prop === 'inspectionResult'" v-model="form.inspectionResult" placeholder="请选择检查结果" clearable style="width: 100%">
+                <el-option label="合格" value="1" />
+                <el-option label="不合格" value="0" />
+              </el-select>
+              <!-- 删除标志选择框 -->
+              <el-select v-else-if="field.prop === 'delFlag'" v-model="form.delFlag" placeholder="请选择状态" clearable style="width: 100%">
+                <el-option label="未删除" value="0" />
+                <el-option label="已删除" value="1" />
+              </el-select>
+              <!-- 检查时间选择器 -->
               <el-date-picker
+                v-else-if="field.prop === 'inspectionTime'"
                 clearable
                 v-model="form.inspectionTime"
                 type="datetime"
                 value-format="YYYY-MM-DD HH:mm:ss"
                 placeholder="请选择检查时间"
                 style="width: 100%"
-              >
-              </el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="检查结果" prop="inspectionResult">
-              <el-select v-model="form.inspectionResult" placeholder="请选择检查结果" style="width: 100%">
-                <el-option label="合格" :value="'1'" />
-                <el-option label="不合格" :value="'0'" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="问题描述" prop="problemDescription">
-              <el-input v-model="form.problemDescription" type="textarea" :rows="4" placeholder="请输入问题描述" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="整改建议" prop="rectificationSuggestion">
-              <el-input v-model="form.rectificationSuggestion" type="textarea" :rows="4" placeholder="请输入整改建议" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="是否删除" prop="delFlag">
-              <el-select v-model="form.delFlag" placeholder="请选择状态" style="width: 100%">
-                <el-option label="未删除" :value="'0'" />
-                <el-option label="已删除" :value="'1'" />
-              </el-select>
+              />
+              <!-- 文本域 -->
+              <el-input
+                v-else-if="field.type === 'textarea'"
+                v-model="form[field.prop]"
+                type="textarea"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                :maxlength="field.maxlength"
+                :show-word-limit="field.showWordLimit"
+                :rows="field.rows || 3"
+              />
+              <!-- 默认文本输入框 -->
+              <el-input
+                v-else
+                v-model="form[field.prop]"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -227,15 +214,15 @@
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <!-- 搜索配置对话框 -->
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" />
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
 <script setup name="CoreSystemInspectionRecord" lang="ts">
-import { ref, reactive, computed, onMounted, getCurrentInstance, toRefs } from 'vue';
-import { FormInstance } from 'element-plus';
+import { ref, reactive, toRefs, computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
+import type { FormInstance } from 'element-plus';
 import {
   listCoreSystemInspectionRecord,
   getCoreSystemInspectionRecord,
@@ -248,21 +235,12 @@ import {
   CoreSystemInspectionRecordQuery,
   CoreSystemInspectionRecordForm
 } from '@/api/coresystem/coreSystemInspectionRecord/types';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import { createCoreSystemInspectionRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
-import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import { createCoreSystemInspectionRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
-
-// Simple parseTime implementation
-const parseTime = (time: any, pattern?: string) => {
-  if (!time) return '';
-  const date = new Date(time);
-  if (pattern === '{y}-{m}-{d}') {
-    return date.toLocaleDateString();
-  }
-  return date.toLocaleString();
-};
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -278,18 +256,19 @@ const total = ref(0);
 const queryFormRef = ref<FormInstance>();
 const coreSystemInspectionRecordFormRef = ref<FormInstance>();
 
-// 字段配置相关
-const fieldConfigManager = createCoreSystemInspectionRecordFieldConfig();
-const showFieldConfig = ref(false);
-// 搜索配置相关
-const searchConfigVisible = ref(false);
-const searchConfigManager = createCoreSystemInspectionRecordSearchConfig();
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
-
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 配置管理器
+const fieldConfigManager = new FieldConfigManager('coreSystemInspectionRecord', createCoreSystemInspectionRecordFieldConfig());
+const searchConfigManager = createCoreSystemInspectionRecordSearchConfig();
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
 
 const initFormData: CoreSystemInspectionRecordForm = {
   id: undefined,
@@ -303,6 +282,7 @@ const initFormData: CoreSystemInspectionRecordForm = {
   rectificationSuggestion: undefined,
   delFlag: undefined
 };
+
 const data = reactive<PageData<CoreSystemInspectionRecordForm, CoreSystemInspectionRecordQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -360,10 +340,6 @@ const handleQuery = () => {
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
   handleQuery();
-};
-/** 搜索配置 */
-const handleSearchConfig = () => {
-  searchConfigVisible.value = true;
 };
 
 /** 多选框选中数据 */
@@ -427,18 +403,177 @@ const handleExport = () => {
   );
 };
 
-/** 字段配置操作 */
+/** 字段配置按钮操作 */
 const handleFieldConfig = () => {
-  showFieldConfig.value = true;
+  fieldConfigVisible.value = true;
 };
 
-/** 字段配置确认操作 */
+/** 搜索配置按钮操作 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+/** 字段配置确认 */
 const handleFieldConfigConfirm = () => {
-  showFieldConfig.value = false;
-  // 配置更新后可以在这里添加额外的逻辑，比如重新获取数据等
+  fieldConfigVisible.value = false;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
 };
 
 onMounted(() => {
   getList();
 });
 </script>
+
+<style scoped>
+.app-container {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.page-header {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .page-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
+
+    .title-icon {
+      color: #409eff;
+      font-size: 20px;
+    }
+  }
+
+  .page-description {
+    margin: 0;
+    color: #86909c;
+    font-size: 14px;
+  }
+}
+
+.search-card {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .search-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .search-icon {
+        color: #409eff;
+      }
+    }
+
+    .search-actions {
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .table-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .table-icon {
+        color: #409eff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+.inspection-record-table {
+  :deep(.el-table__header) {
+    th {
+      background-color: #fafafa;
+      font-weight: 600;
+      color: #1d2129;
+    }
+  }
+
+  :deep(.el-table__row) {
+    &:hover {
+      background-color: #f5f7fa;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+  }
+
+  .page-header {
+    .page-title {
+      font-size: 20px;
+    }
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .table-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}
+</style>

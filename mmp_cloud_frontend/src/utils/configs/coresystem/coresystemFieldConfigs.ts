@@ -316,30 +316,35 @@ export function createCoreSystemRectificationRecordFieldConfig() {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: false, group: 'basic' },
-        { prop: 'tenantId', label: '租户ID', visible: false, group: 'basic' },
-        { prop: 'rectificationId', label: '整改编号', visible: true, group: 'basic' },
-        { prop: 'systemId', label: '制度ID', visible: false, group: 'basic' },
-        { prop: 'systemName', label: '制度名称', visible: true, group: 'basic' },
-        { prop: 'rectifierId', label: '整改人ID', visible: false, group: 'basic' },
-        { prop: 'rectifierName', label: '整改人名称', visible: true, group: 'basic' }
+        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
+        { prop: 'rectificationId', label: '整改编号', visible: true, required: true, group: 'basic' },
+        { prop: 'systemName', label: '制度名称', visible: true, required: true, group: 'basic' },
+        { prop: 'rectifierName', label: '整改人名称', visible: true, required: true, group: 'basic' }
+      ]
+    },
+    {
+      name: 'association',
+      label: '关联信息',
+      fields: [
+        { prop: 'systemId', label: '制度ID', visible: false, required: true, group: 'association' },
+        { prop: 'rectifierId', label: '整改人ID', visible: false, required: true, group: 'association' }
       ]
     },
     {
       name: 'status',
       label: '整改状态',
       fields: [
-        { prop: 'rectificationStatus', label: '整改状态', visible: true, group: 'status' },
+        { prop: 'rectificationStatus', label: '整改状态', visible: true, required: true, group: 'status' },
         { prop: 'rectificationStartTime', label: '开始时间', visible: true, width: '180', group: 'status' },
         { prop: 'rectificationEndTime', label: '完成时间', visible: true, width: '180', group: 'status' }
       ]
     },
     {
-      name: 'content',
-      label: '整改内容',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'rectificationContent', label: '整改内容', visible: true, group: 'content' },
-        { prop: 'rectificationMeasures', label: '整改措施', visible: true, group: 'content' }
+        { prop: 'rectificationContent', label: '整改内容', visible: true, group: 'detail' },
+        { prop: 'rectificationMeasures', label: '整改措施', visible: true, group: 'detail' }
       ]
     },
     {

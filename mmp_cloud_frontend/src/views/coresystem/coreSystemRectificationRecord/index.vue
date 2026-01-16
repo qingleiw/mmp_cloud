@@ -80,8 +80,8 @@
               size="small"
               >导出</el-button
             >
-            <el-button type="info" plain @click="toggleFieldConfig" size="small">
-              <template #icon><i-ep-setting /></template>
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
             </el-button>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
@@ -99,44 +99,39 @@
       >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleFields"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
-          :prop="field.prop"
           :label="field.label"
-          :width="field.width"
           align="center"
+          :prop="field.prop"
+          :width="field.width"
+          :min-width="field.minWidth || 120"
+          resizable
           :sortable="field.sortable"
         >
           <template #default="scope">
-            <!-- 整改状态 -->
-            <template v-if="field.prop === 'rectificationStatus'">
-              <el-tag :type="getStatusTagType(scope.row.rectificationStatus)" size="small">
-                {{ getStatusLabel(scope.row.rectificationStatus) }}
-              </el-tag>
-            </template>
-            <!-- 验收结果 -->
-            <template v-else-if="field.prop === 'acceptanceResult'">
-              <el-tag :type="getResultTagType(scope.row.acceptanceResult)" size="small">
-                {{ getResultLabel(scope.row.acceptanceResult) }}
-              </el-tag>
-            </template>
-            <!-- 删除标志 -->
-            <template v-else-if="field.prop === 'delFlag'">
-              <el-tag :type="scope.row.delFlag === '0' ? 'success' : 'danger'" size="small">
-                {{ scope.row.delFlag === '0' ? '正常' : '已删除' }}
-              </el-tag>
-            </template>
-            <!-- 时间字段 -->
-            <template v-else-if="field.prop === 'rectificationStartTime' || field.prop === 'rectificationEndTime'">
-              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
-            </template>
-            <template v-else-if="field.prop === 'createTime' || field.prop === 'updateTime'">
-              <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}</span>
-            </template>
+            <!-- 整改状态标签 -->
+            <el-tag v-if="field.prop === 'rectificationStatus'" :type="getStatusTagType(scope.row.rectificationStatus)" size="small">
+              {{ getStatusLabel(scope.row.rectificationStatus) }}
+            </el-tag>
+            <!-- 验收结果标签 -->
+            <el-tag v-else-if="field.prop === 'acceptanceResult'" :type="getResultTagType(scope.row.acceptanceResult)" size="small">
+              {{ getResultLabel(scope.row.acceptanceResult) }}
+            </el-tag>
+            <!-- 删除标志字段 -->
+            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row.delFlag === '0' ? 'success' : 'danger'" size="small">
+              {{ scope.row.delFlag === '0' ? '未删除' : '已删除' }}
+            </el-tag>
+            <!-- 整改开始/结束时间字段 -->
+            <span v-else-if="field.prop === 'rectificationStartTime' || field.prop === 'rectificationEndTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
+            </span>
+            <!-- 创建和更新时间字段 -->
+            <span v-else-if="field.prop === 'createTime' || field.prop === 'updateTime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
             <!-- 默认显示 -->
-            <template v-else>
-              {{ scope.row[field.prop] }}
-            </template>
+            <span v-else>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
@@ -167,97 +162,82 @@
     </el-card>
 
     <!-- 添加或修改制度整改记录对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="coreSystemRectificationRecordFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="整改ID" prop="rectificationId">
-          <el-input v-model="form.rectificationId" placeholder="请输入整改ID" />
-        </el-form-item>
-        <el-form-item label="制度ID" prop="systemId">
-          <el-input v-model="form.systemId" placeholder="请输入制度ID" />
-        </el-form-item>
-        <el-form-item label="制度名称" prop="systemName">
-          <el-input v-model="form.systemName" placeholder="请输入制度名称" />
-        </el-form-item>
-        <el-form-item label="整改人ID" prop="rectifierId">
-          <el-input v-model="form.rectifierId" placeholder="请输入整改人ID" />
-        </el-form-item>
-        <el-form-item label="整改人名称" prop="rectifierName">
-          <el-input v-model="form.rectifierName" placeholder="请输入整改人名称" />
-        </el-form-item>
-        <el-form-item label="整改状态" prop="rectificationStatus">
-          <el-select v-model="form.rectificationStatus" placeholder="请选择整改状态" style="width: 100%">
-            <el-option label="未开始" :value="'0'" />
-            <el-option label="进行中" :value="'1'" />
-            <el-option label="已完成" :value="'2'" />
-            <el-option label="暂停" :value="'3'" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开始时间" prop="rectificationStartTime">
-          <el-date-picker
-            clearable
-            v-model="form.rectificationStartTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择开始时间"
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
+      <el-form ref="coreSystemRectificationRecordFormRef" :model="form" :rules="rules" label-width="120px">
+        <el-row :gutter="20">
+          <el-col
+            v-for="field in fieldConfigManager.getFormFields()"
+            :key="field.prop"
+            :span="field.colSpan || 12"
           >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="完成时间" prop="rectificationEndTime">
-          <el-date-picker
-            clearable
-            v-model="form.rectificationEndTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择完成时间"
-          >
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="整改内容">
-          <editor v-model="form.rectificationContent" :min-height="192" />
-        </el-form-item>
-        <el-form-item label="整改措施" prop="rectificationMeasures">
-          <el-input v-model="form.rectificationMeasures" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="验收结果" prop="acceptanceResult">
-          <el-select v-model="form.acceptanceResult" placeholder="请选择验收结果" style="width: 100%">
-            <el-option label="合格" :value="'1'" />
-            <el-option label="不合格" :value="'0'" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="验收意见" prop="acceptanceOpinion">
-          <el-input v-model="form.acceptanceOpinion" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="删除标志" prop="delFlag">
-          <el-select v-model="form.delFlag" placeholder="请选择状态" style="width: 100%">
-            <el-option label="未删除" :value="'0'" />
-            <el-option label="已删除" :value="'1'" />
-          </el-select>
-        </el-form-item>
+            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules">
+              <!-- 整改状态选择框 -->
+              <el-select v-if="field.prop === 'rectificationStatus'" v-model="form.rectificationStatus" placeholder="请选择整改状态" clearable style="width: 100%">
+                <el-option label="未开始" value="0" />
+                <el-option label="进行中" value="1" />
+                <el-option label="已完成" value="2" />
+                <el-option label="暂停" value="3" />
+              </el-select>
+              <!-- 验收结果选择框 -->
+              <el-select v-else-if="field.prop === 'acceptanceResult'" v-model="form.acceptanceResult" placeholder="请选择验收结果" clearable style="width: 100%">
+                <el-option label="合格" value="1" />
+                <el-option label="不合格" value="0" />
+              </el-select>
+              <!-- 删除标志选择框 -->
+              <el-select v-else-if="field.prop === 'delFlag'" v-model="form.delFlag" placeholder="请选择状态" clearable style="width: 100%">
+                <el-option label="未删除" value="0" />
+                <el-option label="已删除" value="1" />
+              </el-select>
+              <!-- 整改时间选择器 -->
+              <el-date-picker
+                v-else-if="field.prop === 'rectificationStartTime' || field.prop === 'rectificationEndTime'"
+                clearable
+                v-model="form[field.prop]"
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+                :placeholder="`请选择${field.label}`"
+                style="width: 100%"
+              />
+              <!-- 整改内容富文本编辑器 -->
+              <editor v-else-if="field.prop === 'rectificationContent'" v-model="form.rectificationContent" :min-height="192" />
+              <!-- 文本域 -->
+              <el-input
+                v-else-if="field.type === 'textarea'"
+                v-model="form[field.prop]"
+                type="textarea"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+                :maxlength="field.maxlength"
+                :show-word-limit="field.showWordLimit"
+                :rows="field.rows || 3"
+              />
+              <!-- 默认文本输入框 -->
+              <el-input
+                v-else
+                v-model="form[field.prop]"
+                :placeholder="field.placeholder || `请输入${field.label}`"
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">
-            <template #icon><i-ep-check /></template>
-            确 定
-          </el-button>
-          <el-button @click="cancel">
-            <template #icon><i-ep-close /></template>
-            取 消
-          </el-button>
+          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
     </el-dialog>
 
     <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
+    <FieldConfigDialog v-model:visible="fieldConfigVisible" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
     <!-- 搜索配置对话框 -->
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" />
+    <SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
 <script setup name="CoreSystemRectificationRecord" lang="ts">
-import { ref, reactive, computed, onMounted, getCurrentInstance, toRefs } from 'vue';
-import { FormInstance } from 'element-plus';
+import { ref, reactive, toRefs, computed, onMounted, getCurrentInstance, type ComponentInternalInstance } from 'vue';
+import type { FormInstance } from 'element-plus';
 import {
   listCoreSystemRectificationRecord,
   getCoreSystemRectificationRecord,
@@ -270,21 +250,12 @@ import {
   CoreSystemRectificationRecordQuery,
   CoreSystemRectificationRecordForm
 } from '@/api/coresystem/coreSystemRectificationRecord/types';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import { createCoreSystemRectificationRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
-import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
-import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import { createCoreSystemRectificationRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
-
-// Simple parseTime implementation
-const parseTime = (time: any, pattern?: string) => {
-  if (!time) return '';
-  const date = new Date(time);
-  if (pattern === '{y}-{m}-{d}') {
-    return date.toLocaleDateString();
-  }
-  return date.toLocaleString();
-};
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -297,24 +268,22 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-// 字段配置和搜索配置
-const showFieldConfig = ref(false);
-const searchConfigVisible = ref(false);
-const searchConfigManager = createCoreSystemRectificationRecordSearchConfig();
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
-
-// 字段配置管理器
-const fieldConfigManager = createCoreSystemRectificationRecordFieldConfig();
-const visibleFields = computed(() => fieldConfigManager.getVisibleFields());
-
 const queryFormRef = ref<FormInstance>();
 const coreSystemRectificationRecordFormRef = ref<FormInstance>();
-const searchFormRef = ref();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 配置管理器
+const fieldConfigManager = new FieldConfigManager('coreSystemRectificationRecord', createCoreSystemRectificationRecordFieldConfig());
+const searchConfigManager = createCoreSystemRectificationRecordSearchConfig();
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 配置对话框状态
+const fieldConfigVisible = ref(false);
+const searchConfigVisible = ref(false);
 
 const initFormData: CoreSystemRectificationRecordForm = {
   id: undefined,
@@ -333,6 +302,7 @@ const initFormData: CoreSystemRectificationRecordForm = {
   delFlag: undefined,
   tenantId: undefined
 };
+
 const data = reactive<PageData<CoreSystemRectificationRecordForm, CoreSystemRectificationRecordQuery>>({
   form: { ...initFormData },
   queryParams: {
@@ -363,15 +333,6 @@ const data = reactive<PageData<CoreSystemRectificationRecordForm, CoreSystemRect
 
 const { queryParams, form, rules } = toRefs(data);
 
-/** 字段配置相关函数 */
-const toggleFieldConfig = () => {
-  showFieldConfig.value = true;
-};
-
-const handleFieldConfigConfirm = () => {
-  showFieldConfig.value = false;
-};
-
 /** 查询制度整改记录列表 */
 const getList = async () => {
   loading.value = true;
@@ -397,11 +358,6 @@ const reset = () => {
 const handleQuery = () => {
   queryParams.value.pageNum = 1;
   getList();
-};
-
-/** 搜索配置 */
-const handleSearchConfig = () => {
-  searchConfigVisible.value = true;
 };
 
 /** 重置按钮操作 */
@@ -471,64 +427,64 @@ const handleExport = () => {
   );
 };
 
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+/** 搜索配置按钮操作 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  fieldConfigVisible.value = false;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
+};
+
 /** 获取整改状态标签类型 */
 const getStatusTagType = (status: string | number) => {
-  const numStatus = typeof status === 'string' ? parseInt(status) : status;
-  switch (numStatus) {
-    case 0:
-      return 'info';
-    case 1:
-      return 'warning';
-    case 2:
-      return 'success';
-    case 3:
-      return 'danger';
-    default:
-      return 'info';
-  }
+  const statusMap: Record<string, string> = {
+    '0': 'info',
+    '1': 'warning',
+    '2': 'success',
+    '3': 'danger'
+  };
+  return statusMap[String(status)] || 'info';
 };
 
 /** 获取整改状态标签文本 */
-const getStatusLabel = (status: number) => {
-  const numStatus = typeof status === 'string' ? parseInt(status) : status;
-  switch (numStatus) {
-    case 0:
-      return '未开始';
-    case 1:
-      return '进行中';
-    case 2:
-      return '已完成';
-    case 3:
-      return '暂停';
-    default:
-      return '未知';
-  }
+const getStatusLabel = (status: string | number) => {
+  const statusMap: Record<string, string> = {
+    '0': '未开始',
+    '1': '进行中',
+    '2': '已完成',
+    '3': '暂停'
+  };
+  return statusMap[String(status)] || '未知';
 };
 
 /** 获取验收结果标签类型 */
 const getResultTagType = (result: string | number) => {
-  const numResult = typeof result === 'string' ? parseInt(result) : result;
-  switch (numResult) {
-    case 1:
-      return 'success';
-    case 0:
-      return 'danger';
-    default:
-      return 'info';
-  }
+  const resultMap: Record<string, string> = {
+    '1': 'success',
+    '0': 'danger'
+  };
+  return resultMap[String(result)] || 'info';
 };
 
 /** 获取验收结果标签文本 */
-const getResultLabel = (result: number) => {
-  const numResult = typeof result === 'string' ? parseInt(result) : result;
-  switch (numResult) {
-    case 1:
-      return '合格';
-    case 0:
-      return '不合格';
-    default:
-      return '未知';
-  }
+const getResultLabel = (result: string | number) => {
+  const resultMap: Record<string, string> = {
+    '1': '合格',
+    '0': '不合格'
+  };
+  return resultMap[String(result)] || '未知';
 };
 
 onMounted(() => {
@@ -536,66 +492,72 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .app-container {
-  padding: 20px;
   background-color: #f5f5f5;
-  min-height: calc(100vh - 84px);
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .page-header {
-  margin-bottom: 24px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   .page-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
+    margin: 0 0 8px 0;
+    color: #1d2129;
+    font-size: 18px;
+    font-weight: 600;
 
     .title-icon {
       color: #409eff;
+      font-size: 20px;
     }
   }
 
   .page-description {
+    margin: 0;
     color: #86909c;
     font-size: 14px;
   }
 }
 
-.search-container {
-  .search-card {
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.search-card {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-    .search-header {
+  .search-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .search-title {
+      font-weight: 600;
+      color: #1d2129;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      gap: 6px;
 
-      .search-title {
-        font-weight: 600;
-        color: #1d2129;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-
-        .search-icon {
-          color: #409eff;
-        }
+      .search-icon {
+        color: #409eff;
       }
+    }
 
-      .search-actions {
-        .config-btn {
-          color: #409eff;
+    .search-actions {
+      .config-btn {
+        color: #409eff;
 
-          .btn-icon {
-            margin-right: 4px;
-          }
+        .btn-icon {
+          margin-right: 4px;
         }
       }
     }
@@ -656,23 +618,6 @@ onMounted(() => {
   }
 }
 
-.rectification-dialog {
-  :deep(.el-dialog__body) {
-    padding: 24px;
-  }
-
-  .w-full {
-    width: 100%;
-  }
-}
-
-.dialog-footer {
-  text-align: right;
-  padding-top: 16px;
-  border-top: 1px solid #ebeef5;
-}
-
-// 响应式设计
 @media (max-width: 768px) {
   .app-container {
     padding: 12px;
@@ -692,13 +637,6 @@ onMounted(() => {
     .table-actions {
       width: 100%;
       justify-content: flex-end;
-    }
-  }
-
-  .rectification-dialog {
-    :deep(.el-dialog) {
-      width: 95% !important;
-      margin: 5vh auto;
     }
   }
 }

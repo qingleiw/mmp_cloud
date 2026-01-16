@@ -245,11 +245,27 @@ export function createCoreSystemRectificationRecordSearchConfig() {
       ]
     },
     {
+      name: 'content',
+      label: '整改内容',
+      fields: [
+        { prop: 'rectificationContent', label: '整改内容', type: 'input', placeholder: '请输入整改内容' },
+        { prop: 'rectificationMeasures', label: '整改措施', type: 'input', placeholder: '请输入整改措施' },
+        { prop: 'acceptanceOpinion', label: '验收意见', type: 'input', placeholder: '请输入验收意见' }
+      ]
+    },
+    {
       name: 'time',
       label: '时间范围',
       fields: [
         { prop: 'rectificationStartTime', label: '开始时间', type: 'daterange', placeholder: '请选择开始时间范围' },
         { prop: 'rectificationEndTime', label: '完成时间', type: 'daterange', placeholder: '请选择完成时间范围' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统信息',
+      fields: [
+        { prop: 'delFlag', label: '删除标志', type: 'select', placeholder: '请选择删除状态' }
       ]
     }
   ];
