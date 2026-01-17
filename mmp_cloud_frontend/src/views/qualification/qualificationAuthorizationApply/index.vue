@@ -19,6 +19,8 @@
 
 
 
+
+
     <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="search-container mb-4" class="search-container mb-4">
@@ -36,7 +38,6 @@
                 </el-button>
               </div>
             </div>
-          
     
     <!-- 字段配置对话框 -->
     <FieldConfigDialog

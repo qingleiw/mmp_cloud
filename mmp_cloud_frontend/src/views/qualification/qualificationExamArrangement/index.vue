@@ -18,6 +18,8 @@
 
 
 
+
+
     <!-- 页面头部 -->
     
       <div class="header-desc">管理系统资质考试安排信息，包括考试基本信息、时间安排和考生管理等</div>
@@ -33,7 +35,6 @@
           </div>
           <el-button type="info" text icon="Setting" @click="toggleSearchConfig">搜索配置</el-button>
         </div>
-      
     
     <!-- 字段配置对话框 -->
     <FieldConfigDialog

@@ -18,6 +18,8 @@
 
 
 
+
+
     <!-- 页面头部 -->
     
       <div class="header-desc">管理系统资质考试题目，包括题目内容、选项、答案、难度设置等信息</div>
@@ -33,7 +35,6 @@
           </div>
           <el-button type="info" text icon="Setting" @click="toggleSearchConfig">搜索配置</el-button>
         </div>
-      
     <!-- 搜索配置对话框 -->
     <SearchConfigDialog
       v-model:visible="searchConfigVisible"

@@ -18,6 +18,8 @@
 
 
 
+
+
       <div class="header-desc">管理系统资质考试试卷信息，包括试卷基本信息、题目设置和考试规则等</div>
     </div>
 
@@ -31,7 +33,6 @@
           </div>
           <el-button type="info" text icon="Setting" @click="toggleSearchConfig">搜索配置</el-button>
         </div>
-      
     
     <!-- 字段配置对话框 -->
     <FieldConfigDialog
