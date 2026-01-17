@@ -1,4 +1,4 @@
-export interface NatdssB16-3MolecularPathologyExamRecordVO {
+export interface NatdssB172LabMicrobiologicalInfoVO {
   /**
    * 系统自增主键
    */
@@ -55,21 +55,6 @@ export interface NatdssB16-3MolecularPathologyExamRecordVO {
   name: string;
 
   /**
-   * 性别
-   */
-  gender: string;
-
-  /**
-   * 年龄(岁)
-   */
-  age: number;
-
-  /**
-   * 出生日期
-   */
-  dateOfBirth: string;
-
-  /**
    * 申请单号
    */
   applyNo: string;
@@ -85,54 +70,14 @@ export interface NatdssB16-3MolecularPathologyExamRecordVO {
   applyDatetime: string;
 
   /**
-   * 分子病理号
-   */
-  molPathoNo: string;
-
-  /**
-   * 检测流水号
+   * 微生物检验流水号
    */
   labSn: string;
 
   /**
-   * 检测时间
+   * 检验时间
    */
-  examDatetime: string;
-
-  /**
-   * 标本编号
-   */
-  sampleNo: string;
-
-  /**
-   * 标本类型
-   */
-  sampleType: string;
-
-  /**
-   * 检测平台
-   */
-  testPlatform: string;
-
-  /**
-   * 检测项目
-   */
-  testItem: string;
-
-  /**
-   * 检测方法
-   */
-  testMethod: string;
-
-  /**
-   * 检测内容
-   */
-  testContent: string;
-
-  /**
-   * 检测结果
-   */
-  testResult: string;
+  testDatetime: string;
 
   /**
    * 报告单号
@@ -145,69 +90,79 @@ export interface NatdssB16-3MolecularPathologyExamRecordVO {
   reportDatetime: string;
 
   /**
-   * 外显子
+   * 标本编号
    */
-  testExon: string;
+  specimenCode: string;
 
   /**
-   * 位点
+   * 标本来源
    */
-  testLocus: string;
+  sampleType: string;
 
   /**
-   * 检测基因
+   * 检验方法代码
    */
-  testGene: string;
+  testMethodCode: string;
 
   /**
-   * 转录本
+   * 检验方法
    */
-  transcript: string;
+  testMethod: string;
 
   /**
-   * 核苷酸改变
+   * 培养结果
    */
-  nucleAlt: string;
+  cultivationResult: string;
 
   /**
-   * 氨基酸改变
+   * 结果代码
    */
-  aminoAcidAlt: string | number;
+  resultCode: string;
 
   /**
-   * 丰度
+   * 结果阴阳性
    */
-  mutAbundance: string;
+  resultPosNeg: string;
 
   /**
-   * 变异类型
+   * 药敏方法
    */
-  variationType: string;
+  sensTestMethod: string;
 
   /**
-   * 变异解读
+   * 耐药机制
    */
-  mutInterpretation: string;
+  resisMechanism: string;
 
   /**
-   * 基因型
+   * 检测抗生素编码
    */
-  genoType: string;
+  antibioticsCode: string;
 
   /**
-   * 取材部位
+   * 检测抗生素名称
    */
-  samplingSite: string;
+  antibiotics: string;
 
   /**
-   * 测序深度
+   * 抗生素检测结果
    */
-  geneSequencingDepth: string;
+  antibioResult: string;
 
   /**
-   * 肿瘤突变负荷
+   * 药敏结果
    */
-  tmb: string;
+  sensitivityResult: string;
+
+  /**
+   * 结果参考值
+   */
+  resultReference: string;
+
+  /**
+   * 多重耐药名称
+   */
+  mdroName: string;
 
   /**
    * 扩展字段1
@@ -225,6 +180,11 @@ export interface NatdssB16-3MolecularPathologyExamRecordVO {
   recordStatus: number;
 
   /**
+   * 培养代码
+   */
+  cultivationCode: string;
+
+  /**
    * 创建时间
    */
   createdTime: string;
@@ -236,7 +196,7 @@ export interface NatdssB16-3MolecularPathologyExamRecordVO {
 
 }
 
-export interface NatdssB16-3MolecularPathologyExamRecordForm extends BaseEntity {
+export interface NatdssB172LabMicrobiologicalInfoForm extends BaseEntity {
   /**
    * 系统自增主键
    */
@@ -293,21 +253,6 @@ export interface NatdssB16-3MolecularPathologyExamRecordForm extends BaseEntity 
   name?: string;
 
   /**
-   * 性别
-   */
-  gender?: string;
-
-  /**
-   * 年龄(岁)
-   */
-  age?: number;
-
-  /**
-   * 出生日期
-   */
-  dateOfBirth?: string;
-
-  /**
    * 申请单号
    */
   applyNo?: string;
@@ -323,54 +268,14 @@ export interface NatdssB16-3MolecularPathologyExamRecordForm extends BaseEntity 
   applyDatetime?: string;
 
   /**
-   * 分子病理号
-   */
-  molPathoNo?: string;
-
-  /**
-   * 检测流水号
+   * 微生物检验流水号
    */
   labSn?: string;
 
   /**
-   * 检测时间
+   * 检验时间
    */
-  examDatetime?: string;
-
-  /**
-   * 标本编号
-   */
-  sampleNo?: string;
-
-  /**
-   * 标本类型
-   */
-  sampleType?: string;
-
-  /**
-   * 检测平台
-   */
-  testPlatform?: string;
-
-  /**
-   * 检测项目
-   */
-  testItem?: string;
-
-  /**
-   * 检测方法
-   */
-  testMethod?: string;
-
-  /**
-   * 检测内容
-   */
-  testContent?: string;
-
-  /**
-   * 检测结果
-   */
-  testResult?: string;
+  testDatetime?: string;
 
   /**
    * 报告单号
@@ -383,69 +288,79 @@ export interface NatdssB16-3MolecularPathologyExamRecordForm extends BaseEntity 
   reportDatetime?: string;
 
   /**
-   * 外显子
+   * 标本编号
    */
-  testExon?: string;
+  specimenCode?: string;
 
   /**
-   * 位点
+   * 标本来源
    */
-  testLocus?: string;
+  sampleType?: string;
 
   /**
-   * 检测基因
+   * 检验方法代码
    */
-  testGene?: string;
+  testMethodCode?: string;
 
   /**
-   * 转录本
+   * 检验方法
    */
-  transcript?: string;
+  testMethod?: string;
 
   /**
-   * 核苷酸改变
+   * 培养结果
    */
-  nucleAlt?: string;
+  cultivationResult?: string;
 
   /**
-   * 氨基酸改变
+   * 结果代码
    */
-  aminoAcidAlt?: string | number;
+  resultCode?: string;
 
   /**
-   * 丰度
+   * 结果阴阳性
    */
-  mutAbundance?: string;
+  resultPosNeg?: string;
 
   /**
-   * 变异类型
+   * 药敏方法
    */
-  variationType?: string;
+  sensTestMethod?: string;
 
   /**
-   * 变异解读
+   * 耐药机制
    */
-  mutInterpretation?: string;
+  resisMechanism?: string;
 
   /**
-   * 基因型
+   * 检测抗生素编码
    */
-  genoType?: string;
+  antibioticsCode?: string;
 
   /**
-   * 取材部位
+   * 检测抗生素名称
    */
-  samplingSite?: string;
+  antibiotics?: string;
 
   /**
-   * 测序深度
+   * 抗生素检测结果
    */
-  geneSequencingDepth?: string;
+  antibioResult?: string;
 
   /**
-   * 肿瘤突变负荷
+   * 药敏结果
    */
-  tmb?: string;
+  sensitivityResult?: string;
+
+  /**
+   * 结果参考值
+   */
+  resultReference?: string;
+
+  /**
+   * 多重耐药名称
+   */
+  mdroName?: string;
 
   /**
    * 扩展字段1
@@ -463,6 +378,11 @@ export interface NatdssB16-3MolecularPathologyExamRecordForm extends BaseEntity 
   recordStatus?: number;
 
   /**
+   * 培养代码
+   */
+  cultivationCode?: string;
+
+  /**
    * 创建时间
    */
   createdTime?: string;
@@ -474,7 +394,7 @@ export interface NatdssB16-3MolecularPathologyExamRecordForm extends BaseEntity 
 
 }
 
-export interface NatdssB16-3MolecularPathologyExamRecordQuery extends PageQuery {
+export interface NatdssB172LabMicrobiologicalInfoQuery extends PageQuery {
 
   /**
    * 患者ID
@@ -527,21 +447,6 @@ export interface NatdssB16-3MolecularPathologyExamRecordQuery extends PageQuery 
   name?: string;
 
   /**
-   * 性别
-   */
-  gender?: string;
-
-  /**
-   * 年龄(岁)
-   */
-  age?: number;
-
-  /**
-   * 出生日期
-   */
-  dateOfBirth?: string;
-
-  /**
    * 申请单号
    */
   applyNo?: string;
@@ -557,54 +462,14 @@ export interface NatdssB16-3MolecularPathologyExamRecordQuery extends PageQuery 
   applyDatetime?: string;
 
   /**
-   * 分子病理号
-   */
-  molPathoNo?: string;
-
-  /**
-   * 检测流水号
+   * 微生物检验流水号
    */
   labSn?: string;
 
   /**
-   * 检测时间
+   * 检验时间
    */
-  examDatetime?: string;
-
-  /**
-   * 标本编号
-   */
-  sampleNo?: string;
-
-  /**
-   * 标本类型
-   */
-  sampleType?: string;
-
-  /**
-   * 检测平台
-   */
-  testPlatform?: string;
-
-  /**
-   * 检测项目
-   */
-  testItem?: string;
-
-  /**
-   * 检测方法
-   */
-  testMethod?: string;
-
-  /**
-   * 检测内容
-   */
-  testContent?: string;
-
-  /**
-   * 检测结果
-   */
-  testResult?: string;
+  testDatetime?: string;
 
   /**
    * 报告单号
@@ -617,69 +482,79 @@ export interface NatdssB16-3MolecularPathologyExamRecordQuery extends PageQuery 
   reportDatetime?: string;
 
   /**
-   * 外显子
+   * 标本编号
    */
-  testExon?: string;
+  specimenCode?: string;
 
   /**
-   * 位点
+   * 标本来源
    */
-  testLocus?: string;
+  sampleType?: string;
 
   /**
-   * 检测基因
+   * 检验方法代码
    */
-  testGene?: string;
+  testMethodCode?: string;
 
   /**
-   * 转录本
+   * 检验方法
    */
-  transcript?: string;
+  testMethod?: string;
 
   /**
-   * 核苷酸改变
+   * 培养结果
    */
-  nucleAlt?: string;
+  cultivationResult?: string;
 
   /**
-   * 氨基酸改变
+   * 结果代码
    */
-  aminoAcidAlt?: string | number;
+  resultCode?: string;
 
   /**
-   * 丰度
+   * 结果阴阳性
    */
-  mutAbundance?: string;
+  resultPosNeg?: string;
 
   /**
-   * 变异类型
+   * 药敏方法
    */
-  variationType?: string;
+  sensTestMethod?: string;
 
   /**
-   * 变异解读
+   * 耐药机制
    */
-  mutInterpretation?: string;
+  resisMechanism?: string;
 
   /**
-   * 基因型
+   * 检测抗生素编码
    */
-  genoType?: string;
+  antibioticsCode?: string;
 
   /**
-   * 取材部位
+   * 检测抗生素名称
    */
-  samplingSite?: string;
+  antibiotics?: string;
 
   /**
-   * 测序深度
+   * 抗生素检测结果
    */
-  geneSequencingDepth?: string;
+  antibioResult?: string;
 
   /**
-   * 肿瘤突变负荷
+   * 药敏结果
    */
-  tmb?: string;
+  sensitivityResult?: string;
+
+  /**
+   * 结果参考值
+   */
+  resultReference?: string;
+
+  /**
+   * 多重耐药名称
+   */
+  mdroName?: string;
 
   /**
    * 扩展字段1
@@ -695,6 +570,11 @@ export interface NatdssB16-3MolecularPathologyExamRecordQuery extends PageQuery 
    * 记录状态:1正常 0作废
    */
   recordStatus?: number;
+
+  /**
+   * 培养代码
+   */
+  cultivationCode?: string;
 
   /**
    * 创建时间

@@ -225,8 +225,7 @@ const data = reactive<PageData<DoctorProfessionalRatingForm, DoctorProfessionalR
 const { queryParams, form, rules } = toRefs(data);
 
 // 字段配置管理器
-const fieldGroups = createDoctorProfessionalRatingFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorProfessionalRating', fieldGroups);
+const fieldConfigManager = createDoctorProfessionalRatingFieldConfig();
 
 // 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
 fieldConfigManager.clearConfig();

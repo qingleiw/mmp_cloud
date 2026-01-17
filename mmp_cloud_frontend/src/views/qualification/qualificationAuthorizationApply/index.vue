@@ -1,17 +1,50 @@
 <template>
-  <div class="p-2">
+  <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-document class="title-icon"></i-ep-document>
+        授权申请管理
+      </h2>
+      <p class="page-description">管理授权申请和审批</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
+      <div v-show="showSearch" class="search-container mb-4" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
           <template #header>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <el-icon><Search /></el-icon>
-                <span>搜索条件</span>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
               </div>
-              <el-button type="info" text :icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
             </div>
-          </template>
+          
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
           <DynamicSearchForm
             ref="queryFormRef"
             :query="queryParams"
@@ -19,69 +52,21 @@
             @search="handleQuery"
             @reset="resetQuery"
           />
-          <!-- 原查询表单已替换 -->
-          <!--
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="申请单号" prop="applyNo">
-              <el-input v-model="queryParams.applyNo" placeholder="请输入申请单号" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="申请人ID" prop="applicantId">
-              <el-input v-model="queryParams.applicantId" placeholder="请输入申请人ID" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="申请人姓名" prop="applicantName">
-              <el-input v-model="queryParams.applicantName" placeholder="请输入申请人姓名" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="科室ID" prop="departmentId">
-              <el-input v-model="queryParams.departmentId" placeholder="请输入科室ID" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="科室名称" prop="departmentName">
-              <el-input v-model="queryParams.departmentName" placeholder="请输入科室名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="资质ID列表(逗号分隔)" prop="qualificationIds">
-              <el-input v-model="queryParams.qualificationIds" placeholder="请输入资质ID列表(逗号分隔)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="申请理由" prop="applyReason">
-              <el-input v-model="queryParams.applyReason" placeholder="请输入申请理由" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="关联证书ID" prop="certificateIds">
-              <el-input v-model="queryParams.certificateIds" placeholder="请输入关联证书ID" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="考核成绩" prop="examScore">
-              <el-input v-model="queryParams.examScore" placeholder="请输入考核成绩" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="工作量数据JSON" prop="workQuantity">
-              <el-input v-model="queryParams.workQuantity" placeholder="请输入工作量数据JSON" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="工作质量数据JSON" prop="workQuality">
-              <el-input v-model="queryParams.workQuality" placeholder="请输入工作质量数据JSON" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="当前审批节点" prop="currentNode">
-              <el-input v-model="queryParams.currentNode" placeholder="请输入当前审批节点" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="工作流实例ID" prop="workflowInstanceId">
-              <el-input v-model="queryParams.workflowInstanceId" placeholder="请输入工作流实例ID" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="是否删除" prop="delFlag">
-              <el-input v-model="queryParams.delFlag" placeholder="请输入是否删除" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
-          -->
         </el-card>
       </div>
     </transition>
 
-    <el-card shadow="never">
+    <!-- 数据表格 -->
+    <el-card shadow="never" class="table-card">
       <template #header>
-        <div class="mb8 flex items-center gap-2 flex-nowrap">
-          <el-icon><List /></el-icon>
-          <span class="font-medium">申请记录列表</span>
-          <span class="text-[12px] text-gray-500">{{ total }} 条记录</span>
-          <div class="ml-auto flex items-center gap-2">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationAuthorizationApply:add']"
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>申请记录列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationAuthorizationApply:add']" size="small"
               >新增</el-button
             >
             <el-button
@@ -91,6 +76,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['qualification:qualificationAuthorizationApply:edit']"
+              size="small"
               >修改</el-button
             >
             <el-button
@@ -100,6 +86,7 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['qualification:qualificationAuthorizationApply:remove']"
+              size="small"
               >删除</el-button
             >
             <el-button
@@ -108,9 +95,13 @@
               icon="Download"
               @click="handleExport"
               v-hasPermi="['qualification:qualificationAuthorizationApply:export']"
+              size="small"
               >导出</el-button
             >
-            <el-button type="info" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
           </div>
         </div>
@@ -119,37 +110,37 @@
       <el-table v-loading="loading" border :data="qualificationAuthorizationApplyList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in fieldConfigManager.getVisibleFields()"
           :key="field.prop"
           :label="field.label"
           align="center"
           :prop="field.prop"
-          :width="field.width || undefined"
+          :width="field.width"
+          :min-width="field.minWidth || 120"
+          resizable
         >
           <template #default="scope">
             <span>{{ scope.row[field.prop] }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-tooltip content="修改" placement="top">
-              <el-button
-                link
-                type="primary"
-                icon="Edit"
-                @click="handleUpdate(scope.row)"
-                v-hasPermi="['qualification:qualificationAuthorizationApply:edit']"
-              ></el-button>
-            </el-tooltip>
-            <el-tooltip content="删除" placement="top">
-              <el-button
-                link
-                type="primary"
-                icon="Delete"
-                @click="handleDelete(scope.row)"
-                v-hasPermi="['qualification:qualificationAuthorizationApply:remove']"
-              ></el-button>
-            </el-tooltip>
+            <el-button
+              link
+              size="small"
+              icon="Edit"
+              @click="handleUpdate(scope.row)"
+              v-hasPermi="['qualification:qualificationAuthorizationApply:edit']"
+              >修改</el-button
+            >
+            <el-button
+              link
+              size="small"
+              icon="Delete"
+              @click="handleDelete(scope.row)"
+              v-hasPermi="['qualification:qualificationAuthorizationApply:remove']"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -208,11 +199,7 @@
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
-    </el-dialog>
-
-    <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    </el-dialog><SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -230,11 +217,14 @@ import {
   QualificationAuthorizationApplyForm
 } from '@/api/qualification/qualificationAuthorizationApply/types';
 import { createQualificationAuthorizationApplyFieldConfig } from '@/utils/configs/qualification/qualificationFieldConfigs';
+import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createQualificationAuthorizationApplySearchConfig } from '@/utils/configs/qualification/qualificationSearchConfigs';
-import { Search, Setting, List } from '@element-plus/icons-vue';
+import type { FormInstance } from 'element-plus';
+import type { DialogOption, PageData } from '@/types/global';
+import type { ComponentInternalInstance } from 'vue';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -242,26 +232,25 @@ const qualificationAuthorizationApplyList = ref<QualificationAuthorizationApplyV
 const buttonLoading = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
-const showFieldConfig = ref(false);
 const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref<ElFormInstance>();
-const qualificationAuthorizationApplyFormRef = ref<ElFormInstance>();
-
-// 字段配置相关变量
-const fieldConfigManager = createQualificationAuthorizationApplyFieldConfig();
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
-const searchConfigManager = createQualificationAuthorizationApplySearchConfig();
-const searchConfigVisible = ref(false);
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+const queryFormRef = ref<FormInstance>();
+const qualificationAuthorizationApplyFormRef = ref<FormInstance>();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
+
+// 字段配置相关变量
+const fieldConfigManager = createQualificationAuthorizationApplyFieldConfig();
+const fieldConfigVisible = ref(false);
+const searchConfigManager = createQualificationAuthorizationApplySearchConfig();
+const searchConfigVisible = ref(false);
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 const initFormData: QualificationAuthorizationApplyForm = {
   id: undefined,
@@ -408,10 +397,14 @@ const handleExport = () => {
   );
 };
 
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
 /** 字段配置确认 */
 const handleFieldConfigConfirm = () => {
-  // 字段配置更新后刷新列表
-  getList();
+  fieldConfigVisible.value = false;
 };
 
 const handleSearchConfig = () => {
@@ -425,3 +418,136 @@ onMounted(() => {
   getList();
 });
 </script>
+<style lang="scss" scoped>
+.app-container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: calc(100vh - 84px);
+}
+
+.page-header {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
+
+      .title-icon {
+        color: #409eff;
+        font-size: 20px;
+      }
+    }
+
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
+  }
+}
+
+.search-container {
+  .search-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .search-title {
+        font-weight: 600;
+        color: #1d2129;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .search-icon {
+          color: #409eff;
+        }
+      }
+
+      .search-actions {
+        .config-btn {
+          color: #409eff;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.table-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .table-title {
+      font-weight: 600;
+      color: #1d2129;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .table-icon {
+        color: #409eff;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .config-btn {
+        color: #409eff;
+
+        .btn-icon {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+  }
+
+  .page-header {
+    .page-title {
+      font-size: 16px;
+    }
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .table-actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}
+</style>

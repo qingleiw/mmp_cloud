@@ -314,7 +314,7 @@ const rules = {
 const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 // 字段配置管理器
-const fieldConfigManager = new FieldConfigManager('doctorAbilityAssessment', createDoctorAbilityAssessmentFieldConfig());
+const fieldConfigManager = createDoctorAbilityAssessmentFieldConfig();
 const searchConfigManager = createDoctorAbilityAssessmentSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

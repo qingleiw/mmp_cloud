@@ -319,7 +319,7 @@ import SearchConfigDialog from '@/components/SearchConfigDialog.vue'
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
 // 字段配置管理器
-const fieldConfigManager = new FieldConfigManager('newTechnologyProjectCase', createNewTechnologyProjectCaseFieldConfig());
+const fieldConfigManager = createNewTechnologyProjectCaseFieldConfig();
 const searchConfigManager = createNewTechnologyProjectCaseSearchConfig()
 
 // 可见字段配置

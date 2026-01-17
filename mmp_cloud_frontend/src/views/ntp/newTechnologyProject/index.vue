@@ -380,8 +380,7 @@ const dialog = reactive<DialogOption>({
 });
 
 // 字段配置相关变量
-const fieldConfigManager = new FieldConfigManager('newTechnologyProject', createNewTechnologyProjectFieldConfig());
-fieldConfigManager.clearConfig();
+const fieldConfigManager = createNewTechnologyProjectFieldConfig();
 const showFieldConfig = ref(false);
 const searchConfigManager = createNewTechnologyProjectSearchConfig();
 const searchConfigVisible = ref(false);

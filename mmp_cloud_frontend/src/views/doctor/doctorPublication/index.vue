@@ -174,8 +174,7 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorPublicationFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldGroups = createDoctorPublicationFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorPublication', fieldGroups);
+const fieldConfigManager = createDoctorPublicationFieldConfig();
 
 // 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
 fieldConfigManager.clearConfig();

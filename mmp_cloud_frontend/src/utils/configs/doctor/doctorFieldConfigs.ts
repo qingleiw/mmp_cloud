@@ -1,1112 +1,743 @@
 import { FieldConfigManager, FieldGroup } from '../fieldConfigManager';
 
-// 医生基本信息字段配置
-export function createDoctorBasicInfoFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '医生ID', visible: false, group: 'basic' },
-        { prop: 'doctorCode', label: '医生工号', visible: true, required: true, group: 'basic' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, required: true, group: 'basic' },
-        { prop: 'gender', label: '性别', visible: true, group: 'basic' },
-        { prop: 'idCard', label: '身份证号', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'phone', label: '联系电话', visible: true, group: 'detail' },
-        { prop: 'email', label: '电子邮箱', visible: true, group: 'detail' },
-        { prop: 'photoUrl', label: '照片URL', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'deptId', label: '科室ID', visible: false, required: true, group: 'association' },
-        { prop: 'departmentName', label: '科室名称', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'birthDate', label: '出生日期', visible: true, width: '120', group: 'time' },
-        { prop: 'entryDate', label: '入职日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'title', label: '职称', visible: true, group: 'status' },
-        { prop: 'titleLevel', label: '职称级别', visible: true, group: 'status' },
-        { prop: 'status', label: '工作状态', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生工作经验字段配置
-export function createDoctorWorkExperienceFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '工作经验ID', visible: false, group: 'basic' },
-        { prop: 'companyName', label: '工作单位', visible: true, required: true, group: 'basic' },
-        { prop: 'department', label: '科室/部门', visible: true, group: 'basic' },
-        { prop: 'position', label: '职位', visible: true, required: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'startDate', label: '开始日期', visible: true, width: '120', group: 'time' },
-        { prop: 'endDate', label: '结束日期', visible: true, width: '120', group: 'time' },
-        { prop: 'workYears', label: '工作年限', visible: true, group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'workContent', label: '工作内容', visible: true, group: 'detail' },
-        { prop: 'performance', label: '工作业绩', visible: true, group: 'detail' },
-        { prop: 'reasonForLeaving', label: '离职原因', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生学历信息字段配置
-export function createDoctorEducationFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '学历ID', visible: false, group: 'basic' },
-        { prop: 'educationLevel', label: '学历层次', visible: true, required: true, group: 'basic' },
-        { prop: 'degree', label: '学位', visible: true, group: 'basic' },
-        { prop: 'major', label: '专业', visible: true, required: true, group: 'basic' },
-        { prop: 'schoolName', label: '学校名称', visible: true, required: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'enrollmentDate', label: '入学日期', visible: true, width: '120', group: 'time' },
-        { prop: 'graduationDate', label: '毕业日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'educationType', label: '教育类型', visible: true, group: 'detail' },
-        { prop: 'studyMode', label: '学习方式', visible: true, group: 'detail' },
-        { prop: 'certificateNo', label: '证书编号', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'isHighest', label: '是否最高学历', visible: true, group: 'status' },
-        { prop: 'verificationStatus', label: '验证状态', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生培训记录字段配置
-export function createDoctorTrainingFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '培训ID', visible: false, group: 'basic' },
-        { prop: 'trainingName', label: '培训名称', visible: true, required: true, group: 'basic' },
-        { prop: 'trainingType', label: '培训类型', visible: true, required: true, group: 'basic' },
-        { prop: 'trainingInstitution', label: '培训机构', visible: true, required: true, group: 'basic' },
-        { prop: 'trainingLocation', label: '培训地点', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'startDate', label: '开始日期', visible: true, width: '120', group: 'time' },
-        { prop: 'endDate', label: '结束日期', visible: true, width: '120', group: 'time' },
-        { prop: 'trainingHours', label: '培训学时', visible: true, group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'trainingContent', label: '培训内容', visible: true, group: 'detail' },
-        { prop: 'trainingMethod', label: '培训方式', visible: true, group: 'detail' },
-        { prop: 'certificateNo', label: '证书编号', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'completionStatus', label: '完成状态', visible: true, group: 'status' },
-        { prop: 'assessmentResult', label: '考核结果', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生证书信息字段配置
-export function createDoctorCertificateFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '证书ID', visible: false, group: 'basic' },
-        { prop: 'certificateName', label: '证书名称', visible: true, required: true, group: 'basic' },
-        { prop: 'certificateType', label: '证书类型', visible: true, required: true, group: 'basic' },
-        { prop: 'certificateNo', label: '证书编号', visible: true, required: true, group: 'basic' },
-        { prop: 'issuingAuthority', label: '发证机构', visible: true, required: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'issueDate', label: '发证日期', visible: true, width: '120', group: 'time' },
-        { prop: 'expiryDate', label: '到期日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'certificateLevel', label: '证书等级', visible: true, group: 'detail' },
-        { prop: 'certificateScope', label: '证书范围', visible: true, group: 'detail' },
-        { prop: 'attachmentUrl', label: '附件URL', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '证书状态', visible: true, group: 'status' },
-        { prop: 'isValid', label: '是否有效', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生学术职位字段配置
-export function createDoctorAcademicPositionFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '职位ID', visible: false, group: 'basic' },
-        { prop: 'positionName', label: '职位名称', visible: true, required: true, group: 'basic' },
-        { prop: 'positionLevel', label: '职位级别', visible: true, required: true, group: 'basic' },
-        { prop: 'organizationName', label: '所属机构', visible: true, required: true, group: 'basic' },
-        { prop: 'department', label: '所属部门', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'startDate', label: '任职开始日期', visible: true, width: '120', group: 'time' },
-        { prop: 'endDate', label: '任职结束日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'responsibilities', label: '职责描述', visible: true, group: 'detail' },
-        { prop: 'achievements', label: '主要成就', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '职位状态', visible: true, group: 'status' },
-        { prop: 'isCurrent', label: '是否现任', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生荣誉信息字段配置
-export function createDoctorHonorFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '荣誉ID', visible: false, group: 'basic' },
-        { prop: 'honorName', label: '荣誉名称', visible: true, required: true, group: 'basic' },
-        { prop: 'honorType', label: '荣誉类型', visible: true, required: true, group: 'basic' },
-        { prop: 'honorLevel', label: '荣誉等级', visible: true, group: 'basic' },
-        { prop: 'issuingAuthority', label: '颁发机构', visible: true, required: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'awardDate', label: '获奖日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'honorDescription', label: '荣誉描述', visible: true, group: 'detail' },
-        { prop: 'certificateNo', label: '证书编号', visible: true, group: 'detail' },
-        { prop: 'attachmentUrl', label: '附件URL', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '荣誉状态', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生科研项目字段配置
-export function createDoctorResearchProjectFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '项目ID', visible: false, group: 'basic' },
-        { prop: 'projectName', label: '项目名称', visible: true, required: true, group: 'basic' },
-        { prop: 'projectType', label: '项目类型', visible: true, required: true, group: 'basic' },
-        { prop: 'projectLevel', label: '项目等级', visible: true, group: 'basic' },
-        { prop: 'projectNo', label: '项目编号', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'organizationName', label: '承担单位', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'startDate', label: '开始日期', visible: true, width: '120', group: 'time' },
-        { prop: 'endDate', label: '结束日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'projectDescription', label: '项目描述', visible: true, group: 'detail' },
-        { prop: 'researchContent', label: '研究内容', visible: true, group: 'detail' },
-        { prop: 'expectedResults', label: '预期成果', visible: true, group: 'detail' },
-        { prop: 'fundingAmount', label: '资助金额', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'projectStatus', label: '项目状态', visible: true, group: 'status' },
-        { prop: 'approvalStatus', label: '审批状态', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生论文发表字段配置
-export function createDoctorPublicationFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '论文ID', visible: false, group: 'basic' },
-        { prop: 'title', label: '论文标题', visible: true, required: true, group: 'basic' },
-        { prop: 'publicationType', label: '发表类型', visible: true, required: true, group: 'basic' },
-        { prop: 'journalName', label: '期刊名称', visible: true, group: 'basic' },
-        { prop: 'publicationNo', label: '发表号', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'correspondingAuthor', label: '通讯作者', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'publicationDate', label: '发表日期', visible: true, width: '120', group: 'time' },
-        { prop: 'acceptanceDate', label: '接收日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'abstract', label: '摘要', visible: true, group: 'detail' },
-        { prop: 'keywords', label: '关键词', visible: true, group: 'detail' },
-        { prop: 'doi', label: 'DOI', visible: true, group: 'detail' },
-        { prop: 'citationCount', label: '引用次数', visible: true, group: 'detail' },
-        { prop: 'impactFactor', label: '影响因子', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'publicationStatus', label: '发表状态', visible: true, group: 'status' },
-        { prop: 'peerReviewStatus', label: '同行评审状态', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
-
-  return fieldGroups;
-}
-
-// 医生能力评估字段配置
+// doctorAbilityAssessment字段配置
 export function createDoctorAbilityAssessmentFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '评估ID', visible: false, group: 'basic' },
-        { prop: 'assessmentName', label: '评估名称', visible: true, required: true, group: 'basic' },
-        { prop: 'assessmentType', label: '评估类型', visible: true, required: true, group: 'basic' },
-        { prop: 'assessmentPeriod', label: '评估周期', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'assessorName', label: '评估人姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'assessmentDate', label: '评估日期', visible: true, width: '120', group: 'time' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'assessmentType', label: '评估类型', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
       name: 'detail',
       label: '详细信息',
       fields: [
-        { prop: 'assessmentContent', label: '评估内容', visible: true, group: 'detail' },
-        { prop: 'assessmentCriteria', label: '评估标准', visible: true, group: 'detail' },
-        { prop: 'assessmentResult', label: '评估结果', visible: true, group: 'detail' },
-        { prop: 'score', label: '得分', visible: true, group: 'detail' },
-        { prop: 'grade', label: '等级', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '评估状态', visible: true, group: 'status' }
+        { prop: 'assessmentYear', label: '评估年度', visible: true, type: 'number', group: 'detail' },
+        { prop: 'clinicalAbilityScore', label: '临床能力得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'teachingAbilityScore', label: '教学能力得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'researchAbilityScore', label: '科研能力得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'managementAbilityScore', label: '管理能力得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'totalScore', label: '总分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'assessmentResult', label: '评估结果 优秀/良好/合格/不合格', visible: true, type: 'input', group: 'detail' },
+        { prop: 'assessor', label: '评估人', visible: true, type: 'input', group: 'detail' },
+        { prop: 'assessmentDate', label: '评估日期', visible: true, type: 'date', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return fieldGroups;
+  return new FieldConfigManager('doctorAbilityAssessment', fieldGroups);
 }
 
-// 医生职业资格字段配置
-export function createDoctorQualificationCatalogFieldConfig() {
+
+// doctorAcademicPosition字段配置
+export function createDoctorAcademicPositionFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '资格ID', visible: false, group: 'basic' },
-        { prop: 'qualificationName', label: '资格名称', visible: true, required: true, group: 'basic' },
-        { prop: 'qualificationType', label: '资格类型', visible: true, required: true, group: 'basic' },
-        { prop: 'qualificationLevel', label: '资格等级', visible: true, group: 'basic' },
-        { prop: 'qualificationNo', label: '资格编号', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'issuingAuthority', label: '发证机构', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'issueDate', label: '发证日期', visible: true, width: '120', group: 'time' },
-        { prop: 'expiryDate', label: '到期日期', visible: true, width: '120', group: 'time' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'positionLevel', label: '职务级别', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
       name: 'detail',
       label: '详细信息',
       fields: [
-        { prop: 'qualificationScope', label: '资格范围', visible: true, group: 'detail' },
-        { prop: 'qualificationDescription', label: '资格描述', visible: true, group: 'detail' },
-        { prop: 'certificateUrl', label: '证书URL', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '资格状态', visible: true, group: 'status' },
-        { prop: 'isValid', label: '是否有效', visible: true, group: 'status' }
+        { prop: 'organization', label: '学术组织', visible: true, type: 'input', group: 'detail' },
+        { prop: 'position', label: '职务', visible: true, type: 'input', group: 'detail' },
+        { prop: 'startDate', label: '任职开始日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'endDate', label: '任职结束日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'isCurrent', label: '是否现任 1-是 0-否', visible: true, type: 'number', group: 'detail' },
+        { prop: 'appointmentUrl', label: '任职证明URL', visible: true, type: 'input', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return fieldGroups;
+  return new FieldConfigManager('doctorAcademicPosition', fieldGroups);
 }
 
-// 医生专业评分字段配置
-export function createDoctorProfessionalRatingFieldConfig() {
-  const fieldGroups: FieldGroup[] = [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'id', label: '评分ID', visible: false, group: 'basic' },
-        { prop: 'ratingName', label: '评分名称', visible: true, required: true, group: 'basic' },
-        { prop: 'ratingType', label: '评分类型', visible: true, required: true, group: 'basic' },
-        { prop: 'ratingPeriod', label: '评分周期', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'raterName', label: '评分人姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'ratingDate', label: '评分日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'detail',
-      label: '详细信息',
-      fields: [
-        { prop: 'ratingCriteria', label: '评分标准', visible: true, group: 'detail' },
-        { prop: 'ratingResult', label: '评分结果', visible: true, group: 'detail' },
-        { prop: 'totalScore', label: '总分', visible: true, group: 'detail' },
-        { prop: 'grade', label: '等级', visible: true, group: 'detail' },
-        { prop: 'feedback', label: '反馈意见', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '评分状态', visible: true, group: 'status' }
-      ]
-    },
-    {
-      name: 'system',
-      label: '系统字段',
-      fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
-      ]
-    }
-  ];
 
-  return fieldGroups;
-}
-
-// 医生不良记录字段配置
+// doctorAdverseRecord字段配置
 export function createDoctorAdverseRecordFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '记录ID', visible: false, group: 'basic' },
-        { prop: 'recordType', label: '记录类型', visible: true, required: true, group: 'basic' },
-        { prop: 'incidentDescription', label: '事件描述', visible: true, required: true, group: 'basic' },
-        { prop: 'severityLevel', label: '严重程度', visible: true, required: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'reporterName', label: '报告人姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'incidentDate', label: '事件日期', visible: true, width: '120', group: 'time' },
-        { prop: 'reportDate', label: '报告日期', visible: true, width: '120', group: 'time' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'recordType', label: '记录类型 医疗事故/差错/违规', visible: true, type: 'input', group: 'basic' },
+        { prop: 'recordTitle', label: '记录标题', visible: true, type: 'input', group: 'basic' },
+        { prop: 'recordStatus', label: '记录状态 待处理/处理中/已处理', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
       name: 'detail',
       label: '详细信息',
       fields: [
-        { prop: 'incidentDetails', label: '事件详情', visible: true, group: 'detail' },
-        { prop: 'consequences', label: '后果影响', visible: true, group: 'detail' },
-        { prop: 'correctiveActions', label: '纠正措施', visible: true, group: 'detail' },
-        { prop: 'preventiveMeasures', label: '预防措施', visible: true, group: 'detail' },
-        { prop: 'attachmentUrl', label: '附件URL', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '处理状态', visible: true, group: 'status' },
-        { prop: 'investigationResult', label: '调查结果', visible: true, group: 'status' }
+        { prop: 'occurDate', label: '发生日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'description', label: '事件描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'consequence', label: '后果', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'handlingMeasure', label: '处理措施', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'punishment', label: '处罚情况', visible: true, type: 'input', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return fieldGroups;
+  return new FieldConfigManager('doctorAdverseRecord', fieldGroups);
 }
 
-// 医生伦理评估字段配置
-export function createDoctorEthicsEvaluationFieldConfig() {
+
+// doctorBasicInfo字段配置
+export function createDoctorBasicInfoFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '评估ID', visible: false, group: 'basic' },
-        { prop: 'evaluationName', label: '评估名称', visible: true, required: true, group: 'basic' },
-        { prop: 'evaluationType', label: '评估类型', visible: true, required: true, group: 'basic' },
-        { prop: 'evaluationPeriod', label: '评估周期', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'evaluatorName', label: '评估人姓名', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'evaluationDate', label: '评估日期', visible: true, width: '120', group: 'time' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorCode', label: '医生工号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorName', label: '医生姓名', visible: true, type: 'input', group: 'basic' },
+        { prop: 'idCard', label: '身份证号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'deptId', label: '科室ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'departmentName', label: '科室名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'title', label: '职称', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
       name: 'detail',
       label: '详细信息',
       fields: [
-        { prop: 'evaluationContent', label: '评估内容', visible: true, group: 'detail' },
-        { prop: 'evaluationCriteria', label: '评估标准', visible: true, group: 'detail' },
-        { prop: 'evaluationResult', label: '评估结果', visible: true, group: 'detail' },
-        { prop: 'score', label: '得分', visible: true, group: 'detail' },
-        { prop: 'grade', label: '等级', visible: true, group: 'detail' },
-        { prop: 'recommendations', label: '建议意见', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '评估状态', visible: true, group: 'status' }
+        { prop: 'gender', label: '性别 1-男 2-女', visible: true, type: 'number', group: 'detail' },
+        { prop: 'birthDate', label: '出生日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'phone', label: '联系电话', visible: true, type: 'input', group: 'detail' },
+        { prop: 'email', label: '电子邮箱', visible: true, type: 'input', group: 'detail' },
+        { prop: 'photoUrl', label: '照片URL', visible: true, type: 'input', group: 'detail' },
+        { prop: 'titleLevel', label: '职称级别 1-初级 2-中级 3-副高 4-正高', visible: true, type: 'number', group: 'detail' },
+        { prop: 'status', label: '状态 1-在职 2-离职 3-退休', visible: true, type: 'number', group: 'detail' },
+        { prop: 'entryDate', label: '入职日期', visible: true, type: 'date', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return fieldGroups;
+  return new FieldConfigManager('doctorBasicInfo', fieldGroups);
 }
 
-// 医生电子注册字段配置
+
+// doctorCertificate字段配置
+export function createDoctorCertificateFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'certificateType', label: '证书类型 执业/资格/培训等', visible: true, type: 'input', group: 'basic' },
+        { prop: 'certificateName', label: '证书名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'certificateNo', label: '证书编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'validDate', label: '有效期至', visible: true, type: 'date', group: 'basic' },
+        { prop: 'status', label: '状态 1-有效 2-即将到期 3-已过期 4-已注销', visible: true, type: 'number', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'issueUnit', label: '发证机构', visible: true, type: 'input', group: 'detail' },
+        { prop: 'issueDate', label: '发证日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'isPermanent', label: '是否长期有效 1-是 0-否', visible: true, type: 'number', group: 'detail' },
+        { prop: 'certificateUrl', label: '证书附件URL', visible: true, type: 'input', group: 'detail' },
+        { prop: 'remindDays', label: '提前提醒天数', visible: true, type: 'number', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorCertificate', fieldGroups);
+}
+
+
+// doctorEducation字段配置
+export function createDoctorEducationFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'schoolName', label: '学校名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'educationLevel', label: '学历 本科/硕士/博士', visible: true, type: 'input', group: 'basic' },
+        { prop: 'certificateNo', label: '证书编号', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'major', label: '专业', visible: true, type: 'input', group: 'detail' },
+        { prop: 'degree', label: '学位', visible: true, type: 'input', group: 'detail' },
+        { prop: 'startDate', label: '开始日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'endDate', label: '结束日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'isFullTime', label: '是否全日制 1-是 0-否', visible: true, type: 'number', group: 'detail' },
+        { prop: 'certificateUrl', label: '证书附件URL', visible: true, type: 'input', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorEducation', fieldGroups);
+}
+
+
+// doctorElectronicRegistration字段配置
 export function createDoctorElectronicRegistrationFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '注册ID', visible: false, group: 'basic' },
-        { prop: 'registrationNo', label: '注册编号', visible: true, required: true, group: 'basic' },
-        { prop: 'registrationType', label: '注册类型', visible: true, required: true, group: 'basic' },
-        { prop: 'registrationLevel', label: '注册等级', visible: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'registrationAuthority', label: '注册机构', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'registrationDate', label: '注册日期', visible: true, width: '120', group: 'time' },
-        { prop: 'expiryDate', label: '到期日期', visible: true, width: '120', group: 'time' },
-        { prop: 'renewalDate', label: '续展日期', visible: true, width: '120', group: 'time' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'registrationNo', label: '注册编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'registrationType', label: '注册类型 首次注册/变更注册/多机构备案', visible: true, type: 'input', group: 'basic' },
+        { prop: 'validDate', label: '有效期至', visible: true, type: 'date', group: 'basic' },
+        { prop: 'registrationStatus', label: '注册状态 有效/注销/吊销', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
       name: 'detail',
       label: '详细信息',
       fields: [
-        { prop: 'registrationScope', label: '注册范围', visible: true, group: 'detail' },
-        { prop: 'registrationConditions', label: '注册条件', visible: true, group: 'detail' },
-        { prop: 'certificateUrl', label: '证书URL', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '注册状态', visible: true, group: 'status' },
-        { prop: 'isValid', label: '是否有效', visible: true, group: 'status' }
+        { prop: 'practiceCategory', label: '执业类别', visible: true, type: 'input', group: 'detail' },
+        { prop: 'practiceScope', label: '执业范围', visible: true, type: 'input', group: 'detail' },
+        { prop: 'practiceLocation', label: '执业地点', visible: true, type: 'input', group: 'detail' },
+        { prop: 'issueDate', label: '发证日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'registrationAuthority', label: '注册机关', visible: true, type: 'input', group: 'detail' },
+        { prop: 'multiInstitutionFlag', label: '是否多机构备案 1-是 0-否', visible: true, type: 'number', group: 'detail' },
+        { prop: 'certificateUrl', label: '证书附件URL', visible: true, type: 'input', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return fieldGroups;
+  return new FieldConfigManager('doctorElectronicRegistration', fieldGroups);
 }
 
-// 医生保险代码字段配置
+
+// doctorEthicsEvaluation字段配置
+export function createDoctorEthicsEvaluationFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'evaluationYear', label: '考评年度', visible: true, type: 'number', group: 'detail' },
+        { prop: 'evaluationCycle', label: '考评周期', visible: true, type: 'input', group: 'detail' },
+        { prop: 'selfScore', label: '自评得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'peerScore', label: '同行评议得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'patientScore', label: '患者评价得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'departmentScore', label: '科室评价得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'hospitalScore', label: '医院评价得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'totalScore', label: '总分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'evaluationResult', label: '考评结果 优秀/良好/合格/不合格', visible: true, type: 'input', group: 'detail' },
+        { prop: 'rewardPunishment', label: '奖惩情况', visible: true, type: 'input', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorEthicsEvaluation', fieldGroups);
+}
+
+
+// doctorHonor字段配置
+export function createDoctorHonorFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'honorName', label: '荣誉名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'honorLevel', label: '荣誉级别 国家级/省级/市级/院级', visible: true, type: 'input', group: 'basic' },
+        { prop: 'certificateNo', label: '证书编号', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'awardUnit', label: '授予单位', visible: true, type: 'input', group: 'detail' },
+        { prop: 'awardDate', label: '获得日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'certificateUrl', label: '证书附件URL', visible: true, type: 'input', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorHonor', fieldGroups);
+}
+
+
+// doctorInsuranceCode字段配置
 export function createDoctorInsuranceCodeFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '保险ID', visible: false, group: 'basic' },
-        { prop: 'insuranceType', label: '保险类型', visible: true, required: true, group: 'basic' },
-        { prop: 'insuranceCode', label: '保险代码', visible: true, required: true, group: 'basic' },
-        { prop: 'insuranceName', label: '保险名称', visible: true, required: true, group: 'basic' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', visible: false, required: true, group: 'association' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, group: 'association' },
-        { prop: 'insuranceCompany', label: '保险公司', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'effectiveDate', label: '生效日期', visible: true, width: '120', group: 'time' },
-        { prop: 'expiryDate', label: '到期日期', visible: true, width: '120', group: 'time' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'insuranceCode', label: '医保医师码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'insuranceType', label: '医保类型 职工医保/居民医保/生育保险', visible: true, type: 'input', group: 'basic' },
+        { prop: 'validDate', label: '有效期至', visible: true, type: 'date', group: 'basic' },
+        { prop: 'status', label: '状态 有效/暂停/注销', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
       name: 'detail',
       label: '详细信息',
       fields: [
-        { prop: 'coverageAmount', label: '保额', visible: true, group: 'detail' },
-        { prop: 'premiumAmount', label: '保费', visible: true, group: 'detail' },
-        { prop: 'insuranceDescription', label: '保险描述', visible: true, group: 'detail' },
-        { prop: 'policyUrl', label: '保单URL', visible: true, group: 'detail' },
-        { prop: 'remark', label: '备注', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '保险状态', visible: true, group: 'status' },
-        { prop: 'isActive', label: '是否激活', visible: true, group: 'status' }
+        { prop: 'applyDate', label: '申请日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'approveDate', label: '审批日期', visible: true, type: 'date', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return fieldGroups;
+  return new FieldConfigManager('doctorInsuranceCode', fieldGroups);
 }
 
-// 医生信息字段配置
-export function createDoctorInfoFieldConfig() {
+
+// doctorProfessionalRating字段配置
+export function createDoctorProfessionalRatingFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '医生ID', visible: false, group: 'basic' },
-        { prop: 'doctorCode', label: '医生工号', visible: true, required: true, group: 'basic' },
-        { prop: 'doctorName', label: '医生姓名', visible: true, required: true, group: 'basic' },
-        { prop: 'gender', label: '性别', visible: true, group: 'basic' },
-        { prop: 'birthDate', label: '出生日期', visible: true, width: '120', group: 'basic' },
-        { prop: 'idCard', label: '身份证号', visible: true, group: 'basic' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医师ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'doctorName', label: '医师姓名', visible: true, type: 'input', group: 'basic' },
+        { prop: 'ratingLevel', label: '评分等级', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
       name: 'detail',
       label: '详细信息',
       fields: [
-        { prop: 'phone', label: '联系电话', visible: true, group: 'detail' },
-        { prop: 'email', label: '电子邮箱', visible: true, group: 'detail' },
-        { prop: 'photoUrl', label: '照片URL', visible: true, group: 'detail' },
-        { prop: 'address', label: '地址', visible: true, group: 'detail' },
-        { prop: 'emergencyContact', label: '紧急联系人', visible: true, group: 'detail' },
-        { prop: 'emergencyPhone', label: '紧急联系电话', visible: true, group: 'detail' }
-      ]
-    },
-    {
-      name: 'association',
-      label: '关联信息',
-      fields: [
-        { prop: 'deptId', label: '科室ID', visible: false, required: true, group: 'association' },
-        { prop: 'departmentName', label: '科室名称', visible: true, group: 'association' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间信息',
-      fields: [
-        { prop: 'entryDate', label: '入职日期', visible: true, width: '120', group: 'time' },
-        { prop: 'graduationDate', label: '毕业日期', visible: true, width: '120', group: 'time' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'title', label: '职称', visible: true, group: 'status' },
-        { prop: 'titleLevel', label: '职称级别', visible: true, group: 'status' },
-        { prop: 'status', label: '工作状态', visible: true, group: 'status' },
-        { prop: 'maritalStatus', label: '婚姻状况', visible: true, group: 'status' },
-        { prop: 'politicalStatus', label: '政治面貌', visible: true, group: 'status' }
+        { prop: 'ratingYear', label: '评分年份', visible: true, type: 'number', group: 'detail' },
+        { prop: 'ratingQuarter', label: '评分季度', visible: true, type: 'number', group: 'detail' },
+        { prop: 'baseScore', label: '基础分数', visible: true, type: 'number', group: 'detail' },
+        { prop: 'complaintDeduction', label: '投诉扣分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'medicalQualityScore', label: '医疗质量评分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'patientSatisfaction', label: '患者满意度', visible: true, type: 'number', group: 'detail' },
+        { prop: 'finalScore', label: '最终得分', visible: true, type: 'number', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: false, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: false, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: false, group: 'system' },
-        { prop: 'createDept', label: '创建部门', visible: false, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: false, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: false, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return fieldGroups;
+  return new FieldConfigManager('doctorProfessionalRating', fieldGroups);
+}
+
+
+// doctorPublication字段配置
+export function createDoctorPublicationFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'publicationType', label: '类型 论文/论著/专利', visible: true, type: 'input', group: 'basic' },
+        { prop: 'title', label: '标题', visible: true, type: 'input', group: 'basic' },
+        { prop: 'journalName', label: '期刊名称/出版社', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'authors', label: '作者', visible: true, type: 'input', group: 'detail' },
+        { prop: 'authorOrder', label: '作者排序', visible: true, type: 'number', group: 'detail' },
+        { prop: 'publishDate', label: '发表日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'volume', label: '卷号', visible: true, type: 'input', group: 'detail' },
+        { prop: 'issue', label: '期号', visible: true, type: 'input', group: 'detail' },
+        { prop: 'pages', label: '页码', visible: true, type: 'input', group: 'detail' },
+        { prop: 'doi', label: 'DOI', visible: true, type: 'input', group: 'detail' },
+        { prop: 'impactFactor', label: '影响因子', visible: true, type: 'number', group: 'detail' },
+        { prop: 'citationCount', label: '引用次数', visible: true, type: 'number', group: 'detail' },
+        { prop: 'fullTextUrl', label: '全文URL', visible: true, type: 'input', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorPublication', fieldGroups);
+}
+
+
+// doctorQualificationCatalog字段配置
+export function createDoctorQualificationCatalogFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'catalogCode', label: '资质编码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'catalogName', label: '资质名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'parentId', label: '父级ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'catalogLevel', label: '目录层级 1-一级 2-二级 3-三级 4-四级', visible: true, type: 'number', group: 'basic' },
+        { prop: 'catalogType', label: '资质类型 手术分级/有创操作/限制类技术/处方权/会诊权/其他', visible: true, type: 'input', group: 'basic' },
+        { prop: 'subType', label: '资质子类型', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'operationCode', label: '手术操作编码（对应ICD-9-CM附加编码）', visible: true, type: 'input', group: 'detail' },
+        { prop: 'category', label: '类别（手术/介入治疗）', visible: true, type: 'input', group: 'detail' },
+        { prop: 'hospitalLevel', label: '院内手术等级（三级手术/四级手术）', visible: true, type: 'input', group: 'detail' },
+        { prop: 'description', label: '资质描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'sortOrder', label: '排序', visible: true, type: 'number', group: 'detail' },
+        { prop: 'isEnabled', label: '是否启用 1-是 0-否', visible: true, type: 'number', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorQualificationCatalog', fieldGroups);
+}
+
+
+// doctorResearchProject字段配置
+export function createDoctorResearchProjectFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'projectName', label: '项目名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectNo', label: '项目编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectLevel', label: '项目级别 国家级/省级/市级/院级', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectType', label: '项目类型', visible: true, type: 'input', group: 'basic' },
+        { prop: 'status', label: '项目状态 在研/结题/终止', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'role', label: '承担角色 主持人/参与人', visible: true, type: 'input', group: 'detail' },
+        { prop: 'startDate', label: '开始日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'endDate', label: '结束日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'fundingAmount', label: '资助金额', visible: true, type: 'number', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorResearchProject', fieldGroups);
+}
+
+
+// doctorTraining字段配置
+export function createDoctorTrainingFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'trainingType', label: '培训类型 进修/继续教育/院内培训', visible: true, type: 'input', group: 'basic' },
+        { prop: 'trainingName', label: '培训名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'certificateNo', label: '证书编号', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'trainingUnit', label: '培训单位', visible: true, type: 'input', group: 'detail' },
+        { prop: 'startDate', label: '开始日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'endDate', label: '结束日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'trainingHours', label: '培训学时', visible: true, type: 'number', group: 'detail' },
+        { prop: 'trainingContent', label: '培训内容', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'trainingResult', label: '培训结果 合格/不合格', visible: true, type: 'input', group: 'detail' },
+        { prop: 'certificateUrl', label: '证书附件URL', visible: true, type: 'input', group: 'detail' },
+        { prop: 'credits', label: '学分', visible: true, type: 'number', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorTraining', fieldGroups);
+}
+
+
+// doctorWorkExperience字段配置
+export function createDoctorWorkExperienceFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'doctorId', label: '医生ID', visible: true, type: 'number', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'organization', label: '工作单位', visible: true, type: 'input', group: 'detail' },
+        { prop: 'department', label: '部门', visible: true, type: 'input', group: 'detail' },
+        { prop: 'position', label: '职位', visible: true, type: 'input', group: 'detail' },
+        { prop: 'startDate', label: '开始日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'endDate', label: '结束日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'jobDescription', label: '工作描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'achievements', label: '工作业绩', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'referencePerson', label: '证明人', visible: true, type: 'input', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('doctorWorkExperience', fieldGroups);
 }

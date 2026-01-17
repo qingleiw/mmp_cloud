@@ -1,4 +1,4 @@
-export interface NatdssB16-2PathologicalExamRecordVO {
+export interface NatdssB162PathologicalExamRecordVO {
   /**
    * 系统自增主键
    */
@@ -281,7 +281,7 @@ export interface NatdssB16-2PathologicalExamRecordVO {
 
 }
 
-export interface NatdssB16-2PathologicalExamRecordForm extends BaseEntity {
+export interface NatdssB162PathologicalExamRecordForm extends BaseEntity {
   /**
    * 系统自增主键
    */
@@ -564,7 +564,7 @@ export interface NatdssB16-2PathologicalExamRecordForm extends BaseEntity {
 
 }
 
-export interface NatdssB16-2PathologicalExamRecordQuery extends PageQuery {
+export interface NatdssB162PathologicalExamRecordQuery extends PageQuery {
 
   /**
    * 患者ID

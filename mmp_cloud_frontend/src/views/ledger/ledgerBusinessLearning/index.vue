@@ -1,55 +1,77 @@
 <template>
   <div class="p-2">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-reading class="title-icon"></i-ep-reading>
+        业务学习管理
+      </h2>
+      <p class="page-description">管理业务学习和培训记录</p>
+    </div>
+
+
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="学习日期" prop="learningDate">
-              <el-date-picker clearable v-model="queryParams.learningDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择学习日期" />
-            </el-form-item>
-            <el-form-item label="学习主题" prop="learningTopic">
-              <el-input v-model="queryParams.learningTopic" placeholder="请输入学习主题" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="组织者" prop="organizer">
-              <el-input v-model="queryParams.organizer" placeholder="请输入组织者" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="参与人员" prop="participants">
-              <el-input v-model="queryParams.participants" placeholder="请输入参与人员" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="学习学时" prop="learningHours">
-              <el-input v-model="queryParams.learningHours" placeholder="请输入学习学时" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="授课人" prop="instructor">
-              <el-input v-model="queryParams.instructor" placeholder="请输入授课人" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="评价结果" prop="evaluationResults">
-              <el-input v-model="queryParams.evaluationResults" placeholder="请输入评价结果" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="附件" prop="attachments">
-              <el-input v-model="queryParams.attachments" placeholder="请输入附件" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      v-model:fields="visibleSearchFields"
+      :config="[]"
+      title="搜索字段配置"
+    />
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
 
     <el-card shadow="never">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerBusinessLearning:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ledger:ledgerBusinessLearning:edit']"
+              <div class="table-header">
+        <div class="table-title">
+          <i-ep-list class="table-icon"></i-ep-list>
+          <span>业务学习列表</span>
+        </div>
+        <div class="table-actions">
+
+          
+            <el-button size="small" type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerBusinessLearning:add']">新增</el-button>
+          
+          
+            <el-button size="small" type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ledger:ledgerBusinessLearning:edit']"
               >修改</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button
+          
+          
+            <el-button size="small"
               type="danger"
               plain
               icon="Delete"
@@ -58,14 +80,20 @@
               v-hasPermi="['ledger:ledgerBusinessLearning:remove']"
               >删除</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerBusinessLearning:export']"
+          
+          
+            <el-button size="small" type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerBusinessLearning:export']"
               >导出</el-button
             >
-          </el-col>
+          
+          
+          <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+            <i-ep-setting class="btn-icon"></i-ep-setting>
+            字段配置
+          </el-button>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+        </div>
+      </div>
       </template>
 
       <el-table v-loading="loading" border :data="ledgerBusinessLearningList" @selection-change="handleSelectionChange">
@@ -159,6 +187,9 @@
 </template>
 
 <script setup name="LedgerBusinessLearning" lang="ts">
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import {
   listLedgerBusinessLearning,
   getLedgerBusinessLearning,
@@ -167,6 +198,19 @@ import {
   updateLedgerBusinessLearning
 } from '@/api/ledger/ledgerBusinessLearning';
 import { LedgerBusinessLearningVO, LedgerBusinessLearningQuery, LedgerBusinessLearningForm } from '@/api/ledger/ledgerBusinessLearning/types';
+
+
+const searchConfigVisible = ref(false);
+const fieldConfigVisible = ref(false);
+const visibleSearchFields = ref<string[]>([]);
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -248,8 +248,7 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorResearchProjectFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldGroups = createDoctorResearchProjectFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorResearchProject', fieldGroups);
+const fieldConfigManager = createDoctorResearchProjectFieldConfig();
 const searchConfigManager = createDoctorResearchProjectSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());

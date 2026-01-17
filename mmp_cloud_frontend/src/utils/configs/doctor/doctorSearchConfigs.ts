@@ -1,1048 +1,743 @@
-import { SearchConfigManager } from '../searchConfigManager';
+import { SearchConfigManager, SearchFieldGroup } from '../searchConfigManager';
 
-// 医生基本信息搜索配置
-export function createDoctorBasicInfoSearchConfig() {
-  return new SearchConfigManager('doctorBasicInfo', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'doctorCode', label: '医生工号', type: 'input', visible: true, placeholder: '请输入医生工号' },
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' },
-        { prop: 'gender', label: '性别', type: 'select', visible: true, placeholder: '请选择性别' },
-        { prop: 'idCard', label: '身份证号', type: 'input', visible: true, placeholder: '请输入身份证号' }
-      ]
-    },
-    {
-      name: 'contact',
-      label: '联系信息',
-      fields: [
-        { prop: 'phone', label: '联系电话', type: 'input', visible: true, placeholder: '请输入联系电话' },
-        { prop: 'email', label: '电子邮箱', type: 'input', visible: true, placeholder: '请输入电子邮箱' }
-      ]
-    },
-    {
-      name: 'department',
-      label: '科室信息',
-      fields: [
-        { prop: 'departmentName', label: '科室名称', type: 'input', visible: true, placeholder: '请输入科室名称' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'title', label: '职称', type: 'select', visible: true, placeholder: '请选择职称' },
-        { prop: 'titleLevel', label: '职称级别', type: 'select', visible: true, placeholder: '请选择职称级别' },
-        { prop: 'status', label: '工作状态', type: 'select', visible: true, placeholder: '请选择工作状态' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'entryDate', 
-          label: '入职日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'entryDateStart', 
-          endProp: 'entryDateEnd' 
-        },
-        { 
-          prop: 'birthDate', 
-          label: '出生日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'birthDateStart', 
-          endProp: 'birthDateEnd' 
-        }
-      ]
-    }
-  ]);
-}
-
-// 医生工作经验搜索配置
-export function createDoctorWorkExperienceSearchConfig() {
-  return new SearchConfigManager('doctorWorkExperience', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'companyName', label: '工作单位', type: 'input', visible: true, placeholder: '请输入工作单位' },
-        { prop: 'department', label: '科室/部门', type: 'input', visible: true, placeholder: '请输入科室/部门' },
-        { prop: 'position', label: '职位', type: 'input', visible: true, placeholder: '请输入职位' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'startDate', 
-          label: '开始日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'startDateStart', 
-          endProp: 'startDateEnd' 
-        },
-        { 
-          prop: 'endDate', 
-          label: '结束日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'endDateStart', 
-          endProp: 'endDateEnd' 
-        }
-      ]
-    }
-  ]);
-}
-
-// 医生学历信息搜索配置
-export function createDoctorEducationSearchConfig() {
-  return new SearchConfigManager('doctorEducation', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'educationLevel', label: '学历层次', type: 'select', visible: true, placeholder: '请选择学历层次' },
-        { prop: 'degree', label: '学位', type: 'select', visible: true, placeholder: '请选择学位' },
-        { prop: 'major', label: '专业', type: 'input', visible: true, placeholder: '请输入专业' },
-        { prop: 'schoolName', label: '学校名称', type: 'input', visible: true, placeholder: '请输入学校名称' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'enrollmentDate', 
-          label: '入学日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'enrollmentDateStart', 
-          endProp: 'enrollmentDateEnd' 
-        },
-        { 
-          prop: 'graduationDate', 
-          label: '毕业日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'graduationDateStart', 
-          endProp: 'graduationDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'isHighest', label: '是否最高学历', type: 'select', visible: true, placeholder: '请选择是否最高学历' },
-        { prop: 'verificationStatus', label: '验证状态', type: 'select', visible: true, placeholder: '请选择验证状态' }
-      ]
-    }
-  ]);
-}
-
-// 医生培训记录搜索配置
-export function createDoctorTrainingSearchConfig() {
-  return new SearchConfigManager('doctorTraining', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'trainingName', label: '培训名称', type: 'input', visible: true, placeholder: '请输入培训名称' },
-        { prop: 'trainingType', label: '培训类型', type: 'select', visible: true, placeholder: '请选择培训类型' },
-        { prop: 'trainingInstitution', label: '培训机构', type: 'input', visible: true, placeholder: '请输入培训机构' },
-        { prop: 'trainingLocation', label: '培训地点', type: 'input', visible: true, placeholder: '请输入培训地点' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'startDate', 
-          label: '开始日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'startDateStart', 
-          endProp: 'startDateEnd' 
-        },
-        { 
-          prop: 'endDate', 
-          label: '结束日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'endDateStart', 
-          endProp: 'endDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'completionStatus', label: '完成状态', type: 'select', visible: true, placeholder: '请选择完成状态' },
-        { prop: 'assessmentResult', label: '考核结果', type: 'select', visible: true, placeholder: '请选择考核结果' }
-      ]
-    }
-  ]);
-}
-
-// 医生证书信息搜索配置
-export function createDoctorCertificateSearchConfig() {
-  return new SearchConfigManager('doctorCertificate', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'certificateName', label: '证书名称', type: 'input', visible: true, placeholder: '请输入证书名称' },
-        { prop: 'certificateType', label: '证书类型', type: 'select', visible: true, placeholder: '请选择证书类型' },
-        { prop: 'certificateNo', label: '证书编号', type: 'input', visible: true, placeholder: '请输入证书编号' },
-        { prop: 'issueUnit', label: '发证单位', type: 'input', visible: true, placeholder: '请输入发证单位' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorId', label: '医生ID', type: 'input', visible: true, placeholder: '请输入医生ID' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'issueDate', 
-          label: '发证日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'issueDateStart', 
-          endProp: 'issueDateEnd' 
-        },
-        { 
-          prop: 'validDate', 
-          label: '到期日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'validDateStart', 
-          endProp: 'validDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '证书状态', type: 'select', visible: true, placeholder: '请选择证书状态' },
-        { prop: 'isPermanent', label: '是否长期有效', type: 'select', visible: true, placeholder: '请选择是否长期有效' }
-      ]
-    }
-  ]);
-}
-
-// 医生学术职位搜索配置
-export function createDoctorAcademicPositionSearchConfig() {
-  return new SearchConfigManager('doctorAcademicPosition', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'positionName', label: '职位名称', type: 'input', visible: true, placeholder: '请输入职位名称' },
-        { prop: 'positionLevel', label: '职位级别', type: 'select', visible: true, placeholder: '请选择职位级别' },
-        { prop: 'organizationName', label: '所属机构', type: 'input', visible: true, placeholder: '请输入所属机构' },
-        { prop: 'department', label: '所属部门', type: 'input', visible: true, placeholder: '请输入所属部门' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'startDate', 
-          label: '任职开始日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'startDateStart', 
-          endProp: 'startDateEnd' 
-        },
-        { 
-          prop: 'endDate', 
-          label: '任职结束日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'endDateStart', 
-          endProp: 'endDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '职位状态', type: 'select', visible: true, placeholder: '请选择职位状态' },
-        { prop: 'isCurrent', label: '是否现任', type: 'select', visible: true, placeholder: '请选择是否现任' }
-      ]
-    }
-  ]);
-}
-
-// 医生荣誉信息搜索配置
-export function createDoctorHonorSearchConfig() {
-  return new SearchConfigManager('doctorHonor', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'honorName', label: '荣誉名称', type: 'input', visible: true, placeholder: '请输入荣誉名称' },
-        { prop: 'honorType', label: '荣誉类型', type: 'select', visible: true, placeholder: '请选择荣誉类型' },
-        { prop: 'honorLevel', label: '荣誉级别', type: 'select', visible: true, placeholder: '请选择荣誉级别' },
-        { prop: 'issuingAuthority', label: '颁发机构', type: 'input', visible: true, placeholder: '请输入颁发机构' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'awardDate', 
-          label: '获奖日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'awardDateStart', 
-          endProp: 'awardDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '荣誉状态', type: 'select', visible: true, placeholder: '请选择荣誉状态' }
-      ]
-    }
-  ]);
-}
-
-// 医生科研项目搜索配置
-export function createDoctorResearchProjectSearchConfig() {
-  return new SearchConfigManager('doctorResearchProject', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'projectName', label: '项目名称', type: 'input', visible: true, placeholder: '请输入项目名称' },
-        { prop: 'projectType', label: '项目类型', type: 'select', visible: true, placeholder: '请选择项目类型' },
-        { prop: 'projectLevel', label: '项目级别', type: 'select', visible: true, placeholder: '请选择项目级别' },
-        { prop: 'projectNo', label: '项目编号', type: 'input', visible: true, placeholder: '请输入项目编号' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'organization',
-      label: '机构信息',
-      fields: [
-        { prop: 'organizationName', label: '承担单位', type: 'input', visible: true, placeholder: '请输入承担单位' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'startDate', 
-          label: '开始日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'startDateStart', 
-          endProp: 'startDateEnd' 
-        },
-        { 
-          prop: 'endDate', 
-          label: '结束日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'endDateStart', 
-          endProp: 'endDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'projectStatus', label: '项目状态', type: 'select', visible: true, placeholder: '请选择项目状态' },
-        { prop: 'approvalStatus', label: '审批状态', type: 'select', visible: true, placeholder: '请选择审批状态' }
-      ]
-    }
-  ]);
-}
-
-// 医生论文发表搜索配置
-export function createDoctorPublicationSearchConfig() {
-  return new SearchConfigManager('doctorPublication', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'title', label: '论文标题', type: 'input', visible: true, placeholder: '请输入论文标题' },
-        { prop: 'publicationType', label: '发表类型', type: 'select', visible: true, placeholder: '请选择发表类型' },
-        { prop: 'journalName', label: '期刊名称', type: 'input', visible: true, placeholder: '请输入期刊名称' },
-        { prop: 'publicationNo', label: '发表号', type: 'input', visible: true, placeholder: '请输入发表号' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' },
-        { prop: 'correspondingAuthor', label: '通讯作者', type: 'input', visible: true, placeholder: '请输入通讯作者' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'publicationDate', 
-          label: '发表日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'publicationDateStart', 
-          endProp: 'publicationDateEnd' 
-        },
-        { 
-          prop: 'acceptanceDate', 
-          label: '接收日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'acceptanceDateStart', 
-          endProp: 'acceptanceDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'metrics',
-      label: '指标信息',
-      fields: [
-        { prop: 'citationCount', label: '引用次数', type: 'numberrange', visible: true, placeholder: '请输入引用次数范围' },
-        { prop: 'impactFactor', label: '影响因子', type: 'numberrange', visible: true, placeholder: '请输入影响因子范围' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'publicationStatus', label: '发表状态', type: 'select', visible: true, placeholder: '请选择发表状态' },
-        { prop: 'peerReviewStatus', label: '同行评审状态', type: 'select', visible: true, placeholder: '请选择同行评审状态' }
-      ]
-    }
-  ]);
-}
-
-// 医生能力评估搜索配置
+// doctorAbilityAssessment搜索配置
 export function createDoctorAbilityAssessmentSearchConfig() {
-  return new SearchConfigManager('doctorAbilityAssessment', [
+  const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'assessmentName', label: '评估名称', type: 'input', visible: true, placeholder: '请输入评估名称' },
-        { prop: 'assessmentType', label: '评估类型', type: 'select', visible: true, placeholder: '请选择评估类型' },
-        { prop: 'assessmentPeriod', label: '评估周期', type: 'select', visible: true, placeholder: '请选择评估周期' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'assessmentType', label: '评估类型', type: 'input', visible: true, placeholder: '请输入评估类型' }
       ]
     },
     {
-      name: 'doctor',
-      label: '医生信息',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
+        { prop: 'assessmentYear', label: '评估年度', type: 'number', visible: true, placeholder: '请输入评估年度' },
+        { prop: 'clinicalAbilityScore', label: '临床能力得分', type: 'number', visible: false, placeholder: '请输入临床能力得分' },
+        { prop: 'teachingAbilityScore', label: '教学能力得分', type: 'number', visible: false, placeholder: '请输入教学能力得分' },
+        { prop: 'researchAbilityScore', label: '科研能力得分', type: 'number', visible: false, placeholder: '请输入科研能力得分' },
+        { prop: 'managementAbilityScore', label: '管理能力得分', type: 'number', visible: false, placeholder: '请输入管理能力得分' },
+        { prop: 'totalScore', label: '总分', type: 'number', visible: false, placeholder: '请输入总分' },
+        { prop: 'assessmentResult', label: '评估结果 优秀/良好/合格/不合格', type: 'input', visible: false, placeholder: '请输入评估结果 优秀/良好/合格/不合格' },
+        { prop: 'assessor', label: '评估人', type: 'input', visible: false, placeholder: '请输入评估人' },
+        { prop: 'assessmentDate', label: '评估日期', type: 'daterange', visible: false, placeholder: '请输入评估日期', startProp: 'assessmentDateStart', endProp: 'assessmentDateEnd' }
       ]
     },
     {
-      name: 'evaluator',
-      label: '评估人信息',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'assessorName', label: '评估人姓名', type: 'input', visible: true, placeholder: '请输入评估人姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'assessmentDate', 
-          label: '评估日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'assessmentDateStart', 
-          endProp: 'assessmentDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'score',
-      label: '评分信息',
-      fields: [
-        { prop: 'score', label: '得分', type: 'numberrange', visible: true, placeholder: '请输入得分范围' },
-        { prop: 'grade', label: '等级', type: 'select', visible: true, placeholder: '请选择等级' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '评估状态', type: 'select', visible: true, placeholder: '请选择评估状态' }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
-  ]);
+  ];
+
+  return new SearchConfigManager('doctorAbilityAssessment', searchFieldGroups);
 }
 
-// 医生资格目录搜索配置
-export function createDoctorQualificationCatalogSearchConfig() {
-  return new SearchConfigManager('doctorQualificationCatalog', [
+
+// doctorAcademicPosition搜索配置
+export function createDoctorAcademicPositionSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'qualificationName', label: '资格名称', type: 'input', visible: true, placeholder: '请输入资格名称' },
-        { prop: 'qualificationType', label: '资格类型', type: 'select', visible: true, placeholder: '请选择资格类型' },
-        { prop: 'qualificationLevel', label: '资格级别', type: 'select', visible: true, placeholder: '请选择资格级别' },
-        { prop: 'qualificationNo', label: '资格编号', type: 'input', visible: true, placeholder: '请输入资格编号' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'positionLevel', label: '职务级别', type: 'input', visible: true, placeholder: '请输入职务级别' }
       ]
     },
     {
-      name: 'doctor',
-      label: '医生信息',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
+        { prop: 'organization', label: '学术组织', type: 'input', visible: true, placeholder: '请输入学术组织' },
+        { prop: 'position', label: '职务', type: 'input', visible: false, placeholder: '请输入职务' },
+        { prop: 'startDate', label: '任职开始日期', type: 'daterange', visible: false, placeholder: '请输入任职开始日期', startProp: 'startDateStart', endProp: 'startDateEnd' },
+        { prop: 'endDate', label: '任职结束日期', type: 'daterange', visible: false, placeholder: '请输入任职结束日期', startProp: 'endDateStart', endProp: 'endDateEnd' },
+        { prop: 'isCurrent', label: '是否现任 1-是 0-否', type: 'number', visible: false, placeholder: '请输入是否现任 1-是 0-否' },
+        { prop: 'appointmentUrl', label: '任职证明URL', type: 'input', visible: false, placeholder: '请输入任职证明URL' }
       ]
     },
     {
-      name: 'authority',
-      label: '机构信息',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'issuingAuthority', label: '发证机构', type: 'input', visible: true, placeholder: '请输入发证机构' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'issueDate', 
-          label: '发证日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'issueDateStart', 
-          endProp: 'issueDateEnd' 
-        },
-        { 
-          prop: 'expiryDate', 
-          label: '到期日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'expiryDateStart', 
-          endProp: 'expiryDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '资格状态', type: 'select', visible: true, placeholder: '请选择资格状态' },
-        { prop: 'isValid', label: '是否有效', type: 'select', visible: true, placeholder: '请选择是否有效' }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
-  ]);
+  ];
+
+  return new SearchConfigManager('doctorAcademicPosition', searchFieldGroups);
 }
 
-// 医生专业评分搜索配置
-export function createDoctorProfessionalRatingSearchConfig() {
-  return new SearchConfigManager('doctorProfessionalRating', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'ratingName', label: '评分名称', type: 'input', visible: true, placeholder: '请输入评分名称' },
-        { prop: 'ratingType', label: '评分类型', type: 'select', visible: true, placeholder: '请选择评分类型' },
-        { prop: 'ratingPeriod', label: '评分周期', type: 'select', visible: true, placeholder: '请选择评分周期' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'rater',
-      label: '评分人信息',
-      fields: [
-        { prop: 'raterName', label: '评分人姓名', type: 'input', visible: true, placeholder: '请输入评分人姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'ratingDate', 
-          label: '评分日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'ratingDateStart', 
-          endProp: 'ratingDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'score',
-      label: '评分信息',
-      fields: [
-        { prop: 'totalScore', label: '总分', type: 'numberrange', visible: true, placeholder: '请输入总分范围' },
-        { prop: 'grade', label: '等级', type: 'select', visible: true, placeholder: '请选择等级' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '评分状态', type: 'select', visible: true, placeholder: '请选择评分状态' }
-      ]
-    }
-  ]);
-}
 
-// 医生不良记录搜索配置
+// doctorAdverseRecord搜索配置
 export function createDoctorAdverseRecordSearchConfig() {
-  return new SearchConfigManager('doctorAdverseRecord', [
+  const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'recordType', label: '记录类型', type: 'select', visible: true, placeholder: '请选择记录类型' },
-        { prop: 'incidentDescription', label: '事件描述', type: 'input', visible: true, placeholder: '请输入事件描述' },
-        { prop: 'severityLevel', label: '严重程度', type: 'select', visible: true, placeholder: '请选择严重程度' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'recordType', label: '记录类型 医疗事故/差错/违规', type: 'input', visible: true, placeholder: '请输入记录类型 医疗事故/差错/违规' },
+        { prop: 'recordTitle', label: '记录标题', type: 'input', visible: true, placeholder: '请输入记录标题' },
+        { prop: 'recordStatus', label: '记录状态 待处理/处理中/已处理', type: 'input', visible: false, placeholder: '请输入记录状态 待处理/处理中/已处理' }
       ]
     },
     {
-      name: 'doctor',
-      label: '医生信息',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
+        { prop: 'occurDate', label: '发生日期', type: 'daterange', visible: false, placeholder: '请输入发生日期', startProp: 'occurDateStart', endProp: 'occurDateEnd' },
+        { prop: 'description', label: '事件描述', type: 'input', visible: false, placeholder: '请输入事件描述' },
+        { prop: 'consequence', label: '后果', type: 'input', visible: false, placeholder: '请输入后果' },
+        { prop: 'handlingMeasure', label: '处理措施', type: 'input', visible: false, placeholder: '请输入处理措施' },
+        { prop: 'punishment', label: '处罚情况', type: 'input', visible: false, placeholder: '请输入处罚情况' }
       ]
     },
     {
-      name: 'reporter',
-      label: '报告人信息',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'reporterName', label: '报告人姓名', type: 'input', visible: true, placeholder: '请输入报告人姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'incidentDate', 
-          label: '事件日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'incidentDateStart', 
-          endProp: 'incidentDateEnd' 
-        },
-        { 
-          prop: 'reportDate', 
-          label: '报告日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'reportDateStart', 
-          endProp: 'reportDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '处理状态', type: 'select', visible: true, placeholder: '请选择处理状态' },
-        { prop: 'investigationResult', label: '调查结果', type: 'select', visible: true, placeholder: '请选择调查结果' }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
-  ]);
+  ];
+
+  return new SearchConfigManager('doctorAdverseRecord', searchFieldGroups);
 }
 
-// 医生伦理评估搜索配置
-export function createDoctorEthicsEvaluationSearchConfig() {
-  return new SearchConfigManager('doctorEthicsEvaluation', [
+
+// doctorBasicInfo搜索配置
+export function createDoctorBasicInfoSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'evaluationName', label: '评估名称', type: 'input', visible: true, placeholder: '请输入评估名称' },
-        { prop: 'evaluationType', label: '评估类型', type: 'select', visible: true, placeholder: '请选择评估类型' },
-        { prop: 'evaluationPeriod', label: '评估周期', type: 'select', visible: true, placeholder: '请选择评估周期' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'evaluator',
-      label: '评估人信息',
-      fields: [
-        { prop: 'evaluatorName', label: '评估人姓名', type: 'input', visible: true, placeholder: '请输入评估人姓名' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'evaluationDate', 
-          label: '评估日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'evaluationDateStart', 
-          endProp: 'evaluationDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'score',
-      label: '评分信息',
-      fields: [
-        { prop: 'score', label: '得分', type: 'numberrange', visible: true, placeholder: '请输入得分范围' },
-        { prop: 'grade', label: '等级', type: 'select', visible: true, placeholder: '请选择等级' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '评估状态', type: 'select', visible: true, placeholder: '请选择评估状态' }
-      ]
-    }
-  ]);
-}
-
-// 医生电子注册搜索配置
-export function createDoctorElectronicRegistrationSearchConfig() {
-  return new SearchConfigManager('doctorElectronicRegistration', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'registrationNo', label: '注册编号', type: 'input', visible: true, placeholder: '请输入注册编号' },
-        { prop: 'registrationType', label: '注册类型', type: 'select', visible: true, placeholder: '请选择注册类型' },
-        { prop: 'registrationLevel', label: '注册级别', type: 'select', visible: true, placeholder: '请选择注册级别' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'authority',
-      label: '机构信息',
-      fields: [
-        { prop: 'registrationAuthority', label: '注册机构', type: 'input', visible: true, placeholder: '请输入注册机构' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'registrationDate', 
-          label: '注册日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'registrationDateStart', 
-          endProp: 'registrationDateEnd' 
-        },
-        { 
-          prop: 'expiryDate', 
-          label: '到期日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'expiryDateStart', 
-          endProp: 'expiryDateEnd' 
-        },
-        { 
-          prop: 'renewalDate', 
-          label: '续展日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'renewalDateStart', 
-          endProp: 'renewalDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '注册状态', type: 'select', visible: true, placeholder: '请选择注册状态' },
-        { prop: 'isValid', label: '是否有效', type: 'select', visible: true, placeholder: '请选择是否有效' }
-      ]
-    }
-  ]);
-}
-
-// 医生保险代码搜索配置
-export function createDoctorInsuranceCodeSearchConfig() {
-  return new SearchConfigManager('doctorInsuranceCode', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
-        { prop: 'insuranceType', label: '保险类型', type: 'select', visible: true, placeholder: '请选择保险类型' },
-        { prop: 'insuranceCode', label: '保险代码', type: 'input', visible: true, placeholder: '请输入保险代码' },
-        { prop: 'insuranceName', label: '保险名称', type: 'input', visible: true, placeholder: '请输入保险名称' }
-      ]
-    },
-    {
-      name: 'doctor',
-      label: '医生信息',
-      fields: [
-        { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' }
-      ]
-    },
-    {
-      name: 'company',
-      label: '保险公司信息',
-      fields: [
-        { prop: 'insuranceCompany', label: '保险公司', type: 'input', visible: true, placeholder: '请输入保险公司' }
-      ]
-    },
-    {
-      name: 'amount',
-      label: '金额信息',
-      fields: [
-        { prop: 'coverageAmount', label: '保额', type: 'numberrange', visible: true, placeholder: '请输入保额范围' },
-        { prop: 'premiumAmount', label: '保费', type: 'numberrange', visible: true, placeholder: '请输入保费范围' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'effectiveDate', 
-          label: '生效日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'effectiveDateStart', 
-          endProp: 'effectiveDateEnd' 
-        },
-        { 
-          prop: 'expiryDate', 
-          label: '到期日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'expiryDateStart', 
-          endProp: 'expiryDateEnd' 
-        }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'status', label: '保险状态', type: 'select', visible: true, placeholder: '请选择保险状态' },
-        { prop: 'isActive', label: '是否激活', type: 'select', visible: true, placeholder: '请选择是否激活' }
-      ]
-    }
-  ]);
-}
-
-// 医生信息总览搜索配置
-export function createDoctorInfoSearchConfig() {
-  return new SearchConfigManager('doctorInfo', [
-    {
-      name: 'basic',
-      label: '基础信息',
-      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
         { prop: 'doctorCode', label: '医生工号', type: 'input', visible: true, placeholder: '请输入医生工号' },
         { prop: 'doctorName', label: '医生姓名', type: 'input', visible: true, placeholder: '请输入医生姓名' },
-        { prop: 'gender', label: '性别', type: 'select', visible: true, placeholder: '请选择性别' },
-        { prop: 'idCard', label: '身份证号', type: 'input', visible: true, placeholder: '请输入身份证号' }
+        { prop: 'idCard', label: '身份证号', type: 'input', visible: true, placeholder: '请输入身份证号' },
+        { prop: 'deptId', label: '科室ID', type: 'number', visible: false, placeholder: '请输入科室ID' },
+        { prop: 'departmentName', label: '科室名称', type: 'input', visible: false, placeholder: '请输入科室名称' },
+        { prop: 'title', label: '职称', type: 'input', visible: false, placeholder: '请输入职称' }
       ]
     },
     {
-      name: 'contact',
-      label: '联系信息',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'phone', label: '联系电话', type: 'input', visible: true, placeholder: '请输入联系电话' },
-        { prop: 'email', label: '电子邮箱', type: 'input', visible: true, placeholder: '请输入电子邮箱' }
+        { prop: 'gender', label: '性别 1-男 2-女', type: 'number', visible: false, placeholder: '请输入性别 1-男 2-女' },
+        { prop: 'birthDate', label: '出生日期', type: 'daterange', visible: false, placeholder: '请输入出生日期', startProp: 'birthDateStart', endProp: 'birthDateEnd' },
+        { prop: 'phone', label: '联系电话', type: 'input', visible: false, placeholder: '请输入联系电话' },
+        { prop: 'email', label: '电子邮箱', type: 'input', visible: false, placeholder: '请输入电子邮箱' },
+        { prop: 'photoUrl', label: '照片URL', type: 'input', visible: false, placeholder: '请输入照片URL' },
+        { prop: 'titleLevel', label: '职称级别 1-初级 2-中级 3-副高 4-正高', type: 'number', visible: false, placeholder: '请输入职称级别 1-初级 2-中级 3-副高 4-正高' },
+        { prop: 'status', label: '状态 1-在职 2-离职 3-退休', type: 'number', visible: false, placeholder: '请输入状态 1-在职 2-离职 3-退休' },
+        { prop: 'entryDate', label: '入职日期', type: 'daterange', visible: false, placeholder: '请输入入职日期', startProp: 'entryDateStart', endProp: 'entryDateEnd' }
       ]
     },
     {
-      name: 'department',
-      label: '科室信息',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'departmentName', label: '科室名称', type: 'input', visible: true, placeholder: '请输入科室名称' }
-      ]
-    },
-    {
-      name: 'status',
-      label: '状态信息',
-      fields: [
-        { prop: 'title', label: '职称', type: 'select', visible: true, placeholder: '请选择职称' },
-        { prop: 'titleLevel', label: '职称级别', type: 'select', visible: true, placeholder: '请选择职称级别' },
-        { prop: 'status', label: '工作状态', type: 'select', visible: true, placeholder: '请选择工作状态' },
-        { prop: 'maritalStatus', label: '婚姻状况', type: 'select', visible: true, placeholder: '请选择婚姻状况' },
-        { prop: 'politicalStatus', label: '政治面貌', type: 'select', visible: true, placeholder: '请选择政治面貌' }
-      ]
-    },
-    {
-      name: 'time',
-      label: '时间范围',
-      fields: [
-        { 
-          prop: 'entryDate', 
-          label: '入职日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'entryDateStart', 
-          endProp: 'entryDateEnd' 
-        },
-        { 
-          prop: 'birthDate', 
-          label: '出生日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'birthDateStart', 
-          endProp: 'birthDateEnd' 
-        },
-        { 
-          prop: 'graduationDate', 
-          label: '毕业日期', 
-          type: 'daterange', 
-          visible: true, 
-          startPlaceholder: '开始日期',
-          endPlaceholder: '结束日期',
-          startProp: 'graduationDateStart', 
-          endProp: 'graduationDateEnd' 
-        }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
-  ]);
+  ];
+
+  return new SearchConfigManager('doctorBasicInfo', searchFieldGroups);
+}
+
+
+// doctorCertificate搜索配置
+export function createDoctorCertificateSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'certificateType', label: '证书类型 执业/资格/培训等', type: 'input', visible: true, placeholder: '请输入证书类型 执业/资格/培训等' },
+        { prop: 'certificateName', label: '证书名称', type: 'input', visible: true, placeholder: '请输入证书名称' },
+        { prop: 'certificateNo', label: '证书编号', type: 'input', visible: false, placeholder: '请输入证书编号' },
+        { prop: 'validDate', label: '有效期至', type: 'daterange', visible: false, placeholder: '请输入有效期至', startProp: 'validDateStart', endProp: 'validDateEnd' },
+        { prop: 'status', label: '状态 1-有效 2-即将到期 3-已过期 4-已注销', type: 'number', visible: false, placeholder: '请输入状态 1-有效 2-即将到期 3-已过期 4-已注销' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'issueUnit', label: '发证机构', type: 'input', visible: false, placeholder: '请输入发证机构' },
+        { prop: 'issueDate', label: '发证日期', type: 'daterange', visible: false, placeholder: '请输入发证日期', startProp: 'issueDateStart', endProp: 'issueDateEnd' },
+        { prop: 'isPermanent', label: '是否长期有效 1-是 0-否', type: 'number', visible: false, placeholder: '请输入是否长期有效 1-是 0-否' },
+        { prop: 'certificateUrl', label: '证书附件URL', type: 'input', visible: false, placeholder: '请输入证书附件URL' },
+        { prop: 'remindDays', label: '提前提醒天数', type: 'number', visible: false, placeholder: '请输入提前提醒天数' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorCertificate', searchFieldGroups);
+}
+
+
+// doctorEducation搜索配置
+export function createDoctorEducationSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'schoolName', label: '学校名称', type: 'input', visible: true, placeholder: '请输入学校名称' },
+        { prop: 'educationLevel', label: '学历 本科/硕士/博士', type: 'input', visible: true, placeholder: '请输入学历 本科/硕士/博士' },
+        { prop: 'certificateNo', label: '证书编号', type: 'input', visible: false, placeholder: '请输入证书编号' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'major', label: '专业', type: 'input', visible: false, placeholder: '请输入专业' },
+        { prop: 'degree', label: '学位', type: 'input', visible: false, placeholder: '请输入学位' },
+        { prop: 'startDate', label: '开始日期', type: 'daterange', visible: false, placeholder: '请输入开始日期', startProp: 'startDateStart', endProp: 'startDateEnd' },
+        { prop: 'endDate', label: '结束日期', type: 'daterange', visible: false, placeholder: '请输入结束日期', startProp: 'endDateStart', endProp: 'endDateEnd' },
+        { prop: 'isFullTime', label: '是否全日制 1-是 0-否', type: 'number', visible: false, placeholder: '请输入是否全日制 1-是 0-否' },
+        { prop: 'certificateUrl', label: '证书附件URL', type: 'input', visible: false, placeholder: '请输入证书附件URL' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorEducation', searchFieldGroups);
+}
+
+
+// doctorElectronicRegistration搜索配置
+export function createDoctorElectronicRegistrationSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'registrationNo', label: '注册编号', type: 'input', visible: true, placeholder: '请输入注册编号' },
+        { prop: 'registrationType', label: '注册类型 首次注册/变更注册/多机构备案', type: 'input', visible: true, placeholder: '请输入注册类型 首次注册/变更注册/多机构备案' },
+        { prop: 'validDate', label: '有效期至', type: 'daterange', visible: false, placeholder: '请输入有效期至', startProp: 'validDateStart', endProp: 'validDateEnd' },
+        { prop: 'registrationStatus', label: '注册状态 有效/注销/吊销', type: 'input', visible: false, placeholder: '请输入注册状态 有效/注销/吊销' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'practiceCategory', label: '执业类别', type: 'input', visible: false, placeholder: '请输入执业类别' },
+        { prop: 'practiceScope', label: '执业范围', type: 'input', visible: false, placeholder: '请输入执业范围' },
+        { prop: 'practiceLocation', label: '执业地点', type: 'input', visible: false, placeholder: '请输入执业地点' },
+        { prop: 'issueDate', label: '发证日期', type: 'daterange', visible: false, placeholder: '请输入发证日期', startProp: 'issueDateStart', endProp: 'issueDateEnd' },
+        { prop: 'registrationAuthority', label: '注册机关', type: 'input', visible: false, placeholder: '请输入注册机关' },
+        { prop: 'multiInstitutionFlag', label: '是否多机构备案 1-是 0-否', type: 'number', visible: false, placeholder: '请输入是否多机构备案 1-是 0-否' },
+        { prop: 'certificateUrl', label: '证书附件URL', type: 'input', visible: false, placeholder: '请输入证书附件URL' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorElectronicRegistration', searchFieldGroups);
+}
+
+
+// doctorEthicsEvaluation搜索配置
+export function createDoctorEthicsEvaluationSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'evaluationYear', label: '考评年度', type: 'number', visible: true, placeholder: '请输入考评年度' },
+        { prop: 'evaluationCycle', label: '考评周期', type: 'input', visible: true, placeholder: '请输入考评周期' },
+        { prop: 'selfScore', label: '自评得分', type: 'number', visible: false, placeholder: '请输入自评得分' },
+        { prop: 'peerScore', label: '同行评议得分', type: 'number', visible: false, placeholder: '请输入同行评议得分' },
+        { prop: 'patientScore', label: '患者评价得分', type: 'number', visible: false, placeholder: '请输入患者评价得分' },
+        { prop: 'departmentScore', label: '科室评价得分', type: 'number', visible: false, placeholder: '请输入科室评价得分' },
+        { prop: 'hospitalScore', label: '医院评价得分', type: 'number', visible: false, placeholder: '请输入医院评价得分' },
+        { prop: 'totalScore', label: '总分', type: 'number', visible: false, placeholder: '请输入总分' },
+        { prop: 'evaluationResult', label: '考评结果 优秀/良好/合格/不合格', type: 'input', visible: false, placeholder: '请输入考评结果 优秀/良好/合格/不合格' },
+        { prop: 'rewardPunishment', label: '奖惩情况', type: 'input', visible: false, placeholder: '请输入奖惩情况' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorEthicsEvaluation', searchFieldGroups);
+}
+
+
+// doctorHonor搜索配置
+export function createDoctorHonorSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'honorName', label: '荣誉名称', type: 'input', visible: true, placeholder: '请输入荣誉名称' },
+        { prop: 'honorLevel', label: '荣誉级别 国家级/省级/市级/院级', type: 'input', visible: true, placeholder: '请输入荣誉级别 国家级/省级/市级/院级' },
+        { prop: 'certificateNo', label: '证书编号', type: 'input', visible: false, placeholder: '请输入证书编号' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'awardUnit', label: '授予单位', type: 'input', visible: false, placeholder: '请输入授予单位' },
+        { prop: 'awardDate', label: '获得日期', type: 'daterange', visible: false, placeholder: '请输入获得日期', startProp: 'awardDateStart', endProp: 'awardDateEnd' },
+        { prop: 'certificateUrl', label: '证书附件URL', type: 'input', visible: false, placeholder: '请输入证书附件URL' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorHonor', searchFieldGroups);
+}
+
+
+// doctorInsuranceCode搜索配置
+export function createDoctorInsuranceCodeSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'insuranceCode', label: '医保医师码', type: 'input', visible: true, placeholder: '请输入医保医师码' },
+        { prop: 'insuranceType', label: '医保类型 职工医保/居民医保/生育保险', type: 'input', visible: true, placeholder: '请输入医保类型 职工医保/居民医保/生育保险' },
+        { prop: 'validDate', label: '有效期至', type: 'daterange', visible: false, placeholder: '请输入有效期至', startProp: 'validDateStart', endProp: 'validDateEnd' },
+        { prop: 'status', label: '状态 有效/暂停/注销', type: 'input', visible: false, placeholder: '请输入状态 有效/暂停/注销' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'applyDate', label: '申请日期', type: 'daterange', visible: false, placeholder: '请输入申请日期', startProp: 'applyDateStart', endProp: 'applyDateEnd' },
+        { prop: 'approveDate', label: '审批日期', type: 'daterange', visible: false, placeholder: '请输入审批日期', startProp: 'approveDateStart', endProp: 'approveDateEnd' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorInsuranceCode', searchFieldGroups);
+}
+
+
+// doctorProfessionalRating搜索配置
+export function createDoctorProfessionalRatingSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医师ID', type: 'number', visible: true, placeholder: '请输入医师ID' },
+        { prop: 'doctorName', label: '医师姓名', type: 'input', visible: true, placeholder: '请输入医师姓名' },
+        { prop: 'ratingLevel', label: '评分等级', type: 'input', visible: true, placeholder: '请输入评分等级' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'ratingYear', label: '评分年份', type: 'number', visible: false, placeholder: '请输入评分年份' },
+        { prop: 'ratingQuarter', label: '评分季度', type: 'number', visible: false, placeholder: '请输入评分季度' },
+        { prop: 'baseScore', label: '基础分数', type: 'number', visible: false, placeholder: '请输入基础分数' },
+        { prop: 'complaintDeduction', label: '投诉扣分', type: 'number', visible: false, placeholder: '请输入投诉扣分' },
+        { prop: 'medicalQualityScore', label: '医疗质量评分', type: 'number', visible: false, placeholder: '请输入医疗质量评分' },
+        { prop: 'patientSatisfaction', label: '患者满意度', type: 'number', visible: false, placeholder: '请输入患者满意度' },
+        { prop: 'finalScore', label: '最终得分', type: 'number', visible: false, placeholder: '请输入最终得分' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorProfessionalRating', searchFieldGroups);
+}
+
+
+// doctorPublication搜索配置
+export function createDoctorPublicationSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'publicationType', label: '类型 论文/论著/专利', type: 'input', visible: true, placeholder: '请输入类型 论文/论著/专利' },
+        { prop: 'title', label: '标题', type: 'input', visible: true, placeholder: '请输入标题' },
+        { prop: 'journalName', label: '期刊名称/出版社', type: 'input', visible: false, placeholder: '请输入期刊名称/出版社' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'authors', label: '作者', type: 'input', visible: false, placeholder: '请输入作者' },
+        { prop: 'authorOrder', label: '作者排序', type: 'number', visible: false, placeholder: '请输入作者排序' },
+        { prop: 'publishDate', label: '发表日期', type: 'daterange', visible: false, placeholder: '请输入发表日期', startProp: 'publishDateStart', endProp: 'publishDateEnd' },
+        { prop: 'volume', label: '卷号', type: 'input', visible: false, placeholder: '请输入卷号' },
+        { prop: 'issue', label: '期号', type: 'input', visible: false, placeholder: '请输入期号' },
+        { prop: 'pages', label: '页码', type: 'input', visible: false, placeholder: '请输入页码' },
+        { prop: 'doi', label: 'DOI', type: 'input', visible: false, placeholder: '请输入DOI' },
+        { prop: 'impactFactor', label: '影响因子', type: 'number', visible: false, placeholder: '请输入影响因子' },
+        { prop: 'citationCount', label: '引用次数', type: 'number', visible: false, placeholder: '请输入引用次数' },
+        { prop: 'fullTextUrl', label: '全文URL', type: 'input', visible: false, placeholder: '请输入全文URL' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorPublication', searchFieldGroups);
+}
+
+
+// doctorQualificationCatalog搜索配置
+export function createDoctorQualificationCatalogSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'catalogCode', label: '资质编码', type: 'input', visible: true, placeholder: '请输入资质编码' },
+        { prop: 'catalogName', label: '资质名称', type: 'input', visible: true, placeholder: '请输入资质名称' },
+        { prop: 'parentId', label: '父级ID', type: 'number', visible: true, placeholder: '请输入父级ID' },
+        { prop: 'catalogLevel', label: '目录层级 1-一级 2-二级 3-三级 4-四级', type: 'number', visible: false, placeholder: '请输入目录层级 1-一级 2-二级 3-三级 4-四级' },
+        { prop: 'catalogType', label: '资质类型 手术分级/有创操作/限制类技术/处方权/会诊权/其他', type: 'input', visible: false, placeholder: '请输入资质类型 手术分级/有创操作/限制类技术/处方权/会诊权/其他' },
+        { prop: 'subType', label: '资质子类型', type: 'input', visible: false, placeholder: '请输入资质子类型' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'operationCode', label: '手术操作编码（对应ICD-9-CM附加编码）', type: 'input', visible: false, placeholder: '请输入手术操作编码（对应ICD-9-CM附加编码）' },
+        { prop: 'category', label: '类别（手术/介入治疗）', type: 'input', visible: false, placeholder: '请输入类别（手术/介入治疗）' },
+        { prop: 'hospitalLevel', label: '院内手术等级（三级手术/四级手术）', type: 'input', visible: false, placeholder: '请输入院内手术等级（三级手术/四级手术）' },
+        { prop: 'description', label: '资质描述', type: 'input', visible: false, placeholder: '请输入资质描述' },
+        { prop: 'sortOrder', label: '排序', type: 'number', visible: false, placeholder: '请输入排序' },
+        { prop: 'isEnabled', label: '是否启用 1-是 0-否', type: 'number', visible: false, placeholder: '请输入是否启用 1-是 0-否' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorQualificationCatalog', searchFieldGroups);
+}
+
+
+// doctorResearchProject搜索配置
+export function createDoctorResearchProjectSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'projectName', label: '项目名称', type: 'input', visible: true, placeholder: '请输入项目名称' },
+        { prop: 'projectNo', label: '项目编号', type: 'input', visible: true, placeholder: '请输入项目编号' },
+        { prop: 'projectLevel', label: '项目级别 国家级/省级/市级/院级', type: 'input', visible: false, placeholder: '请输入项目级别 国家级/省级/市级/院级' },
+        { prop: 'projectType', label: '项目类型', type: 'input', visible: false, placeholder: '请输入项目类型' },
+        { prop: 'status', label: '项目状态 在研/结题/终止', type: 'input', visible: false, placeholder: '请输入项目状态 在研/结题/终止' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'role', label: '承担角色 主持人/参与人', type: 'input', visible: false, placeholder: '请输入承担角色 主持人/参与人' },
+        { prop: 'startDate', label: '开始日期', type: 'daterange', visible: false, placeholder: '请输入开始日期', startProp: 'startDateStart', endProp: 'startDateEnd' },
+        { prop: 'endDate', label: '结束日期', type: 'daterange', visible: false, placeholder: '请输入结束日期', startProp: 'endDateStart', endProp: 'endDateEnd' },
+        { prop: 'fundingAmount', label: '资助金额', type: 'number', visible: false, placeholder: '请输入资助金额' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorResearchProject', searchFieldGroups);
+}
+
+
+// doctorTraining搜索配置
+export function createDoctorTrainingSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' },
+        { prop: 'trainingType', label: '培训类型 进修/继续教育/院内培训', type: 'input', visible: true, placeholder: '请输入培训类型 进修/继续教育/院内培训' },
+        { prop: 'trainingName', label: '培训名称', type: 'input', visible: true, placeholder: '请输入培训名称' },
+        { prop: 'certificateNo', label: '证书编号', type: 'input', visible: false, placeholder: '请输入证书编号' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'trainingUnit', label: '培训单位', type: 'input', visible: false, placeholder: '请输入培训单位' },
+        { prop: 'startDate', label: '开始日期', type: 'daterange', visible: false, placeholder: '请输入开始日期', startProp: 'startDateStart', endProp: 'startDateEnd' },
+        { prop: 'endDate', label: '结束日期', type: 'daterange', visible: false, placeholder: '请输入结束日期', startProp: 'endDateStart', endProp: 'endDateEnd' },
+        { prop: 'trainingHours', label: '培训学时', type: 'number', visible: false, placeholder: '请输入培训学时' },
+        { prop: 'trainingContent', label: '培训内容', type: 'input', visible: false, placeholder: '请输入培训内容' },
+        { prop: 'trainingResult', label: '培训结果 合格/不合格', type: 'input', visible: false, placeholder: '请输入培训结果 合格/不合格' },
+        { prop: 'certificateUrl', label: '证书附件URL', type: 'input', visible: false, placeholder: '请输入证书附件URL' },
+        { prop: 'credits', label: '学分', type: 'number', visible: false, placeholder: '请输入学分' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorTraining', searchFieldGroups);
+}
+
+
+// doctorWorkExperience搜索配置
+export function createDoctorWorkExperienceSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'doctorId', label: '医生ID', type: 'number', visible: true, placeholder: '请输入医生ID' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'organization', label: '工作单位', type: 'input', visible: true, placeholder: '请输入工作单位' },
+        { prop: 'department', label: '部门', type: 'input', visible: true, placeholder: '请输入部门' },
+        { prop: 'position', label: '职位', type: 'input', visible: false, placeholder: '请输入职位' },
+        { prop: 'startDate', label: '开始日期', type: 'daterange', visible: false, placeholder: '请输入开始日期', startProp: 'startDateStart', endProp: 'startDateEnd' },
+        { prop: 'endDate', label: '结束日期', type: 'daterange', visible: false, placeholder: '请输入结束日期', startProp: 'endDateStart', endProp: 'endDateEnd' },
+        { prop: 'jobDescription', label: '工作描述', type: 'input', visible: false, placeholder: '请输入工作描述' },
+        { prop: 'achievements', label: '工作业绩', type: 'input', visible: false, placeholder: '请输入工作业绩' },
+        { prop: 'referencePerson', label: '证明人', type: 'input', visible: false, placeholder: '请输入证明人' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('doctorWorkExperience', searchFieldGroups);
 }

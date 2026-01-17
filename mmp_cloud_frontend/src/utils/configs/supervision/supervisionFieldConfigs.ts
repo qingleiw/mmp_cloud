@@ -1,422 +1,640 @@
 import { FieldConfigManager, FieldGroup } from '../fieldConfigManager';
 
-// 监管检查记录字段配置
-export function createSupervisionInspectionRecordFieldConfig() {
+// supervisionExpertGroup字段配置
+export function createSupervisionExpertGroupFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'inspectionNo', label: '检查编号', visible: true, required: true, group: 'basic' },
-        { prop: 'inspectionTitle', label: '检查标题', visible: true, required: true, group: 'basic' },
-        { prop: 'inspectionDate', label: '检查日期', visible: true, required: true, width: '120', group: 'basic' },
-        { prop: 'inspectionType', label: '检查类型', visible: true, required: true, group: 'basic' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'groupCode', label: '专家组编码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'groupName', label: '专家组名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'groupType', label: '专家组类型', visible: true, type: 'input', group: 'basic' },
+        { prop: 'status', label: '状态', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
-      name: 'organization',
-      label: '组织信息',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'inspectedOrganization', label: '被检查单位', visible: true, required: true, group: 'organization' },
-        { prop: 'organizationType', label: '单位类型', visible: true, group: 'organization' },
-        { prop: 'organizationLevel', label: '单位等级', visible: true, group: 'organization' },
-        { prop: 'contactPerson', label: '联系人', visible: true, group: 'organization' },
-        { prop: 'contactPhone', label: '联系电话', visible: true, group: 'organization' }
-      ]
-    },
-    {
-      name: 'team',
-      label: '检查团队',
-      fields: [
-        { prop: 'inspectionLeader', label: '检查组长', visible: true, required: true, group: 'team' },
-        { prop: 'teamMembers', label: '检查组成员', visible: true, group: 'team' },
-        { prop: 'expertMembers', label: '专家成员', visible: true, group: 'team' },
-        { prop: 'supervisoryAuthority', label: '监管机构', visible: true, group: 'team' }
-      ]
-    },
-    {
-      name: 'content',
-      label: '检查内容',
-      fields: [
-        { prop: 'inspectionScope', label: '检查范围', visible: true, group: 'content' },
-        { prop: 'inspectionBasis', label: '检查依据', visible: true, group: 'content' },
-        { prop: 'inspectionMethods', label: '检查方法', visible: true, group: 'content' },
-        { prop: 'keyPoints', label: '重点检查事项', visible: true, group: 'content' }
-      ]
-    },
-    {
-      name: 'findings',
-      label: '检查发现',
-      fields: [
-        { prop: 'findings', label: '检查发现', visible: true, group: 'findings' },
-        { prop: 'problems', label: '存在问题', visible: true, group: 'findings' },
-        { prop: 'violations', label: '违规情况', visible: true, group: 'findings' },
-        { prop: 'evidence', label: '证据材料', visible: true, group: 'findings' }
-      ]
-    },
-    {
-      name: 'result',
-      label: '检查结果',
-      fields: [
-        { prop: 'overallAssessment', label: '总体评价', visible: true, group: 'result' },
-        { prop: 'inspectionGrade', label: '检查等级', visible: true, group: 'result' },
-        { prop: 'rectificationRequired', label: '是否需要整改', visible: true, group: 'result' },
-        { prop: 'rectificationDeadline', label: '整改期限', visible: true, width: '120', group: 'result' }
+        { prop: 'specialty', label: '专业领域', visible: true, type: 'input', group: 'detail' },
+        { prop: 'description', label: '描述', visible: true, type: 'textarea', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return new FieldConfigManager('supervisionInspectionRecord', fieldGroups);
+  return new FieldConfigManager('supervisionExpertGroup', fieldGroups);
 }
 
-// 监管整改通知字段配置
-export function createSupervisionRectificationNoticeFieldConfig() {
+
+// supervisionExpertMember字段配置
+export function createSupervisionExpertMemberFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'noticeNo', label: '通知编号', visible: true, required: true, group: 'basic' },
-        { prop: 'noticeTitle', label: '通知标题', visible: true, required: true, group: 'basic' },
-        { prop: 'noticeDate', label: '通知日期', visible: true, required: true, width: '120', group: 'basic' },
-        { prop: 'inspectionId', label: '关联检查ID', visible: true, group: 'basic' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'groupId', label: '专家组ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'expertName', label: '专家姓名', visible: true, type: 'input', group: 'basic' },
+        { prop: 'expertTitle', label: '专家职称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'status', label: '状态', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
-      name: 'organization',
-      label: '被通知单位',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'notifiedOrganization', label: '被通知单位', visible: true, required: true, group: 'organization' },
-        { prop: 'organizationType', label: '单位类型', visible: true, group: 'organization' },
-        { prop: 'contactPerson', label: '联系人', visible: true, group: 'organization' },
-        { prop: 'contactPhone', label: '联系电话', visible: true, group: 'organization' }
-      ]
-    },
-    {
-      name: 'issues',
-      label: '问题清单',
-      fields: [
-        { prop: 'issuesList', label: '问题清单', visible: true, group: 'issues' },
-        { prop: 'issueCategories', label: '问题分类', visible: true, group: 'issues' },
-        { prop: 'severityLevels', label: '严重程度', visible: true, group: 'issues' },
-        { prop: 'issueDescriptions', label: '问题描述', visible: true, group: 'issues' }
-      ]
-    },
-    {
-      name: 'requirements',
-      label: '整改要求',
-      fields: [
-        { prop: 'rectificationRequirements', label: '整改要求', visible: true, required: true, group: 'requirements' },
-        { prop: 'rectificationStandards', label: '整改标准', visible: true, group: 'requirements' },
-        { prop: 'rectificationDeadline', label: '整改期限', visible: true, required: true, width: '120', group: 'requirements' },
-        { prop: 'responsiblePerson', label: '责任人', visible: true, group: 'requirements' }
-      ]
-    },
-    {
-      name: 'followup',
-      label: '后续跟踪',
-      fields: [
-        { prop: 'followupRequired', label: '是否需要跟踪', visible: true, group: 'followup' },
-        { prop: 'followupSchedule', label: '跟踪计划', visible: true, group: 'followup' },
-        { prop: 'reportingRequirements', label: '报告要求', visible: true, group: 'followup' }
+        { prop: 'hospital', label: '所在医院', visible: true, type: 'input', group: 'detail' },
+        { prop: 'specialty', label: '专业特长', visible: true, type: 'input', group: 'detail' },
+        { prop: 'contactInfo', label: '联系方式', visible: true, type: 'input', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return new FieldConfigManager('supervisionRectificationNotice', fieldGroups);
+  return new FieldConfigManager('supervisionExpertMember', fieldGroups);
 }
 
-// 监管整改报告字段配置
-export function createSupervisionRectificationReportFieldConfig() {
+
+// supervisionForm字段配置
+export function createSupervisionFormFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'reportNo', label: '报告编号', visible: true, required: true, group: 'basic' },
-        { prop: 'reportTitle', label: '报告标题', visible: true, required: true, group: 'basic' },
-        { prop: 'reportDate', label: '报告日期', visible: true, required: true, width: '120', group: 'basic' },
-        { prop: 'noticeId', label: '关联通知ID', visible: true, group: 'basic' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'formCode', label: '表单编码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'formName', label: '表单名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectId', label: '关联项目ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'status', label: '状态', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
-      name: 'organization',
-      label: '报告单位',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'reportingOrganization', label: '报告单位', visible: true, required: true, group: 'organization' },
-        { prop: 'organizationType', label: '单位类型', visible: true, group: 'organization' },
-        { prop: 'contactPerson', label: '联系人', visible: true, group: 'organization' },
-        { prop: 'contactPhone', label: '联系电话', visible: true, group: 'organization' }
-      ]
-    },
-    {
-      name: 'progress',
-      label: '整改进度',
-      fields: [
-        { prop: 'rectificationProgress', label: '整改进度', visible: true, group: 'progress' },
-        { prop: 'completionRate', label: '完成率', visible: true, group: 'progress' },
-        { prop: 'remainingIssues', label: '剩余问题', visible: true, group: 'progress' },
-        { prop: 'expectedCompletionDate', label: '预计完成日期', visible: true, width: '120', group: 'progress' }
-      ]
-    },
-    {
-      name: 'measures',
-      label: '整改措施',
-      fields: [
-        { prop: 'measuresTaken', label: '已采取措施', visible: true, group: 'measures' },
-        { prop: 'effectiveness', label: '措施有效性', visible: true, group: 'measures' },
-        { prop: 'difficulties', label: '遇到的困难', visible: true, group: 'measures' },
-        { prop: 'supportNeeded', label: '需要的支持', visible: true, group: 'measures' }
-      ]
-    },
-    {
-      name: 'verification',
-      label: '验收信息',
-      fields: [
-        { prop: 'selfAssessment', label: '自查评估', visible: true, group: 'verification' },
-        { prop: 'verificationResult', label: '验收结果', visible: true, group: 'verification' },
-        { prop: 'verifier', label: '验收人', visible: true, group: 'verification' },
-        { prop: 'verificationDate', label: '验收日期', visible: true, width: '120', group: 'verification' }
+        { prop: 'formDescription', label: '表单描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'formConfig', label: '表单配置（JSON格式）', visible: true, type: 'textarea', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return new FieldConfigManager('supervisionRectificationReport', fieldGroups);
+  return new FieldConfigManager('supervisionForm', fieldGroups);
 }
 
-// 监管处罚决定字段配置
-export function createSupervisionPenaltyDecisionFieldConfig() {
+
+// supervisionFormField字段配置
+export function createSupervisionFormFieldFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'decisionNo', label: '决定编号', visible: true, required: true, group: 'basic' },
-        { prop: 'decisionTitle', label: '决定标题', visible: true, required: true, group: 'basic' },
-        { prop: 'decisionDate', label: '决定日期', visible: true, required: true, width: '120', group: 'basic' },
-        { prop: 'inspectionId', label: '关联检查ID', visible: true, group: 'basic' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'formId', label: '表单ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'fieldCode', label: '字段编码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'fieldName', label: '字段名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'fieldType', label: '字段类型', visible: true, type: 'input', group: 'basic' },
+        { prop: 'status', label: '状态', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
-      name: 'organization',
-      label: '被处罚单位',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'penalizedOrganization', label: '被处罚单位', visible: true, required: true, group: 'organization' },
-        { prop: 'organizationType', label: '单位类型', visible: true, group: 'organization' },
-        { prop: 'legalRepresentative', label: '法定代表人', visible: true, group: 'organization' },
-        { prop: 'contactInfo', label: '联系方式', visible: true, group: 'organization' }
-      ]
-    },
-    {
-      name: 'violations',
-      label: '违法事实',
-      fields: [
-        { prop: 'violations', label: '违法事实', visible: true, required: true, group: 'violations' },
-        { prop: 'legalBasis', label: '法律依据', visible: true, required: true, group: 'violations' },
-        { prop: 'violationCategory', label: '违法类别', visible: true, group: 'violations' },
-        { prop: 'violationSeverity', label: '违法严重程度', visible: true, group: 'violations' }
-      ]
-    },
-    {
-      name: 'penalty',
-      label: '处罚内容',
-      fields: [
-        { prop: 'penaltyType', label: '处罚类型', visible: true, required: true, group: 'penalty' },
-        { prop: 'penaltyAmount', label: '罚款金额', visible: true, group: 'penalty' },
-        { prop: 'penaltyDetails', label: '处罚详情', visible: true, group: 'penalty' },
-        { prop: 'penaltyBasis', label: '处罚依据', visible: true, group: 'penalty' }
-      ]
-    },
-    {
-      name: 'execution',
-      label: '执行信息',
-      fields: [
-        { prop: 'executionDeadline', label: '执行期限', visible: true, group: 'execution' },
-        { prop: 'executionStatus', label: '执行状态', visible: true, group: 'execution' },
-        { prop: 'executionDate', label: '执行日期', visible: true, width: '120', group: 'execution' },
-        { prop: 'executionResult', label: '执行结果', visible: true, group: 'execution' }
+        { prop: 'fieldConfig', label: '字段配置（JSON格式）', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'requiredFlag', label: '是否必填：0-否，1-是', visible: true, type: 'select', group: 'detail' },
+        { prop: 'sortOrder', label: '排序', visible: true, type: 'number', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return new FieldConfigManager('supervisionPenaltyDecision', fieldGroups);
+  return new FieldConfigManager('supervisionFormField', fieldGroups);
 }
 
-// 监管工作计划字段配置
-export function createSupervisionWorkPlanFieldConfig() {
+
+// supervisionIssue字段配置
+export function createSupervisionIssueFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'planNo', label: '计划编号', visible: true, required: true, group: 'basic' },
-        { prop: 'planTitle', label: '计划标题', visible: true, required: true, group: 'basic' },
-        { prop: 'planYear', label: '计划年度', visible: true, required: true, group: 'basic' },
-        { prop: 'planType', label: '计划类型', visible: true, required: true, group: 'basic' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'resultId', label: '结果ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'issueType', label: '问题类型', visible: true, type: 'input', group: 'basic' },
+        { prop: 'status', label: '状态：pending-待整改，rectifying-整改中，completed-已完成', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
-      name: 'content',
-      label: '计划内容',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'planObjectives', label: '计划目标', visible: true, group: 'content' },
-        { prop: 'planScope', label: '计划范围', visible: true, group: 'content' },
-        { prop: 'keyTasks', label: '重点任务', visible: true, group: 'content' },
-        { prop: 'workRequirements', label: '工作要求', visible: true, group: 'content' }
-      ]
-    },
-    {
-      name: 'schedule',
-      label: '时间安排',
-      fields: [
-        { prop: 'startDate', label: '开始日期', visible: true, width: '120', group: 'schedule' },
-        { prop: 'endDate', label: '结束日期', visible: true, width: '120', group: 'schedule' },
-        { prop: 'milestones', label: '里程碑', visible: true, group: 'schedule' },
-        { prop: 'deadlines', label: '截止时间', visible: true, group: 'schedule' }
-      ]
-    },
-    {
-      name: 'resources',
-      label: '资源配置',
-      fields: [
-        { prop: 'personnelAllocation', label: '人员配置', visible: true, group: 'resources' },
-        { prop: 'budgetAllocation', label: '预算配置', visible: true, group: 'resources' },
-        { prop: 'equipmentNeeds', label: '设备需求', visible: true, group: 'resources' },
-        { prop: 'trainingNeeds', label: '培训需求', visible: true, group: 'resources' }
-      ]
-    },
-    {
-      name: 'monitoring',
-      label: '监控评估',
-      fields: [
-        { prop: 'monitoringIndicators', label: '监控指标', visible: true, group: 'monitoring' },
-        { prop: 'evaluationMethods', label: '评估方法', visible: true, group: 'monitoring' },
-        { prop: 'reportingRequirements', label: '报告要求', visible: true, group: 'monitoring' },
-        { prop: 'adjustmentMechanism', label: '调整机制', visible: true, group: 'monitoring' }
+        { prop: 'issueDescription', label: '问题描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'severity', label: '严重程度', visible: true, type: 'input', group: 'detail' },
+        { prop: 'responsiblePerson', label: '责任人', visible: true, type: 'input', group: 'detail' },
+        { prop: 'rectificationDeadline', label: '整改期限', visible: true, type: 'date', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return new FieldConfigManager('supervisionWorkPlan', fieldGroups);
+  return new FieldConfigManager('supervisionIssue', fieldGroups);
 }
 
-// 监管统计报告字段配置
-export function createSupervisionStatisticsReportFieldConfig() {
+
+// supervisionPlan字段配置
+export function createSupervisionPlanFieldConfig() {
   const fieldGroups: FieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'id', label: '主键ID', visible: true, group: 'basic' },
-        { prop: 'reportNo', label: '报告编号', visible: true, required: true, group: 'basic' },
-        { prop: 'reportTitle', label: '报告标题', visible: true, required: true, group: 'basic' },
-        { prop: 'reportPeriod', label: '报告周期', visible: true, required: true, group: 'basic' },
-        { prop: 'reportDate', label: '报告日期', visible: true, required: true, width: '120', group: 'basic' }
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'planCode', label: '计划编码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'planName', label: '计划名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectId', label: '项目ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'planType', label: '计划类型', visible: true, type: 'input', group: 'basic' },
+        { prop: 'status', label: '状态：draft-草稿，published-已发布，executing-执行中，completed-已完成', visible: true, type: 'input', group: 'basic' }
       ]
     },
     {
-      name: 'statistics',
-      label: '统计数据',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'inspectionCount', label: '检查次数', visible: true, group: 'statistics' },
-        { prop: 'organizationsInspected', label: '检查单位数', visible: true, group: 'statistics' },
-        { prop: 'issuesFound', label: '发现问题数', visible: true, group: 'statistics' },
-        { prop: 'rectificationNotices', label: '整改通知数', visible: true, group: 'statistics' },
-        { prop: 'penaltyDecisions', label: '处罚决定数', visible: true, group: 'statistics' }
-      ]
-    },
-    {
-      name: 'analysis',
-      label: '分析内容',
-      fields: [
-        { prop: 'trendAnalysis', label: '趋势分析', visible: true, group: 'analysis' },
-        { prop: 'problemAnalysis', label: '问题分析', visible: true, group: 'analysis' },
-        { prop: 'effectivenessAnalysis', label: '成效分析', visible: true, group: 'analysis' },
-        { prop: 'recommendations', label: '建议措施', visible: true, group: 'analysis' }
-      ]
-    },
-    {
-      name: 'quality',
-      label: '质量指标',
-      fields: [
-        { prop: 'complianceRate', label: '合规率', visible: true, group: 'quality' },
-        { prop: 'rectificationCompletionRate', label: '整改完成率', visible: true, group: 'quality' },
-        { prop: 'penaltyExecutionRate', label: '处罚执行率', visible: true, group: 'quality' },
-        { prop: 'satisfactionRate', label: '满意度', visible: true, group: 'quality' }
+        { prop: 'supervisionPeriod', label: '督导周期', visible: true, type: 'input', group: 'detail' },
+        { prop: 'startDate', label: '开始日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'endDate', label: '结束日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'responsiblePerson', label: '负责人', visible: true, type: 'input', group: 'detail' }
       ]
     },
     {
       name: 'system',
       label: '系统字段',
       fields: [
-        { prop: 'delFlag', label: '删除标志', visible: true, group: 'system' },
-        { prop: 'createTime', label: '创建时间', visible: true, group: 'system' },
-        { prop: 'createBy', label: '创建者', visible: true, group: 'system' },
-        { prop: 'updateTime', label: '更新时间', visible: true, group: 'system' },
-        { prop: 'updateBy', label: '更新者', visible: true, group: 'system' }
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
       ]
     }
   ];
 
-  return new FieldConfigManager('supervisionStatisticsReport', fieldGroups);
+  return new FieldConfigManager('supervisionPlan', fieldGroups);
+}
+
+
+// supervisionPlanDept字段配置
+export function createSupervisionPlanDeptFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'planId', label: '计划ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'deptId', label: '科室ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'status', label: '状态：pending-待督导，completed-已完成', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'supervisionDate', label: '督导日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'supervisor', label: '督导人', visible: true, type: 'input', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionPlanDept', fieldGroups);
+}
+
+
+// supervisionPlanForm字段配置
+export function createSupervisionPlanFormFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'planId', label: '计划ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'formId', label: '表单ID', visible: true, type: 'number', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'sortOrder', label: '排序', visible: true, type: 'number', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionPlanForm', fieldGroups);
+}
+
+
+// supervisionProject字段配置
+export function createSupervisionProjectFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectCode', label: '项目编码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectName', label: '项目名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectType', label: '项目类型', visible: true, type: 'input', group: 'basic' },
+        { prop: 'status', label: '状态：active-启用，inactive-停用', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'projectDescription', label: '项目描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'supervisionDepartment', label: '督导部门', visible: true, type: 'input', group: 'detail' },
+        { prop: 'responsiblePerson', label: '负责人', visible: true, type: 'input', group: 'detail' },
+        { prop: 'contactInfo', label: '联系方式', visible: true, type: 'input', group: 'detail' },
+        { prop: 'supervisionFrequency', label: '督导频次', visible: true, type: 'input', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionProject', fieldGroups);
+}
+
+
+// supervisionProjectIndicator字段配置
+export function createSupervisionProjectIndicatorFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'projectId', label: '项目ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'indicatorCode', label: '指标编码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'indicatorName', label: '指标名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'indicatorType', label: '指标类型', visible: true, type: 'input', group: 'basic' },
+        { prop: 'status', label: '状态', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'indicatorDescription', label: '指标描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'scoringStandard', label: '评分标准', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'weight', label: '权重', visible: true, type: 'number', group: 'detail' },
+        { prop: 'maxScore', label: '满分值', visible: true, type: 'number', group: 'detail' },
+        { prop: 'sortOrder', label: '排序', visible: true, type: 'number', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionProjectIndicator', fieldGroups);
+}
+
+
+// supervisionRectificationProgress字段配置
+export function createSupervisionRectificationProgressFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'taskId', label: '任务ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'status', label: '状态', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'progressDescription', label: '进度描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'progressPercentage', label: '进度百分比', visible: true, type: 'number', group: 'detail' },
+        { prop: 'attachmentUrls', label: '附件URL', visible: true, type: 'textarea', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionRectificationProgress', fieldGroups);
+}
+
+
+// supervisionRectificationTask字段配置
+export function createSupervisionRectificationTaskFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'issueId', label: '问题ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'status', label: '状态', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'taskDescription', label: '任务描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'responsibleDept', label: '责任部门', visible: true, type: 'input', group: 'detail' },
+        { prop: 'responsiblePerson', label: '责任人', visible: true, type: 'input', group: 'detail' },
+        { prop: 'deadline', label: '截止日期', visible: true, type: 'date', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionRectificationTask', fieldGroups);
+}
+
+
+// supervisionResult字段配置
+export function createSupervisionResultFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'planId', label: '计划ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'deptId', label: '科室ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'expertGroupId', label: '专家组ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'status', label: '状态：draft-草稿，submitted-已提交，reviewed-已审核', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'supervisionDate', label: '督导日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'supervisor', label: '督导人', visible: true, type: 'input', group: 'detail' },
+        { prop: 'totalScore', label: '总分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'grade', label: '等级', visible: true, type: 'input', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionResult', fieldGroups);
+}
+
+
+// supervisionResultDetail字段配置
+export function createSupervisionResultDetailFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'resultId', label: '结果ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'indicatorId', label: '指标ID', visible: true, type: 'number', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'score', label: '得分', visible: true, type: 'number', group: 'detail' },
+        { prop: 'remarks', label: '备注', visible: true, type: 'textarea', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionResultDetail', fieldGroups);
+}
+
+
+// supervisionReview字段配置
+export function createSupervisionReviewFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'taskId', label: '任务ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'status', label: '状态', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'reviewDate', label: '复查日期', visible: true, type: 'date', group: 'detail' },
+        { prop: 'reviewer', label: '复查人', visible: true, type: 'input', group: 'detail' },
+        { prop: 'reviewResult', label: '复查结果：qualified-合格，unqualified-不合格', visible: true, type: 'input', group: 'detail' },
+        { prop: 'reviewOpinion', label: '复查意见', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'nextReviewDate', label: '下次复查日期', visible: true, type: 'date', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('supervisionReview', fieldGroups);
 }

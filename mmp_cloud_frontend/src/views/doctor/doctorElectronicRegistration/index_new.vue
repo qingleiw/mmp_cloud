@@ -286,7 +286,7 @@ const dialog = reactive<DialogOption>({
 
 const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
-const fieldConfigManager = new FieldConfigManager('doctorElectronicRegistration', createDoctorElectronicRegistrationFieldConfig());
+const fieldConfigManager = createDoctorElectronicRegistrationFieldConfig();
 const searchConfigManager = createDoctorElectronicRegistrationSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

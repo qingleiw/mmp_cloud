@@ -3,13 +3,13 @@
     <!-- 页面标题 -->
     <div class="page-header mb-4">
       <h2 class="page-title">
-        <i-ep-setting class="title-icon"></i-ep-setting>
-        质量指标管理
+        <i-ep-data-analysis class="title-icon"></i-ep-data-analysis>
+        质控质量指标管理
       </h2>
-      <p class="page-description">管理系统质量指标的定义、计算公式、标准值等信息</p>
+      <p class="page-description">管理质控质量指标的定义和标准</p>
     </div>
 
-    <!-- 动态搜索表单 -->
+    <!-- 搜索区域 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="search-container mb-4">
         <el-card shadow="hover" class="search-card">
@@ -38,19 +38,35 @@
       </div>
     </transition>
 
-    <!-- 数据表格 -->
+    <!-- 表格区域 -->
     <el-card shadow="never" class="table-card">
       <template #header>
         <div class="table-header">
           <div class="table-title">
             <i-ep-list class="table-icon"></i-ep-list>
-            <span>质量指标列表</span>
+            <span>质控质量指标列表</span>
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
             <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qc:qcQualityIndicator:add']" size="small">新增</el-button>
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['qc:qcQualityIndicator:edit']" size="small">修改</el-button>
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['qc:qcQualityIndicator:remove']" size="small">删除</el-button>
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['qc:qcQualityIndicator:edit']"
+              size="small"
+            >修改</el-button>
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['qc:qcQualityIndicator:remove']"
+              size="small"
+            >删除</el-button>
             <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qc:qcQualityIndicator:export']" size="small">导出</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
@@ -61,46 +77,49 @@
         </div>
       </template>
 
-      <el-table v-loading="loading" border :data="qcQualityIndicatorList" @selection-change="handleSelectionChange" class="qc-quality-indicator-table">
+      <!-- 动态表格 -->
+      <el-table
+        v-loading="loading"
+        border
+        :data="qcQualityIndicatorList"
+        @selection-change="handleSelectionChange"
+        class="dynamic-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in fieldConfigManager.getVisibleFields()"
+          v-for="field in visibleTableFields"
           :key="field.prop"
           :label="field.label"
-          align="center"
           :prop="field.prop"
           :width="field.width"
-          :min-width="field.minWidth || 120"
-          resizable
+          align="center"
+          :show-overflow-tooltip="true"
         >
           <template #default="scope">
-            <!-- 时间字段格式化 -->
-            <span v-if="field.prop === 'createTime' || field.prop === 'updateTime'">
+            <span v-if="field.type === 'datetime'">
               {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
             </span>
-            <!-- 状态标签 -->
-            <el-tag v-else-if="field.prop === 'status'" :type="scope.row.status === 1 ? 'success' : 'danger'">
-              {{ scope.row.status === 1 ? '启用' : '禁用' }}
-            </el-tag>
-            <!-- 删除标志标签 -->
-            <el-tag v-else-if="field.prop === 'delFlag'" :type="scope.row.delFlag === '0' ? 'success' : 'danger'">
-              {{ scope.row.delFlag === '0' ? '未删除' : '已删除' }}
-            </el-tag>
-            <!-- 数据类型标签 -->
-            <el-tag v-else-if="field.prop === 'dataType'" :type="getDataTypeTagType(scope.row.dataType)">
-              {{ getDataTypeLabel(scope.row.dataType) }}
-            </el-tag>
-            <!-- 默认显示 -->
-            <span v-else>{{ scope.row[field.prop] }}</span>
+            <span v-else-if="field.type === 'date'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
+            </span>
+            <span v-else>
+              {{ scope.row[field.prop] }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width" width="120">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
               <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['qc:qcQualityIndicator:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['qc:qcQualityIndicator:remove']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['qc:qcQualityIndicator:remove']"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -108,88 +127,53 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改质量指标对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
-      <el-form ref="qcQualityIndicatorFormRef" :model="form" :rules="rules" label-width="100px">
+
+    <!-- 添加/修改对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col :span="field.type === 'textarea' ? 24 : 12" v-for="field in fieldConfigManager.getFormFields()" :key="field.prop">
-            <!-- 下拉选择框 -->
-            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-if="field.prop === 'dataType'">
-              <el-select v-model="form.dataType" placeholder="请选择数据类型" clearable style="width: 100%">
-                <el-option label="比率" value="rate" />
-                <el-option label="计数" value="count" />
-                <el-option label="比值" value="ratio" />
-              </el-select>
-            </el-form-item>
-            <!-- 状态选择 -->
-            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else-if="field.prop === 'status'">
-              <el-select v-model="form.status" placeholder="请选择状态" clearable style="width: 100%">
-                <el-option label="禁用" :value="0" />
-                <el-option label="启用" :value="1" />
-              </el-select>
-            </el-form-item>
-            <!-- 删除标志选择 -->
-            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else-if="field.prop === 'delFlag'">
-              <el-select v-model="form.delFlag" placeholder="请选择删除标志" clearable style="width: 100%">
-                <el-option label="未删除" value="0" />
-                <el-option label="已删除" value="1" />
-              </el-select>
-            </el-form-item>
-            <!-- 数字输入框 -->
-            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else-if="field.type === 'number'">
-              <el-input-number
+          <el-col :span="12" v-for="field in visibleFormFields" :key="field.prop">
+            <el-form-item :label="field.label" :prop="field.prop">
+              <el-input v-if="!field.type || field.type === 'text'" v-model="form[field.prop]" :placeholder="'请输入' + field.label" />
+              <el-date-picker
+                v-else-if="field.type === 'date'"
                 v-model="form[field.prop]"
-                :min="field.min || 0"
-                :max="field.max || 99999"
-                :placeholder="field.placeholder || `请输入${field.label}`"
+                type="date"
+                :placeholder="'选择' + field.label"
                 style="width: 100%"
               />
-            </el-form-item>
-            <!-- 文本域 -->
-            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else-if="field.type === 'textarea'">
-              <el-input
+              <el-date-picker
+                v-else-if="field.type === 'datetime'"
                 v-model="form[field.prop]"
-                type="textarea"
-                :placeholder="field.placeholder || `请输入${field.label}`"
-                :maxlength="field.maxlength"
-                :show-word-limit="field.showWordLimit"
-                :rows="field.rows || 3"
+                type="datetime"
+                :placeholder="'选择' + field.label"
                 style="width: 100%"
               />
-            </el-form-item>
-            <!-- 默认文本输入框 -->
-            <el-form-item :label="field.label" :prop="field.prop" :rules="field.rules" v-else>
-              <el-input
-                v-model="form[field.prop]"
-                :placeholder="field.placeholder || `请输入${field.label}`"
-                style="width: 100%"
-              />
+              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="'请输入' + field.label" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
+          <el-button type="primary" @click="submitForm">确 定</el-button>
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
     </el-dialog>
 
-    <!-- 字段配置对话框 -->
-    <FieldConfigDialog
-      :visible="showFieldConfig"
-      :field-config-manager="fieldConfigManager"
-      @update:visible="showFieldConfig = $event"
-      @confirm="handleFieldConfigConfirm"
-    />
-
     <!-- 搜索配置对话框 -->
     <SearchConfigDialog
-      :visible="showSearchConfig"
-      :search-config-manager="searchConfigManager"
-      @update:visible="showSearchConfig = $event"
+      v-model:visible="searchConfigVisible"
+      :searchConfigManager="searchConfigManager"
       @confirm="handleSearchConfigConfirm"
+    />
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :fieldConfigManager="fieldConfigManager"
+      @confirm="handleFieldConfigConfirm"
     />
   </div>
 </template>
@@ -203,14 +187,13 @@ import {
   updateQcQualityIndicator
 } from '@/api/qc/qcQualityIndicator';
 import { QcQualityIndicatorVO, QcQualityIndicatorQuery, QcQualityIndicatorForm } from '@/api/qc/qcQualityIndicator/types';
-import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
 import { createQcQualityIndicatorFieldConfig } from '@/utils/configs/qc/qcFieldConfigs';
-import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { createQcQualityIndicatorSearchConfig } from '@/utils/configs/qc/qcSearchConfigs';
-import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { Search, Setting, List } from '@element-plus/icons-vue';
+import type { FormInstance } from 'element-plus';
+import type { DialogOption } from '@/types/global';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -218,84 +201,93 @@ const qcQualityIndicatorList = ref<QcQualityIndicatorVO[]>([]);
 const buttonLoading = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
-const showFieldConfig = ref(false);
-const showSearchConfig = ref(false);
 const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref<ElFormInstance>();
-const qcQualityIndicatorFormRef = ref<ElFormInstance>();
-
-// 初始化字段配置管理器
-const fieldConfigManager = new FieldConfigManager('qcQualityIndicator', createQcQualityIndicatorFieldConfig());
-// 初始化搜索配置管理器
-const searchConfigManager = createQcQualityIndicatorSearchConfig();
-// 获取可见搜索字段
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+const queryFormRef = ref<FormInstance>();
+const formRef = ref<FormInstance>();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
 
+// 字段配置相关变量
+const fieldConfigManager = createQcQualityIndicatorFieldConfig();
+const fieldConfigVisible = ref(false);
+const searchConfigManager = createQcQualityIndicatorSearchConfig();
+const searchConfigVisible = ref(false);
+
+// 计算属性：获取可见的搜索字段
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表格字段
+const visibleTableFields = computed(() => fieldConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表单字段
+const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
+
 const initFormData: QcQualityIndicatorForm = {
   id: undefined,
-  indicatorCode: undefined,
-  indicatorName: undefined,
-  categoryId: undefined,
-  parentId: undefined,
-  indicatorLevel: undefined,
-  definition: undefined,
-  formula: undefined,
-  significance: undefined,
-  remark: undefined,
-  unit: undefined,
-  dataType: undefined,
-  standardValue: undefined,
-  maxScore: undefined,
-  sortOrder: undefined,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
   status: undefined,
-  delFlag: undefined
+  drillResult: undefined,
+  lessonsLearned: undefined,
+  remark: undefined
 };
-const data = reactive<PageData<QcQualityIndicatorForm, QcQualityIndicatorQuery>>({
-  form: { ...initFormData },
-  queryParams: {
-    pageNum: 1,
-    pageSize: 10,
-    indicatorCode: undefined,
-    indicatorName: undefined,
-    indicatorLevel: undefined,
-    definition: undefined,
-    formula: undefined,
-    significance: undefined,
-    unit: undefined,
-    dataType: undefined,
-    standardValue: undefined,
-    maxScore: undefined,
-    sortOrder: undefined,
-    status: undefined,
-    delFlag: undefined,
-    params: {}
-  },
-  rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
-    indicatorCode: [{ required: true, message: '指标编码不能为空', trigger: 'blur' }],
-    indicatorName: [{ required: true, message: '指标名称不能为空', trigger: 'blur' }],
-    categoryId: [{ required: true, message: '所属专业ID不能为空', trigger: 'blur' }]
-  }
+
+const queryParams = reactive<QcQualityIndicatorQuery>({
+  pageNum: 1,
+  pageSize: 10,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  lessonsLearned: undefined,
+  params: {}
 });
 
-const { queryParams, form, rules } = toRefs(data);
+const form = reactive<QcQualityIndicatorForm>({ ...initFormData });
 
-/** 查询质量指标列表 */
+const rules = {
+  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+};
+
+/** 查询质控质量指标列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listQcQualityIndicator(queryParams.value);
-  qcQualityIndicatorList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
+  try {
+    const res = await listQcQualityIndicator(queryParams);
+    qcQualityIndicatorList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取质控质量指标列表失败:', error);
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 取消按钮 */
@@ -306,19 +298,25 @@ const cancel = () => {
 
 /** 表单重置 */
 const reset = () => {
-  form.value = { ...initFormData };
-  qcQualityIndicatorFormRef.value?.resetFields();
+  Object.assign(form, initFormData);
+  formRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  queryParams.pageNum = 1;
   getList();
 };
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
+  // 重置查询参数
+  Object.keys(queryParams).forEach(key => {
+    if (key !== 'pageNum' && key !== 'pageSize' && key !== 'params') {
+      (queryParams as any)[key] = undefined;
+    }
+  });
   handleQuery();
 };
 
@@ -333,43 +331,59 @@ const handleSelectionChange = (selection: QcQualityIndicatorVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加质量指标';
+  dialog.title = '添加应急演练计划';
 };
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: QcQualityIndicatorVO) => {
   reset();
   const _id = row?.id || ids.value[0];
-  const res = await getQcQualityIndicator(_id);
-  Object.assign(form.value, res.data);
-  dialog.visible = true;
-  dialog.title = '修改质量指标';
+  if (_id) {
+    try {
+      const res = await getQcQualityIndicator(_id);
+      Object.assign(form, res.data);
+      dialog.visible = true;
+      dialog.title = '修改应急演练计划';
+    } catch (error) {
+      console.error('获取应急演练计划详情失败:', error);
+      proxy?.$modal.msgError('获取数据失败');
+    }
+  }
 };
 
 /** 提交按钮 */
-const submitForm = () => {
-  qcQualityIndicatorFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateQcQualityIndicator(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addQcQualityIndicator(form.value).finally(() => (buttonLoading.value = false));
-      }
-      proxy?.$modal.msgSuccess('操作成功');
-      dialog.visible = false;
-      await getList();
+const submitForm = async () => {
+  try {
+    buttonLoading.value = true;
+    if (form.id) {
+      await updateQcQualityIndicator(form);
+      proxy?.$modal.msgSuccess('修改成功');
+    } else {
+      await addQcQualityIndicator(form);
+      proxy?.$modal.msgSuccess('新增成功');
     }
-  });
+    dialog.visible = false;
+    await getList();
+  } catch (error) {
+    console.error('提交表单失败:', error);
+  } finally {
+    buttonLoading.value = false;
+  }
 };
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: QcQualityIndicatorVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除质量指标编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
-  await delQcQualityIndicator(_ids);
-  proxy?.$modal.msgSuccess('删除成功');
-  await getList();
+  try {
+    await proxy?.$modal.confirm('是否确认删除应急演练计划编号为"' + _ids + '"的数据项？');
+    await delQcQualityIndicator(_ids);
+    proxy?.$modal.msgSuccess('删除成功');
+    await getList();
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除失败:', error);
+    }
+  }
 };
 
 /** 导出按钮操作 */
@@ -377,52 +391,30 @@ const handleExport = () => {
   proxy?.download(
     'system/qcQualityIndicator/export',
     {
-      ...queryParams.value
+      ...queryParams
     },
     `qcQualityIndicator_${new Date().getTime()}.xlsx`
   );
 };
 
-/** 字段配置 */
-const handleFieldConfig = () => {
-  showFieldConfig.value = true;
-};
-
-/** 字段配置确认 */
-const handleFieldConfigConfirm = () => {
-  showFieldConfig.value = false;
-  // 重新获取列表以应用新的字段配置
-  getList();
-};
-
 /** 搜索配置 */
 const handleSearchConfig = () => {
-  showSearchConfig.value = true;
+  searchConfigVisible.value = true;
+};
+
+/** 字段配置 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
 };
 
 /** 搜索配置确认 */
 const handleSearchConfigConfirm = () => {
-  showSearchConfig.value = false;
+  searchConfigVisible.value = false;
 };
 
-/** 获取数据类型标签类型 */
-const getDataTypeTagType = (dataType: string) => {
-  const typeMap: Record<string, 'primary' | 'success' | 'warning' | 'info' | 'danger'> = {
-    'rate': 'primary',
-    'count': 'success',
-    'ratio': 'warning'
-  };
-  return typeMap[dataType] || 'info';
-};
-
-/** 获取数据类型标签文本 */
-const getDataTypeLabel = (dataType: string) => {
-  const labelMap: Record<string, string> = {
-    'rate': '比率',
-    'count': '计数',
-    'ratio': '比值'
-  };
-  return labelMap[dataType] || dataType;
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  fieldConfigVisible.value = false;
 };
 
 onMounted(() => {
@@ -430,152 +422,168 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .app-container {
-  background-color: #f5f5f5;
-  min-height: 100vh;
   padding: 20px;
-}
 
-.page-header {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  .page-header {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-  .page-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0 0 8px 0;
-    color: #1d2129;
-    font-size: 18px;
-    font-weight: 600;
-
-    .title-icon {
-      color: #409eff;
-      font-size: 20px;
-    }
-  }
-
-  .page-description {
-    margin: 0;
-    color: #86909c;
-    font-size: 14px;
-  }
-}
-
-.search-card {
-  background: white;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  .search-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-
-    .search-title {
-      font-weight: 600;
-      color: #1d2129;
+    .page-title {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
 
-      .search-icon {
+      .title-icon {
         color: #409eff;
+        font-size: 20px;
       }
     }
 
-    .search-actions {
-      .config-btn {
-        color: #409eff;
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
+  }
 
-        .btn-icon {
-          margin-right: 4px;
+  .search-container {
+    margin-bottom: 16px;
+
+    .search-card {
+      border-radius: 8px;
+      overflow: hidden;
+
+      .search-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .search-title {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+          color: #303133;
+
+          .search-icon {
+            margin-right: 6px;
+            font-size: 16px;
+          }
+        }
+
+        .search-actions {
+          .config-btn {
+            padding: 4px 8px;
+
+            .btn-icon {
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+
+      :deep(.el-card__body) {
+        padding: 16px;
+      }
+    }
+  }
+
+  .table-card {
+    border-radius: 8px;
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+
+      .table-title {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+
+        .table-icon {
+          margin-right: 8px;
+          font-size: 18px;
+          color: #409eff;
+        }
+      }
+
+      .table-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .action-btn {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .config-btn {
+          padding: 8px 12px;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+
+    :deep(.el-table) {
+      margin-top: 16px;
+
+      .el-table__header {
+        th {
+          background-color: #f5f7fa;
+          color: #606266;
+          font-weight: 600;
         }
       }
     }
   }
 }
 
-.table-card {
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  .table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-
-    .table-title {
-      font-weight: 600;
-      color: #1d2129;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      .table-icon {
-        color: #409eff;
-      }
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-
-      .config-btn {
-        color: #409eff;
-
-        .btn-icon {
-          margin-right: 4px;
-        }
-      }
-    }
-  }
-}
-
-/* 表格样式 */
-.qc-quality-indicator-table {
-  :deep(.el-table__header) {
-    th {
-      background-color: #fafafa;
-      font-weight: 600;
-      color: #1d2129;
-    }
-  }
-
-  :deep(.el-table__row) {
-    &:hover {
-      background-color: #f5f7fa;
-    }
-  }
-}
-
+// 响应式布局
 @media (max-width: 768px) {
   .app-container {
     padding: 12px;
-  }
 
-  .page-header {
-    .page-title {
-      font-size: 20px;
+    .page-header {
+      padding: 12px 16px;
+
+      .page-title {
+        font-size: 18px;
+      }
+
+      .page-description {
+        font-size: 12px;
+      }
     }
-  }
 
-  .table-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    .table-card {
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
 
-    .table-actions {
-      width: 100%;
-      justify-content: flex-end;
+        .table-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
     }
   }
 }

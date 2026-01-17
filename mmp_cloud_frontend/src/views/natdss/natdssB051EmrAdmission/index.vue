@@ -1,251 +1,125 @@
 <template>
-  <div class="p-2">
+  <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-document-add class="title-icon"></i-ep-document-add>
+        入院记录管理
+      </h2>
+      <p class="page-description">管理患者的入院记录信息</p>
+    </div>
+
+    <!-- 搜索区域 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="患者ID" prop="patientId">
-              <el-input v-model="queryParams.patientId" placeholder="请输入患者ID" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="单次就诊唯一标识号" prop="visitSn">
-              <el-input v-model="queryParams.visitSn" placeholder="请输入单次就诊唯一标识号" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="病案号" prop="medicalRecordNo">
-              <el-input v-model="queryParams.medicalRecordNo" placeholder="请输入病案号" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="住院号" prop="inpatientNo">
-              <el-input v-model="queryParams.inpatientNo" placeholder="请输入住院号" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="住院次数" prop="hospitalizationTimes">
-              <el-input v-model="queryParams.hospitalizationTimes" placeholder="请输入住院次数" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院记录流水号" prop="recordSn">
-              <el-input v-model="queryParams.recordSn" placeholder="请输入入院记录流水号" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院记录创建时间" prop="recordDatetime">
-              <el-date-picker clearable
-                v-model="queryParams.recordDatetime"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择入院记录创建时间"
-              />
-            </el-form-item>
-            <el-form-item label="KPS评分" prop="kpsScore">
-              <el-input v-model="queryParams.kpsScore" placeholder="请输入KPS评分" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="ECOG PS评分" prop="ecogScore">
-              <el-input v-model="queryParams.ecogScore" placeholder="请输入ECOG PS评分" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="文书内容" prop="recordText">
-              <el-input v-model="queryParams.recordText" placeholder="请输入文书内容" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="主诉" prop="chiefComplaint">
-              <el-input v-model="queryParams.chiefComplaint" placeholder="请输入主诉" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="现病史" prop="currentMedhistory">
-              <el-input v-model="queryParams.currentMedhistory" placeholder="请输入现病史" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="既往史" prop="pastMedhistory">
-              <el-input v-model="queryParams.pastMedhistory" placeholder="请输入既往史" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="个人史" prop="personalMedhistory">
-              <el-input v-model="queryParams.personalMedhistory" placeholder="请输入个人史" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="家族史" prop="familyHistory">
-              <el-input v-model="queryParams.familyHistory" placeholder="请输入家族史" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="婚育史" prop="marriageBirthHistory">
-              <el-input v-model="queryParams.marriageBirthHistory" placeholder="请输入婚育史" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="月经史" prop="menstrualHistory">
-              <el-input v-model="queryParams.menstrualHistory" placeholder="请输入月经史" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="收缩压(mmHg)" prop="systolicPressure">
-              <el-input v-model="queryParams.systolicPressure" placeholder="请输入收缩压(mmHg)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="舒张压(mmHg)" prop="diastolicPressure">
-              <el-input v-model="queryParams.diastolicPressure" placeholder="请输入舒张压(mmHg)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="呼吸(次/分)" prop="respiratoryRate">
-              <el-input v-model="queryParams.respiratoryRate" placeholder="请输入呼吸(次/分)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="体温(℃)" prop="bodyTemperature">
-              <el-input v-model="queryParams.bodyTemperature" placeholder="请输入体温(℃)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="心率(次/分)" prop="heartRate">
-              <el-input v-model="queryParams.heartRate" placeholder="请输入心率(次/分)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="身高(cm)" prop="height">
-              <el-input v-model="queryParams.height" placeholder="请输入身高(cm)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="体重(kg)" prop="weight">
-              <el-input v-model="queryParams.weight" placeholder="请输入体重(kg)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="体表面积(m²)" prop="bodySurfaceArea">
-              <el-input v-model="queryParams.bodySurfaceArea" placeholder="请输入体表面积(m²)" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="体格检查" prop="physicalExam">
-              <el-input v-model="queryParams.physicalExam" placeholder="请输入体格检查" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="专科检查" prop="specialExam">
-              <el-input v-model="queryParams.specialExam" placeholder="请输入专科检查" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="辅助检查" prop="auxiliaryExam">
-              <el-input v-model="queryParams.auxiliaryExam" placeholder="请输入辅助检查" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院主要诊断编码" prop="admissionMaindiagCode1">
-              <el-input v-model="queryParams.admissionMaindiagCode1" placeholder="请输入入院主要诊断编码" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院主要诊断名称" prop="admissionMaindiagName1">
-              <el-input v-model="queryParams.admissionMaindiagName1" placeholder="请输入入院主要诊断名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断编码-2" prop="admissionDiagCode2">
-              <el-input v-model="queryParams.admissionDiagCode2" placeholder="请输入入院诊断编码-2" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断名称-2" prop="admissionDiagName2">
-              <el-input v-model="queryParams.admissionDiagName2" placeholder="请输入入院诊断名称-2" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断编码-3" prop="admissionDiagCode3">
-              <el-input v-model="queryParams.admissionDiagCode3" placeholder="请输入入院诊断编码-3" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断名称-3" prop="admissionDiagName3">
-              <el-input v-model="queryParams.admissionDiagName3" placeholder="请输入入院诊断名称-3" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断编码-4" prop="admissionDiagCode4">
-              <el-input v-model="queryParams.admissionDiagCode4" placeholder="请输入入院诊断编码-4" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断名称-4" prop="admissionDiagName4">
-              <el-input v-model="queryParams.admissionDiagName4" placeholder="请输入入院诊断名称-4" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断编码-5" prop="admissionDiagCode5">
-              <el-input v-model="queryParams.admissionDiagCode5" placeholder="请输入入院诊断编码-5" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断名称-5" prop="admissionDiagName5">
-              <el-input v-model="queryParams.admissionDiagName5" placeholder="请输入入院诊断名称-5" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断编码-N" prop="admissionDiagCoden">
-              <el-input v-model="queryParams.admissionDiagCoden" placeholder="请输入入院诊断编码-N" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院诊断名称-N" prop="admissionDiagNamen">
-              <el-input v-model="queryParams.admissionDiagNamen" placeholder="请输入入院诊断名称-N" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="扩展字段1" prop="extendData1">
-              <el-input v-model="queryParams.extendData1" placeholder="请输入扩展字段1" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="扩展字段2" prop="extendData2">
-              <el-input v-model="queryParams.extendData2" placeholder="请输入扩展字段2" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="创建时间" prop="createdTime">
-              <el-date-picker clearable
-                v-model="queryParams.createdTime"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择创建时间"
-              />
-            </el-form-item>
-            <el-form-item label="更新时间" prop="updatedTime">
-              <el-date-picker clearable
-                v-model="queryParams.updatedTime"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择更新时间"
-              />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
 
-    <el-card shadow="never">
+    <!-- 表格区域 -->
+    <el-card shadow="never" class="table-card">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['natdss:natdssB051EmrAdmission:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['natdss:natdssB051EmrAdmission:edit']">修改</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="danger" plain icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['natdss:natdssB051EmrAdmission:remove']">删除</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['natdss:natdssB051EmrAdmission:export']">导出</el-button>
-          </el-col>
-          <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>入院记录列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['natdss:natdssB051EmrAdmission:add']" size="small">新增</el-button>
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['natdss:natdssB051EmrAdmission:edit']"
+              size="small"
+            >修改</el-button>
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['natdss:natdssB051EmrAdmission:remove']"
+              size="small"
+            >删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['natdss:natdssB051EmrAdmission:export']" size="small">导出</el-button>
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
       </template>
 
-      <el-table v-loading="loading" border :data="natdssB051EmrAdmissionList" @selection-change="handleSelectionChange">
+      <!-- 动态表格 -->
+      <el-table
+        v-loading="loading"
+        border
+        :data="natdssB051EmrAdmissionList"
+        @selection-change="handleSelectionChange"
+        class="dynamic-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="系统自增主键" align="center" prop="id" v-if="true" />
-        <el-table-column label="患者ID" align="center" prop="patientId" />
-        <el-table-column label="单次就诊唯一标识号" align="center" prop="visitSn" />
-        <el-table-column label="病案号" align="center" prop="medicalRecordNo" />
-        <el-table-column label="住院号" align="center" prop="inpatientNo" />
-        <el-table-column label="住院次数" align="center" prop="hospitalizationTimes" />
-        <el-table-column label="入院记录流水号" align="center" prop="recordSn" />
-        <el-table-column label="入院记录创建时间" align="center" prop="recordDatetime" width="180">
+        <el-table-column
+          v-for="field in visibleTableFields"
+          :key="field.prop"
+          :label="field.label"
+          :prop="field.prop"
+          :width="field.width"
+          align="center"
+          :show-overflow-tooltip="true"
+        >
           <template #default="scope">
-            <span>{{ parseTime(scope.row.recordDatetime, '{y}-{m}-{d}') }}</span>
+            <span v-if="field.type === 'datetime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+            <span v-else-if="field.type === 'date'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
+            </span>
+            <span v-else>
+              {{ scope.row[field.prop] }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column label="KPS评分" align="center" prop="kpsScore" />
-        <el-table-column label="ECOG PS评分" align="center" prop="ecogScore" />
-        <el-table-column label="文书内容" align="center" prop="recordText" />
-        <el-table-column label="主诉" align="center" prop="chiefComplaint" />
-        <el-table-column label="现病史" align="center" prop="currentMedhistory" />
-        <el-table-column label="既往史" align="center" prop="pastMedhistory" />
-        <el-table-column label="个人史" align="center" prop="personalMedhistory" />
-        <el-table-column label="家族史" align="center" prop="familyHistory" />
-        <el-table-column label="婚育史" align="center" prop="marriageBirthHistory" />
-        <el-table-column label="月经史" align="center" prop="menstrualHistory" />
-        <el-table-column label="收缩压(mmHg)" align="center" prop="systolicPressure" />
-        <el-table-column label="舒张压(mmHg)" align="center" prop="diastolicPressure" />
-        <el-table-column label="呼吸(次/分)" align="center" prop="respiratoryRate" />
-        <el-table-column label="体温(℃)" align="center" prop="bodyTemperature" />
-        <el-table-column label="心率(次/分)" align="center" prop="heartRate" />
-        <el-table-column label="身高(cm)" align="center" prop="height" />
-        <el-table-column label="体重(kg)" align="center" prop="weight" />
-        <el-table-column label="体表面积(m²)" align="center" prop="bodySurfaceArea" />
-        <el-table-column label="体格检查" align="center" prop="physicalExam" />
-        <el-table-column label="专科检查" align="center" prop="specialExam" />
-        <el-table-column label="辅助检查" align="center" prop="auxiliaryExam" />
-        <el-table-column label="入院主要诊断编码" align="center" prop="admissionMaindiagCode1" />
-        <el-table-column label="入院主要诊断名称" align="center" prop="admissionMaindiagName1" />
-        <el-table-column label="入院诊断编码-2" align="center" prop="admissionDiagCode2" />
-        <el-table-column label="入院诊断名称-2" align="center" prop="admissionDiagName2" />
-        <el-table-column label="入院诊断编码-3" align="center" prop="admissionDiagCode3" />
-        <el-table-column label="入院诊断名称-3" align="center" prop="admissionDiagName3" />
-        <el-table-column label="入院诊断编码-4" align="center" prop="admissionDiagCode4" />
-        <el-table-column label="入院诊断名称-4" align="center" prop="admissionDiagName4" />
-        <el-table-column label="入院诊断编码-5" align="center" prop="admissionDiagCode5" />
-        <el-table-column label="入院诊断名称-5" align="center" prop="admissionDiagName5" />
-        <el-table-column label="入院诊断编码-N" align="center" prop="admissionDiagCoden" />
-        <el-table-column label="入院诊断名称-N" align="center" prop="admissionDiagNamen" />
-        <el-table-column label="扩展字段1" align="center" prop="extendData1" />
-        <el-table-column label="扩展字段2" align="center" prop="extendData2" />
-        <el-table-column label="记录状态:1正常 0作废" align="center" prop="recordStatus" />
-        <el-table-column label="创建时间" align="center" prop="createdTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.createdTime, '{y}-{m}-{d}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="更新时间" align="center" prop="updatedTime" width="180">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.updatedTime, '{y}-{m}-{d}') }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width" width="120">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
               <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['natdss:natdssB051EmrAdmission:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <el-button link type="primary" icon="Delete" @click="handleDelete(scope.row)" v-hasPermi="['natdss:natdssB051EmrAdmission:remove']"></el-button>
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['natdss:natdssB051EmrAdmission:remove']"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -253,170 +127,73 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改B05-1 入院记录对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="500px" append-to-body>
-      <el-form ref="natdssB051EmrAdmissionFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="患者ID" prop="patientId">
-          <el-input v-model="form.patientId" placeholder="请输入患者ID" />
-        </el-form-item>
-        <el-form-item label="单次就诊唯一标识号" prop="visitSn">
-          <el-input v-model="form.visitSn" placeholder="请输入单次就诊唯一标识号" />
-        </el-form-item>
-        <el-form-item label="病案号" prop="medicalRecordNo">
-          <el-input v-model="form.medicalRecordNo" placeholder="请输入病案号" />
-        </el-form-item>
-        <el-form-item label="住院号" prop="inpatientNo">
-          <el-input v-model="form.inpatientNo" placeholder="请输入住院号" />
-        </el-form-item>
-        <el-form-item label="住院次数" prop="hospitalizationTimes">
-          <el-input v-model="form.hospitalizationTimes" placeholder="请输入住院次数" />
-        </el-form-item>
-        <el-form-item label="入院记录流水号" prop="recordSn">
-          <el-input v-model="form.recordSn" placeholder="请输入入院记录流水号" />
-        </el-form-item>
-        <el-form-item label="入院记录创建时间" prop="recordDatetime">
-          <el-date-picker clearable
-            v-model="form.recordDatetime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择入院记录创建时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="KPS评分" prop="kpsScore">
-          <el-input v-model="form.kpsScore" placeholder="请输入KPS评分" />
-        </el-form-item>
-        <el-form-item label="ECOG PS评分" prop="ecogScore">
-          <el-input v-model="form.ecogScore" placeholder="请输入ECOG PS评分" />
-        </el-form-item>
-        <el-form-item label="文书内容" prop="recordText">
-            <el-input v-model="form.recordText" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="主诉" prop="chiefComplaint">
-            <el-input v-model="form.chiefComplaint" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="现病史" prop="currentMedhistory">
-            <el-input v-model="form.currentMedhistory" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="既往史" prop="pastMedhistory">
-            <el-input v-model="form.pastMedhistory" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="个人史" prop="personalMedhistory">
-            <el-input v-model="form.personalMedhistory" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="家族史" prop="familyHistory">
-            <el-input v-model="form.familyHistory" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="婚育史" prop="marriageBirthHistory">
-            <el-input v-model="form.marriageBirthHistory" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="月经史" prop="menstrualHistory">
-            <el-input v-model="form.menstrualHistory" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="收缩压(mmHg)" prop="systolicPressure">
-          <el-input v-model="form.systolicPressure" placeholder="请输入收缩压(mmHg)" />
-        </el-form-item>
-        <el-form-item label="舒张压(mmHg)" prop="diastolicPressure">
-          <el-input v-model="form.diastolicPressure" placeholder="请输入舒张压(mmHg)" />
-        </el-form-item>
-        <el-form-item label="呼吸(次/分)" prop="respiratoryRate">
-          <el-input v-model="form.respiratoryRate" placeholder="请输入呼吸(次/分)" />
-        </el-form-item>
-        <el-form-item label="体温(℃)" prop="bodyTemperature">
-          <el-input v-model="form.bodyTemperature" placeholder="请输入体温(℃)" />
-        </el-form-item>
-        <el-form-item label="心率(次/分)" prop="heartRate">
-          <el-input v-model="form.heartRate" placeholder="请输入心率(次/分)" />
-        </el-form-item>
-        <el-form-item label="身高(cm)" prop="height">
-          <el-input v-model="form.height" placeholder="请输入身高(cm)" />
-        </el-form-item>
-        <el-form-item label="体重(kg)" prop="weight">
-          <el-input v-model="form.weight" placeholder="请输入体重(kg)" />
-        </el-form-item>
-        <el-form-item label="体表面积(m²)" prop="bodySurfaceArea">
-          <el-input v-model="form.bodySurfaceArea" placeholder="请输入体表面积(m²)" />
-        </el-form-item>
-        <el-form-item label="体格检查" prop="physicalExam">
-            <el-input v-model="form.physicalExam" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="专科检查" prop="specialExam">
-            <el-input v-model="form.specialExam" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="辅助检查" prop="auxiliaryExam">
-            <el-input v-model="form.auxiliaryExam" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="入院主要诊断编码" prop="admissionMaindiagCode1">
-          <el-input v-model="form.admissionMaindiagCode1" placeholder="请输入入院主要诊断编码" />
-        </el-form-item>
-        <el-form-item label="入院主要诊断名称" prop="admissionMaindiagName1">
-          <el-input v-model="form.admissionMaindiagName1" placeholder="请输入入院主要诊断名称" />
-        </el-form-item>
-        <el-form-item label="入院诊断编码-2" prop="admissionDiagCode2">
-          <el-input v-model="form.admissionDiagCode2" placeholder="请输入入院诊断编码-2" />
-        </el-form-item>
-        <el-form-item label="入院诊断名称-2" prop="admissionDiagName2">
-          <el-input v-model="form.admissionDiagName2" placeholder="请输入入院诊断名称-2" />
-        </el-form-item>
-        <el-form-item label="入院诊断编码-3" prop="admissionDiagCode3">
-          <el-input v-model="form.admissionDiagCode3" placeholder="请输入入院诊断编码-3" />
-        </el-form-item>
-        <el-form-item label="入院诊断名称-3" prop="admissionDiagName3">
-          <el-input v-model="form.admissionDiagName3" placeholder="请输入入院诊断名称-3" />
-        </el-form-item>
-        <el-form-item label="入院诊断编码-4" prop="admissionDiagCode4">
-          <el-input v-model="form.admissionDiagCode4" placeholder="请输入入院诊断编码-4" />
-        </el-form-item>
-        <el-form-item label="入院诊断名称-4" prop="admissionDiagName4">
-          <el-input v-model="form.admissionDiagName4" placeholder="请输入入院诊断名称-4" />
-        </el-form-item>
-        <el-form-item label="入院诊断编码-5" prop="admissionDiagCode5">
-          <el-input v-model="form.admissionDiagCode5" placeholder="请输入入院诊断编码-5" />
-        </el-form-item>
-        <el-form-item label="入院诊断名称-5" prop="admissionDiagName5">
-          <el-input v-model="form.admissionDiagName5" placeholder="请输入入院诊断名称-5" />
-        </el-form-item>
-        <el-form-item label="入院诊断编码-N" prop="admissionDiagCoden">
-            <el-input v-model="form.admissionDiagCoden" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="入院诊断名称-N" prop="admissionDiagNamen">
-            <el-input v-model="form.admissionDiagNamen" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="扩展字段1" prop="extendData1">
-            <el-input v-model="form.extendData1" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="扩展字段2" prop="extendData2">
-            <el-input v-model="form.extendData2" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="创建时间" prop="createdTime">
-          <el-date-picker clearable
-            v-model="form.createdTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择创建时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="更新时间" prop="updatedTime">
-          <el-date-picker clearable
-            v-model="form.updatedTime"
-            type="datetime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            placeholder="请选择更新时间">
-          </el-date-picker>
-        </el-form-item>
+
+    <!-- 添加/修改对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
+        <el-row :gutter="20">
+          <el-col :span="12" v-for="field in visibleFormFields" :key="field.prop">
+            <el-form-item :label="field.label" :prop="field.prop">
+              <el-input v-if="!field.type || field.type === 'text'" v-model="form[field.prop]" :placeholder="'请输入' + field.label" />
+              <el-date-picker
+                v-else-if="field.type === 'date'"
+                v-model="form[field.prop]"
+                type="date"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-date-picker
+                v-else-if="field.type === 'datetime'"
+                v-model="form[field.prop]"
+                type="datetime"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="'请输入' + field.label" />
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
+          <el-button type="primary" @click="submitForm">确 定</el-button>
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
     </el-dialog>
+
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      :searchConfigManager="searchConfigManager"
+      @confirm="handleSearchConfigConfirm"
+    />
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :fieldConfigManager="fieldConfigManager"
+      @confirm="handleFieldConfigConfirm"
+    />
   </div>
 </template>
 
 <script setup name="NatdssB051EmrAdmission" lang="ts">
-import { listNatdssB051EmrAdmission, getNatdssB051EmrAdmission, delNatdssB051EmrAdmission, addNatdssB051EmrAdmission, updateNatdssB051EmrAdmission } from '@/api/natdss/natdssB051EmrAdmission';
+import {
+  listNatdssB051EmrAdmission,
+  getNatdssB051EmrAdmission,
+  delNatdssB051EmrAdmission,
+  addNatdssB051EmrAdmission,
+  updateNatdssB051EmrAdmission
+} from '@/api/natdss/natdssB051EmrAdmission';
 import { NatdssB051EmrAdmissionVO, NatdssB051EmrAdmissionQuery, NatdssB051EmrAdmissionForm } from '@/api/natdss/natdssB051EmrAdmission/types';
+import { createNatdssB051EmrAdmissionFieldConfig } from '@/utils/configs/natdss/natdssFieldConfigs';
+import { createNatdssB051EmrAdmissionSearchConfig } from '@/utils/configs/natdss/natdssSearchConfigs';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import type { FormInstance } from 'element-plus';
+import type { DialogOption } from '@/types/global';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -429,224 +206,385 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref<ElFormInstance>();
-const natdssB051EmrAdmissionFormRef = ref<ElFormInstance>();
+const queryFormRef = ref<FormInstance>();
+const formRef = ref<FormInstance>();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
 
+// 字段配置相关变量
+const fieldConfigManager = createNatdssB051EmrAdmissionFieldConfig();
+const fieldConfigVisible = ref(false);
+const searchConfigManager = createNatdssB051EmrAdmissionSearchConfig();
+const searchConfigVisible = ref(false);
+
+// 计算属性：获取可见的搜索字段
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表格字段
+const visibleTableFields = computed(() => fieldConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表单字段
+const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
+
 const initFormData: NatdssB051EmrAdmissionForm = {
   id: undefined,
-  patientId: undefined,
-  visitSn: undefined,
-  medicalRecordNo: undefined,
-  inpatientNo: undefined,
-  hospitalizationTimes: undefined,
-  recordSn: undefined,
-  recordDatetime: undefined,
-  kpsScore: undefined,
-  ecogScore: undefined,
-  recordText: undefined,
-  chiefComplaint: undefined,
-  currentMedhistory: undefined,
-  pastMedhistory: undefined,
-  personalMedhistory: undefined,
-  familyHistory: undefined,
-  marriageBirthHistory: undefined,
-  menstrualHistory: undefined,
-  systolicPressure: undefined,
-  diastolicPressure: undefined,
-  respiratoryRate: undefined,
-  bodyTemperature: undefined,
-  heartRate: undefined,
-  height: undefined,
-  weight: undefined,
-  bodySurfaceArea: undefined,
-  physicalExam: undefined,
-  specialExam: undefined,
-  auxiliaryExam: undefined,
-  admissionMaindiagCode1: undefined,
-  admissionMaindiagName1: undefined,
-  admissionDiagCode2: undefined,
-  admissionDiagName2: undefined,
-  admissionDiagCode3: undefined,
-  admissionDiagName3: undefined,
-  admissionDiagCode4: undefined,
-  admissionDiagName4: undefined,
-  admissionDiagCode5: undefined,
-  admissionDiagName5: undefined,
-  admissionDiagCoden: undefined,
-  admissionDiagNamen: undefined,
-  extendData1: undefined,
-  extendData2: undefined,
-  recordStatus: undefined,
-  createdTime: undefined,
-  updatedTime: undefined
-}
-const data = reactive<PageData<NatdssB051EmrAdmissionForm, NatdssB051EmrAdmissionQuery>>({
-  form: {...initFormData},
-  queryParams: {
-    pageNum: 1,
-    pageSize: 10,
-    patientId: undefined,
-    visitSn: undefined,
-    medicalRecordNo: undefined,
-    inpatientNo: undefined,
-    hospitalizationTimes: undefined,
-    recordSn: undefined,
-    recordDatetime: undefined,
-    kpsScore: undefined,
-    ecogScore: undefined,
-    recordText: undefined,
-    chiefComplaint: undefined,
-    currentMedhistory: undefined,
-    pastMedhistory: undefined,
-    personalMedhistory: undefined,
-    familyHistory: undefined,
-    marriageBirthHistory: undefined,
-    menstrualHistory: undefined,
-    systolicPressure: undefined,
-    diastolicPressure: undefined,
-    respiratoryRate: undefined,
-    bodyTemperature: undefined,
-    heartRate: undefined,
-    height: undefined,
-    weight: undefined,
-    bodySurfaceArea: undefined,
-    physicalExam: undefined,
-    specialExam: undefined,
-    auxiliaryExam: undefined,
-    admissionMaindiagCode1: undefined,
-    admissionMaindiagName1: undefined,
-    admissionDiagCode2: undefined,
-    admissionDiagName2: undefined,
-    admissionDiagCode3: undefined,
-    admissionDiagName3: undefined,
-    admissionDiagCode4: undefined,
-    admissionDiagName4: undefined,
-    admissionDiagCode5: undefined,
-    admissionDiagName5: undefined,
-    admissionDiagCoden: undefined,
-    admissionDiagNamen: undefined,
-    extendData1: undefined,
-    extendData2: undefined,
-    recordStatus: undefined,
-    createdTime: undefined,
-    updatedTime: undefined,
-    params: {
-    }
-  },
-  rules: {
-    id: [
-      { required: true, message: "系统自增主键不能为空", trigger: "blur" }
-    ],
-    patientId: [
-      { required: true, message: "患者ID不能为空", trigger: "blur" }
-    ],
-    visitSn: [
-      { required: true, message: "单次就诊唯一标识号不能为空", trigger: "blur" }
-    ],
-    recordSn: [
-      { required: true, message: "入院记录流水号不能为空", trigger: "blur" }
-    ],
-  }
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  drillResult: undefined,
+  lessonsLearned: undefined,
+  remark: undefined
+};
+
+const queryParams = reactive<NatdssB051EmrAdmissionQuery>({
+  pageNum: 1,
+  pageSize: 10,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  lessonsLearned: undefined,
+  params: {}
 });
 
-const { queryParams, form, rules } = toRefs(data);
+const form = reactive<NatdssB051EmrAdmissionForm>({ ...initFormData });
 
-/** 查询B05-1 入院记录列表 */
+const rules = {
+  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+};
+
+/** 查询入院记录列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listNatdssB051EmrAdmission(queryParams.value);
-  natdssB051EmrAdmissionList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
-}
+  try {
+    const res = await listNatdssB051EmrAdmission(queryParams);
+    natdssB051EmrAdmissionList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取入院记录列表失败:', error);
+  } finally {
+    loading.value = false;
+  }
+};
 
 /** 取消按钮 */
 const cancel = () => {
   reset();
   dialog.visible = false;
-}
+};
 
 /** 表单重置 */
 const reset = () => {
-  form.value = {...initFormData};
-  natdssB051EmrAdmissionFormRef.value?.resetFields();
-}
+  Object.assign(form, initFormData);
+  formRef.value?.resetFields();
+};
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  queryParams.pageNum = 1;
   getList();
-}
+};
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
+  // 重置查询参数
+  Object.keys(queryParams).forEach(key => {
+    if (key !== 'pageNum' && key !== 'pageSize' && key !== 'params') {
+      (queryParams as any)[key] = undefined;
+    }
+  });
   handleQuery();
-}
+};
 
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: NatdssB051EmrAdmissionVO[]) => {
-  ids.value = selection.map(item => item.id);
+  ids.value = selection.map((item) => item.id);
   single.value = selection.length != 1;
   multiple.value = !selection.length;
-}
+};
 
 /** 新增按钮操作 */
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = "添加B05-1 入院记录";
-}
+  dialog.title = '添加应急演练计划';
+};
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: NatdssB051EmrAdmissionVO) => {
   reset();
-  const _id = row?.id || ids.value[0]
-  const res = await getNatdssB051EmrAdmission(_id);
-  Object.assign(form.value, res.data);
-  dialog.visible = true;
-  dialog.title = "修改B05-1 入院记录";
-}
+  const _id = row?.id || ids.value[0];
+  if (_id) {
+    try {
+      const res = await getNatdssB051EmrAdmission(_id);
+      Object.assign(form, res.data);
+      dialog.visible = true;
+      dialog.title = '修改应急演练计划';
+    } catch (error) {
+      console.error('获取应急演练计划详情失败:', error);
+      proxy?.$modal.msgError('获取数据失败');
+    }
+  }
+};
 
 /** 提交按钮 */
-const submitForm = () => {
-  natdssB051EmrAdmissionFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateNatdssB051EmrAdmission(form.value).finally(() =>  buttonLoading.value = false);
-      } else {
-        await addNatdssB051EmrAdmission(form.value).finally(() =>  buttonLoading.value = false);
-      }
-      proxy?.$modal.msgSuccess("操作成功");
-      dialog.visible = false;
-      await getList();
+const submitForm = async () => {
+  try {
+    buttonLoading.value = true;
+    if (form.id) {
+      await updateNatdssB051EmrAdmission(form);
+      proxy?.$modal.msgSuccess('修改成功');
+    } else {
+      await addNatdssB051EmrAdmission(form);
+      proxy?.$modal.msgSuccess('新增成功');
     }
-  });
-}
+    dialog.visible = false;
+    await getList();
+  } catch (error) {
+    console.error('提交表单失败:', error);
+  } finally {
+    buttonLoading.value = false;
+  }
+};
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: NatdssB051EmrAdmissionVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除B05-1 入院记录编号为"' + _ids + '"的数据项？').finally(() => loading.value = false);
-  await delNatdssB051EmrAdmission(_ids);
-  proxy?.$modal.msgSuccess("删除成功");
-  await getList();
-}
+  try {
+    await proxy?.$modal.confirm('是否确认删除应急演练计划编号为"' + _ids + '"的数据项？');
+    await delNatdssB051EmrAdmission(_ids);
+    proxy?.$modal.msgSuccess('删除成功');
+    await getList();
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除失败:', error);
+    }
+  }
+};
 
 /** 导出按钮操作 */
 const handleExport = () => {
-  proxy?.download('natdss/natdssB051EmrAdmission/export', {
-    ...queryParams.value
-  }, `natdssB051EmrAdmission_${new Date().getTime()}.xlsx`)
-}
+  proxy?.download(
+    'system/natdssB051EmrAdmission/export',
+    {
+      ...queryParams
+    },
+    `natdssB051EmrAdmission_${new Date().getTime()}.xlsx`
+  );
+};
+
+/** 搜索配置 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+/** 字段配置 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
+};
+
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  fieldConfigVisible.value = false;
+};
 
 onMounted(() => {
   getList();
 });
 </script>
+
+<style scoped lang="scss">
+.app-container {
+  padding: 20px;
+
+  .page-header {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
+
+      .title-icon {
+        color: #409eff;
+        font-size: 20px;
+      }
+    }
+
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
+  }
+
+  .search-container {
+    margin-bottom: 16px;
+
+    .search-card {
+      border-radius: 8px;
+      overflow: hidden;
+
+      .search-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .search-title {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+          color: #303133;
+
+          .search-icon {
+            margin-right: 6px;
+            font-size: 16px;
+          }
+        }
+
+        .search-actions {
+          .config-btn {
+            padding: 4px 8px;
+
+            .btn-icon {
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+
+      :deep(.el-card__body) {
+        padding: 16px;
+      }
+    }
+  }
+
+  .table-card {
+    border-radius: 8px;
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+
+      .table-title {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+
+        .table-icon {
+          margin-right: 8px;
+          font-size: 18px;
+          color: #409eff;
+        }
+      }
+
+      .table-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .action-btn {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .config-btn {
+          padding: 8px 12px;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+
+    :deep(.el-table) {
+      margin-top: 16px;
+
+      .el-table__header {
+        th {
+          background-color: #f5f7fa;
+          color: #606266;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+// 响应式布局
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+
+    .page-header {
+      padding: 12px 16px;
+
+      .page-title {
+        font-size: 18px;
+      }
+
+      .page-description {
+        font-size: 12px;
+      }
+    }
+
+    .table-card {
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .table-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+}
+</style>

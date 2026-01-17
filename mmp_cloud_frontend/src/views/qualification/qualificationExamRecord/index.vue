@@ -3,16 +3,48 @@
     <!-- 页面标题 -->
     <div class="page-header mb-4">
       <h2 class="page-title">
-        <i-ep-document-checked class="title-icon"></i-ep-document-checked>
-        资质考试记录管理
+        <i-ep-notebook class="title-icon"></i-ep-notebook>
+        考试记录管理
       </h2>
-      <p class="page-description">管理系统资质考试记录信息，包括考试成绩、答题详情和阅卷结果等</p>
+      <p class="page-description">管理考试记录和成绩</p>
     </div>
+
+
+
+
+
+
+
+
+
+
 
     <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="search-container mb-4">
+      <div v-show="showSearch" class="search-container mb-4" class="search-container mb-4">
         <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
           <template #header>
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
@@ -234,10 +266,7 @@
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
-    </el-dialog>
-    <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="showSearchConfig" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    </el-dialog><SearchConfigDialog v-model="showSearchConfig" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -259,6 +288,20 @@ import { createQualificationExamRecordSearchConfig } from '@/utils/configs/quali
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+
+
+const searchConfigVisible = ref(false);
+const fieldConfigVisible = ref(false);
+
+
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

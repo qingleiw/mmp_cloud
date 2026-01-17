@@ -285,8 +285,7 @@ const getDoctorName = (doctorId: string | number) => {
 };
 
 // 字段配置管理器
-const fieldGroups = createDoctorWorkExperienceFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorWorkExperience', fieldGroups);
+const fieldConfigManager = createDoctorWorkExperienceFieldConfig();
 const searchConfigManager = createDoctorWorkExperienceSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());

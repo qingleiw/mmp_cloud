@@ -3,16 +3,40 @@
     <!-- 页面标题 -->
     <div class="page-header mb-4">
       <h2 class="page-title">
-        <i-ep-document-checked class="title-icon"></i-ep-document-checked>
-        资质使用记录管理
+        <i-ep-clock class="title-icon"></i-ep-clock>
+        使用记录管理
       </h2>
-      <p class="page-description">管理系统资质使用记录信息，包括使用时间、患者信息、操作详情和使用结果等</p>
+      <p class="page-description">管理资质使用记录和统计</p>
     </div>
+
+
+
+
+
+
+
+
+
+
 
     <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="search-container mb-4">
+      <div v-show="showSearch" class="search-container mb-4" class="search-container mb-4">
         <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
           <template #header>
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
@@ -245,6 +269,20 @@ import { createQualificationUsageRecordSearchConfig } from '@/utils/configs/qual
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+
+
+const searchConfigVisible = ref(false);
+const fieldConfigVisible = ref(false);
+
+
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

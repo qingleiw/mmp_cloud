@@ -1,163 +1,179 @@
 <template>
   <div class="app-container">
-    <!-- 页面头部 -->
-    <div class="page-header">
-      <h1>重要医疗事件管理</h1>
-      <p>管理系统中的重要医疗事件信息，包括事件记录、通知和处理等功能</p>
-      <div class="flex gap-2">
-        <el-button type="primary" icon="i-ep:Plus" @click="handleAdd" v-hasPermi="['emergency:importantMedicalEvent:add']">新增</el-button>
-        <el-button type="success" icon="i-ep:Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['emergency:importantMedicalEvent:edit']"
-          >修改</el-button
-        >
-        <el-button
-          type="danger"
-          icon="i-ep:Delete"
-          :disabled="multiple"
-          @click="handleDelete()"
-          v-hasPermi="['emergency:importantMedicalEvent:remove']"
-          >删除</el-button
-        >
-        <el-button type="warning" icon="i-ep:Download" @click="handleExport" v-hasPermi="['emergency:importantMedicalEvent:export']">导出</el-button>
-        <el-button type="info" icon="i-ep:Setting" @click="fieldConfigVisible = true">字段配置</el-button>
-        <el-button type="info" icon="i-ep:Setting" @click="searchConfigVisible = true">搜索项配置</el-button>
-        <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-      </div>
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-medal class="title-icon"></i-ep-medal>
+        重大医疗事件管理
+      </h2>
+      <p class="page-description">管理重大医疗事件的记录和上报</p>
     </div>
 
     <!-- 搜索区域 -->
-    <div class="search-card" v-show="showSearch">
-      <DynamicSearchForm
-        ref="searchFormRef"
-        :search-config="searchConfig"
-        :query-params="queryParams"
-        @search="handleQuery"
-        @reset="resetQuery"
-      />
-    </div>
+    <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
+        </el-card>
+      </div>
+    </transition>
 
     <!-- 表格区域 -->
-    <div class="table-card">
-      <el-table v-loading="loading" border :data="importantMedicalEventList" @selection-change="handleSelectionChange" class="modern-table">
+    <el-card shadow="never" class="table-card">
+      <template #header>
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>重大医疗事件列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['emergency:importantMedicalEvent:add']" size="small">新增</el-button>
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['emergency:importantMedicalEvent:edit']"
+              size="small"
+            >修改</el-button>
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['emergency:importantMedicalEvent:remove']"
+              size="small"
+            >删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['emergency:importantMedicalEvent:export']" size="small">导出</el-button>
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
+      </template>
+
+      <!-- 动态表格 -->
+      <el-table
+        v-loading="loading"
+        border
+        :data="importantMedicalEventList"
+        @selection-change="handleSelectionChange"
+        class="dynamic-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in fieldConfig.getVisibleFields()"
+          v-for="field in visibleTableFields"
           :key="field.prop"
           :label="field.label"
-          :align="'center'"
           :prop="field.prop"
           :width="field.width"
-          v-show="field.visible"
+          align="center"
+          :show-overflow-tooltip="true"
         >
           <template #default="scope">
-            <span v-if="field.type === 'datetime'">{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
-            <span v-else>{{ scope.row[field.prop] }}</span>
+            <span v-if="field.type === 'datetime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+            <span v-else-if="field.type === 'date'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
+            </span>
+            <span v-else>
+              {{ scope.row[field.prop] }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width" width="120">
           <template #default="scope">
-            <div class="flex items-center justify-center space-x-1">
-              <el-tooltip content="修改" placement="top">
-                <el-button
-                  link
-                  type="primary"
-                  icon="i-ep:Edit"
-                  @click="handleUpdate(scope.row)"
-                  v-hasPermi="['emergency:importantMedicalEvent:edit']"
-                  size="small"
-                ></el-button>
-              </el-tooltip>
-              <el-tooltip content="删除" placement="top">
-                <el-button
-                  link
-                  type="danger"
-                  icon="i-ep:Delete"
-                  @click="handleDelete(scope.row)"
-                  v-hasPermi="['emergency:importantMedicalEvent:remove']"
-                  size="small"
-                ></el-button>
-              </el-tooltip>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <div class="pagination-container mt-4">
-        <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
-      </div>
-    </div>
-
-    <el-table v-loading="loading" border :data="importantMedicalEventList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column
-        v-for="field in fieldConfigManager.getVisibleFields()"
-        :key="field.prop"
-        :label="field.label"
-        :prop="field.prop"
-        :width="field.width"
-        align="center"
-        :resizable="true"
-      >
-        <template #default="scope" v-if="field.prop === 'eventTime'">
-          <span>{{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}</span>
-        </template>
-        <template #default="scope" v-else-if="field.prop === 'eventType'">
-          <span>{{ getEventTypeLabel(scope.row[field.prop]) }}</span>
-        </template>
-        <template #default="scope" v-else-if="field.prop === 'notifyUsers'">
-          <span>{{ formatNotifyUsers(scope.row[field.prop]) }}</span>
-        </template>
-        <template #default="scope" v-else>
-          <span>{{ scope.row[field.prop] }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width" width="120">
-        <template #default="scope">
-          <div class="flex items-center justify-center space-x-1">
             <el-tooltip content="修改" placement="top">
-              <el-button
-                link
-                type="primary"
-                icon="i-ep:Edit"
-                @click="handleUpdate(scope.row)"
-                v-hasPermi="['emergency:importantMedicalEvent:edit']"
-                size="small"
-              ></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['emergency:importantMedicalEvent:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
               <el-button
                 link
-                type="danger"
-                icon="i-ep:Delete"
+                type="primary"
+                icon="Delete"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['emergency:importantMedicalEvent:remove']"
-                size="small"
               ></el-button>
             </el-tooltip>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
+          </template>
+        </el-table-column>
+      </el-table>
 
-    <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
-    <!-- 添加或修改重要医疗事件对话框 -->
-    <FieldConfigDialog
-      v-model="dialog.visible"
-      :title="dialog.title"
-      :field-config="fieldConfig"
-      :form-data="form"
-      :loading="buttonLoading"
-      @confirm="submitForm"
-      @cancel="cancel"
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
+    </el-card>
+
+    <!-- 添加/修改对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
+        <el-row :gutter="20">
+          <el-col :span="12" v-for="field in visibleFormFields" :key="field.prop">
+            <el-form-item :label="field.label" :prop="field.prop">
+              <el-input v-if="!field.type || field.type === 'text'" v-model="form[field.prop]" :placeholder="'请输入' + field.label" />
+              <el-date-picker
+                v-else-if="field.type === 'date'"
+                v-model="form[field.prop]"
+                type="date"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-date-picker
+                v-else-if="field.type === 'datetime'"
+                v-model="form[field.prop]"
+                type="datetime"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="'请输入' + field.label" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
+
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      :searchConfigManager="searchConfigManager"
+      @confirm="handleSearchConfigConfirm"
     />
-
-    <!-- 搜索项配置对话框 -->
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="() => (searchConfigVisible = false)" />
 
     <!-- 字段配置对话框 -->
     <FieldConfigDialog
       v-model:visible="fieldConfigVisible"
-      :field-config-manager="fieldConfigManager"
-      @confirm="() => (fieldConfigVisible = false)"
+      :fieldConfigManager="fieldConfigManager"
+      @confirm="handleFieldConfigConfirm"
     />
   </div>
 </template>
@@ -171,26 +187,15 @@ import {
   updateImportantMedicalEvent
 } from '@/api/emergency/importantMedicalEvent';
 import { ImportantMedicalEventVO, ImportantMedicalEventQuery, ImportantMedicalEventForm } from '@/api/emergency/importantMedicalEvent/types';
-import { getImportantMedicalEventFieldConfig } from '@/utils/configs/emergency/emergencyFieldConfigs';
-import { getImportantMedicalEventSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
+import { createImportantMedicalEventFieldConfig } from '@/utils/configs/emergency/emergencyFieldConfigs';
+import { createImportantMedicalEventSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import FieldConfigDialog from '@/components/DynamicForm/FieldConfigDialog.vue';
+import type { FormInstance } from 'element-plus';
+import type { DialogOption } from '@/types/global';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
-
-// 初始化动态配置
-const fieldConfig = getImportantMedicalEventFieldConfig();
-const searchConfig = getImportantMedicalEventSearchConfig();
-
-// 搜索项配置管理器 (保留原有配置对话框功能)
-const searchConfigManager = createImportantMedicalEventSearchConfig();
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
-const searchConfigVisible = ref(false);
-
-// 字段配置管理器 (保留原有配置对话框功能)
-const fieldConfigManager = createImportantMedicalEventFieldConfig();
-const fieldConfigVisible = ref(false);
 
 const importantMedicalEventList = ref<ImportantMedicalEventVO[]>([]);
 const buttonLoading = ref(false);
@@ -201,41 +206,85 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const importantMedicalEventFormRef = ref<ElFormInstance>();
+const queryFormRef = ref<FormInstance>();
+const formRef = ref<FormInstance>();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
 
-const initFormData: ImportantMedicalEventForm = fieldConfig.getDefaultFormData();
-const data = reactive<PageData<ImportantMedicalEventForm, ImportantMedicalEventQuery>>({
-  form: { ...initFormData },
-  queryParams: {
-    pageNum: 1,
-    pageSize: 10,
-    ...searchConfig.getDefaultSearchParams(),
-    params: {}
-  },
-  rules: {
-    id: [{ required: true, message: '主键ID不能为空', trigger: 'blur' }],
-    eventNo: [{ required: true, message: '事件编号不能为空', trigger: 'blur' }]
-  }
+// 字段配置相关变量
+const fieldConfigManager = createImportantMedicalEventFieldConfig();
+const fieldConfigVisible = ref(false);
+const searchConfigManager = createImportantMedicalEventSearchConfig();
+const searchConfigVisible = ref(false);
+
+// 计算属性：获取可见的搜索字段
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表格字段
+const visibleTableFields = computed(() => fieldConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表单字段
+const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
+
+const initFormData: ImportantMedicalEventForm = {
+  id: undefined,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  drillResult: undefined,
+  lessonsLearned: undefined,
+  remark: undefined
+};
+
+const queryParams = reactive<ImportantMedicalEventQuery>({
+  pageNum: 1,
+  pageSize: 10,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  lessonsLearned: undefined,
+  params: {}
 });
 
-const { queryParams, form, rules } = toRefs(data);
+const form = reactive<ImportantMedicalEventForm>({ ...initFormData });
 
-/** 查询重要医疗事件列表 */
+const rules = {
+  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+};
+
+/** 查询重大医疗事件列表 */
 const getList = async () => {
   loading.value = true;
   try {
-    const res = await listImportantMedicalEvent(queryParams.value);
+    const res = await listImportantMedicalEvent(queryParams);
     importantMedicalEventList.value = res.rows;
     total.value = res.total;
   } catch (error) {
-    console.error('获取重要医疗事件列表失败:', error);
-    importantMedicalEventList.value = [];
-    total.value = 0;
+    console.error('获取重大医疗事件列表失败:', error);
   } finally {
     loading.value = false;
   }
@@ -249,39 +298,25 @@ const cancel = () => {
 
 /** 表单重置 */
 const reset = () => {
-  form.value = { ...initFormData };
-  importantMedicalEventFormRef.value?.resetFields();
+  Object.assign(form, initFormData);
+  formRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  queryParams.pageNum = 1;
   getList();
 };
 
 /** 重置按钮操作 */
 const resetQuery = () => {
-  // 重置查询参数为初始值
-  queryParams.value = {
-    pageNum: 1,
-    pageSize: 10,
-    eventNo: undefined,
-    eventType: undefined,
-    patientId: undefined,
-    patientName: undefined,
-    visitNo: undefined,
-    departmentId: undefined,
-    departmentName: undefined,
-    responsibleDoctor: undefined,
-    eventTime: undefined,
-    eventDescription: undefined,
-    eventLevel: undefined,
-    notifyUsers: undefined,
-    sourceSystem: undefined,
-    isNotified: undefined,
-    notifyTime: undefined,
-    params: {}
-  };
+  queryFormRef.value?.resetFields();
+  // 重置查询参数
+  Object.keys(queryParams).forEach(key => {
+    if (key !== 'pageNum' && key !== 'pageSize' && key !== 'params') {
+      (queryParams as any)[key] = undefined;
+    }
+  });
   handleQuery();
 };
 
@@ -296,31 +331,41 @@ const handleSelectionChange = (selection: ImportantMedicalEventVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加重要医疗事件';
+  dialog.title = '添加应急演练计划';
 };
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: ImportantMedicalEventVO) => {
   reset();
   const _id = row?.id || ids.value[0];
-  const res = await getImportantMedicalEvent(_id);
-  Object.assign(form.value, res.data);
-  dialog.visible = true;
-  dialog.title = '修改重要医疗事件';
+  if (_id) {
+    try {
+      const res = await getImportantMedicalEvent(_id);
+      Object.assign(form, res.data);
+      dialog.visible = true;
+      dialog.title = '修改应急演练计划';
+    } catch (error) {
+      console.error('获取应急演练计划详情失败:', error);
+      proxy?.$modal.msgError('获取数据失败');
+    }
+  }
 };
 
 /** 提交按钮 */
 const submitForm = async () => {
-  buttonLoading.value = true;
   try {
-    if (form.value.id) {
-      await updateImportantMedicalEvent(form.value);
+    buttonLoading.value = true;
+    if (form.id) {
+      await updateImportantMedicalEvent(form);
+      proxy?.$modal.msgSuccess('修改成功');
     } else {
-      await addImportantMedicalEvent(form.value);
+      await addImportantMedicalEvent(form);
+      proxy?.$modal.msgSuccess('新增成功');
     }
-    proxy?.$modal.msgSuccess('操作成功');
     dialog.visible = false;
     await getList();
+  } catch (error) {
+    console.error('提交表单失败:', error);
   } finally {
     buttonLoading.value = false;
   }
@@ -329,10 +374,16 @@ const submitForm = async () => {
 /** 删除按钮操作 */
 const handleDelete = async (row?: ImportantMedicalEventVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除重要医疗事件编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
-  await delImportantMedicalEvent(_ids);
-  proxy?.$modal.msgSuccess('删除成功');
-  await getList();
+  try {
+    await proxy?.$modal.confirm('是否确认删除应急演练计划编号为"' + _ids + '"的数据项？');
+    await delImportantMedicalEvent(_ids);
+    proxy?.$modal.msgSuccess('删除成功');
+    await getList();
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除失败:', error);
+    }
+  }
 };
 
 /** 导出按钮操作 */
@@ -340,35 +391,30 @@ const handleExport = () => {
   proxy?.download(
     'system/importantMedicalEvent/export',
     {
-      ...queryParams.value
+      ...queryParams
     },
     `importantMedicalEvent_${new Date().getTime()}.xlsx`
   );
 };
 
-/** 获取事件类型标签 */
-const getEventTypeLabel = (eventType: string) => {
-  const typeMap: Record<string, string> = {
-    'death': '死亡',
-    'unplanned_surgery': '非计划手术',
-    'major_surgery': '重大手术',
-    'critical_value': '危急值'
-  };
-  return typeMap[eventType] || eventType;
+/** 搜索配置 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
 };
 
-/** 格式化通知人员列表 */
-const formatNotifyUsers = (notifyUsers: string) => {
-  if (!notifyUsers) return '-';
-  try {
-    const users = JSON.parse(notifyUsers);
-    if (Array.isArray(users)) {
-      return users.map((user) => (typeof user === 'string' ? user : user.name || user)).join(', ');
-    }
-    return notifyUsers;
-  } catch {
-    return notifyUsers;
-  }
+/** 字段配置 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
+};
+
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  fieldConfigVisible.value = false;
 };
 
 onMounted(() => {
@@ -376,104 +422,169 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .app-container {
-  background-color: #f5f5f5;
-  min-height: 100vh;
   padding: 20px;
-}
-
-.page-header {
-  margin-bottom: 20px;
-}
-
-.page-header h1 {
-  color: #1d2129;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.page-header p {
-  color: #666;
-  margin: 0;
-}
-
-.search-card {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-  transition: box-shadow 0.3s ease;
-}
-
-.search-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.table-card {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-.modern-table {
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.modern-table .el-table__header {
-  background-color: #fafafa;
-}
-
-.modern-table .el-table__row {
-  transition: background-color 0.3s ease;
-}
-
-.modern-table .el-table__row:hover {
-  background-color: #f5f5f5;
-}
-
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .app-container {
-    padding: 10px;
-  }
 
   .page-header {
-    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
+
+      .title-icon {
+        color: #409eff;
+        font-size: 20px;
+      }
+    }
+
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
   }
 
-  .page-header .flex {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
+  .search-container {
+    margin-bottom: 16px;
+
+    .search-card {
+      border-radius: 8px;
+      overflow: hidden;
+
+      .search-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .search-title {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+          color: #303133;
+
+          .search-icon {
+            margin-right: 6px;
+            font-size: 16px;
+          }
+        }
+
+        .search-actions {
+          .config-btn {
+            padding: 4px 8px;
+
+            .btn-icon {
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+
+      :deep(.el-card__body) {
+        padding: 16px;
+      }
+    }
   }
 
-  .search-form {
-    flex-direction: column;
-  }
+  .table-card {
+    border-radius: 8px;
 
-  .search-form .el-form-item {
-    width: 100%;
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+
+      .table-title {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+
+        .table-icon {
+          margin-right: 8px;
+          font-size: 18px;
+          color: #409eff;
+        }
+      }
+
+      .table-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .action-btn {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .config-btn {
+          padding: 8px 12px;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+
+    :deep(.el-table) {
+      margin-top: 16px;
+
+      .el-table__header {
+        th {
+          background-color: #f5f7fa;
+          color: #606266;
+          font-weight: 600;
+        }
+      }
+    }
   }
 }
 
-@media (max-width: 480px) {
+// 响应式布局
+@media (max-width: 768px) {
   .app-container {
-    padding: 5px;
-  }
+    padding: 12px;
 
-  .page-header h1 {
-    font-size: 1.25rem;
+    .page-header {
+      padding: 12px 16px;
+
+      .page-title {
+        font-size: 18px;
+      }
+
+      .page-description {
+        font-size: 12px;
+      }
+    }
+
+    .table-card {
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .table-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    }
   }
 }
 </style>

@@ -285,7 +285,7 @@ const dialog = reactive<DialogOption>({
 });
 
 // 配置管理器
-const fieldConfigManager = new FieldConfigManager('newTechnologyProjectProgress', createNewTechnologyProjectProgressFieldConfig());
+const fieldConfigManager = createNewTechnologyProjectProgressFieldConfig();
 const searchConfigManager = createNewTechnologyProjectProgressSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

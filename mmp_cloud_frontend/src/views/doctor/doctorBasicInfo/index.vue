@@ -286,11 +286,7 @@ const dialog = reactive<DialogOption>({
 });
 
 // 字段配置相关变量
-const fieldGroups = createDoctorBasicInfoFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorBasicInfo', fieldGroups);
-
-// 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
-fieldConfigManager.clearConfig();
+const fieldConfigManager = createDoctorBasicInfoFieldConfig();
 localStorage.removeItem('doctorBasicInfo_field_config');
 const showFieldConfig = ref(false);
 const searchConfigManager = createDoctorBasicInfoSearchConfig();

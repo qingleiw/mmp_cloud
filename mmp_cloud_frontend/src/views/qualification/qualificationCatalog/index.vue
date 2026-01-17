@@ -1,74 +1,81 @@
 <template>
   <div class="p-2">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-folder class="title-icon"></i-ep-folder>
+        资质目录管理
+      </h2>
+      <p class="page-description">管理资质目录和分类</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="医生姓名" prop="doctorName">
-              <el-input v-model="queryParams.doctorName" placeholder="请输入医生姓名" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="科室" prop="department">
-              <el-input v-model="queryParams.department" placeholder="请输入科室" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="职务" prop="position">
-              <el-input v-model="queryParams.position" placeholder="请输入职务" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="职称" prop="title">
-              <el-input v-model="queryParams.title" placeholder="请输入职称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="所授权手术级别" prop="authorizedLevel">
-              <el-input v-model="queryParams.authorizedLevel" placeholder="请输入所授权手术级别" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="一级手术授权" prop="level1">
-              <el-input v-model="queryParams.level1" placeholder="请输入一级手术授权" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="二级手术授权" prop="level2">
-              <el-input v-model="queryParams.level2" placeholder="请输入二级手术授权" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="三级手术授权" prop="level3">
-              <el-input v-model="queryParams.level3" placeholder="请输入三级手术授权" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="四级手术授权" prop="level4">
-              <el-input v-model="queryParams.level4" placeholder="请输入四级手术授权" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="手术名称" prop="surgeryName">
-              <el-input v-model="queryParams.surgeryName" placeholder="请输入手术名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="手术代码" prop="surgeryCode">
-              <el-input v-model="queryParams.surgeryCode" placeholder="请输入手术代码" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="手术级别" prop="surgeryLevel">
-              <el-input v-model="queryParams.surgeryLevel" placeholder="请输入手术级别" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="有效期开始" prop="validStartDate">
-              <el-date-picker clearable v-model="queryParams.validStartDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择有效期开始" />
-            </el-form-item>
-            <el-form-item label="有效期结束" prop="validEndDate">
-              <el-date-picker clearable v-model="queryParams.validEndDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择有效期结束" />
-            </el-form-item>
-            <el-form-item label="数据来源" prop="dataSource">
-              <el-input v-model="queryParams.dataSource" placeholder="请输入数据来源" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="是否删除" prop="delFlag">
-              <el-input v-model="queryParams.delFlag" placeholder="请输入是否删除" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      v-model:fields="visibleSearchFields"
+      :config="[]"
+      title="搜索字段配置"
+    />
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
 
     <el-card shadow="never">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationCatalog:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button
+              <div class="table-header">
+        <div class="table-title">
+          <i-ep-list class="table-icon"></i-ep-list>
+          <span>资质目录列表</span>
+        </div>
+        <div class="table-actions">
+
+          
+            <el-button size="small" type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationCatalog:add']">新增</el-button>
+          
+          
+            <el-button size="small"
               type="success"
               plain
               icon="Edit"
@@ -77,9 +84,9 @@
               v-hasPermi="['qualification:qualificationCatalog:edit']"
               >修改</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button
+          
+          
+            <el-button size="small"
               type="danger"
               plain
               icon="Delete"
@@ -88,14 +95,20 @@
               v-hasPermi="['qualification:qualificationCatalog:remove']"
               >删除</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationCatalog:export']"
+          
+          
+            <el-button size="small" type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationCatalog:export']"
               >导出</el-button
             >
-          </el-col>
+          
+          
+          <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+            <i-ep-setting class="btn-icon"></i-ep-setting>
+            字段配置
+          </el-button>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+        </div>
+      </div>
       </template>
 
       <el-table v-loading="loading" border :data="qualificationCatalogList" @selection-change="handleSelectionChange">
@@ -216,11 +229,13 @@
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
-    </el-dialog>
-  </div>
+    </el-dialog></div>
 </template>
 
 <script setup name="QualificationCatalog" lang="ts">
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import {
   listQualificationCatalog,
   getQualificationCatalog,
@@ -229,6 +244,21 @@ import {
   updateQualificationCatalog
 } from '@/api/qualification/qualificationCatalog';
 import { QualificationCatalogVO, QualificationCatalogQuery, QualificationCatalogForm } from '@/api/qualification/qualificationCatalog/types';
+
+
+const searchConfigVisible = ref(false);
+const fieldConfigVisible = ref(false);
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+
+const visibleSearchFields = ref<string[]>([]);
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

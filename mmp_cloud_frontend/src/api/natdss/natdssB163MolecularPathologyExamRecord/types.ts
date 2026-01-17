@@ -1,4 +1,4 @@
-export interface NatdssB17-2LabMicrobiologicalInfoVO {
+export interface NatdssB163MolecularPathologyExamRecordVO {
   /**
    * 系统自增主键
    */
@@ -55,6 +55,21 @@ export interface NatdssB17-2LabMicrobiologicalInfoVO {
   name: string;
 
   /**
+   * 性别
+   */
+  gender: string;
+
+  /**
+   * 年龄(岁)
+   */
+  age: number;
+
+  /**
+   * 出生日期
+   */
+  dateOfBirth: string;
+
+  /**
    * 申请单号
    */
   applyNo: string;
@@ -70,14 +85,54 @@ export interface NatdssB17-2LabMicrobiologicalInfoVO {
   applyDatetime: string;
 
   /**
-   * 微生物检验流水号
+   * 分子病理号
+   */
+  molPathoNo: string;
+
+  /**
+   * 检测流水号
    */
   labSn: string;
 
   /**
-   * 检验时间
+   * 检测时间
    */
-  testDatetime: string;
+  examDatetime: string;
+
+  /**
+   * 标本编号
+   */
+  sampleNo: string;
+
+  /**
+   * 标本类型
+   */
+  sampleType: string;
+
+  /**
+   * 检测平台
+   */
+  testPlatform: string;
+
+  /**
+   * 检测项目
+   */
+  testItem: string;
+
+  /**
+   * 检测方法
+   */
+  testMethod: string;
+
+  /**
+   * 检测内容
+   */
+  testContent: string;
+
+  /**
+   * 检测结果
+   */
+  testResult: string;
 
   /**
    * 报告单号
@@ -90,79 +145,69 @@ export interface NatdssB17-2LabMicrobiologicalInfoVO {
   reportDatetime: string;
 
   /**
-   * 标本编号
+   * 外显子
    */
-  specimenCode: string;
+  testExon: string;
 
   /**
-   * 标本来源
+   * 位点
    */
-  sampleType: string;
+  testLocus: string;
 
   /**
-   * 检验方法代码
+   * 检测基因
    */
-  testMethodCode: string;
+  testGene: string;
 
   /**
-   * 检验方法
+   * 转录本
    */
-  testMethod: string;
+  transcript: string;
 
   /**
-   * 培养结果
+   * 核苷酸改变
    */
-  cultivationResult: string;
+  nucleAlt: string;
 
   /**
-   * 结果代码
+   * 氨基酸改变
    */
-  resultCode: string;
+  aminoAcidAlt: string | number;
 
   /**
-   * 结果阴阳性
+   * 丰度
    */
-  resultPosNeg: string;
+  mutAbundance: string;
 
   /**
-   * 药敏方法
+   * 变异类型
    */
-  sensTestMethod: string;
+  variationType: string;
 
   /**
-   * 耐药机制
+   * 变异解读
    */
-  resisMechanism: string;
+  mutInterpretation: string;
 
   /**
-   * 检测抗生素编码
+   * 基因型
    */
-  antibioticsCode: string;
+  genoType: string;
 
   /**
-   * 检测抗生素名称
+   * 取材部位
    */
-  antibiotics: string;
+  samplingSite: string;
 
   /**
-   * 抗生素检测结果
+   * 测序深度
    */
-  antibioResult: string;
+  geneSequencingDepth: string;
 
   /**
-   * 药敏结果
+   * 肿瘤突变负荷
    */
-  sensitivityResult: string;
-
-  /**
-   * 结果参考值
-   */
-  resultReference: string;
-
-  /**
-   * 多重耐药名称
-   */
-  mdroName: string;
+  tmb: string;
 
   /**
    * 扩展字段1
@@ -180,11 +225,6 @@ export interface NatdssB17-2LabMicrobiologicalInfoVO {
   recordStatus: number;
 
   /**
-   * 培养代码
-   */
-  cultivationCode: string;
-
-  /**
    * 创建时间
    */
   createdTime: string;
@@ -196,7 +236,7 @@ export interface NatdssB17-2LabMicrobiologicalInfoVO {
 
 }
 
-export interface NatdssB17-2LabMicrobiologicalInfoForm extends BaseEntity {
+export interface NatdssB163MolecularPathologyExamRecordForm extends BaseEntity {
   /**
    * 系统自增主键
    */
@@ -253,6 +293,21 @@ export interface NatdssB17-2LabMicrobiologicalInfoForm extends BaseEntity {
   name?: string;
 
   /**
+   * 性别
+   */
+  gender?: string;
+
+  /**
+   * 年龄(岁)
+   */
+  age?: number;
+
+  /**
+   * 出生日期
+   */
+  dateOfBirth?: string;
+
+  /**
    * 申请单号
    */
   applyNo?: string;
@@ -268,14 +323,54 @@ export interface NatdssB17-2LabMicrobiologicalInfoForm extends BaseEntity {
   applyDatetime?: string;
 
   /**
-   * 微生物检验流水号
+   * 分子病理号
+   */
+  molPathoNo?: string;
+
+  /**
+   * 检测流水号
    */
   labSn?: string;
 
   /**
-   * 检验时间
+   * 检测时间
    */
-  testDatetime?: string;
+  examDatetime?: string;
+
+  /**
+   * 标本编号
+   */
+  sampleNo?: string;
+
+  /**
+   * 标本类型
+   */
+  sampleType?: string;
+
+  /**
+   * 检测平台
+   */
+  testPlatform?: string;
+
+  /**
+   * 检测项目
+   */
+  testItem?: string;
+
+  /**
+   * 检测方法
+   */
+  testMethod?: string;
+
+  /**
+   * 检测内容
+   */
+  testContent?: string;
+
+  /**
+   * 检测结果
+   */
+  testResult?: string;
 
   /**
    * 报告单号
@@ -288,79 +383,69 @@ export interface NatdssB17-2LabMicrobiologicalInfoForm extends BaseEntity {
   reportDatetime?: string;
 
   /**
-   * 标本编号
+   * 外显子
    */
-  specimenCode?: string;
+  testExon?: string;
 
   /**
-   * 标本来源
+   * 位点
    */
-  sampleType?: string;
+  testLocus?: string;
 
   /**
-   * 检验方法代码
+   * 检测基因
    */
-  testMethodCode?: string;
+  testGene?: string;
 
   /**
-   * 检验方法
+   * 转录本
    */
-  testMethod?: string;
+  transcript?: string;
 
   /**
-   * 培养结果
+   * 核苷酸改变
    */
-  cultivationResult?: string;
+  nucleAlt?: string;
 
   /**
-   * 结果代码
+   * 氨基酸改变
    */
-  resultCode?: string;
+  aminoAcidAlt?: string | number;
 
   /**
-   * 结果阴阳性
+   * 丰度
    */
-  resultPosNeg?: string;
+  mutAbundance?: string;
 
   /**
-   * 药敏方法
+   * 变异类型
    */
-  sensTestMethod?: string;
+  variationType?: string;
 
   /**
-   * 耐药机制
+   * 变异解读
    */
-  resisMechanism?: string;
+  mutInterpretation?: string;
 
   /**
-   * 检测抗生素编码
+   * 基因型
    */
-  antibioticsCode?: string;
+  genoType?: string;
 
   /**
-   * 检测抗生素名称
+   * 取材部位
    */
-  antibiotics?: string;
+  samplingSite?: string;
 
   /**
-   * 抗生素检测结果
+   * 测序深度
    */
-  antibioResult?: string;
+  geneSequencingDepth?: string;
 
   /**
-   * 药敏结果
+   * 肿瘤突变负荷
    */
-  sensitivityResult?: string;
-
-  /**
-   * 结果参考值
-   */
-  resultReference?: string;
-
-  /**
-   * 多重耐药名称
-   */
-  mdroName?: string;
+  tmb?: string;
 
   /**
    * 扩展字段1
@@ -378,11 +463,6 @@ export interface NatdssB17-2LabMicrobiologicalInfoForm extends BaseEntity {
   recordStatus?: number;
 
   /**
-   * 培养代码
-   */
-  cultivationCode?: string;
-
-  /**
    * 创建时间
    */
   createdTime?: string;
@@ -394,7 +474,7 @@ export interface NatdssB17-2LabMicrobiologicalInfoForm extends BaseEntity {
 
 }
 
-export interface NatdssB17-2LabMicrobiologicalInfoQuery extends PageQuery {
+export interface NatdssB163MolecularPathologyExamRecordQuery extends PageQuery {
 
   /**
    * 患者ID
@@ -447,6 +527,21 @@ export interface NatdssB17-2LabMicrobiologicalInfoQuery extends PageQuery {
   name?: string;
 
   /**
+   * 性别
+   */
+  gender?: string;
+
+  /**
+   * 年龄(岁)
+   */
+  age?: number;
+
+  /**
+   * 出生日期
+   */
+  dateOfBirth?: string;
+
+  /**
    * 申请单号
    */
   applyNo?: string;
@@ -462,14 +557,54 @@ export interface NatdssB17-2LabMicrobiologicalInfoQuery extends PageQuery {
   applyDatetime?: string;
 
   /**
-   * 微生物检验流水号
+   * 分子病理号
+   */
+  molPathoNo?: string;
+
+  /**
+   * 检测流水号
    */
   labSn?: string;
 
   /**
-   * 检验时间
+   * 检测时间
    */
-  testDatetime?: string;
+  examDatetime?: string;
+
+  /**
+   * 标本编号
+   */
+  sampleNo?: string;
+
+  /**
+   * 标本类型
+   */
+  sampleType?: string;
+
+  /**
+   * 检测平台
+   */
+  testPlatform?: string;
+
+  /**
+   * 检测项目
+   */
+  testItem?: string;
+
+  /**
+   * 检测方法
+   */
+  testMethod?: string;
+
+  /**
+   * 检测内容
+   */
+  testContent?: string;
+
+  /**
+   * 检测结果
+   */
+  testResult?: string;
 
   /**
    * 报告单号
@@ -482,79 +617,69 @@ export interface NatdssB17-2LabMicrobiologicalInfoQuery extends PageQuery {
   reportDatetime?: string;
 
   /**
-   * 标本编号
+   * 外显子
    */
-  specimenCode?: string;
+  testExon?: string;
 
   /**
-   * 标本来源
+   * 位点
    */
-  sampleType?: string;
+  testLocus?: string;
 
   /**
-   * 检验方法代码
+   * 检测基因
    */
-  testMethodCode?: string;
+  testGene?: string;
 
   /**
-   * 检验方法
+   * 转录本
    */
-  testMethod?: string;
+  transcript?: string;
 
   /**
-   * 培养结果
+   * 核苷酸改变
    */
-  cultivationResult?: string;
+  nucleAlt?: string;
 
   /**
-   * 结果代码
+   * 氨基酸改变
    */
-  resultCode?: string;
+  aminoAcidAlt?: string | number;
 
   /**
-   * 结果阴阳性
+   * 丰度
    */
-  resultPosNeg?: string;
+  mutAbundance?: string;
 
   /**
-   * 药敏方法
+   * 变异类型
    */
-  sensTestMethod?: string;
+  variationType?: string;
 
   /**
-   * 耐药机制
+   * 变异解读
    */
-  resisMechanism?: string;
+  mutInterpretation?: string;
 
   /**
-   * 检测抗生素编码
+   * 基因型
    */
-  antibioticsCode?: string;
+  genoType?: string;
 
   /**
-   * 检测抗生素名称
+   * 取材部位
    */
-  antibiotics?: string;
+  samplingSite?: string;
 
   /**
-   * 抗生素检测结果
+   * 测序深度
    */
-  antibioResult?: string;
+  geneSequencingDepth?: string;
 
   /**
-   * 药敏结果
+   * 肿瘤突变负荷
    */
-  sensitivityResult?: string;
-
-  /**
-   * 结果参考值
-   */
-  resultReference?: string;
-
-  /**
-   * 多重耐药名称
-   */
-  mdroName?: string;
+  tmb?: string;
 
   /**
    * 扩展字段1
@@ -570,11 +695,6 @@ export interface NatdssB17-2LabMicrobiologicalInfoQuery extends PageQuery {
    * 记录状态:1正常 0作废
    */
   recordStatus?: number;
-
-  /**
-   * 培养代码
-   */
-  cultivationCode?: string;
 
   /**
    * 创建时间

@@ -1,68 +1,72 @@
 <template>
   <div class="p-2">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-refresh class="title-icon"></i-ep-refresh>
+        非计划再手术管理
+      </h2>
+      <p class="page-description">管理非计划再手术记录和分析</p>
+    </div>
+
+
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="患者姓名" prop="patientName">
-              <el-input v-model="queryParams.patientName" placeholder="请输入患者姓名" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="第一次手术日期" prop="firstOperationDate">
-              <el-date-picker
-                clearable
-                v-model="queryParams.firstOperationDate"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择第一次手术日期"
-              />
-            </el-form-item>
-            <el-form-item label="再次手术日期" prop="reoperationDate">
-              <el-date-picker
-                clearable
-                v-model="queryParams.reoperationDate"
-                type="date"
-                value-format="YYYY-MM-DD"
-                placeholder="请选择再次手术日期"
-              />
-            </el-form-item>
-            <el-form-item label="手术科室" prop="department">
-              <el-input v-model="queryParams.department" placeholder="请输入手术科室" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="手术医师" prop="surgeon">
-              <el-input v-model="queryParams.surgeon" placeholder="请输入手术医师" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="第一次手术名称" prop="firstOperationName">
-              <el-input v-model="queryParams.firstOperationName" placeholder="请输入第一次手术名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="再次手术名称" prop="reoperationName">
-              <el-input v-model="queryParams.reoperationName" placeholder="请输入再次手术名称" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="再次手术原因" prop="reoperationReason">
-              <el-input v-model="queryParams.reoperationReason" placeholder="请输入再次手术原因" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="并发症" prop="complications">
-              <el-input v-model="queryParams.complications" placeholder="请输入并发症" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="医疗评价" prop="medicalEvaluation">
-              <el-input v-model="queryParams.medicalEvaluation" placeholder="请输入医疗评价" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      v-model:fields="visibleSearchFields"
+      :config="[]"
+      title="搜索字段配置"
+    />
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
 
     <el-card shadow="never">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerUnplannedReoperation:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button
+              <div class="table-header">
+        <div class="table-title">
+          <i-ep-list class="table-icon"></i-ep-list>
+          <span>非计划再手术列表</span>
+        </div>
+        <div class="table-actions">
+
+          
+            <el-button size="small" type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerUnplannedReoperation:add']">新增</el-button>
+          
+          
+            <el-button size="small"
               type="success"
               plain
               icon="Edit"
@@ -71,9 +75,9 @@
               v-hasPermi="['ledger:ledgerUnplannedReoperation:edit']"
               >修改</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button
+          
+          
+            <el-button size="small"
               type="danger"
               plain
               icon="Delete"
@@ -82,14 +86,20 @@
               v-hasPermi="['ledger:ledgerUnplannedReoperation:remove']"
               >删除</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerUnplannedReoperation:export']"
+          
+          
+            <el-button size="small" type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerUnplannedReoperation:export']"
               >导出</el-button
             >
-          </el-col>
+          
+          
+          <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+            <i-ep-setting class="btn-icon"></i-ep-setting>
+            字段配置
+          </el-button>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+        </div>
+      </div>
       </template>
 
       <el-table v-loading="loading" border :data="ledgerUnplannedReoperationList" @selection-change="handleSelectionChange">
@@ -206,6 +216,9 @@
 </template>
 
 <script setup name="LedgerUnplannedReoperation" lang="ts">
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import {
   listLedgerUnplannedReoperation,
   getLedgerUnplannedReoperation,
@@ -218,6 +231,19 @@ import {
   LedgerUnplannedReoperationQuery,
   LedgerUnplannedReoperationForm
 } from '@/api/ledger/ledgerUnplannedReoperation/types';
+
+
+const searchConfigVisible = ref(false);
+const fieldConfigVisible = ref(false);
+const visibleSearchFields = ref<string[]>([]);
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

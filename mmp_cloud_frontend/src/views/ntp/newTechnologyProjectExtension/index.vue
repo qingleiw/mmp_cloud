@@ -267,7 +267,7 @@ const dialog = reactive<DialogOption>({
 });
 
 // 配置管理器
-const fieldConfigManager = new FieldConfigManager('newTechnologyProjectExtension', createNewTechnologyProjectExtensionFieldConfig());
+const fieldConfigManager = createNewTechnologyProjectExtensionFieldConfig();
 const searchConfigManager = createNewTechnologyProjectExtensionSearchConfig();
 
 // 配置对话框状态

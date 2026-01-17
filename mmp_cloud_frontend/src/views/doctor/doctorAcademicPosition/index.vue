@@ -300,7 +300,7 @@ const rules = {
 const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 // 字段配置管理器
-const fieldConfigManager = new FieldConfigManager('doctorAcademicPosition', createDoctorAcademicPositionFieldConfig());
+const fieldConfigManager = createDoctorAcademicPositionFieldConfig();
 const searchConfigManager = createDoctorAcademicPositionSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

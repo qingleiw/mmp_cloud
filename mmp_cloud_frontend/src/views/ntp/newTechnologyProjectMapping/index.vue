@@ -263,7 +263,7 @@ const dialog = reactive<DialogOption>({
 });
 
 // 配置管理器
-const fieldConfigManager = new FieldConfigManager('newTechnologyProjectMapping', createNewTechnologyProjectMappingFieldConfig());
+const fieldConfigManager = createNewTechnologyProjectMappingFieldConfig();
 const searchConfigManager = createNewTechnologyProjectMappingSearchConfig();
 
 // 配置对话框状态

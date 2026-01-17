@@ -48,9 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:complaintInvestigation:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:complaintInvestigation:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -58,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['system:complaintInvestigation:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -68,12 +64,8 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['system:complaintInvestigation:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:complaintInvestigation:export']" size="small"
-              >导出</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:complaintInvestigation:export']" size="small">导出</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -217,8 +209,8 @@ import {
   ComplaintInvestigationForm
 } from '@/api/complaintdispute/complaintInvestigation/types';
 import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
-import { createComplaintInvestigationFieldConfig } from '@/utils/configs/complaintdispute/complaintinvestigationFieldConfigs';
-import { createComplaintInvestigationSearchConfig } from '@/utils/configs/complaintdispute/complaintinvestigationSearchConfigs';
+import { createComplaintInvestigationFieldConfig } from '@/utils/configs/complaintdispute/complaintdisputeFieldConfigs';
+import { createComplaintInvestigationSearchConfig } from '@/utils/configs/complaintdispute/complaintdisputeSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
@@ -243,7 +235,7 @@ const dialog = reactive<DialogOption>({
 });
 
 // 配置管理器
-const fieldConfigManager = new FieldConfigManager('complaintInvestigation', createComplaintInvestigationFieldConfig());
+const fieldConfigManager = createComplaintInvestigationFieldConfig();
 const searchConfigManager = createComplaintInvestigationSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

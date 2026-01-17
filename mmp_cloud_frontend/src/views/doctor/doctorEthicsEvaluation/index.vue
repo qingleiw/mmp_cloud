@@ -216,8 +216,7 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorEthicsEvaluationFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldGroups = createDoctorEthicsEvaluationFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorEthicsEvaluation', fieldGroups);
+const fieldConfigManager = createDoctorEthicsEvaluationFieldConfig();
 const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
 const searchConfigManager = createDoctorEthicsEvaluationSearchConfig();
 const searchConfigVisible = ref(false);

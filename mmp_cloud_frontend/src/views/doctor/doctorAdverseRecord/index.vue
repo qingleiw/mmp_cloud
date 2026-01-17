@@ -291,7 +291,7 @@ const rules = {
 const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 // 字段配置管理器
-const fieldConfigManager = new FieldConfigManager('doctorAdverseRecord', createDoctorAdverseRecordFieldConfig());
+const fieldConfigManager = createDoctorAdverseRecordFieldConfig();
 const searchConfigManager = createDoctorAdverseRecordSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

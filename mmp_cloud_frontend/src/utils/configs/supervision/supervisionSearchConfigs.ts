@@ -1,257 +1,640 @@
 import { SearchConfigManager, SearchFieldGroup } from '../searchConfigManager';
 
-// 监管检查记录搜索配置
-export function createSupervisionInspectionRecordSearchConfig() {
+// supervisionExpertGroup搜索配置
+export function createSupervisionExpertGroupSearchConfig() {
   const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'inspectionNo', label: '检查编号', type: 'input', placeholder: '请输入检查编号' },
-        { prop: 'inspectionTitle', label: '检查标题', type: 'input', placeholder: '请输入检查标题' },
-        { prop: 'inspectionType', label: '检查类型', type: 'select', placeholder: '请选择检查类型' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'groupCode', label: '专家组编码', type: 'input', visible: true, placeholder: '请输入专家组编码' },
+        { prop: 'groupName', label: '专家组名称', type: 'input', visible: true, placeholder: '请输入专家组名称' },
+        { prop: 'groupType', label: '专家组类型', type: 'input', visible: true, placeholder: '请输入专家组类型' },
+        { prop: 'status', label: '状态', type: 'input', visible: false, placeholder: '请输入状态' }
       ]
     },
     {
-      name: 'organization',
-      label: '组织信息',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'inspectedOrganization', label: '被检查单位', type: 'input', placeholder: '请输入被检查单位' },
-        { prop: 'organizationType', label: '单位类型', type: 'select', placeholder: '请选择单位类型' }
+        { prop: 'specialty', label: '专业领域', type: 'input', visible: false, placeholder: '请输入专业领域' },
+        { prop: 'description', label: '描述', type: 'input', visible: false, placeholder: '请输入描述' }
       ]
     },
     {
-      name: 'time',
-      label: '时间范围',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'inspectionDate', label: '检查日期', type: 'daterange', placeholder: '请选择检查日期范围' }
-      ]
-    },
-    {
-      name: 'team',
-      label: '检查团队',
-      fields: [
-        { prop: 'inspectionLeader', label: '检查组长', type: 'input', placeholder: '请输入检查组长' },
-        { prop: 'supervisoryAuthority', label: '监管机构', type: 'input', placeholder: '请输入监管机构' }
-      ]
-    },
-    {
-      name: 'result',
-      label: '检查结果',
-      fields: [
-        { prop: 'inspectionGrade', label: '检查等级', type: 'select', placeholder: '请选择检查等级' },
-        { prop: 'rectificationRequired', label: '是否需要整改', type: 'select', placeholder: '请选择是否需要整改' }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
   ];
 
-  return new SearchConfigManager('supervisionInspectionRecord', searchFieldGroups);
+  return new SearchConfigManager('supervisionExpertGroup', searchFieldGroups);
 }
 
-// 监管整改通知搜索配置
-export function createSupervisionRectificationNoticeSearchConfig() {
+
+// supervisionExpertMember搜索配置
+export function createSupervisionExpertMemberSearchConfig() {
   const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'noticeNo', label: '通知编号', type: 'input', placeholder: '请输入通知编号' },
-        { prop: 'noticeTitle', label: '通知标题', type: 'input', placeholder: '请输入通知标题' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'groupId', label: '专家组ID', type: 'number', visible: true, placeholder: '请输入专家组ID' },
+        { prop: 'expertName', label: '专家姓名', type: 'input', visible: true, placeholder: '请输入专家姓名' },
+        { prop: 'expertTitle', label: '专家职称', type: 'input', visible: true, placeholder: '请输入专家职称' },
+        { prop: 'status', label: '状态', type: 'input', visible: false, placeholder: '请输入状态' }
       ]
     },
     {
-      name: 'organization',
-      label: '被通知单位',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'notifiedOrganization', label: '被通知单位', type: 'input', placeholder: '请输入被通知单位' },
-        { prop: 'organizationType', label: '单位类型', type: 'select', placeholder: '请选择单位类型' }
+        { prop: 'hospital', label: '所在医院', type: 'input', visible: false, placeholder: '请输入所在医院' },
+        { prop: 'specialty', label: '专业特长', type: 'input', visible: false, placeholder: '请输入专业特长' },
+        { prop: 'contactInfo', label: '联系方式', type: 'input', visible: false, placeholder: '请输入联系方式' }
       ]
     },
     {
-      name: 'time',
-      label: '时间范围',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'noticeDate', label: '通知日期', type: 'daterange', placeholder: '请选择通知日期范围' },
-        { prop: 'rectificationDeadline', label: '整改期限', type: 'daterange', placeholder: '请选择整改期限范围' }
-      ]
-    },
-    {
-      name: 'issues',
-      label: '问题信息',
-      fields: [
-        { prop: 'severityLevels', label: '严重程度', type: 'select', placeholder: '请选择严重程度' }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
   ];
 
-  return new SearchConfigManager('supervisionRectificationNotice', searchFieldGroups);
+  return new SearchConfigManager('supervisionExpertMember', searchFieldGroups);
 }
 
-// 监管整改报告搜索配置
-export function createSupervisionRectificationReportSearchConfig() {
+
+// supervisionForm搜索配置
+export function createSupervisionFormSearchConfig() {
   const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'reportNo', label: '报告编号', type: 'input', placeholder: '请输入报告编号' },
-        { prop: 'reportTitle', label: '报告标题', type: 'input', placeholder: '请输入报告标题' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'formCode', label: '表单编码', type: 'input', visible: true, placeholder: '请输入表单编码' },
+        { prop: 'formName', label: '表单名称', type: 'input', visible: true, placeholder: '请输入表单名称' },
+        { prop: 'projectId', label: '关联项目ID', type: 'number', visible: true, placeholder: '请输入关联项目ID' },
+        { prop: 'status', label: '状态', type: 'input', visible: false, placeholder: '请输入状态' }
       ]
     },
     {
-      name: 'organization',
-      label: '报告单位',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'reportingOrganization', label: '报告单位', type: 'input', placeholder: '请输入报告单位' },
-        { prop: 'organizationType', label: '单位类型', type: 'select', placeholder: '请选择单位类型' }
+        { prop: 'formDescription', label: '表单描述', type: 'input', visible: false, placeholder: '请输入表单描述' },
+        { prop: 'formConfig', label: '表单配置（JSON格式）', type: 'input', visible: false, placeholder: '请输入表单配置（JSON格式）' }
       ]
     },
     {
-      name: 'time',
-      label: '时间范围',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'reportDate', label: '报告日期', type: 'daterange', placeholder: '请选择报告日期范围' },
-        { prop: 'expectedCompletionDate', label: '预计完成日期', type: 'daterange', placeholder: '请选择预计完成日期范围' }
-      ]
-    },
-    {
-      name: 'progress',
-      label: '整改进度',
-      fields: [
-        { prop: 'completionRate', label: '完成率', type: 'numberrange', placeholder: '请输入完成率范围' }
-      ]
-    },
-    {
-      name: 'verification',
-      label: '验收信息',
-      fields: [
-        { prop: 'verificationResult', label: '验收结果', type: 'select', placeholder: '请选择验收结果' },
-        { prop: 'verifier', label: '验收人', type: 'input', placeholder: '请输入验收人' }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
   ];
 
-  return new SearchConfigManager('supervisionRectificationReport', searchFieldGroups);
+  return new SearchConfigManager('supervisionForm', searchFieldGroups);
 }
 
-// 监管处罚决定搜索配置
-export function createSupervisionPenaltyDecisionSearchConfig() {
+
+// supervisionFormField搜索配置
+export function createSupervisionFormFieldSearchConfig() {
   const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'decisionNo', label: '决定编号', type: 'input', placeholder: '请输入决定编号' },
-        { prop: 'decisionTitle', label: '决定标题', type: 'input', placeholder: '请输入决定标题' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'formId', label: '表单ID', type: 'number', visible: true, placeholder: '请输入表单ID' },
+        { prop: 'fieldCode', label: '字段编码', type: 'input', visible: true, placeholder: '请输入字段编码' },
+        { prop: 'fieldName', label: '字段名称', type: 'input', visible: true, placeholder: '请输入字段名称' },
+        { prop: 'fieldType', label: '字段类型', type: 'input', visible: false, placeholder: '请输入字段类型' },
+        { prop: 'status', label: '状态', type: 'input', visible: false, placeholder: '请输入状态' }
       ]
     },
     {
-      name: 'organization',
-      label: '被处罚单位',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'penalizedOrganization', label: '被处罚单位', type: 'input', placeholder: '请输入被处罚单位' },
-        { prop: 'organizationType', label: '单位类型', type: 'select', placeholder: '请选择单位类型' }
+        { prop: 'fieldConfig', label: '字段配置（JSON格式）', type: 'input', visible: false, placeholder: '请输入字段配置（JSON格式）' },
+        { prop: 'requiredFlag', label: '是否必填：0-否，1-是', type: 'select', visible: false, placeholder: '请输入是否必填：0-否，1-是' },
+        { prop: 'sortOrder', label: '排序', type: 'number', visible: false, placeholder: '请输入排序' }
       ]
     },
     {
-      name: 'time',
-      label: '时间范围',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'decisionDate', label: '决定日期', type: 'daterange', placeholder: '请选择决定日期范围' },
-        { prop: 'executionDeadline', label: '执行期限', type: 'daterange', placeholder: '请选择执行期限范围' }
-      ]
-    },
-    {
-      name: 'violations',
-      label: '违法信息',
-      fields: [
-        { prop: 'violationCategory', label: '违法类别', type: 'select', placeholder: '请选择违法类别' },
-        { prop: 'violationSeverity', label: '违法严重程度', type: 'select', placeholder: '请选择违法严重程度' }
-      ]
-    },
-    {
-      name: 'penalty',
-      label: '处罚信息',
-      fields: [
-        { prop: 'penaltyType', label: '处罚类型', type: 'select', placeholder: '请选择处罚类型' },
-        { prop: 'penaltyAmount', label: '罚款金额', type: 'numberrange', placeholder: '请输入罚款金额范围' }
-      ]
-    },
-    {
-      name: 'execution',
-      label: '执行信息',
-      fields: [
-        { prop: 'executionStatus', label: '执行状态', type: 'select', placeholder: '请选择执行状态' }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
   ];
 
-  return new SearchConfigManager('supervisionPenaltyDecision', searchFieldGroups);
+  return new SearchConfigManager('supervisionFormField', searchFieldGroups);
 }
 
-// 监管工作计划搜索配置
-export function createSupervisionWorkPlanSearchConfig() {
+
+// supervisionIssue搜索配置
+export function createSupervisionIssueSearchConfig() {
   const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'planNo', label: '计划编号', type: 'input', placeholder: '请输入计划编号' },
-        { prop: 'planTitle', label: '计划标题', type: 'input', placeholder: '请输入计划标题' },
-        { prop: 'planYear', label: '计划年度', type: 'input', placeholder: '请输入计划年度' },
-        { prop: 'planType', label: '计划类型', type: 'select', placeholder: '请选择计划类型' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'resultId', label: '结果ID', type: 'number', visible: true, placeholder: '请输入结果ID' },
+        { prop: 'issueType', label: '问题类型', type: 'input', visible: true, placeholder: '请输入问题类型' },
+        { prop: 'status', label: '状态：pending-待整改，rectifying-整改中，completed-已完成', type: 'input', visible: true, placeholder: '请输入状态：pending-待整改，rectifying-整改中，completed-已完成' }
       ]
     },
     {
-      name: 'schedule',
-      label: '时间安排',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'startDate', label: '开始日期', type: 'daterange', placeholder: '请选择开始日期范围' },
-        { prop: 'endDate', label: '结束日期', type: 'daterange', placeholder: '请选择结束日期范围' }
+        { prop: 'issueDescription', label: '问题描述', type: 'input', visible: false, placeholder: '请输入问题描述' },
+        { prop: 'severity', label: '严重程度', type: 'input', visible: false, placeholder: '请输入严重程度' },
+        { prop: 'responsiblePerson', label: '责任人', type: 'input', visible: false, placeholder: '请输入责任人' },
+        { prop: 'rectificationDeadline', label: '整改期限', type: 'daterange', visible: false, placeholder: '请输入整改期限', startProp: 'rectificationDeadlineStart', endProp: 'rectificationDeadlineEnd' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
   ];
 
-  return new SearchConfigManager('supervisionWorkPlan', searchFieldGroups);
+  return new SearchConfigManager('supervisionIssue', searchFieldGroups);
 }
 
-// 监管统计报告搜索配置
-export function createSupervisionStatisticsReportSearchConfig() {
+
+// supervisionPlan搜索配置
+export function createSupervisionPlanSearchConfig() {
   const searchFieldGroups: SearchFieldGroup[] = [
     {
       name: 'basic',
       label: '基础信息',
       fields: [
-        { prop: 'reportNo', label: '报告编号', type: 'input', placeholder: '请输入报告编号' },
-        { prop: 'reportTitle', label: '报告标题', type: 'input', placeholder: '请输入报告标题' },
-        { prop: 'reportPeriod', label: '报告周期', type: 'select', placeholder: '请选择报告周期' }
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'planCode', label: '计划编码', type: 'input', visible: true, placeholder: '请输入计划编码' },
+        { prop: 'planName', label: '计划名称', type: 'input', visible: true, placeholder: '请输入计划名称' },
+        { prop: 'projectId', label: '项目ID', type: 'number', visible: true, placeholder: '请输入项目ID' },
+        { prop: 'planType', label: '计划类型', type: 'input', visible: false, placeholder: '请输入计划类型' },
+        { prop: 'status', label: '状态：draft-草稿，published-已发布，executing-执行中，completed-已完成', type: 'input', visible: false, placeholder: '请输入状态：draft-草稿，published-已发布，executing-执行中，completed-已完成' }
       ]
     },
     {
-      name: 'time',
-      label: '时间范围',
+      name: 'detail',
+      label: '详细信息',
       fields: [
-        { prop: 'reportDate', label: '报告日期', type: 'daterange', placeholder: '请选择报告日期范围' }
+        { prop: 'supervisionPeriod', label: '督导周期', type: 'input', visible: false, placeholder: '请输入督导周期' },
+        { prop: 'startDate', label: '开始日期', type: 'daterange', visible: false, placeholder: '请输入开始日期', startProp: 'startDateStart', endProp: 'startDateEnd' },
+        { prop: 'endDate', label: '结束日期', type: 'daterange', visible: false, placeholder: '请输入结束日期', startProp: 'endDateStart', endProp: 'endDateEnd' },
+        { prop: 'responsiblePerson', label: '负责人', type: 'input', visible: false, placeholder: '请输入负责人' }
       ]
     },
     {
-      name: 'statistics',
-      label: '统计数据',
+      name: 'system',
+      label: '系统字段',
       fields: [
-        { prop: 'inspectionCount', label: '检查次数', type: 'numberrange', placeholder: '请输入检查次数范围' },
-        { prop: 'organizationsInspected', label: '检查单位数', type: 'numberrange', placeholder: '请输入检查单位数范围' },
-        { prop: 'issuesFound', label: '发现问题数', type: 'numberrange', placeholder: '请输入发现问题数范围' }
-      ]
-    },
-    {
-      name: 'quality',
-      label: '质量指标',
-      fields: [
-        { prop: 'complianceRate', label: '合规率', type: 'numberrange', placeholder: '请输入合规率范围' },
-        { prop: 'rectificationCompletionRate', label: '整改完成率', type: 'numberrange', placeholder: '请输入整改完成率范围' }
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
       ]
     }
   ];
 
-  return new SearchConfigManager('supervisionStatisticsReport', searchFieldGroups);
+  return new SearchConfigManager('supervisionPlan', searchFieldGroups);
+}
+
+
+// supervisionPlanDept搜索配置
+export function createSupervisionPlanDeptSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'planId', label: '计划ID', type: 'number', visible: true, placeholder: '请输入计划ID' },
+        { prop: 'deptId', label: '科室ID', type: 'number', visible: true, placeholder: '请输入科室ID' },
+        { prop: 'status', label: '状态：pending-待督导，completed-已完成', type: 'input', visible: true, placeholder: '请输入状态：pending-待督导，completed-已完成' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'supervisionDate', label: '督导日期', type: 'daterange', visible: false, placeholder: '请输入督导日期', startProp: 'supervisionDateStart', endProp: 'supervisionDateEnd' },
+        { prop: 'supervisor', label: '督导人', type: 'input', visible: false, placeholder: '请输入督导人' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionPlanDept', searchFieldGroups);
+}
+
+
+// supervisionPlanForm搜索配置
+export function createSupervisionPlanFormSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'planId', label: '计划ID', type: 'number', visible: true, placeholder: '请输入计划ID' },
+        { prop: 'formId', label: '表单ID', type: 'number', visible: true, placeholder: '请输入表单ID' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'sortOrder', label: '排序', type: 'number', visible: true, placeholder: '请输入排序' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionPlanForm', searchFieldGroups);
+}
+
+
+// supervisionProject搜索配置
+export function createSupervisionProjectSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'projectCode', label: '项目编码', type: 'input', visible: true, placeholder: '请输入项目编码' },
+        { prop: 'projectName', label: '项目名称', type: 'input', visible: true, placeholder: '请输入项目名称' },
+        { prop: 'projectType', label: '项目类型', type: 'input', visible: true, placeholder: '请输入项目类型' },
+        { prop: 'status', label: '状态：active-启用，inactive-停用', type: 'input', visible: false, placeholder: '请输入状态：active-启用，inactive-停用' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'projectDescription', label: '项目描述', type: 'input', visible: false, placeholder: '请输入项目描述' },
+        { prop: 'supervisionDepartment', label: '督导部门', type: 'input', visible: false, placeholder: '请输入督导部门' },
+        { prop: 'responsiblePerson', label: '负责人', type: 'input', visible: false, placeholder: '请输入负责人' },
+        { prop: 'contactInfo', label: '联系方式', type: 'input', visible: false, placeholder: '请输入联系方式' },
+        { prop: 'supervisionFrequency', label: '督导频次', type: 'input', visible: false, placeholder: '请输入督导频次' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionProject', searchFieldGroups);
+}
+
+
+// supervisionProjectIndicator搜索配置
+export function createSupervisionProjectIndicatorSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'projectId', label: '项目ID', type: 'number', visible: true, placeholder: '请输入项目ID' },
+        { prop: 'indicatorCode', label: '指标编码', type: 'input', visible: true, placeholder: '请输入指标编码' },
+        { prop: 'indicatorName', label: '指标名称', type: 'input', visible: true, placeholder: '请输入指标名称' },
+        { prop: 'indicatorType', label: '指标类型', type: 'input', visible: false, placeholder: '请输入指标类型' },
+        { prop: 'status', label: '状态', type: 'input', visible: false, placeholder: '请输入状态' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'indicatorDescription', label: '指标描述', type: 'input', visible: false, placeholder: '请输入指标描述' },
+        { prop: 'scoringStandard', label: '评分标准', type: 'input', visible: false, placeholder: '请输入评分标准' },
+        { prop: 'weight', label: '权重', type: 'number', visible: false, placeholder: '请输入权重' },
+        { prop: 'maxScore', label: '满分值', type: 'number', visible: false, placeholder: '请输入满分值' },
+        { prop: 'sortOrder', label: '排序', type: 'number', visible: false, placeholder: '请输入排序' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionProjectIndicator', searchFieldGroups);
+}
+
+
+// supervisionRectificationProgress搜索配置
+export function createSupervisionRectificationProgressSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'taskId', label: '任务ID', type: 'number', visible: true, placeholder: '请输入任务ID' },
+        { prop: 'status', label: '状态', type: 'input', visible: true, placeholder: '请输入状态' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'progressDescription', label: '进度描述', type: 'input', visible: true, placeholder: '请输入进度描述' },
+        { prop: 'progressPercentage', label: '进度百分比', type: 'number', visible: false, placeholder: '请输入进度百分比' },
+        { prop: 'attachmentUrls', label: '附件URL', type: 'input', visible: false, placeholder: '请输入附件URL' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionRectificationProgress', searchFieldGroups);
+}
+
+
+// supervisionRectificationTask搜索配置
+export function createSupervisionRectificationTaskSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'issueId', label: '问题ID', type: 'number', visible: true, placeholder: '请输入问题ID' },
+        { prop: 'status', label: '状态', type: 'input', visible: true, placeholder: '请输入状态' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'taskDescription', label: '任务描述', type: 'input', visible: true, placeholder: '请输入任务描述' },
+        { prop: 'responsibleDept', label: '责任部门', type: 'input', visible: false, placeholder: '请输入责任部门' },
+        { prop: 'responsiblePerson', label: '责任人', type: 'input', visible: false, placeholder: '请输入责任人' },
+        { prop: 'deadline', label: '截止日期', type: 'daterange', visible: false, placeholder: '请输入截止日期', startProp: 'deadlineStart', endProp: 'deadlineEnd' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionRectificationTask', searchFieldGroups);
+}
+
+
+// supervisionResult搜索配置
+export function createSupervisionResultSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'planId', label: '计划ID', type: 'number', visible: true, placeholder: '请输入计划ID' },
+        { prop: 'deptId', label: '科室ID', type: 'number', visible: true, placeholder: '请输入科室ID' },
+        { prop: 'expertGroupId', label: '专家组ID', type: 'number', visible: true, placeholder: '请输入专家组ID' },
+        { prop: 'status', label: '状态：draft-草稿，submitted-已提交，reviewed-已审核', type: 'input', visible: false, placeholder: '请输入状态：draft-草稿，submitted-已提交，reviewed-已审核' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'supervisionDate', label: '督导日期', type: 'daterange', visible: false, placeholder: '请输入督导日期', startProp: 'supervisionDateStart', endProp: 'supervisionDateEnd' },
+        { prop: 'supervisor', label: '督导人', type: 'input', visible: false, placeholder: '请输入督导人' },
+        { prop: 'totalScore', label: '总分', type: 'number', visible: false, placeholder: '请输入总分' },
+        { prop: 'grade', label: '等级', type: 'input', visible: false, placeholder: '请输入等级' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionResult', searchFieldGroups);
+}
+
+
+// supervisionResultDetail搜索配置
+export function createSupervisionResultDetailSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'resultId', label: '结果ID', type: 'number', visible: true, placeholder: '请输入结果ID' },
+        { prop: 'indicatorId', label: '指标ID', type: 'number', visible: true, placeholder: '请输入指标ID' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'score', label: '得分', type: 'number', visible: true, placeholder: '请输入得分' },
+        { prop: 'remarks', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionResultDetail', searchFieldGroups);
+}
+
+
+// supervisionReview搜索配置
+export function createSupervisionReviewSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'taskId', label: '任务ID', type: 'number', visible: true, placeholder: '请输入任务ID' },
+        { prop: 'status', label: '状态', type: 'input', visible: true, placeholder: '请输入状态' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'reviewDate', label: '复查日期', type: 'daterange', visible: true, placeholder: '请输入复查日期', startProp: 'reviewDateStart', endProp: 'reviewDateEnd' },
+        { prop: 'reviewer', label: '复查人', type: 'input', visible: false, placeholder: '请输入复查人' },
+        { prop: 'reviewResult', label: '复查结果：qualified-合格，unqualified-不合格', type: 'input', visible: false, placeholder: '请输入复查结果：qualified-合格，unqualified-不合格' },
+        { prop: 'reviewOpinion', label: '复查意见', type: 'input', visible: false, placeholder: '请输入复查意见' },
+        { prop: 'nextReviewDate', label: '下次复查日期', type: 'daterange', visible: false, placeholder: '请输入下次复查日期', startProp: 'nextReviewDateStart', endProp: 'nextReviewDateEnd' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('supervisionReview', searchFieldGroups);
 }

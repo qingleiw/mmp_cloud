@@ -1,11 +1,25 @@
 <template>
   <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-edit class="title-icon"></i-ep-edit>
+        考试题目管理
+      </h2>
+      <p class="page-description">管理考试题目和答案</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
     <!-- 页面头部 -->
-    <div class="page-header">
-      <div class="header-title">
-        <i-ep-document-checked />
-        资质考试题目管理
-      </div>
+    
       <div class="header-desc">管理系统资质考试题目，包括题目内容、选项、答案、难度设置等信息</div>
     </div>
 
@@ -19,7 +33,22 @@
           </div>
           <el-button type="info" text icon="Setting" @click="toggleSearchConfig">搜索配置</el-button>
         </div>
-      </template>
+      
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      v-model:fields="visibleSearchFields"
+      :config="[]"
+      title="搜索字段配置"
+    />
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
       <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
     </el-card>
 
@@ -218,12 +247,7 @@
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
-    </el-dialog>
-    <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <!-- 搜索配置对话框 -->
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
-  </div>
+    </el-dialog></div>
 </template>
 
 <script setup name="QualificationExamQuestion" lang="ts">
@@ -244,6 +268,15 @@ import { createQualificationExamQuestionSearchConfig } from '@/utils/configs/qua
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+
+
+const fieldConfigVisible = ref(false);
+
+
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

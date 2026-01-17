@@ -197,8 +197,7 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorHonorFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldGroups = createDoctorHonorFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorHonor', fieldGroups);
+const fieldConfigManager = createDoctorHonorFieldConfig();
 
 // 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
 fieldConfigManager.clearConfig();

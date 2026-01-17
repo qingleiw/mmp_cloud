@@ -287,7 +287,7 @@ const rules = {
 const doctorOptions = ref<DoctorBasicInfoVO[]>([]);
 
 // 字段配置管理器
-const fieldConfigManager = new FieldConfigManager('doctorEducation', createDoctorEducationFieldConfig());
+const fieldConfigManager = createDoctorEducationFieldConfig();
 const searchConfigManager = createDoctorEducationSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

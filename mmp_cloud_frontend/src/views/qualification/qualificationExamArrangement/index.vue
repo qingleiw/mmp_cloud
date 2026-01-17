@@ -1,11 +1,25 @@
 <template>
   <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-calendar class="title-icon"></i-ep-calendar>
+        考试安排管理
+      </h2>
+      <p class="page-description">管理考试安排和通知</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
     <!-- 页面头部 -->
-    <div class="page-header">
-      <div class="header-title">
-        <i-ep-document-checked />
-        资质考试安排管理
-      </div>
+    
       <div class="header-desc">管理系统资质考试安排信息，包括考试基本信息、时间安排和考生管理等</div>
     </div>
 
@@ -19,7 +33,15 @@
           </div>
           <el-button type="info" text icon="Setting" @click="toggleSearchConfig">搜索配置</el-button>
         </div>
-      </template>
+      
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
       <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
     </el-card>
 
@@ -192,10 +214,7 @@
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
-    </el-dialog>
-    <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="showSearchConfig" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    </el-dialog><SearchConfigDialog v-model="showSearchConfig" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -217,6 +236,20 @@ import { createQualificationExamArrangementSearchConfig } from '@/utils/configs/
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+
+
+const searchConfigVisible = ref(false);
+const fieldConfigVisible = ref(false);
+
+
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

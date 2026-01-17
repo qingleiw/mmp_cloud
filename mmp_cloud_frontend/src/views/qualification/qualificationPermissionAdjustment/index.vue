@@ -1,11 +1,25 @@
 <template>
   <div class="app-container">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-key class="title-icon"></i-ep-key>
+        权限调整管理
+      </h2>
+      <p class="page-description">管理权限调整和变更</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
     <!-- 页面头部 -->
-    <div class="page-header">
-      <div class="header-title">
-        <i-ep-document-checked />
-        资质权限调整历史
-      </div>
+    
       <div class="header-desc">管理医师资质权限的调整记录，包括权限级别的变更历史和调整依据</div>
     </div>
 
@@ -17,8 +31,7 @@
             <i-ep-search />
             <span>搜索条件</span>
           </div>
-          <el-button type="info" text icon="Setting" @click="searchConfigVisible = true">搜索配置</el-button>
-        </div>
+          </div>
       </template>
       <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
     </el-card>
@@ -247,6 +260,17 @@ import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { createQualificationPermissionAdjustmentFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
 import { Search, Setting } from '@element-plus/icons-vue';
 
+
+const fieldConfigVisible = ref(false);
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
 const qualificationPermissionAdjustmentList = ref<QualificationPermissionAdjustmentVO[]>([]);
@@ -425,12 +449,33 @@ onMounted(() => {
 }
 
 .page-header {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
+
+      .title-icon {
+        color: #409eff;
+        font-size: 20px;
+      }
+    }
+
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
+  }
   .header-title {
     font-size: 18px;
     font-weight: 600;

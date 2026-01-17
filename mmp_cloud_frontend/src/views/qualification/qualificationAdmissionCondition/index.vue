@@ -3,15 +3,25 @@
     <!-- 页面标题 -->
     <div class="page-header mb-4">
       <h2 class="page-title">
-        <i-ep-document-checked class="title-icon"></i-ep-document-checked>
-        资质准入条件管理
+        <i-ep-tickets class="title-icon"></i-ep-tickets>
+        准入条件管理
       </h2>
-      <p class="page-description">管理系统资质准入条件，包括条件运算符、条件值、逻辑关系等信息</p>
+      <p class="page-description">管理准入条件和要求</p>
     </div>
+
+
+
+
+
+
+
+
+
+
 
     <!-- 动态搜索表单 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="search-container mb-4">
+      <div v-show="showSearch" class="search-container mb-4" class="search-container mb-4">
         <el-card shadow="hover" class="search-card">
           <template #header>
             <div class="search-header">
@@ -26,7 +36,15 @@
                 </el-button>
               </div>
             </div>
-          </template>
+          
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
           <DynamicSearchForm
             ref="queryFormRef"
             :query="queryParams"
@@ -95,7 +113,7 @@
               size="small"
               >导入</el-button
             >
-            <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
             </el-button>
@@ -242,11 +260,7 @@
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
-    </el-dialog>
-
-    <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    </el-dialog><SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -275,7 +289,6 @@ const qualificationAdmissionConditionList = ref<QualificationAdmissionConditionV
 const buttonLoading = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
-const showFieldConfig = ref(false);
 const ids = ref<Array<string | number>>([]);
 const single = ref(true);
 const multiple = ref(true);
@@ -287,6 +300,7 @@ const qualificationAdmissionConditionFormRef = ref<ElFormInstance>();
 // 字段配置相关变量
 const fieldConfigManager = createQualificationAdmissionConditionFieldConfig();
 const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
+const fieldConfigVisible = ref(false);
 const searchConfigManager = createQualificationAdmissionConditionSearchConfig();
 const searchConfigVisible = ref(false);
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
@@ -441,10 +455,14 @@ const handleExport = () => {
   );
 };
 
+/** 字段配置按钮操作 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
 /** 字段配置确认 */
 const handleFieldConfigConfirm = () => {
-  // 字段配置更新后刷新列表
-  getList();
+  fieldConfigVisible.value = false;
 };
 
 const handleSearchConfig = () => {
@@ -469,26 +487,32 @@ onMounted(() => {
 
 // 页面标题区域
 .page-header {
-  margin-bottom: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-  .page-title {
-    display: flex;
-    align-items: center;
-    font-size: 24px;
-    font-weight: 600;
-    color: #1d2129;
-    margin-bottom: 8px;
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
 
-    .title-icon {
-      margin-right: 8px;
-      color: #409eff;
+      .title-icon {
+        color: #409eff;
+        font-size: 20px;
+      }
     }
-  }
 
-  .page-description {
-    color: #86909c;
-    font-size: 14px;
-    margin: 0;
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
   }
 }
 

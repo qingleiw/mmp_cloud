@@ -217,8 +217,7 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorInsuranceCodeFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldGroups = createDoctorInsuranceCodeFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorInsuranceCode', fieldGroups);
+const fieldConfigManager = createDoctorInsuranceCodeFieldConfig();
 const searchConfigManager = createDoctorInsuranceCodeSearchConfig();
 
 // 初始化时清除之前的搜索配置和localStorage缓存，确保新配置生效

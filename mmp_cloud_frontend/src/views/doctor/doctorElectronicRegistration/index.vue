@@ -301,8 +301,7 @@ const data = reactive<PageData<DoctorElectronicRegistrationForm, DoctorElectroni
 });
 
 // 字段配置相关变量
-const fieldGroups = createDoctorElectronicRegistrationFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorElectronicRegistration', fieldGroups);
+const fieldConfigManager = createDoctorElectronicRegistrationFieldConfig();
 const fieldConfigVisible = ref(false);
 
 const searchConfigManager = createDoctorElectronicRegistrationSearchConfig();

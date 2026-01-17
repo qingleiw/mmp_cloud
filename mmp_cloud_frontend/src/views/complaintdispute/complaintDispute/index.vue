@@ -48,9 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:complaintDispute:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['system:complaintDispute:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -58,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['system:complaintDispute:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -68,12 +64,8 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['system:complaintDispute:remove']"
-              size="small"
-              >删除</el-button
-            >
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:complaintDispute:export']" size="small"
-              >导出</el-button
-            >
+              size="small">删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['system:complaintDispute:export']" size="small">导出</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -279,7 +271,7 @@ const dialog = reactive<DialogOption>({
 });
 
 // 配置管理器
-const fieldConfigManager = new FieldConfigManager('complaintDispute', createComplaintDisputeFieldConfig());
+const fieldConfigManager = createComplaintDisputeFieldConfig();
 const searchConfigManager = createComplaintDisputeSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

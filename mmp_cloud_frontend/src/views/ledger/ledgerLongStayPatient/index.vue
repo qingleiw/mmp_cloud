@@ -1,61 +1,77 @@
 <template>
   <div class="p-2">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-timer class="title-icon"></i-ep-timer>
+        长期住院患者管理
+      </h2>
+      <p class="page-description">管理长期住院患者信息</p>
+    </div>
+
+
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
-          <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-            <el-form-item label="患者姓名" prop="patientName">
-              <el-input v-model="queryParams.patientName" placeholder="请输入患者姓名" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="入院日期" prop="admissionDate">
-              <el-date-picker clearable v-model="queryParams.admissionDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择入院日期" />
-            </el-form-item>
-            <el-form-item label="出院日期" prop="dischargeDate">
-              <el-date-picker clearable v-model="queryParams.dischargeDate" type="date" value-format="YYYY-MM-DD" placeholder="请选择出院日期" />
-            </el-form-item>
-            <el-form-item label="住院天数" prop="hospitalDays">
-              <el-input v-model="queryParams.hospitalDays" placeholder="请输入住院天数" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="所在科室" prop="department">
-              <el-input v-model="queryParams.department" placeholder="请输入所在科室" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="诊断" prop="diagnosis">
-              <el-input v-model="queryParams.diagnosis" placeholder="请输入诊断" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="治疗方案" prop="treatmentPlan">
-              <el-input v-model="queryParams.treatmentPlan" placeholder="请输入治疗方案" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="并发症" prop="complications">
-              <el-input v-model="queryParams.complications" placeholder="请输入并发症" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="特殊原因" prop="specialReasons">
-              <el-input v-model="queryParams.specialReasons" placeholder="请输入特殊原因" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item label="医疗评价" prop="medicalEvaluation">
-              <el-input v-model="queryParams.medicalEvaluation" placeholder="请输入医疗评价" clearable @keyup.enter="handleQuery" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
-              <el-button icon="Refresh" @click="resetQuery">重置</el-button>
-            </el-form-item>
-          </el-form>
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      v-model:fields="visibleSearchFields"
+      :config="[]"
+      title="搜索字段配置"
+    />
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
         </el-card>
       </div>
     </transition>
 
     <el-card shadow="never">
       <template #header>
-        <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerLongStayPatient:add']">新增</el-button>
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ledger:ledgerLongStayPatient:edit']"
+              <div class="table-header">
+        <div class="table-title">
+          <i-ep-list class="table-icon"></i-ep-list>
+          <span>长期住院患者列表</span>
+        </div>
+        <div class="table-actions">
+
+          
+            <el-button size="small" type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['ledger:ledgerLongStayPatient:add']">新增</el-button>
+          
+          
+            <el-button size="small" type="success" plain icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['ledger:ledgerLongStayPatient:edit']"
               >修改</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button
+          
+          
+            <el-button size="small"
               type="danger"
               plain
               icon="Delete"
@@ -64,14 +80,20 @@
               v-hasPermi="['ledger:ledgerLongStayPatient:remove']"
               >删除</el-button
             >
-          </el-col>
-          <el-col :span="1.5">
-            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerLongStayPatient:export']"
+          
+          
+            <el-button size="small" type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['ledger:ledgerLongStayPatient:export']"
               >导出</el-button
             >
-          </el-col>
+          
+          
+          <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+            <i-ep-setting class="btn-icon"></i-ep-setting>
+            字段配置
+          </el-button>
           <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
-        </el-row>
+        </div>
+      </div>
       </template>
 
       <el-table v-loading="loading" border :data="ledgerLongStayPatientList" @selection-change="handleSelectionChange">
@@ -176,6 +198,9 @@
 </template>
 
 <script setup name="LedgerLongStayPatient" lang="ts">
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import {
   listLedgerLongStayPatient,
   getLedgerLongStayPatient,
@@ -184,6 +209,19 @@ import {
   updateLedgerLongStayPatient
 } from '@/api/ledger/ledgerLongStayPatient';
 import { LedgerLongStayPatientVO, LedgerLongStayPatientQuery, LedgerLongStayPatientForm } from '@/api/ledger/ledgerLongStayPatient/types';
+
+
+const searchConfigVisible = ref(false);
+const fieldConfigVisible = ref(false);
+const visibleSearchFields = ref<string[]>([]);
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

@@ -299,7 +299,7 @@ const dialog = reactive<DialogOption>({
 });
 
 // 配置管理器
-const fieldConfigManager = new FieldConfigManager('doctorCertificate', createDoctorCertificateFieldConfig());
+const fieldConfigManager = createDoctorCertificateFieldConfig();
 const searchConfigManager = createDoctorCertificateSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 

@@ -3,13 +3,13 @@
     <!-- 页面标题 -->
     <div class="page-header mb-4">
       <h2 class="page-title">
-        <i-ep-alarm-light class="title-icon"></i-ep-alarm-light>
-        突发事件管理
+        <i-ep-bell class="title-icon"></i-ep-bell>
+        应急事件管理
       </h2>
-      <p class="page-description">管理系统突发事件的报告、处理和跟踪等全流程</p>
+      <p class="page-description">管理应急事件的记录和处理流程</p>
     </div>
 
-    <!-- 动态搜索表单 -->
+    <!-- 搜索区域 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
       <div v-show="showSearch" class="search-container mb-4">
         <el-card shadow="hover" class="search-card">
@@ -38,35 +38,39 @@
       </div>
     </transition>
 
-    <!-- 数据表格 -->
+    <!-- 表格区域 -->
     <el-card shadow="never" class="table-card">
       <template #header>
         <div class="table-header">
           <div class="table-title">
             <i-ep-list class="table-icon"></i-ep-list>
-            <span>突发事件列表</span>
+            <span>应急事件列表</span>
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" icon="Plus" @click="handleAdd" v-hasPermi="['emergency:emergencyEvent:add']" class="action-btn">
-              <span>新增</span>
-            </el-button>
-            <el-button type="success" icon="Edit" :disabled="single" @click="handleUpdate()" v-hasPermi="['emergency:emergencyEvent:edit']" class="action-btn">
-              <span>修改</span>
-            </el-button>
-            <el-button type="danger" icon="Delete" :disabled="multiple" @click="handleDelete()" v-hasPermi="['emergency:emergencyEvent:remove']" class="action-btn">
-              <span>删除</span>
-            </el-button>
-            <el-button type="warning" icon="Download" @click="handleExport" v-hasPermi="['emergency:emergencyEvent:export']" class="action-btn">
-              <span>导出</span>
-            </el-button>
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['emergency:emergencyEvent:add']" size="small">新增</el-button>
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['emergency:emergencyEvent:edit']"
+              size="small"
+            >修改</el-button>
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['emergency:emergencyEvent:remove']"
+              size="small"
+            >删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['emergency:emergencyEvent:export']" size="small">导出</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
-            </el-button>
-            <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
-              <i-ep-setting class="btn-icon"></i-ep-setting>
-              搜索项配置
             </el-button>
             <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
           </div>
@@ -124,42 +128,70 @@
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
 
-    <!-- 动态表单对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body class="dynamic-dialog">
-      <DynamicForm
-        ref="formRef"
-        :model="form"
-        :visible-fields="visibleFormFields"
-        :rules="rules"
-        @submit="submitForm"
-        @cancel="cancel"
-      />
+    <!-- 添加/修改对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
+        <el-row :gutter="20">
+          <el-col :span="12" v-for="field in visibleFormFields" :key="field.prop">
+            <el-form-item :label="field.label" :prop="field.prop">
+              <el-input v-if="!field.type || field.type === 'text'" v-model="form[field.prop]" :placeholder="'请输入' + field.label" />
+              <el-date-picker
+                v-else-if="field.type === 'date'"
+                v-model="form[field.prop]"
+                type="date"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-date-picker
+                v-else-if="field.type === 'datetime'"
+                v-model="form[field.prop]"
+                type="datetime"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="'请输入' + field.label" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
+        </div>
+      </template>
     </el-dialog>
 
     <!-- 搜索配置对话框 -->
     <SearchConfigDialog
       v-model:visible="searchConfigVisible"
-      :config-manager="searchConfigManager"
+      :searchConfigManager="searchConfigManager"
       @confirm="handleSearchConfigConfirm"
     />
 
     <!-- 字段配置对话框 -->
     <FieldConfigDialog
       v-model:visible="fieldConfigVisible"
-      :config-manager="fieldConfigManager"
+      :fieldConfigManager="fieldConfigManager"
       @confirm="handleFieldConfigConfirm"
     />
   </div>
 </template>
 
 <script setup name="EmergencyEvent" lang="ts">
-import { listEmergencyEvent, getEmergencyEvent, delEmergencyEvent, addEmergencyEvent, updateEmergencyEvent } from '@/api/emergency/emergencyEvent';
+import {
+  listEmergencyEvent,
+  getEmergencyEvent,
+  delEmergencyEvent,
+  addEmergencyEvent,
+  updateEmergencyEvent
+} from '@/api/emergency/emergencyEvent';
 import { EmergencyEventVO, EmergencyEventQuery, EmergencyEventForm } from '@/api/emergency/emergencyEvent/types';
 import { createEmergencyEventFieldConfig } from '@/utils/configs/emergency/emergencyFieldConfigs';
+import { createEmergencyEventSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createEmergencyEventSearchConfig } from '@/utils/configs/emergency/emergencySearchConfigs';
 import type { FormInstance } from 'element-plus';
 import type { DialogOption } from '@/types/global';
 
@@ -184,7 +216,6 @@ const dialog = reactive<DialogOption>({
 
 // 字段配置相关变量
 const fieldConfigManager = createEmergencyEventFieldConfig();
-fieldConfigManager.clearConfig();
 const fieldConfigVisible = ref(false);
 const searchConfigManager = createEmergencyEventSearchConfig();
 const searchConfigVisible = ref(false);
@@ -198,53 +229,54 @@ const visibleTableFields = computed(() => fieldConfigManager.getVisibleFields())
 // 计算属性：获取可见的表单字段
 const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
+const initFormData: EmergencyEventForm = {
+  id: undefined,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  drillResult: undefined,
+  lessonsLearned: undefined,
+  remark: undefined
+};
+
 const queryParams = reactive<EmergencyEventQuery>({
   pageNum: 1,
   pageSize: 10,
-  eventCode: undefined,
-  eventTitle: undefined,
-  eventType: undefined,
-  eventLevel: undefined,
-  occurrenceTime: undefined,
-  discoveryTime: undefined,
-  reportTime: undefined,
-  reporter: undefined,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
   location: undefined,
-  affectedPersons: undefined,
-  eventDescription: undefined,
-  immediateMeasures: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
   status: undefined,
+  lessonsLearned: undefined,
   params: {}
 });
-
-const initFormData: EmergencyEventForm = {
-  id: undefined,
-  eventCode: undefined,
-  eventTitle: undefined,
-  eventType: undefined,
-  eventLevel: undefined,
-  occurrenceTime: undefined,
-  discoveryTime: undefined,
-  reportTime: undefined,
-  reporter: undefined,
-  location: undefined,
-  affectedPersons: undefined,
-  eventDescription: undefined,
-  immediateMeasures: undefined,
-  status: undefined,
-  remark: undefined
-};
 
 const form = reactive<EmergencyEventForm>({ ...initFormData });
 
 const rules = {
-  eventCode: [{ required: true, message: '事件编码不能为空', trigger: 'blur' }],
-  eventTitle: [{ required: true, message: '事件标题不能为空', trigger: 'blur' }],
-  occurrenceTime: [{ required: true, message: '发生时间不能为空', trigger: 'blur' }],
-  eventDescription: [{ required: true, message: '事件描述不能为空', trigger: 'blur' }]
+  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
 };
 
-/** 查询突发事件记录列表 */
+/** 查询应急事件列表 */
 const getList = async () => {
   loading.value = true;
   try {
@@ -252,7 +284,7 @@ const getList = async () => {
     emergencyEventList.value = res.rows;
     total.value = res.total;
   } catch (error) {
-    console.error('获取突发事件列表失败:', error);
+    console.error('获取应急事件列表失败:', error);
   } finally {
     loading.value = false;
   }
@@ -291,7 +323,7 @@ const resetQuery = () => {
 /** 多选框选中数据 */
 const handleSelectionChange = (selection: EmergencyEventVO[]) => {
   ids.value = selection.map((item) => item.id);
-  single.value = selection.length !== 1;
+  single.value = selection.length != 1;
   multiple.value = !selection.length;
 };
 
@@ -299,7 +331,7 @@ const handleSelectionChange = (selection: EmergencyEventVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加突发事件记录';
+  dialog.title = '添加应急演练计划';
 };
 
 /** 修改按钮操作 */
@@ -311,9 +343,9 @@ const handleUpdate = async (row?: EmergencyEventVO) => {
       const res = await getEmergencyEvent(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改突发事件记录';
+      dialog.title = '修改应急演练计划';
     } catch (error) {
-      console.error('获取突发事件详情失败:', error);
+      console.error('获取应急演练计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }
@@ -343,7 +375,7 @@ const submitForm = async () => {
 const handleDelete = async (row?: EmergencyEventVO) => {
   const _ids = row?.id || ids.value;
   try {
-    await proxy?.$modal.confirm('是否确认删除突发事件记录编号为"' + _ids + '"的数据项？');
+    await proxy?.$modal.confirm('是否确认删除应急演练计划编号为"' + _ids + '"的数据项？');
     await delEmergencyEvent(_ids);
     proxy?.$modal.msgSuccess('删除成功');
     await getList();
@@ -389,3 +421,170 @@ onMounted(() => {
   getList();
 });
 </script>
+
+<style scoped lang="scss">
+.app-container {
+  padding: 20px;
+
+  .page-header {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
+
+      .title-icon {
+        color: #409eff;
+        font-size: 20px;
+      }
+    }
+
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
+  }
+
+  .search-container {
+    margin-bottom: 16px;
+
+    .search-card {
+      border-radius: 8px;
+      overflow: hidden;
+
+      .search-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .search-title {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+          color: #303133;
+
+          .search-icon {
+            margin-right: 6px;
+            font-size: 16px;
+          }
+        }
+
+        .search-actions {
+          .config-btn {
+            padding: 4px 8px;
+
+            .btn-icon {
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+
+      :deep(.el-card__body) {
+        padding: 16px;
+      }
+    }
+  }
+
+  .table-card {
+    border-radius: 8px;
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+
+      .table-title {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+
+        .table-icon {
+          margin-right: 8px;
+          font-size: 18px;
+          color: #409eff;
+        }
+      }
+
+      .table-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .action-btn {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .config-btn {
+          padding: 8px 12px;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+
+    :deep(.el-table) {
+      margin-top: 16px;
+
+      .el-table__header {
+        th {
+          background-color: #f5f7fa;
+          color: #606266;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+// 响应式布局
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+
+    .page-header {
+      padding: 12px 16px;
+
+      .page-title {
+        font-size: 18px;
+      }
+
+      .page-description {
+        font-size: 12px;
+      }
+    }
+
+    .table-card {
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .table-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+}
+</style>

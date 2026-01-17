@@ -264,8 +264,7 @@ const data = reactive<PageData<DoctorQualificationCatalogForm, DoctorQualificati
 const { queryParams, form, rules } = toRefs(data);
 
 // 字段配置管理器
-const fieldGroups = createDoctorQualificationCatalogFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorQualificationCatalog', fieldGroups);
+const fieldConfigManager = createDoctorQualificationCatalogFieldConfig();
 
 // 初始化时清除之前的字段配置和localStorage缓存，确保新配置生效
 fieldConfigManager.clearConfig();

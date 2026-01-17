@@ -1,11 +1,23 @@
 <template>
   <div class="app-container">
     <!-- 页面标题 -->
-    <div class="page-header">
-      <div class="header-title">
-        <i-ep-document-copy></i-ep-document-copy>
-        资质考试试卷管理
-      </div>
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-document-copy class="title-icon"></i-ep-document-copy>
+        考试试卷管理
+      </h2>
+      <p class="page-description">管理考试试卷和题库</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
       <div class="header-desc">管理系统资质考试试卷信息，包括试卷基本信息、题目设置和考试规则等</div>
     </div>
 
@@ -19,7 +31,15 @@
           </div>
           <el-button type="info" text icon="Setting" @click="toggleSearchConfig">搜索配置</el-button>
         </div>
-      </template>
+      
+    
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :config="[]"
+      title="列表字段配置"
+    />
+  </template>
       <DynamicSearchForm ref="queryFormRef" :query="queryParams" :visible-fields="visibleSearchFields" @search="handleQuery" @reset="resetQuery" />
     </el-card>
 
@@ -183,10 +203,7 @@
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
-    </el-dialog>
-    <!-- 字段配置对话框 -->
-    <FieldConfigDialog v-model:visible="showFieldConfig" :field-config-manager="fieldConfigManager" @confirm="handleFieldConfigConfirm" />
-    <SearchConfigDialog v-model="showSearchConfig" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    </el-dialog><SearchConfigDialog v-model="showSearchConfig" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
   </div>
 </template>
 
@@ -205,6 +222,20 @@ import { createQualificationExamPaperSearchConfig } from '@/utils/configs/qualif
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+
+
+const searchConfigVisible = ref(false);
+const fieldConfigVisible = ref(false);
+
+
+
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -396,12 +427,33 @@ onMounted(() => {
 }
 
 .page-header {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
+
+      .title-icon {
+        color: #409eff;
+        font-size: 20px;
+      }
+    }
+
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
+  }
   .header-title {
     font-size: 18px;
     font-weight: 600;

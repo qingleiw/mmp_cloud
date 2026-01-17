@@ -204,8 +204,7 @@ const queryFormRef = ref<ElFormInstance>();
 const doctorTrainingFormRef = ref<ElFormInstance>();
 
 // 字段配置相关变量
-const fieldGroups = createDoctorTrainingFieldConfig();
-const fieldConfigManager = new FieldConfigManager('doctorTraining', fieldGroups);
+const fieldConfigManager = createDoctorTrainingFieldConfig();
 const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
 const searchConfigManager = createDoctorTrainingSearchConfig();
 const searchConfigVisible = ref(false);

@@ -1,8 +1,28 @@
 <template>
   <div class="p-2">
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-document-checked class="title-icon"></i-ep-document-checked>
+        授权记录管理
+      </h2>
+      <p class="page-description">管理授权记录和历史</p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="mb-[10px]">
-        <el-card shadow="hover">
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
           <template #header>
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
@@ -189,6 +209,15 @@ import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import { createQualificationAuthorizationRecordSearchConfig } from '@/utils/configs/qualification/qualificationSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import { Search, Setting, List } from '@element-plus/icons-vue';
+
+
+const fieldConfigVisible = ref(false);
+
+
+
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 

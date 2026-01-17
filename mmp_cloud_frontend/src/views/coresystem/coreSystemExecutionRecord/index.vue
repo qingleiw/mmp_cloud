@@ -48,9 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['coresystem:coreSystemExecutionRecord:add']" size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['coresystem:coreSystemExecutionRecord:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -58,9 +56,7 @@
               :disabled="single"
               @click="handleUpdate()"
               v-hasPermi="['coresystem:coreSystemExecutionRecord:edit']"
-              size="small"
-              >修改</el-button
-            >
+              size="small">修改</el-button>
             <el-button
               type="danger"
               plain
@@ -68,18 +64,14 @@
               :disabled="multiple"
               @click="handleDelete()"
               v-hasPermi="['coresystem:coreSystemExecutionRecord:remove']"
-              size="small"
-              >删除</el-button
-            >
+              size="small">删除</el-button>
             <el-button
               type="warning"
               plain
               icon="Download"
               @click="handleExport"
               v-hasPermi="['coresystem:coreSystemExecutionRecord:export']"
-              size="small"
-              >导出</el-button
-            >
+              size="small">导出</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -236,7 +228,6 @@ import {
   CoreSystemExecutionRecordForm
 } from '@/api/coresystem/coreSystemExecutionRecord/types';
 import { FieldConfigManager } from '@/utils/configs/fieldConfigManager';
-import { SearchConfigManager } from '@/utils/configs/searchConfigManager';
 import { createCoreSystemExecutionRecordFieldConfig } from '@/utils/configs/coresystem/coresystemFieldConfigs';
 import { createCoreSystemExecutionRecordSearchConfig } from '@/utils/configs/coresystem/coresystemSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
@@ -263,8 +254,8 @@ const dialog = reactive<DialogOption>({
 });
 
 // 配置管理器
-const fieldConfigManager = new FieldConfigManager('coreSystemExecutionRecord', createCoreSystemExecutionRecordFieldConfig());
-const searchConfigManager = new SearchConfigManager('coreSystemExecutionRecord', createCoreSystemExecutionRecordSearchConfig());
+const fieldConfigManager = createCoreSystemExecutionRecordFieldConfig();
+const searchConfigManager = createCoreSystemExecutionRecordSearchConfig();
 const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
 
 // 配置对话框状态

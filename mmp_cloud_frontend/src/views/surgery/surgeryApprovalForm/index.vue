@@ -1,368 +1,590 @@
 <template>
   <div class="app-container">
-    <el-form ref="formRef" :model="formData" :rules="rules" label-width="120px" size="default">
-      <h2 class="form-title">北京大学人民医院重大手术审批报告单</h2>
+    <!-- 页面标题 -->
+    <div class="page-header mb-4">
+      <h2 class="page-title">
+        <i-ep-document-checked class="title-icon"></i-ep-document-checked>
+        手术审批单管理
+      </h2>
+      <p class="page-description">管理手术审批单的提交和审核</p>
+    </div>
 
-      <!-- 申报信息 -->
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item label="申报科室" prop="deptId">
-            <el-tree-select
-              v-model="formData.deptId"
-              :data="deptTree"
-              placeholder="请选择申报科室"
-              filterable
-              check-strictly
-              :render-after-expand="false"
-              @change="handleDeptChange"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="申报日期" prop="reportDate">
-            <el-date-picker
-              v-model="formData.reportDate"
-              type="date"
-              placeholder="选择申报日期"
-              format="YYYY 年 MM 月 DD 日"
-              value-format="YYYY-MM-DD"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
+    <!-- 搜索区域 -->
+    <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
+      <div v-show="showSearch" class="search-container mb-4">
+        <el-card shadow="hover" class="search-card">
+          <template #header>
+            <div class="search-header">
+              <span class="search-title">
+                <i-ep-search class="search-icon"></i-ep-search>
+                搜索条件
+              </span>
+              <div class="search-actions">
+                <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  搜索配置
+                </el-button>
+              </div>
+            </div>
+          </template>
+          <DynamicSearchForm
+            ref="queryFormRef"
+            :query="queryParams"
+            :visible-fields="visibleSearchFields"
+            @search="handleQuery"
+            @reset="resetQuery"
+          />
+        </el-card>
+      </div>
+    </transition>
 
-      <!-- 患者信息 -->
-      <el-row :gutter="20">
-        <el-col :span="8">
-          <el-form-item label="患者姓名" prop="patientName">
-            <el-input v-model="formData.patientName" placeholder="请输入患者姓名" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="性别" prop="gender">
-            <el-select v-model="formData.gender" placeholder="请选择性别">
-              <el-option label="男" value="男" />
-              <el-option label="女" value="女" />
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label="年龄" prop="age">
-            <el-input-number v-model="formData.age" :min="0" :max="150" />
-          </el-form-item>
-        </el-col>
-      </el-row>
+    <!-- 表格区域 -->
+    <el-card shadow="never" class="table-card">
+      <template #header>
+        <div class="table-header">
+          <div class="table-title">
+            <i-ep-list class="table-icon"></i-ep-list>
+            <span>手术审批单列表</span>
+            <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
+          </div>
+          <div class="table-actions">
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['surgery:surgeryApprovalForm:add']" size="small">新增</el-button>
+            <el-button
+              type="success"
+              plain
+              icon="Edit"
+              :disabled="single"
+              @click="handleUpdate()"
+              v-hasPermi="['surgery:surgeryApprovalForm:edit']"
+              size="small"
+            >修改</el-button>
+            <el-button
+              type="danger"
+              plain
+              icon="Delete"
+              :disabled="multiple"
+              @click="handleDelete()"
+              v-hasPermi="['surgery:surgeryApprovalForm:remove']"
+              size="small"
+            >删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['surgery:surgeryApprovalForm:export']" size="small">导出</el-button>
+            <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
+              <i-ep-setting class="btn-icon"></i-ep-setting>
+              字段配置
+            </el-button>
+            <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
+          </div>
+        </div>
+      </template>
 
-      <el-form-item label="住院号" prop="hospitalNumber">
-        <el-input v-model="formData.hospitalNumber" placeholder="请输入住院号" />
-      </el-form-item>
+      <!-- 动态表格 -->
+      <el-table
+        v-loading="loading"
+        border
+        :data="surgeryApprovalFormList"
+        @selection-change="handleSelectionChange"
+        class="dynamic-table"
+      >
+        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column
+          v-for="field in visibleTableFields"
+          :key="field.prop"
+          :label="field.label"
+          :prop="field.prop"
+          :width="field.width"
+          align="center"
+          :show-overflow-tooltip="true"
+        >
+          <template #default="scope">
+            <span v-if="field.type === 'datetime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+            <span v-else-if="field.type === 'date'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
+            </span>
+            <span v-else>
+              {{ scope.row[field.prop] }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width" width="120">
+          <template #default="scope">
+            <el-tooltip content="修改" placement="top">
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['surgery:surgeryApprovalForm:edit']"></el-button>
+            </el-tooltip>
+            <el-tooltip content="删除" placement="top">
+              <el-button
+                link
+                type="primary"
+                icon="Delete"
+                @click="handleDelete(scope.row)"
+                v-hasPermi="['surgery:surgeryApprovalForm:remove']"
+              ></el-button>
+            </el-tooltip>
+          </template>
+        </el-table-column>
+      </el-table>
 
-      <!-- 手术信息 -->
-      <el-form-item label="术前诊断" prop="preoperativeDiagnosis">
-        <el-input v-model="formData.preoperativeDiagnosis" type="textarea" :rows="3" placeholder="请输入术前诊断" />
-      </el-form-item>
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
+    </el-card>
 
-      <el-form-item label="手术名称" prop="surgeryName">
-        <el-input v-model="formData.surgeryName" placeholder="请输入手术名称" />
-      </el-form-item>
-
-      <el-form-item label="手术级别" prop="surgeryLevel">
-        <el-radio-group v-model="formData.surgeryLevel">
-          <el-radio label="一级">一级</el-radio>
-          <el-radio label="二级">二级</el-radio>
-          <el-radio label="三级">三级</el-radio>
-          <el-radio label="四级">四级</el-radio>
-        </el-radio-group>
-      </el-form-item>
-
-      <el-form-item label="麻醉方式" prop="anesthesiaMethod">
-        <el-select v-model="formData.anesthesiaMethod" placeholder="请选择麻醉方式" style="width: 100%">
-          <el-option label="全身麻醉" value="全身麻醉" />
-          <el-option label="局部麻醉" value="局部麻醉" />
-          <el-option label="椎管内麻醉" value="椎管内麻醉" />
-          <el-option label="神经阻滞" value="神经阻滞" />
-          <el-option label="其他" value="其他" />
-        </el-select>
-      </el-form-item>
-
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item label="术者及职称" prop="surgeon">
-            <el-input v-model="formData.surgeon" placeholder="请输入术者及职称" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="助手及职称" prop="assistant">
-            <el-input v-model="formData.assistant" placeholder="请输入助手及职称" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <!-- 术前讨论结果 -->
-      <el-form-item label="术前讨论结果" prop="discussionResult">
-        <el-input
-          v-model="formData.discussionResult"
-          type="textarea"
-          :rows="8"
-          placeholder="请输入术前讨论结果（包括针对特殊情况的处理、患者对手术耐受性的评估、术中可能预见情况及处理预案）"
-        />
-      </el-form-item>
-
-      <!-- 报告医师 -->
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item label="报告医师" prop="reportingPhysician">
-            <el-input v-model="formData.reportingPhysician" placeholder="请输入报告医师姓名" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="报告日期" prop="reportingDate">
-            <el-date-picker
-              v-model="formData.reportingDate"
-              type="date"
-              placeholder="选择报告日期"
-              format="YYYY 年 MM 月 DD 日"
-              value-format="YYYY-MM-DD"
-            />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <!-- 知情同意情况 -->
-      <el-form-item label="患者或授权委托人知情同意情况" prop="informedConsent">
-        <el-input v-model="formData.informedConsent" type="textarea" :rows="6" placeholder="请输入知情同意情况" />
-      </el-form-item>
-
-      <!-- 科室意见 -->
-      <el-card class="opinion-card">
-        <template #header>
-          <span>科室意见</span>
-        </template>
+    <!-- 添加/修改对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="科室主任签字" prop="departmentDirector">
-              <el-input v-model="formData.departmentDirector" placeholder="请输入科室主任姓名" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="签字日期" prop="departmentDate">
+          <el-col :span="12" v-for="field in visibleFormFields" :key="field.prop">
+            <el-form-item :label="field.label" :prop="field.prop">
+              <el-input v-if="!field.type || field.type === 'text'" v-model="form[field.prop]" :placeholder="'请输入' + field.label" />
               <el-date-picker
-                v-model="formData.departmentDate"
+                v-else-if="field.type === 'date'"
+                v-model="form[field.prop]"
                 type="date"
-                placeholder="选择签字日期"
-                format="YYYY 年 MM 月 DD 日"
-                value-format="YYYY-MM-DD"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
               />
+              <el-date-picker
+                v-else-if="field.type === 'datetime'"
+                v-model="form[field.prop]"
+                type="datetime"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="'请输入' + field.label" />
             </el-form-item>
           </el-col>
         </el-row>
-      </el-card>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
+        </div>
+      </template>
+    </el-dialog>
 
-      <!-- 医务部意见 -->
-      <el-card class="opinion-card">
-        <template #header>
-          <span>医务部意见</span>
-        </template>
-        <el-form-item label="医务部主任签字" prop="medicalDirector">
-          <el-input v-model="formData.medicalDirector" placeholder="请输入医务部主任姓名" />
-        </el-form-item>
-      </el-card>
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      :searchConfigManager="searchConfigManager"
+      @confirm="handleSearchConfigConfirm"
+    />
 
-      <!-- 备注 -->
-      <el-alert title="注：本表一式两份，一份科室存档，一份医务部存档。" type="info" :closable="false" class="note" />
-
-      <!-- 操作按钮 -->
-      <el-form-item>
-        <el-button type="primary" @click="submitForm">提交审批</el-button>
-        <el-button @click="resetForm">重置</el-button>
-        <el-button @click="printForm">打印</el-button>
-      </el-form-item>
-    </el-form>
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :fieldConfigManager="fieldConfigManager"
+      @confirm="handleFieldConfigConfirm"
+    />
   </div>
 </template>
 
-<script setup lang="ts" name="SurgeryApprovalForm">
-import { ref, reactive, onMounted } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
-import type { FormInstance, FormRules } from 'element-plus';
-import { submitApproval } from '@/api/surgery/surgeryApprovalForm';
-import { SurgeryApprovalFormForm } from '@/api/surgery/surgeryApprovalForm/types';
-import { useUserStore } from '@/store/modules/user';
-import { deptTreeSelect } from '@/api/system/user';
+<script setup name="SurgeryApprovalForm" lang="ts">
+import {
+  listSurgeryApprovalForm,
+  getSurgeryApprovalForm,
+  delSurgeryApprovalForm,
+  addSurgeryApprovalForm,
+  updateSurgeryApprovalForm
+} from '@/api/surgery/surgeryApprovalForm';
+import { SurgeryApprovalFormVO, SurgeryApprovalFormQuery, SurgeryApprovalFormForm } from '@/api/surgery/surgeryApprovalForm/types';
+import { createSurgeryApprovalFormFieldConfig } from '@/utils/configs/surgery/surgeryFieldConfigs';
+import { createSurgeryApprovalFormSearchConfig } from '@/utils/configs/surgery/surgerySearchConfigs';
+import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
+import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
+import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
+import type { FormInstance } from 'element-plus';
+import type { DialogOption } from '@/types/global';
 
-// 表单数据
-const formData = reactive<SurgeryApprovalFormForm>({});
+const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
-// 部门树数据
-const deptTree = ref([]);
+const surgeryApprovalFormList = ref<SurgeryApprovalFormVO[]>([]);
+const buttonLoading = ref(false);
+const loading = ref(true);
+const showSearch = ref(true);
+const ids = ref<Array<string | number>>([]);
+const single = ref(true);
+const multiple = ref(true);
+const total = ref(0);
 
-// 表单验证规则
-const rules: FormRules = {
-  deptId: [{ required: true, message: '请选择申报科室', trigger: 'change' }],
-  reportDate: [{ required: true, message: '请选择申报日期', trigger: 'change' }],
-  patientName: [{ required: true, message: '请输入患者姓名', trigger: 'blur' }],
-  gender: [{ required: true, message: '请选择性别', trigger: 'change' }],
-  age: [{ required: true, message: '请输入年龄', trigger: 'blur' }],
-  hospitalNumber: [{ required: true, message: '请输入住院号', trigger: 'blur' }],
-  preoperativeDiagnosis: [{ required: true, message: '请输入术前诊断', trigger: 'blur' }],
-  surgeryName: [{ required: true, message: '请输入手术名称', trigger: 'blur' }],
-  surgeryLevel: [{ required: true, message: '请选择手术级别', trigger: 'change' }],
-  anesthesiaMethod: [{ required: true, message: '请输入麻醉方式', trigger: 'blur' }],
-  surgeon: [{ required: true, message: '请输入术者及职称', trigger: 'blur' }],
-  assistant: [{ required: true, message: '请输入助手及职称', trigger: 'blur' }],
-  discussionResult: [{ required: true, message: '请输入术前讨论结果', trigger: 'blur' }],
-  reportingPhysician: [{ required: true, message: '请输入报告医师', trigger: 'blur' }],
-  reportingDate: [{ required: true, message: '请选择报告日期', trigger: 'change' }],
-  informedConsent: [{ required: true, message: '请输入知情同意情况', trigger: 'blur' }],
-  departmentDirector: [{ required: true, message: '请输入科室主任签字', trigger: 'blur' }],
-  departmentDate: [{ required: true, message: '请选择签字日期', trigger: 'change' }],
-  medicalDirector: [{ required: true, message: '请输入医务部主任签字', trigger: 'blur' }]
-};
-
+const queryFormRef = ref<FormInstance>();
 const formRef = ref<FormInstance>();
 
-// 处理部门选择变化
-const handleDeptChange = (value: number | string) => {
-  const findDeptName = (tree: any[], deptId: number | string): string => {
-    for (const node of tree) {
-      if (node.id === deptId) {
-        return node.label;
-      }
-      if (node.children && node.children.length > 0) {
-        const found = findDeptName(node.children, deptId);
-        if (found) return found;
-      }
-    }
-    return '';
-  };
-  formData.deptName = findDeptName(deptTree.value, value);
-};
-
-// 初始化表单数据
-onMounted(async () => {
-  const userStore = useUserStore();
-
-  // 获取部门树
-  try {
-    const res = await deptTreeSelect();
-    deptTree.value = res.data;
-  } catch (error) {
-    console.error('获取部门树失败:', error);
-  }
-
-  // 如果用户信息还没有加载，获取用户信息
-  if (!userStore.deptName) {
-    await userStore.getInfo();
-  }
-
-  // 自动填充申报科室为当前用户的部门
-  formData.deptName = userStore.deptName;
-  // 找到当前用户的部门ID并设置
-  const findDeptId = (tree: any[], deptName: string): number | string | null => {
-    for (const node of tree) {
-      if (node.label === deptName) {
-        return node.id;
-      }
-      if (node.children && node.children.length > 0) {
-        const found = findDeptId(node.children, deptName);
-        if (found) return found;
-      }
-    }
-    return null;
-  };
-  formData.deptId = findDeptId(deptTree.value, userStore.deptName);
+const dialog = reactive<DialogOption>({
+  visible: false,
+  title: ''
 });
 
-// 提交表单
-const submitForm = async () => {
-  if (!formRef.value) return;
+// 字段配置相关变量
+const fieldConfigManager = createSurgeryApprovalFormFieldConfig();
+const fieldConfigVisible = ref(false);
+const searchConfigManager = createSurgeryApprovalFormSearchConfig();
+const searchConfigVisible = ref(false);
 
-  await formRef.value.validate((valid) => {
-    if (valid) {
-      ElMessageBox.confirm('确认提交重大手术审批报告单？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
-        .then(async () => {
-          try {
-            await submitApproval(formData);
-            ElMessage.success('提交成功！');
-            // 可以重定向到列表页或清空表单
-            resetForm();
-          } catch (error) {
-            ElMessage.error('提交失败，请重试');
-            console.error('提交失败:', error);
-          }
-        })
-        .catch(() => {
-          ElMessage.info('已取消提交');
-        });
-    } else {
-      ElMessage.error('请填写完整的表单信息');
-      return false;
+// 计算属性：获取可见的搜索字段
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表格字段
+const visibleTableFields = computed(() => fieldConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表单字段
+const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
+
+const initFormData: SurgeryApprovalFormForm = {
+  id: undefined,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  drillResult: undefined,
+  lessonsLearned: undefined,
+  remark: undefined
+};
+
+const queryParams = reactive<SurgeryApprovalFormQuery>({
+  pageNum: 1,
+  pageSize: 10,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  lessonsLearned: undefined,
+  params: {}
+});
+
+const form = reactive<SurgeryApprovalFormForm>({ ...initFormData });
+
+const rules = {
+  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+};
+
+/** 查询手术审批单列表 */
+const getList = async () => {
+  loading.value = true;
+  try {
+    const res = await listSurgeryApprovalForm(queryParams);
+    surgeryApprovalFormList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取手术审批单列表失败:', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+/** 取消按钮 */
+const cancel = () => {
+  reset();
+  dialog.visible = false;
+};
+
+/** 表单重置 */
+const reset = () => {
+  Object.assign(form, initFormData);
+  formRef.value?.resetFields();
+};
+
+/** 搜索按钮操作 */
+const handleQuery = () => {
+  queryParams.pageNum = 1;
+  getList();
+};
+
+/** 重置按钮操作 */
+const resetQuery = () => {
+  queryFormRef.value?.resetFields();
+  // 重置查询参数
+  Object.keys(queryParams).forEach(key => {
+    if (key !== 'pageNum' && key !== 'pageSize' && key !== 'params') {
+      (queryParams as any)[key] = undefined;
     }
   });
+  handleQuery();
 };
 
-// 重置表单
-const resetForm = () => {
-  formRef.value?.resetFields();
-  ElMessage.info('表单已重置');
+/** 多选框选中数据 */
+const handleSelectionChange = (selection: SurgeryApprovalFormVO[]) => {
+  ids.value = selection.map((item) => item.id);
+  single.value = selection.length != 1;
+  multiple.value = !selection.length;
 };
 
-// 打印表单
-const printForm = () => {
-  window.print();
+/** 新增按钮操作 */
+const handleAdd = () => {
+  reset();
+  dialog.visible = true;
+  dialog.title = '添加应急演练计划';
 };
+
+/** 修改按钮操作 */
+const handleUpdate = async (row?: SurgeryApprovalFormVO) => {
+  reset();
+  const _id = row?.id || ids.value[0];
+  if (_id) {
+    try {
+      const res = await getSurgeryApprovalForm(_id);
+      Object.assign(form, res.data);
+      dialog.visible = true;
+      dialog.title = '修改应急演练计划';
+    } catch (error) {
+      console.error('获取应急演练计划详情失败:', error);
+      proxy?.$modal.msgError('获取数据失败');
+    }
+  }
+};
+
+/** 提交按钮 */
+const submitForm = async () => {
+  try {
+    buttonLoading.value = true;
+    if (form.id) {
+      await updateSurgeryApprovalForm(form);
+      proxy?.$modal.msgSuccess('修改成功');
+    } else {
+      await addSurgeryApprovalForm(form);
+      proxy?.$modal.msgSuccess('新增成功');
+    }
+    dialog.visible = false;
+    await getList();
+  } catch (error) {
+    console.error('提交表单失败:', error);
+  } finally {
+    buttonLoading.value = false;
+  }
+};
+
+/** 删除按钮操作 */
+const handleDelete = async (row?: SurgeryApprovalFormVO) => {
+  const _ids = row?.id || ids.value;
+  try {
+    await proxy?.$modal.confirm('是否确认删除应急演练计划编号为"' + _ids + '"的数据项？');
+    await delSurgeryApprovalForm(_ids);
+    proxy?.$modal.msgSuccess('删除成功');
+    await getList();
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除失败:', error);
+    }
+  }
+};
+
+/** 导出按钮操作 */
+const handleExport = () => {
+  proxy?.download(
+    'system/surgeryApprovalForm/export',
+    {
+      ...queryParams
+    },
+    `surgeryApprovalForm_${new Date().getTime()}.xlsx`
+  );
+};
+
+/** 搜索配置 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+/** 字段配置 */
+const handleFieldConfig = () => {
+  fieldConfigVisible.value = true;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
+};
+
+/** 字段配置确认 */
+const handleFieldConfigConfirm = () => {
+  fieldConfigVisible.value = false;
+};
+
+onMounted(() => {
+  getList();
+});
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .app-container {
   padding: 20px;
-  background: #f5f5f5;
-  min-height: 100vh;
-}
 
-.form-title {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.opinion-card {
-  margin-bottom: 20px;
-}
-
-.opinion-card :deep(.el-card__header) {
-  background: #f8f9fa;
-  font-weight: bold;
-}
-
-.note {
-  margin-bottom: 20px;
-}
-
-:deep(.el-form-item__label) {
-  font-weight: 500;
-}
-
-:deep(.el-input__inner),
-:deep(.el-textarea__inner),
-:deep(.el-select__input) {
-  border-radius: 4px;
-}
-
-@media print {
-  .app-container {
-    padding: 0;
+  .page-header {
     background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .page-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 8px 0;
+      color: #1d2129;
+      font-size: 18px;
+      font-weight: 600;
+
+      .title-icon {
+        color: #409eff;
+        font-size: 20px;
+      }
+    }
+
+    .page-description {
+      margin: 0;
+      color: #86909c;
+      font-size: 14px;
+    }
   }
 
-  .el-button {
-    display: none;
+  .search-container {
+    margin-bottom: 16px;
+
+    .search-card {
+      border-radius: 8px;
+      overflow: hidden;
+
+      .search-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .search-title {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+          color: #303133;
+
+          .search-icon {
+            margin-right: 6px;
+            font-size: 16px;
+          }
+        }
+
+        .search-actions {
+          .config-btn {
+            padding: 4px 8px;
+
+            .btn-icon {
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+
+      :deep(.el-card__body) {
+        padding: 16px;
+      }
+    }
+  }
+
+  .table-card {
+    border-radius: 8px;
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+
+      .table-title {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+
+        .table-icon {
+          margin-right: 8px;
+          font-size: 18px;
+          color: #409eff;
+        }
+      }
+
+      .table-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .action-btn {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .config-btn {
+          padding: 8px 12px;
+
+          .btn-icon {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+
+    :deep(.el-table) {
+      margin-top: 16px;
+
+      .el-table__header {
+        th {
+          background-color: #f5f7fa;
+          color: #606266;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+// 响应式布局
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+
+    .page-header {
+      padding: 12px 16px;
+
+      .page-title {
+        font-size: 18px;
+      }
+
+      .page-description {
+        font-size: 12px;
+      }
+    }
+
+    .table-card {
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .table-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
+    }
   }
 }
 </style>
