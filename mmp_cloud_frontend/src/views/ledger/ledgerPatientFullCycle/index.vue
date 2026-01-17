@@ -324,7 +324,7 @@ const handleSelectionChange = (selection: LedgerPatientFullCycleVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加患者全周期';
 };
 
 /** 修改按钮操作 */
@@ -336,7 +336,7 @@ const handleUpdate = async (row?: LedgerPatientFullCycleVO) => {
       const res = await getLedgerPatientFullCycle(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改患者全周期';
     } catch (error) {
       console.error('获取应急演练计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');

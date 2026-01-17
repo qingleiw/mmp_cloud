@@ -331,7 +331,7 @@ const handleSelectionChange = (selection: ImportantMedicalEventVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加重大医疗事件';
 };
 
 /** 修改按钮操作 */
@@ -343,7 +343,7 @@ const handleUpdate = async (row?: ImportantMedicalEventVO) => {
       const res = await getImportantMedicalEvent(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改重大医疗事件';
     } catch (error) {
       console.error('获取应急演练计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');

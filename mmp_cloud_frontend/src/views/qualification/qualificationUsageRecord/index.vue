@@ -264,8 +264,8 @@ const queryParams = reactive<QualificationUsageRecordQuery>({
 const form = reactive<QualificationUsageRecordForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  qualificationId: [{ required: true, message: '资质ID不能为空', trigger: 'blur' }],
+  usageDate: [{ required: true, message: '使用日期不能为空', trigger: 'blur' }]
 };
 
 /** 查询使用记录列表 */
@@ -323,7 +323,7 @@ const handleSelectionChange = (selection: QualificationUsageRecordVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加使用记录';
 };
 
 /** 修改按钮操作 */
@@ -335,7 +335,7 @@ const handleUpdate = async (row?: QualificationUsageRecordVO) => {
       const res = await getQualificationUsageRecord(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改使用记录';
     } catch (error) {
       console.error('获取应急演练计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');

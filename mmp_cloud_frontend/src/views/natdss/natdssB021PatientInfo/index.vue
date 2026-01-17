@@ -331,7 +331,7 @@ const handleSelectionChange = (selection: NatdssB021PatientInfoVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加患者信息';
 };
 
 /** 修改按钮操作 */
@@ -343,7 +343,7 @@ const handleUpdate = async (row?: NatdssB021PatientInfoVO) => {
       const res = await getNatdssB021PatientInfo(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改患者信息';
     } catch (error) {
       console.error('获取应急演练计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');

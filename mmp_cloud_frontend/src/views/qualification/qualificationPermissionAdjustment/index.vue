@@ -323,7 +323,7 @@ const handleSelectionChange = (selection: QualificationPermissionAdjustmentVO[])
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加权限调整';
 };
 
 /** 修改按钮操作 */
@@ -335,7 +335,7 @@ const handleUpdate = async (row?: QualificationPermissionAdjustmentVO) => {
       const res = await getQualificationPermissionAdjustment(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改权限调整';
     } catch (error) {
       console.error('获取应急演练计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');

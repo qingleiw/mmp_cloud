@@ -333,7 +333,7 @@ const handleSelectionChange = (selection: QualificationAuthorizationRecordVO[]) 
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加授权记录';
 };
 
 /** 修改按钮操作 */

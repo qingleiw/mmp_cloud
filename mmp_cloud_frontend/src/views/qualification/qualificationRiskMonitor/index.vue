@@ -272,8 +272,8 @@ const queryParams = reactive<QualificationRiskMonitorQuery>({
 const form = reactive<QualificationRiskMonitorForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  risk_no: [{ required: true, message: '风险编号不能为空', trigger: 'blur' }],
+  staff_id: [{ required: true, message: '人员ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询风险监测列表 */
@@ -331,7 +331,7 @@ const handleSelectionChange = (selection: QualificationRiskMonitorVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加风险监测';
 };
 
 /** 修改按钮操作 */
@@ -343,7 +343,7 @@ const handleUpdate = async (row?: QualificationRiskMonitorVO) => {
       const res = await getQualificationRiskMonitor(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改风险监测';
     } catch (error) {
       console.error('获取应急演练计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
