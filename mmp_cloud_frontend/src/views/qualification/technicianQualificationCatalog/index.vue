@@ -41,12 +41,17 @@
           <div v-show="showSearch" class="mb-[10px]">
             <el-card shadow="hover">
               <template #header>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-2">
+                <div class="search-header" style="display: flex; justify-content: space-between; align-items: center;">
+                  <span class="search-title">
                     <i-ep-search class="search-icon"></i-ep-search>
-                    <span>搜索条件</span>
+                    搜索条件
+                  </span>
+                  <div class="search-actions">
+                    <el-button text type="primary" @click="handleSearchConfig" class="config-btn">
+                      <i-ep-setting class="btn-icon"></i-ep-setting>
+                      搜索配置
+                    </el-button>
                   </div>
-                  <el-button type="info" text icon="Setting" @click="handleSearchConfig">搜索项配置</el-button>
                 </div>
               </template>
               <DynamicSearchForm
@@ -67,7 +72,7 @@
               <span class="table-title-text" title="医技资质目录列表">医技资质目录列表</span>
               <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
               <div class="ml-auto flex items-center gap-2">
-                <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:technicianQualificationCatalog:add']"
+                <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:technicianQualificationCatalog:add']" size="small"
                   >新增</el-button
                 >
                 <el-button
@@ -77,6 +82,7 @@
                   :disabled="single"
                   @click="handleUpdate()"
                   v-hasPermi="['qualification:technicianQualificationCatalog:edit']"
+                  size="small"
                   >修改</el-button
                 >
                 <el-button
@@ -86,6 +92,7 @@
                   :disabled="multiple"
                   @click="handleDelete()"
                   v-hasPermi="['qualification:technicianQualificationCatalog:remove']"
+                  size="small"
                   >删除</el-button
                 >
                 <el-button
@@ -94,9 +101,13 @@
                   icon="Download"
                   @click="handleExport"
                   v-hasPermi="['qualification:technicianQualificationCatalog:export']"
+                  size="small"
                   >导出</el-button
                 >
-                <el-button type="warning" plain icon="Setting" @click="showFieldConfig = true">字段配置</el-button>
+                <el-button text type="primary" @click="showFieldConfig = true" class="config-btn">
+                  <i-ep-setting class="btn-icon"></i-ep-setting>
+                  字段配置
+                </el-button>
                 <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
               </div>
             </div>

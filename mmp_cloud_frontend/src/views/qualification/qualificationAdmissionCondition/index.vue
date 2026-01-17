@@ -134,7 +134,7 @@
         <el-row :gutter="20">
           <el-col :span="12" v-for="field in visibleFormFields" :key="field.prop">
             <el-form-item :label="field.label" :prop="field.prop">
-              <el-input v-if="!field.type || field.type === 'text'" v-model="form[field.prop]" :placeholder="'请输入' + field.label" />
+              <el-input v-if="!field.type || field.type === 'input' || field.type === 'number'" v-model="form[field.prop]" :placeholder="'请输入' + field.label" />
               <el-date-picker
                 v-else-if="field.type === 'date'"
                 v-model="form[field.prop]"
@@ -193,7 +193,6 @@ import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import type { FormInstance } from 'element-plus';
-import type { DialogOption } from '@/types/global';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -209,7 +208,7 @@ const total = ref(0);
 const queryFormRef = ref<FormInstance>();
 const formRef = ref<FormInstance>();
 
-const dialog = reactive<DialogOption>({
+const dialog = reactive<{ visible: boolean; title: string }>({
   visible: false,
   title: ''
 });
@@ -231,49 +230,38 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: QualificationAdmissionConditionForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  qualificationId: undefined,
+  qualificationType: undefined,
+  conditionType: undefined,
+  conditionOperator: undefined,
+  conditionValue: undefined,
+  conditionUnit: undefined,
+  isRequired: undefined,
+  logicRelation: undefined,
+  sortOrder: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<QualificationAdmissionConditionQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  qualificationId: undefined,
+  qualificationType: undefined,
+  conditionType: undefined,
+  conditionOperator: undefined,
+  conditionValue: undefined,
+  conditionUnit: undefined,
+  isRequired: undefined,
+  logicRelation: undefined,
+  sortOrder: undefined,
   params: {}
 });
 
 const form = reactive<QualificationAdmissionConditionForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  qualificationId: [{ required: true, message: '资质ID不能为空', trigger: 'blur' }],
+  conditionType: [{ required: true, message: '条件类型不能为空', trigger: 'blur' }]
 };
 
 /** 查询准入条件列表 */

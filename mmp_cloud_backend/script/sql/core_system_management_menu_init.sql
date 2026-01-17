@@ -11,13 +11,13 @@ INSERT INTO sys_menu VALUES ('20500', '核心制度管理', '0', '100', 'coresys
 -- ----------------------------
 -- 2. 创建子菜单
 -- ----------------------------
-INSERT INTO sys_menu VALUES ('20510', '核心制度评估记录', '20500', '10', 'coreSystemAssessmentRecord', 'coresystem/coreSystemAssessmentRecord/index', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemAssessmentRecord:list', 'clipboard-check', 100, 1, sysdate(), NULL, NULL, '核心制度评估记录');
-INSERT INTO sys_menu VALUES ('20520', '核心制度目录', '20500', '20', 'coreSystemCatalog', 'coresystem/coreSystemCatalog/index', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemCatalog:list', 'list', 100, 1, sysdate(), NULL, NULL, '核心制度目录');
-INSERT INTO sys_menu VALUES ('20530', '核心制度配置', '20500', '30', 'coreSystemConfig', 'coresystem/coreSystemConfig/index', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemConfig:list', 'cog', 100, 1, sysdate(), NULL, NULL, '核心制度配置');
-INSERT INTO sys_menu VALUES ('20540', '核心制度执行记录', '20500', '40', 'coreSystemExecutionRecord', 'coresystem/coreSystemExecutionRecord/index', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemExecutionRecord:list', 'play-circle', 100, 1, sysdate(), NULL, NULL, '核心制度执行记录');
-INSERT INTO sys_menu VALUES ('20550', '核心制度指标', '20500', '50', 'coreSystemIndicator', 'coresystem/coreSystemIndicator/index', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemIndicator:list', 'chart-bar', 100, 1, sysdate(), NULL, NULL, '核心制度指标');
-INSERT INTO sys_menu VALUES ('20560', '核心制度检查记录', '20500', '60', 'coreSystemInspectionRecord', 'coresystem/coreSystemInspectionRecord/index', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemInspectionRecord:list', 'search', 100, 1, sysdate(), NULL, NULL, '核心制度检查记录');
-INSERT INTO sys_menu VALUES ('20570', '核心制度整改记录', '20500', '70', 'coreSystemRectificationRecord', 'coresystem/coreSystemRectificationRecord/index', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemRectificationRecord:list', 'wrench', 100, 1, sysdate(), NULL, NULL, '核心制度整改记录');
+INSERT INTO sys_menu VALUES ('20510', '核心制度评估记录', '20500', '10', 'coreSystemAssessmentRecord', 'coresystem/coreSystemAssessmentRecord', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemAssessmentRecord:list', 'clipboard-check', 100, 1, sysdate(), NULL, NULL, '核心制度评估记录');
+INSERT INTO sys_menu VALUES ('20520', '核心制度目录', '20500', '20', 'coreSystemCatalog', 'coresystem/coreSystemCatalog', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemCatalog:list', 'list', 100, 1, sysdate(), NULL, NULL, '核心制度目录');
+INSERT INTO sys_menu VALUES ('20530', '核心制度配置', '20500', '30', 'coreSystemConfig', 'coresystem/coreSystemConfig', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemConfig:list', 'cog', 100, 1, sysdate(), NULL, NULL, '核心制度配置');
+INSERT INTO sys_menu VALUES ('20540', '核心制度执行记录', '20500', '40', 'coreSystemExecutionRecord', 'coresystem/coreSystemExecutionRecord', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemExecutionRecord:list', 'play-circle', 100, 1, sysdate(), NULL, NULL, '核心制度执行记录');
+INSERT INTO sys_menu VALUES ('20550', '核心制度指标', '20500', '50', 'coreSystemIndicator', 'coresystem/coreSystemIndicator', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemIndicator:list', 'chart-bar', 100, 1, sysdate(), NULL, NULL, '核心制度指标');
+INSERT INTO sys_menu VALUES ('20560', '核心制度检查记录', '20500', '60', 'coreSystemInspectionRecord', 'coresystem/coreSystemInspectionRecord', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemInspectionRecord:list', 'search', 100, 1, sysdate(), NULL, NULL, '核心制度检查记录');
+INSERT INTO sys_menu VALUES ('20570', '核心制度整改记录', '20500', '70', 'coreSystemRectificationRecord', 'coresystem/coreSystemRectificationRecord', '', 1, 0, 'C', '0', '0', 'coresystem:coreSystemRectificationRecord:list', 'wrench', 100, 1, sysdate(), NULL, NULL, '核心制度整改记录');
 
 -- ----------------------------
 -- 3. 定义按钮权限

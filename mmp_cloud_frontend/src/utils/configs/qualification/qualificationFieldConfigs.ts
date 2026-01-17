@@ -536,3 +536,47 @@ export function createQualificationUsageRecordFieldConfig() {
 
   return new FieldConfigManager('qualificationUsageRecord', fieldGroups);
 }
+
+
+// technicianQualificationCatalog字段配置
+export function createTechnicianQualificationCatalogFieldConfig() {
+  const fieldGroups: FieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'tenantId', label: '租户编号', visible: true, type: 'input', group: 'basic' },
+        { prop: 'catalogCode', label: '资质编码', visible: true, type: 'input', group: 'basic' },
+        { prop: 'catalogName', label: '资质名称', visible: true, type: 'input', group: 'basic' },
+        { prop: 'parentId', label: '父级ID', visible: true, type: 'number', group: 'basic' },
+        { prop: 'catalogLevel', label: '目录层级', visible: true, type: 'number', group: 'basic' },
+        { prop: 'catalogType', label: '资质类型', visible: true, type: 'input', group: 'basic' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'description', label: '资质描述', visible: true, type: 'textarea', group: 'detail' },
+        { prop: 'sortOrder', label: '排序', visible: true, type: 'number', group: 'detail' },
+        { prop: 'isEnabled', label: '是否启用', visible: true, type: 'number', group: 'detail' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', visible: true, type: 'select', group: 'system' },
+        { prop: 'createTime', label: '创建时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'createBy', label: '创建人', visible: true, type: 'number', group: 'system' },
+        { prop: 'createDept', label: '创建部门', visible: true, type: 'number', group: 'system' },
+        { prop: 'updateTime', label: '更新时间', visible: true, type: 'datetime', group: 'system' },
+        { prop: 'updateBy', label: '更新人', visible: true, type: 'number', group: 'system' },
+        { prop: 'remark', label: '备注', visible: true, type: 'input', group: 'system' }
+      ]
+    }
+  ];
+
+  return new FieldConfigManager('technicianQualificationCatalog', fieldGroups);
+}

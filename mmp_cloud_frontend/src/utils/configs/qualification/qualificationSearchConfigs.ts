@@ -536,3 +536,47 @@ export function createQualificationUsageRecordSearchConfig() {
 
   return new SearchConfigManager('qualificationUsageRecord', searchFieldGroups);
 }
+
+
+// technicianQualificationCatalog搜索配置
+export function createTechnicianQualificationCatalogSearchConfig() {
+  const searchFieldGroups: SearchFieldGroup[] = [
+    {
+      name: 'basic',
+      label: '基础信息',
+      fields: [
+        { prop: 'id', label: '主键ID', type: 'number', visible: true, placeholder: '请输入主键ID' },
+        { prop: 'tenantId', label: '租户编号', type: 'input', visible: true, placeholder: '请输入租户编号' },
+        { prop: 'catalogCode', label: '资质编码', type: 'input', visible: true, placeholder: '请输入资质编码' },
+        { prop: 'catalogName', label: '资质名称', type: 'input', visible: true, placeholder: '请输入资质名称' },
+        { prop: 'parentId', label: '父级ID', type: 'number', visible: false, placeholder: '请输入父级ID' },
+        { prop: 'catalogLevel', label: '目录层级', type: 'number', visible: false, placeholder: '请输入目录层级' },
+        { prop: 'catalogType', label: '资质类型', type: 'input', visible: true, placeholder: '请输入资质类型' }
+      ]
+    },
+    {
+      name: 'detail',
+      label: '详细信息',
+      fields: [
+        { prop: 'description', label: '资质描述', type: 'input', visible: false, placeholder: '请输入资质描述' },
+        { prop: 'sortOrder', label: '排序', type: 'number', visible: false, placeholder: '请输入排序' },
+        { prop: 'isEnabled', label: '是否启用', type: 'number', visible: false, placeholder: '请输入是否启用' }
+      ]
+    },
+    {
+      name: 'system',
+      label: '系统字段',
+      fields: [
+        { prop: 'delFlag', label: '是否删除', type: 'select', visible: false, placeholder: '请输入是否删除' },
+        { prop: 'createTime', label: '创建时间', type: 'daterange', visible: false, placeholder: '请输入创建时间', startProp: 'createTimeStart', endProp: 'createTimeEnd' },
+        { prop: 'createBy', label: '创建人', type: 'number', visible: false, placeholder: '请输入创建人' },
+        { prop: 'createDept', label: '创建部门', type: 'number', visible: false, placeholder: '请输入创建部门' },
+        { prop: 'updateTime', label: '更新时间', type: 'daterange', visible: false, placeholder: '请输入更新时间', startProp: 'updateTimeStart', endProp: 'updateTimeEnd' },
+        { prop: 'updateBy', label: '更新人', type: 'number', visible: false, placeholder: '请输入更新人' },
+        { prop: 'remark', label: '备注', type: 'input', visible: false, placeholder: '请输入备注' }
+      ]
+    }
+  ];
+
+  return new SearchConfigManager('technicianQualificationCatalog', searchFieldGroups);
+}

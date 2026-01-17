@@ -193,7 +193,6 @@ import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
 import type { FormInstance } from 'element-plus';
-import type { DialogOption } from '@/types/global';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -209,7 +208,7 @@ const total = ref(0);
 const queryFormRef = ref<FormInstance>();
 const formRef = ref<FormInstance>();
 
-const dialog = reactive<DialogOption>({
+const dialog = reactive<{ visible: boolean; title: string }>({
   visible: false,
   title: ''
 });
@@ -231,49 +230,50 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: QualificationAuthorizationApplyForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  applyNo: undefined,
+  applicantId: undefined,
+  applicantName: undefined,
+  applicantType: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  qualificationIds: undefined,
+  applyReason: undefined,
+  certificateIds: undefined,
+  examScore: undefined,
+  workQuantity: undefined,
+  workQuality: undefined,
+  applyStatus: undefined,
+  currentNode: undefined,
+  workflowInstanceId: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<QualificationAuthorizationApplyQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  applyNo: undefined,
+  applicantId: undefined,
+  applicantName: undefined,
+  applicantType: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  qualificationIds: undefined,
+  applyReason: undefined,
+  certificateIds: undefined,
+  examScore: undefined,
+  workQuantity: undefined,
+  workQuality: undefined,
+  applyStatus: undefined,
+  currentNode: undefined,
+  workflowInstanceId: undefined,
   params: {}
 });
 
 const form = reactive<QualificationAuthorizationApplyForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  applyNo: [{ required: true, message: '申请单号不能为空', trigger: 'blur' }],
+  applicantId: [{ required: true, message: '申请人不能为空', trigger: 'blur' }]
 };
 
 /** 查询授权申请列表 */
