@@ -231,41 +231,45 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: SurgeryVideoForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  surgeryRecordId: undefined,
+  videoNo: undefined,
+  videoTitle: undefined,
+  videoType: undefined,
+  videoUrl: undefined,
+  videoDuration: undefined,
+  videoSize: undefined,
+  videoFormat: undefined,
+  recordingDevice: undefined,
+  recordingDoctorId: undefined,
+  recordingDoctorName: undefined,
+  uploadTime: undefined,
+  reviewStatus: undefined,
+  reviewerId: undefined,
+  reviewTime: undefined,
+  reviewComment: undefined,
+  accessLevel: undefined
 };
 
 const queryParams = reactive<SurgeryVideoQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  surgeryRecordId: undefined,
+  videoNo: undefined,
+  videoTitle: undefined,
+  videoType: undefined,
+  videoUrl: undefined,
+  videoDuration: undefined,
+  videoSize: undefined,
+  videoFormat: undefined,
+  recordingDevice: undefined,
+  recordingDoctorId: undefined,
+  recordingDoctorName: undefined,
+  uploadTime: undefined,
+  reviewStatus: undefined,
+  reviewerId: undefined,
+  reviewTime: undefined,
+  reviewComment: undefined,
+  accessLevel: undefined,
   params: {}
 });
 
@@ -331,7 +335,7 @@ const handleSelectionChange = (selection: SurgeryVideoVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加手术视频';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +347,9 @@ const handleUpdate = async (row?: SurgeryVideoVO) => {
       const res = await getSurgeryVideo(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改手术视频';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取手术视频详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

@@ -231,41 +231,23 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: SupervisionRectificationProgressForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  taskId: undefined,
+  progressDescription: undefined,
+  progressPercentage: undefined,
+  attachmentUrls: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<SupervisionRectificationProgressQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  taskId: undefined,
+  progressDescription: undefined,
+  progressPercentage: undefined,
+  attachmentUrls: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +313,7 @@ const handleSelectionChange = (selection: SupervisionRectificationProgressVO[]) 
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加督查整改进度';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +325,9 @@ const handleUpdate = async (row?: SupervisionRectificationProgressVO) => {
       const res = await getSupervisionRectificationProgress(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改督查整改进度';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取督查整改进度详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

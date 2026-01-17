@@ -231,41 +231,29 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: SupervisionFormFieldForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  formId: undefined,
+  fieldCode: undefined,
+  fieldName: undefined,
+  fieldType: undefined,
+  fieldConfig: undefined,
+  requiredFlag: undefined,
+  sortOrder: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<SupervisionFormFieldQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  formId: undefined,
+  fieldCode: undefined,
+  fieldName: undefined,
+  fieldType: undefined,
+  fieldConfig: undefined,
+  requiredFlag: undefined,
+  sortOrder: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +319,7 @@ const handleSelectionChange = (selection: SupervisionFormFieldVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加督查表单字段';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +331,9 @@ const handleUpdate = async (row?: SupervisionFormFieldVO) => {
       const res = await getSupervisionFormField(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改督查表单字段';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取督查表单字段详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

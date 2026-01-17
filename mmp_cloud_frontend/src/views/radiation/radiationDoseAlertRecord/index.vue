@@ -231,41 +231,37 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: RadiationDoseAlertRecordForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  staffId: undefined,
+  staffName: undefined,
+  alertDate: undefined,
+  alertType: undefined,
+  currentDose: undefined,
+  thresholdValue: undefined,
+  alertLevel: undefined,
+  alertMessage: undefined,
+  isHandled: undefined,
+  handler: undefined,
+  handleTime: undefined,
+  handleResult: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<RadiationDoseAlertRecordQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  staffId: undefined,
+  staffName: undefined,
+  alertDate: undefined,
+  alertType: undefined,
+  currentDose: undefined,
+  thresholdValue: undefined,
+  alertLevel: undefined,
+  alertMessage: undefined,
+  isHandled: undefined,
+  handler: undefined,
+  handleTime: undefined,
+  handleResult: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +327,7 @@ const handleSelectionChange = (selection: RadiationDoseAlertRecordVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加放射剂量预警记录';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +339,9 @@ const handleUpdate = async (row?: RadiationDoseAlertRecordVO) => {
       const res = await getRadiationDoseAlertRecord(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改放射剂量预警记录';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取放射剂量预警记录详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

@@ -231,41 +231,25 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: QcIndicatorFactorForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  indicatorId: undefined,
+  factorType: undefined,
+  factorName: undefined,
+  factorCode: undefined,
+  description: undefined,
+  dataSource: undefined,
+  sortOrder: undefined
 };
 
 const queryParams = reactive<QcIndicatorFactorQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  indicatorId: undefined,
+  factorType: undefined,
+  factorName: undefined,
+  factorCode: undefined,
+  description: undefined,
+  dataSource: undefined,
+  sortOrder: undefined,
   params: {}
 });
 
@@ -331,7 +315,7 @@ const handleSelectionChange = (selection: QcIndicatorFactorVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加质控指标因素';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +327,9 @@ const handleUpdate = async (row?: QcIndicatorFactorVO) => {
       const res = await getQcIndicatorFactor(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改质控指标因素';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取质控指标因素详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

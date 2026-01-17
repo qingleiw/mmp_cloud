@@ -231,41 +231,27 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: SupervisionReviewForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  taskId: undefined,
+  reviewDate: undefined,
+  reviewer: undefined,
+  reviewResult: undefined,
+  reviewOpinion: undefined,
+  nextReviewDate: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<SupervisionReviewQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  taskId: undefined,
+  reviewDate: undefined,
+  reviewer: undefined,
+  reviewResult: undefined,
+  reviewOpinion: undefined,
+  nextReviewDate: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +317,7 @@ const handleSelectionChange = (selection: SupervisionReviewVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加督查评审';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +329,9 @@ const handleUpdate = async (row?: SupervisionReviewVO) => {
       const res = await getSupervisionReview(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改督查评审';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取督查评审详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

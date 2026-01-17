@@ -265,7 +265,9 @@ const queryParams = reactive<EmergencyDrillPlanQuery>({
   procedures: undefined,
   evaluationCriteria: undefined,
   status: undefined,
+  drillResult: undefined,
   lessonsLearned: undefined,
+  remark: undefined,
   params: {}
 });
 

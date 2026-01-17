@@ -231,41 +231,31 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: QcManualDataForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  indicatorId: undefined,
+  patientId: undefined,
+  visitNo: undefined,
+  dataType: undefined,
+  dataField: undefined,
+  dataValue: undefined,
+  dataDate: undefined,
+  operationType: undefined,
+  originalValue: undefined,
+  modifyReason: undefined
 };
 
 const queryParams = reactive<QcManualDataQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  indicatorId: undefined,
+  patientId: undefined,
+  visitNo: undefined,
+  dataType: undefined,
+  dataField: undefined,
+  dataValue: undefined,
+  dataDate: undefined,
+  operationType: undefined,
+  originalValue: undefined,
+  modifyReason: undefined,
   params: {}
 });
 
@@ -331,7 +321,7 @@ const handleSelectionChange = (selection: QcManualDataVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加质控手工数据';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +333,9 @@ const handleUpdate = async (row?: QcManualDataVO) => {
       const res = await getQcManualData(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改质控手工数据';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取质控手工数据详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

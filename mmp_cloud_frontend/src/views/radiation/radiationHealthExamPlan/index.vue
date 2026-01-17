@@ -233,19 +233,14 @@ const initFormData: RadiationHealthExamPlanForm = {
   id: undefined,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
+  examType: undefined,
   plannedDate: undefined,
-  actualDate: undefined,
   location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  examAgency: undefined,
+  targetStaff: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  reminderSent: undefined,
+  reminderTime: undefined,
   remark: undefined
 };
 
@@ -254,18 +249,15 @@ const queryParams = reactive<RadiationHealthExamPlanQuery>({
   pageSize: 10,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
+  examType: undefined,
   plannedDate: undefined,
-  actualDate: undefined,
   location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  examAgency: undefined,
+  targetStaff: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  reminderSent: undefined,
+  reminderTime: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +323,7 @@ const handleSelectionChange = (selection: RadiationHealthExamPlanVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加放射健康体检计划';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +335,9 @@ const handleUpdate = async (row?: RadiationHealthExamPlanVO) => {
       const res = await getRadiationHealthExamPlan(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改放射健康体检计划';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取放射健康体检计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

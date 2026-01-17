@@ -233,19 +233,16 @@ const initFormData: RadiationTrainingPlanForm = {
   id: undefined,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
+  trainingType: undefined,
   plannedDate: undefined,
-  actualDate: undefined,
+  plannedTime: undefined,
   location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  trainer: undefined,
+  trainingContent: undefined,
+  targetAudience: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  reminderSent: undefined,
+  reminderTime: undefined,
   remark: undefined
 };
 
@@ -254,18 +251,17 @@ const queryParams = reactive<RadiationTrainingPlanQuery>({
   pageSize: 10,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
+  trainingType: undefined,
   plannedDate: undefined,
-  actualDate: undefined,
+  plannedTime: undefined,
   location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  trainer: undefined,
+  trainingContent: undefined,
+  targetAudience: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  reminderSent: undefined,
+  reminderTime: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +327,7 @@ const handleSelectionChange = (selection: RadiationTrainingPlanVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加放射培训计划';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +339,9 @@ const handleUpdate = async (row?: RadiationTrainingPlanVO) => {
       const res = await getRadiationTrainingPlan(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改放射培训计划';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取放射培训计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

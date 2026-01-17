@@ -233,19 +233,20 @@ const initFormData: EmergencyPlanForm = {
   id: undefined,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  planType: undefined,
+  version: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  effectiveDate: undefined,
+  reviewDate: undefined,
+  nextReviewDate: undefined,
+  keywords: undefined,
+  filePath: undefined,
+  fileName: undefined,
+  fileSize: undefined,
+  uploadBy: undefined,
+  uploadTime: undefined,
+  approveBy: undefined,
+  approveTime: undefined,
   remark: undefined
 };
 
@@ -254,18 +255,21 @@ const queryParams = reactive<EmergencyPlanQuery>({
   pageSize: 10,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  planType: undefined,
+  version: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  effectiveDate: undefined,
+  reviewDate: undefined,
+  nextReviewDate: undefined,
+  keywords: undefined,
+  filePath: undefined,
+  fileName: undefined,
+  fileSize: undefined,
+  uploadBy: undefined,
+  uploadTime: undefined,
+  approveBy: undefined,
+  approveTime: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +335,7 @@ const handleSelectionChange = (selection: EmergencyPlanVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加应急预案';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +347,9 @@ const handleUpdate = async (row?: EmergencyPlanVO) => {
       const res = await getEmergencyPlan(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改应急预案';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取应急预案详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

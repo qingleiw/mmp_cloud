@@ -231,41 +231,29 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: QcScoringResultForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  collectionId: undefined,
+  indicatorId: undefined,
+  indicatorValue: undefined,
+  standardValue: undefined,
+  maxScore: undefined,
+  actualScore: undefined,
+  scoreRate: undefined,
+  evaluationLevel: undefined,
+  calculateTime: undefined
 };
 
 const queryParams = reactive<QcScoringResultQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  collectionId: undefined,
+  indicatorId: undefined,
+  indicatorValue: undefined,
+  standardValue: undefined,
+  maxScore: undefined,
+  actualScore: undefined,
+  scoreRate: undefined,
+  evaluationLevel: undefined,
+  calculateTime: undefined,
   params: {}
 });
 
@@ -331,7 +319,7 @@ const handleSelectionChange = (selection: QcScoringResultVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加质控评分结果';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +331,9 @@ const handleUpdate = async (row?: QcScoringResultVO) => {
       const res = await getQcScoringResult(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改质控评分结果';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取质控评分结果详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

@@ -233,20 +233,12 @@ const initFormData: TumorQcPlanForm = {
   id: undefined,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  planType: undefined,
+  description: undefined,
+  startDate: undefined,
+  endDate: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  approvalStatus: undefined
 };
 
 const queryParams = reactive<TumorQcPlanQuery>({
@@ -254,18 +246,12 @@ const queryParams = reactive<TumorQcPlanQuery>({
   pageSize: 10,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  planType: undefined,
+  description: undefined,
+  startDate: undefined,
+  endDate: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  approvalStatus: undefined,
   params: {}
 });
 
@@ -331,7 +317,7 @@ const handleSelectionChange = (selection: TumorQcPlanVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加肿瘤质控计划';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +329,9 @@ const handleUpdate = async (row?: TumorQcPlanVO) => {
       const res = await getTumorQcPlan(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改肿瘤质控计划';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取肿瘤质控计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

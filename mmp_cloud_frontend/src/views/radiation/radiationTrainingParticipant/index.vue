@@ -231,41 +231,29 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: RadiationTrainingParticipantForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  planId: undefined,
+  staffId: undefined,
+  staffName: undefined,
+  attendanceStatus: undefined,
+  score: undefined,
+  evaluation: undefined,
+  certificateIssued: undefined,
+  certificateNumber: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<RadiationTrainingParticipantQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  planId: undefined,
+  staffId: undefined,
+  staffName: undefined,
+  attendanceStatus: undefined,
+  score: undefined,
+  evaluation: undefined,
+  certificateIssued: undefined,
+  certificateNumber: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +319,7 @@ const handleSelectionChange = (selection: RadiationTrainingParticipantVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加放射培训参与人员';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +331,9 @@ const handleUpdate = async (row?: RadiationTrainingParticipantVO) => {
       const res = await getRadiationTrainingParticipant(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改放射培训参与人员';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取放射培训参与人员详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

@@ -231,41 +231,31 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: RadiationDoseRecordForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  staffId: undefined,
+  staffName: undefined,
+  recordDate: undefined,
+  recordPeriod: undefined,
+  doseValue: undefined,
+  doseUnit: undefined,
+  measurementMethod: undefined,
+  measurementDevice: undefined,
+  remarks: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<RadiationDoseRecordQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  staffId: undefined,
+  staffName: undefined,
+  recordDate: undefined,
+  recordPeriod: undefined,
+  doseValue: undefined,
+  doseUnit: undefined,
+  measurementMethod: undefined,
+  measurementDevice: undefined,
+  remarks: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +321,7 @@ const handleSelectionChange = (selection: RadiationDoseRecordVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加放射剂量记录';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +333,9 @@ const handleUpdate = async (row?: RadiationDoseRecordVO) => {
       const res = await getRadiationDoseRecord(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改放射剂量记录';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取放射剂量记录详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

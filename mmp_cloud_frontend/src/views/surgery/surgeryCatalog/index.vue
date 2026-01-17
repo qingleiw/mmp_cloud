@@ -231,41 +231,31 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: SurgeryCatalogForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  additionalCode: undefined,
+  detailCode: undefined,
+  surgeryName: undefined,
+  category: undefined,
+  surgeryLevel: undefined,
+  isEnabled: undefined,
+  version: undefined,
+  department: undefined,
+  surgeryCategory: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<SurgeryCatalogQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  additionalCode: undefined,
+  detailCode: undefined,
+  surgeryName: undefined,
+  category: undefined,
+  surgeryLevel: undefined,
+  isEnabled: undefined,
+  version: undefined,
+  department: undefined,
+  surgeryCategory: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +321,7 @@ const handleSelectionChange = (selection: SurgeryCatalogVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加手术目录';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +333,9 @@ const handleUpdate = async (row?: SurgeryCatalogVO) => {
       const res = await getSurgeryCatalog(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改手术目录';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取手术目录详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

@@ -231,41 +231,33 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: SurgeryComplicationRecordForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  surgeryRecordId: undefined,
+  doctorId: undefined,
+  doctorName: undefined,
+  patientId: undefined,
+  surgeryCode: undefined,
+  surgeryName: undefined,
+  complicationType: undefined,
+  complicationDescription: undefined,
+  complicationLevel: undefined,
+  occurrenceTime: undefined,
+  isPlannedSecondary: undefined
 };
 
 const queryParams = reactive<SurgeryComplicationRecordQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  surgeryRecordId: undefined,
+  doctorId: undefined,
+  doctorName: undefined,
+  patientId: undefined,
+  surgeryCode: undefined,
+  surgeryName: undefined,
+  complicationType: undefined,
+  complicationDescription: undefined,
+  complicationLevel: undefined,
+  occurrenceTime: undefined,
+  isPlannedSecondary: undefined,
   params: {}
 });
 
@@ -331,7 +323,7 @@ const handleSelectionChange = (selection: SurgeryComplicationRecordVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加手术并发症记录';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +335,9 @@ const handleUpdate = async (row?: SurgeryComplicationRecordVO) => {
       const res = await getSurgeryComplicationRecord(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改手术并发症记录';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取手术并发症记录详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

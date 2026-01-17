@@ -231,41 +231,45 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: RadiationStaffForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  userId: undefined,
+  userName: undefined,
+  employeeCode: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  position: undefined,
+  hireDate: undefined,
+  radiationWorkYears: undefined,
+  radiationQualification: undefined,
+  qualificationCertificate: undefined,
+  certificateNumber: undefined,
+  certificateIssueDate: undefined,
+  certificateExpiryDate: undefined,
+  trainingRecords: undefined,
+  healthExamRecords: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<RadiationStaffQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  userId: undefined,
+  userName: undefined,
+  employeeCode: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  position: undefined,
+  hireDate: undefined,
+  radiationWorkYears: undefined,
+  radiationQualification: undefined,
+  qualificationCertificate: undefined,
+  certificateNumber: undefined,
+  certificateIssueDate: undefined,
+  certificateExpiryDate: undefined,
+  trainingRecords: undefined,
+  healthExamRecords: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +335,7 @@ const handleSelectionChange = (selection: RadiationStaffVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加放射人员';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +347,9 @@ const handleUpdate = async (row?: RadiationStaffVO) => {
       const res = await getRadiationStaff(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改放射人员';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取放射人员详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

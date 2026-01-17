@@ -231,41 +231,27 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: RadiationEquipmentInspectionForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  equipmentId: undefined,
+  inspectionDate: undefined,
+  inspectionAgency: undefined,
+  inspectorName: undefined,
+  inspectionResult: undefined,
+  inspectionReport: undefined,
+  nextInspectionDate: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<RadiationEquipmentInspectionQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  equipmentId: undefined,
+  inspectionDate: undefined,
+  inspectionAgency: undefined,
+  inspectorName: undefined,
+  inspectionResult: undefined,
+  inspectionReport: undefined,
+  nextInspectionDate: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +317,7 @@ const handleSelectionChange = (selection: RadiationEquipmentInspectionVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加放射设备检查';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +329,9 @@ const handleUpdate = async (row?: RadiationEquipmentInspectionVO) => {
       const res = await getRadiationEquipmentInspection(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改放射设备检查';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取放射设备检查详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

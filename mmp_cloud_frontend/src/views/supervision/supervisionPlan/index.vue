@@ -233,19 +233,13 @@ const initFormData: SupervisionPlanForm = {
   id: undefined,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  projectId: undefined,
+  planType: undefined,
+  supervisionPeriod: undefined,
+  startDate: undefined,
+  endDate: undefined,
+  responsiblePerson: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
@@ -254,18 +248,14 @@ const queryParams = reactive<SupervisionPlanQuery>({
   pageSize: 10,
   planCode: undefined,
   planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  projectId: undefined,
+  planType: undefined,
+  supervisionPeriod: undefined,
+  startDate: undefined,
+  endDate: undefined,
+  responsiblePerson: undefined,
   status: undefined,
-  lessonsLearned: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +321,7 @@ const handleSelectionChange = (selection: SupervisionPlanVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加督查计划';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +333,9 @@ const handleUpdate = async (row?: SupervisionPlanVO) => {
       const res = await getSupervisionPlan(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改督查计划';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取督查计划详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

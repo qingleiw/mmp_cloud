@@ -231,41 +231,25 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: EmergencyEventResponseForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  eventId: undefined,
+  responseTeam: undefined,
+  responseStartTime: undefined,
+  responseEndTime: undefined,
+  responseMeasures: undefined,
+  responsiblePerson: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<EmergencyEventResponseQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  eventId: undefined,
+  responseTeam: undefined,
+  responseStartTime: undefined,
+  responseEndTime: undefined,
+  responseMeasures: undefined,
+  responsiblePerson: undefined,
+  remark: undefined,
   params: {}
 });
 
@@ -331,7 +315,7 @@ const handleSelectionChange = (selection: EmergencyEventResponseVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加应急事件响应';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +327,9 @@ const handleUpdate = async (row?: EmergencyEventResponseVO) => {
       const res = await getEmergencyEventResponse(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改应急事件响应';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取应急事件响应详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

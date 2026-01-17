@@ -231,41 +231,31 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: SurgeryWorkloadStatisticsForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  doctorId: undefined,
+  doctorName: undefined,
+  surgeryCode: undefined,
+  surgeryName: undefined,
+  surgeryLevel: undefined,
+  surgeryCount: undefined,
+  mainOperatorCount: undefined,
+  firstAssistantCount: undefined,
+  statisticsYear: undefined,
+  statisticsMonth: undefined
 };
 
 const queryParams = reactive<SurgeryWorkloadStatisticsQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  doctorId: undefined,
+  doctorName: undefined,
+  surgeryCode: undefined,
+  surgeryName: undefined,
+  surgeryLevel: undefined,
+  surgeryCount: undefined,
+  mainOperatorCount: undefined,
+  firstAssistantCount: undefined,
+  statisticsYear: undefined,
+  statisticsMonth: undefined,
   params: {}
 });
 
@@ -331,7 +321,7 @@ const handleSelectionChange = (selection: SurgeryWorkloadStatisticsVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加手术工作量统计';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +333,9 @@ const handleUpdate = async (row?: SurgeryWorkloadStatisticsVO) => {
       const res = await getSurgeryWorkloadStatistics(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改手术工作量统计';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取手术工作量统计详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

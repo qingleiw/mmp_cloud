@@ -231,41 +231,23 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: QcSpecialtyCategoryForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  categoryCode: undefined,
+  categoryName: undefined,
+  version: undefined,
+  publishYear: undefined,
+  sortOrder: undefined,
+  status: undefined
 };
 
 const queryParams = reactive<QcSpecialtyCategoryQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  categoryCode: undefined,
+  categoryName: undefined,
+  version: undefined,
+  publishYear: undefined,
+  sortOrder: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
@@ -331,7 +313,7 @@ const handleSelectionChange = (selection: QcSpecialtyCategoryVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加质控专科分类';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +325,9 @@ const handleUpdate = async (row?: QcSpecialtyCategoryVO) => {
       const res = await getQcSpecialtyCategory(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改质控专科分类';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取质控专科分类详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

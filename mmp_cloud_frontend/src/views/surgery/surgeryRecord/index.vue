@@ -231,41 +231,51 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: SurgeryRecordForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  surgeryRecordId: undefined,
+  applicationId: undefined,
+  patientId: undefined,
+  patientName: undefined,
+  doctorId: undefined,
+  doctorName: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  surgeryCode: undefined,
+  surgeryName: undefined,
+  surgeryLevel: undefined,
+  surgeryType: undefined,
+  anesthesiaMethod: undefined,
+  surgeryStartTime: undefined,
+  surgeryEndTime: undefined,
+  surgeryDuration: undefined,
+  asaGrade: undefined,
+  bloodLoss: undefined,
+  surgeryStatus: undefined,
+  complicationFlag: undefined
 };
 
 const queryParams = reactive<SurgeryRecordQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  surgeryRecordId: undefined,
+  applicationId: undefined,
+  patientId: undefined,
+  patientName: undefined,
+  doctorId: undefined,
+  doctorName: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  surgeryCode: undefined,
+  surgeryName: undefined,
+  surgeryLevel: undefined,
+  surgeryType: undefined,
+  anesthesiaMethod: undefined,
+  surgeryStartTime: undefined,
+  surgeryEndTime: undefined,
+  surgeryDuration: undefined,
+  asaGrade: undefined,
+  bloodLoss: undefined,
+  surgeryStatus: undefined,
+  complicationFlag: undefined,
   params: {}
 });
 
@@ -331,7 +341,7 @@ const handleSelectionChange = (selection: SurgeryRecordVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加手术记录';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +353,9 @@ const handleUpdate = async (row?: SurgeryRecordVO) => {
       const res = await getSurgeryRecord(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改手术记录';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取手术记录详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

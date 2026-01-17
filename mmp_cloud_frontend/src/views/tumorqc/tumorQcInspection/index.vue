@@ -231,41 +231,35 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: TumorQcInspectionForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  inspectionCode: undefined,
+  planId: undefined,
+  inspectionDate: undefined,
+  inspectorId: undefined,
+  inspectorName: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  inspectionType: undefined,
+  inspectionResult: undefined,
+  problemDescription: undefined,
+  suggestion: undefined,
+  status: undefined
 };
 
 const queryParams = reactive<TumorQcInspectionQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  inspectionCode: undefined,
+  planId: undefined,
+  inspectionDate: undefined,
+  inspectorId: undefined,
+  inspectorName: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  inspectionType: undefined,
+  inspectionResult: undefined,
+  problemDescription: undefined,
+  suggestion: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
@@ -331,7 +325,7 @@ const handleSelectionChange = (selection: TumorQcInspectionVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加肿瘤质控检查';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +337,9 @@ const handleUpdate = async (row?: TumorQcInspectionVO) => {
       const res = await getTumorQcInspection(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改肿瘤质控检查';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取肿瘤质控检查详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

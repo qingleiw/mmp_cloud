@@ -231,41 +231,41 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: TumorQcIndicatorConfigForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  indicatorCode: undefined,
+  indicatorName: undefined,
+  indicatorCategory: undefined,
+  tumorType: undefined,
+  indicatorType: undefined,
+  calculationFormula: undefined,
+  dataSource: undefined,
+  collectionFrequency: undefined,
+  standardValue: undefined,
+  targetValue: undefined,
+  version: undefined,
+  effectiveDate: undefined,
+  policyLevel: undefined,
+  policySource: undefined,
+  isEnabled: undefined
 };
 
 const queryParams = reactive<TumorQcIndicatorConfigQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  indicatorCode: undefined,
+  indicatorName: undefined,
+  indicatorCategory: undefined,
+  tumorType: undefined,
+  indicatorType: undefined,
+  calculationFormula: undefined,
+  dataSource: undefined,
+  collectionFrequency: undefined,
+  standardValue: undefined,
+  targetValue: undefined,
+  version: undefined,
+  effectiveDate: undefined,
+  policyLevel: undefined,
+  policySource: undefined,
+  isEnabled: undefined,
   params: {}
 });
 
@@ -331,7 +331,7 @@ const handleSelectionChange = (selection: TumorQcIndicatorConfigVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加肿瘤质控指标配置';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +343,9 @@ const handleUpdate = async (row?: TumorQcIndicatorConfigVO) => {
       const res = await getTumorQcIndicatorConfig(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改肿瘤质控指标配置';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取肿瘤质控指标配置详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

@@ -231,41 +231,29 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: QcIndicatorCollectionConfigForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  indicatorId: undefined,
+  sourceSystem: undefined,
+  sourceTable: undefined,
+  sourceField: undefined,
+  extractionRule: undefined,
+  dataType: undefined,
+  isRequired: undefined,
+  defaultValue: undefined,
+  validationRule: undefined
 };
 
 const queryParams = reactive<QcIndicatorCollectionConfigQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  indicatorId: undefined,
+  sourceSystem: undefined,
+  sourceTable: undefined,
+  sourceField: undefined,
+  extractionRule: undefined,
+  dataType: undefined,
+  isRequired: undefined,
+  defaultValue: undefined,
+  validationRule: undefined,
   params: {}
 });
 
@@ -331,7 +319,7 @@ const handleSelectionChange = (selection: QcIndicatorCollectionConfigVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加质控指标采集配置';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +331,9 @@ const handleUpdate = async (row?: QcIndicatorCollectionConfigVO) => {
       const res = await getQcIndicatorCollectionConfig(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改质控指标采集配置';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取质控指标采集配置详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }

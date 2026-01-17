@@ -231,41 +231,33 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: TumorQcRectificationForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  rectificationCode: undefined,
+  inspectionId: undefined,
+  problemDescription: undefined,
+  rectificationMeasures: undefined,
+  responsiblePersonId: undefined,
+  responsiblePersonName: undefined,
+  deadline: undefined,
+  completionTime: undefined,
+  rectificationResult: undefined,
+  verificationStatus: undefined,
+  status: undefined
 };
 
 const queryParams = reactive<TumorQcRectificationQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  rectificationCode: undefined,
+  inspectionId: undefined,
+  problemDescription: undefined,
+  rectificationMeasures: undefined,
+  responsiblePersonId: undefined,
+  responsiblePersonName: undefined,
+  deadline: undefined,
+  completionTime: undefined,
+  rectificationResult: undefined,
+  verificationStatus: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
@@ -331,7 +323,7 @@ const handleSelectionChange = (selection: TumorQcRectificationVO[]) => {
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加应急演练计划';
+  dialog.title = '添加肿瘤质控整改';
 };
 
 /** 修改按钮操作 */
@@ -343,9 +335,9 @@ const handleUpdate = async (row?: TumorQcRectificationVO) => {
       const res = await getTumorQcRectification(_id);
       Object.assign(form, res.data);
       dialog.visible = true;
-      dialog.title = '修改应急演练计划';
+      dialog.title = '修改肿瘤质控整改';
     } catch (error) {
-      console.error('获取应急演练计划详情失败:', error);
+      console.error('获取肿瘤质控整改详情失败:', error);
       proxy?.$modal.msgError('获取数据失败');
     }
   }
