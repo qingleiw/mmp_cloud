@@ -312,8 +312,7 @@ const initFormData: TechnicianQualificationCatalogForm = {
   catalogType: undefined,
   description: undefined,
   sortOrder: undefined,
-  isEnabled: undefined,
-  delFlag: undefined
+  isEnabled: undefined
 };
 const data = reactive<PageData<TechnicianQualificationCatalogForm, TechnicianQualificationCatalogQuery>>({
   form: { ...initFormData },
@@ -328,7 +327,6 @@ const data = reactive<PageData<TechnicianQualificationCatalogForm, TechnicianQua
     description: undefined,
     sortOrder: undefined,
     isEnabled: undefined,
-    delFlag: undefined,
     params: {}
   },
   rules: {

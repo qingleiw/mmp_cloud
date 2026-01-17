@@ -231,49 +231,38 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: LedgerBusinessLearningForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
+  learningDate: undefined,
+  learningTopic: undefined,
+  learningType: undefined,
   organizer: undefined,
   participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  learningContent: undefined,
+  learningHours: undefined,
+  instructor: undefined,
+  evaluationResults: undefined,
+  attachments: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<LedgerBusinessLearningQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
+  learningDate: undefined,
+  learningTopic: undefined,
+  learningType: undefined,
   organizer: undefined,
   participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  instructor: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
 const form = reactive<LedgerBusinessLearningForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  learningDate: [{ required: true, message: '学习日期不能为空', trigger: 'blur' }],
+  learningTopic: [{ required: true, message: '学习主题不能为空', trigger: 'blur' }]
 };
 
 /** 查询业务学习列表 */

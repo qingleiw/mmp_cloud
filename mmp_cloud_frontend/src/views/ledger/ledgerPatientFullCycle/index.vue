@@ -231,49 +231,42 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: LedgerPatientFullCycleForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  patientName: undefined,
+  admissionDate: undefined,
+  dischargeDate: undefined,
+  department: undefined,
+  attendingPhysician: undefined,
+  diagnosis: undefined,
+  treatmentRecords: undefined,
+  examinationResults: undefined,
+  medicationRecords: undefined,
+  followUpRecords: undefined,
+  outcome: undefined,
+  medicalEvaluation: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<LedgerPatientFullCycleQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientName: undefined,
+  admissionDate: undefined,
+  dischargeDate: undefined,
+  department: undefined,
+  attendingPhysician: undefined,
+  diagnosis: undefined,
+  outcome: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
 const form = reactive<LedgerPatientFullCycleForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientName: [{ required: true, message: '患者姓名不能为空', trigger: 'blur' }],
+  admissionDate: [{ required: true, message: '入院日期不能为空', trigger: 'blur' }]
 };
 
 /** 查询患者全周期列表 */
