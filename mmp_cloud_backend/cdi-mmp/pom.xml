@@ -13,6 +13,7 @@
         <module>cdi-mmp-coresystem</module>
         <module>cdi-mmp-doctor</module>
         <module>cdi-mmp-emergency</module>
+        <module>cdi-mmp-exam</module>
         <module>cdi-mmp-ledger</module>
         <module>cdi-mmp-natdss</module>
         <module>cdi-mmp-ntp</module>
@@ -22,6 +23,7 @@
         <module>cdi-mmp-supervision</module>
         <module>cdi-mmp-surgery</module>
         <module>cdi-mmp-tumorqc</module>
+
     </modules>
 
     <artifactId>cdi-mmp</artifactId>
