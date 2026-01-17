@@ -6,24 +6,12 @@
         <i-ep-tickets class="title-icon"></i-ep-tickets>
         准入条件管理
       </h2>
-      <p class="page-description">管理准入条件和要求</p>
+      <p class="page-description">管理资质准入条件和要求</p>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- 动态搜索表单 -->
+    <!-- 搜索区域 -->
     <transition :enter-active-class="proxy?.animate.searchAnimate.enter" :leave-active-class="proxy?.animate.searchAnimate.leave">
-      <div v-show="showSearch" class="search-container mb-4" class="search-container mb-4">
+      <div v-show="showSearch" class="search-container mb-4">
         <el-card shadow="hover" class="search-card">
           <template #header>
             <div class="search-header">
@@ -38,14 +26,7 @@
                 </el-button>
               </div>
             </div>
-    
-    <!-- 字段配置对话框 -->
-    <FieldConfigDialog
-      v-model:visible="fieldConfigVisible"
-      :config="[]"
-      title="列表字段配置"
-    />
-  </template>
+          </template>
           <DynamicSearchForm
             ref="queryFormRef"
             :query="queryParams"
@@ -57,7 +38,7 @@
       </div>
     </transition>
 
-    <!-- 数据表格 -->
+    <!-- 表格区域 -->
     <el-card shadow="never" class="table-card">
       <template #header>
         <div class="table-header">
@@ -67,15 +48,7 @@
             <el-tag type="info" size="small" class="ml-2">{{ total }} 条记录</el-tag>
           </div>
           <div class="table-actions">
-            <el-button
-              type="primary"
-              plain
-              icon="Plus"
-              @click="handleAdd"
-              v-hasPermi="['qualification:qualificationAdmissionCondition:add']"
-              size="small"
-              >新增</el-button
-            >
+            <el-button type="primary" plain icon="Plus" @click="handleAdd" v-hasPermi="['qualification:qualificationAdmissionCondition:add']" size="small">新增</el-button>
             <el-button
               type="success"
               plain
@@ -84,8 +57,7 @@
               @click="handleUpdate()"
               v-hasPermi="['qualification:qualificationAdmissionCondition:edit']"
               size="small"
-              >修改</el-button
-            >
+            >修改</el-button>
             <el-button
               type="danger"
               plain
@@ -94,26 +66,8 @@
               @click="handleDelete()"
               v-hasPermi="['qualification:qualificationAdmissionCondition:remove']"
               size="small"
-              >删除</el-button
-            >
-            <el-button
-              type="warning"
-              plain
-              icon="Download"
-              @click="handleExport"
-              v-hasPermi="['qualification:qualificationAdmissionCondition:export']"
-              size="small"
-              >导出</el-button
-            >
-            <el-button
-              type="primary"
-              plain
-              icon="Upload"
-              @click="handleImport"
-              v-hasPermi="['qualification:qualificationAdmissionCondition:import']"
-              size="small"
-              >导入</el-button
-            >
+            >删除</el-button>
+            <el-button type="warning" plain icon="Download" @click="handleExport" v-hasPermi="['qualification:qualificationAdmissionCondition:export']" size="small">导出</el-button>
             <el-button text type="primary" @click="handleFieldConfig" class="config-btn">
               <i-ep-setting class="btn-icon"></i-ep-setting>
               字段配置
@@ -123,32 +77,40 @@
         </div>
       </template>
 
-      <el-table v-loading="loading" border :data="qualificationAdmissionConditionList" @selection-change="handleSelectionChange">
+      <!-- 动态表格 -->
+      <el-table
+        v-loading="loading"
+        border
+        :data="qualificationAdmissionConditionList"
+        @selection-change="handleSelectionChange"
+        class="dynamic-table"
+      >
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column
-          v-for="field in visibleColumns"
+          v-for="field in visibleTableFields"
           :key="field.prop"
           :label="field.label"
-          align="center"
           :prop="field.prop"
-          :width="field.width || undefined"
-          :min-width="field.minWidth || 120"
-          resizable
+          :width="field.width"
+          align="center"
+          :show-overflow-tooltip="true"
         >
           <template #default="scope">
-            <span>{{ scope.row[field.prop] }}</span>
+            <span v-if="field.type === 'datetime'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d} {h}:{i}') }}
+            </span>
+            <span v-else-if="field.type === 'date'">
+              {{ parseTime(scope.row[field.prop], '{y}-{m}-{d}') }}
+            </span>
+            <span v-else>
+              {{ scope.row[field.prop] }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" fixed="right" class-name="small-padding fixed-width" width="120">
           <template #default="scope">
             <el-tooltip content="修改" placement="top">
-              <el-button
-                link
-                type="primary"
-                icon="Edit"
-                @click="handleUpdate(scope.row)"
-                v-hasPermi="['qualification:qualificationAdmissionCondition:edit']"
-              ></el-button>
+              <el-button link type="primary" icon="Edit" @click="handleUpdate(scope.row)" v-hasPermi="['qualification:qualificationAdmissionCondition:edit']"></el-button>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
               <el-button
@@ -165,103 +127,54 @@
 
       <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize" @pagination="getList" />
     </el-card>
-    <!-- 添加或修改资质准入条件对话框 -->
-    <el-dialog :title="dialog.title" v-model="dialog.visible" width="700px" append-to-body>
-      <el-form ref="qualificationAdmissionConditionFormRef" :model="form" :rules="rules" label-width="120px">
+
+    <!-- 添加/修改对话框 -->
+    <el-dialog :title="dialog.title" v-model="dialog.visible" width="800px" append-to-body>
+      <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
         <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="资质ID" prop="qualificationId">
-              <el-input v-model="form.qualificationId" placeholder="请输入资质ID" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="资质类型" prop="qualificationType">
-              <el-select v-model="form.qualificationType" placeholder="请选择资质类型" style="width: 100%">
-                <el-option label="医师" value="医师" />
-                <el-option label="医技" value="医技" />
-              </el-select>
+          <el-col :span="12" v-for="field in visibleFormFields" :key="field.prop">
+            <el-form-item :label="field.label" :prop="field.prop">
+              <el-input v-if="!field.type || field.type === 'text'" v-model="form[field.prop]" :placeholder="'请输入' + field.label" />
+              <el-date-picker
+                v-else-if="field.type === 'date'"
+                v-model="form[field.prop]"
+                type="date"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-date-picker
+                v-else-if="field.type === 'datetime'"
+                v-model="form[field.prop]"
+                type="datetime"
+                :placeholder="'选择' + field.label"
+                style="width: 100%"
+              />
+              <el-input v-else-if="field.type === 'textarea'" v-model="form[field.prop]" type="textarea" :placeholder="'请输入' + field.label" />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="条件类型" prop="conditionType">
-              <el-select v-model="form.conditionType" placeholder="请选择条件类型" style="width: 100%">
-                <el-option label="学历" value="学历" />
-                <el-option label="职称" value="职称" />
-                <el-option label="工作年限" value="工作年限" />
-                <el-option label="专业" value="专业" />
-                <el-option label="培训" value="培训" />
-                <el-option label="考核" value="考核" />
-                <el-option label="证书" value="证书" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="条件运算符" prop="conditionOperator">
-              <el-select v-model="form.conditionOperator" placeholder="请选择条件运算符" style="width: 100%">
-                <el-option label="=" value="=" />
-                <el-option label=">" value=">" />
-                <el-option label="<" value="<" />
-                <el-option label=">=" value=">=" />
-                <el-option label="<=" value="<=" />
-                <el-option label="in" value="in" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item label="条件值" prop="conditionValue">
-          <el-input v-model="form.conditionValue" type="textarea" :rows="3" placeholder="请输入条件值" />
-        </el-form-item>
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-form-item label="条件单位" prop="conditionUnit">
-              <el-input v-model="form.conditionUnit" placeholder="请输入条件单位" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="是否必须" prop="isRequired">
-              <el-select v-model="form.isRequired" placeholder="请选择是否必须" style="width: 100%">
-                <el-option label="是" value="1" />
-                <el-option label="否" value="0" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="逻辑关系" prop="logicRelation">
-              <el-select v-model="form.logicRelation" placeholder="请选择逻辑关系" style="width: 100%">
-                <el-option label="AND" value="AND" />
-                <el-option label="OR" value="OR" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="排序" prop="sortOrder">
-              <el-input-number v-model="form.sortOrder" :min="0" placeholder="请输入排序" style="width: 100%" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="删除标志" prop="delFlag">
-              <el-select v-model="form.delFlag" placeholder="请选择删除标志" style="width: 100%">
-                <el-option label="正常" value="0" />
-                <el-option label="已删除" value="1" />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" :rows="3" placeholder="请输入备注" />
-        </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
+          <el-button type="primary" @click="submitForm">确 定</el-button>
           <el-button @click="cancel">取 消</el-button>
         </div>
       </template>
-    </el-dialog><SearchConfigDialog v-model:visible="searchConfigVisible" :search-config-manager="searchConfigManager" @confirm="handleSearchConfigConfirm" />
+    </el-dialog>
+
+    <!-- 搜索配置对话框 -->
+    <SearchConfigDialog
+      v-model:visible="searchConfigVisible"
+      :searchConfigManager="searchConfigManager"
+      @confirm="handleSearchConfigConfirm"
+    />
+
+    <!-- 字段配置对话框 -->
+    <FieldConfigDialog
+      v-model:visible="fieldConfigVisible"
+      :fieldConfigManager="fieldConfigManager"
+      @confirm="handleFieldConfigConfirm"
+    />
   </div>
 </template>
 
@@ -273,16 +186,14 @@ import {
   addQualificationAdmissionCondition,
   updateQualificationAdmissionCondition
 } from '@/api/qualification/qualificationAdmissionCondition';
-import {
-  QualificationAdmissionConditionVO,
-  QualificationAdmissionConditionQuery,
-  QualificationAdmissionConditionForm
-} from '@/api/qualification/qualificationAdmissionCondition/types';
-import { createQualificationAdmissionConditionFieldConfig } from '@/utils/configs/qualification/FieldConfigs';
+import { QualificationAdmissionConditionVO, QualificationAdmissionConditionQuery, QualificationAdmissionConditionForm } from '@/api/qualification/qualificationAdmissionCondition/types';
+import { createQualificationAdmissionConditionFieldConfig } from '@/utils/configs/qualification/qualificationFieldConfigs';
+import { createQualificationAdmissionConditionSearchConfig } from '@/utils/configs/qualification/qualificationSearchConfigs';
 import FieldConfigDialog from '@/components/FieldConfigDialog.vue';
 import DynamicSearchForm from '@/components/DynamicSearchForm.vue';
 import SearchConfigDialog from '@/components/SearchConfigDialog.vue';
-import { createQualificationAdmissionConditionSearchConfig } from '@/utils/configs/qualification/SearchConfigs';
+import type { FormInstance } from 'element-plus';
+import type { DialogOption } from '@/types/global';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -295,69 +206,88 @@ const single = ref(true);
 const multiple = ref(true);
 const total = ref(0);
 
-const queryFormRef = ref<ElFormInstance>();
-const qualificationAdmissionConditionFormRef = ref<ElFormInstance>();
-
-// 字段配置相关变量
-const fieldConfigManager = createQualificationAdmissionConditionFieldConfig();
-const visibleColumns = computed(() => fieldConfigManager.getVisibleFields());
-const fieldConfigVisible = ref(false);
-const searchConfigManager = createQualificationAdmissionConditionSearchConfig();
-const searchConfigVisible = ref(false);
-const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+const queryFormRef = ref<FormInstance>();
+const formRef = ref<FormInstance>();
 
 const dialog = reactive<DialogOption>({
   visible: false,
   title: ''
 });
 
+// 字段配置相关变量
+const fieldConfigManager = createQualificationAdmissionConditionFieldConfig();
+const fieldConfigVisible = ref(false);
+const searchConfigManager = createQualificationAdmissionConditionSearchConfig();
+const searchConfigVisible = ref(false);
+
+// 计算属性：获取可见的搜索字段
+const visibleSearchFields = computed(() => searchConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表格字段
+const visibleTableFields = computed(() => fieldConfigManager.getVisibleFields());
+
+// 计算属性：获取可见的表单字段
+const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
+
 const initFormData: QualificationAdmissionConditionForm = {
   id: undefined,
-  qualificationId: undefined,
-  qualificationType: undefined,
-  conditionType: undefined,
-  conditionOperator: undefined,
-  conditionValue: undefined,
-  conditionUnit: undefined,
-  isRequired: undefined,
-  logicRelation: undefined,
-  sortOrder: undefined,
-  remark: undefined,
-  delFlag: undefined
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  drillResult: undefined,
+  lessonsLearned: undefined,
+  remark: undefined
 };
-const data = reactive<PageData<QualificationAdmissionConditionForm, QualificationAdmissionConditionQuery>>({
-  form: { ...initFormData },
-  queryParams: {
-    pageNum: 1,
-    pageSize: 10,
-    qualificationId: undefined,
-    qualificationType: undefined,
-    conditionType: undefined,
-    conditionOperator: undefined,
-    conditionValue: undefined,
-    conditionUnit: undefined,
-    isRequired: undefined,
-    logicRelation: undefined,
-    sortOrder: undefined,
-    delFlag: undefined,
-    params: {}
-  },
-  rules: {
-    qualificationId: [{ required: true, message: '资质ID不能为空', trigger: 'blur' }],
-    qualificationType: [{ required: true, message: '资质类型不能为空', trigger: 'change' }],
-    conditionType: [{ required: true, message: '条件类型不能为空', trigger: 'change' }]
-  }
+
+const queryParams = reactive<QualificationAdmissionConditionQuery>({
+  pageNum: 1,
+  pageSize: 10,
+  planCode: undefined,
+  planName: undefined,
+  drillType: undefined,
+  drillScenario: undefined,
+  plannedDate: undefined,
+  actualDate: undefined,
+  location: undefined,
+  organizer: undefined,
+  participants: undefined,
+  objectives: undefined,
+  procedures: undefined,
+  evaluationCriteria: undefined,
+  status: undefined,
+  lessonsLearned: undefined,
+  params: {}
 });
 
-const { queryParams, form, rules } = toRefs(data);
+const form = reactive<QualificationAdmissionConditionForm>({ ...initFormData });
 
-/** 查询资质准入条件列表 */
+const rules = {
+  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+};
+
+/** 查询准入条件列表 */
 const getList = async () => {
   loading.value = true;
-  const res = await listQualificationAdmissionCondition(queryParams.value);
-  qualificationAdmissionConditionList.value = res.rows;
-  total.value = res.total;
-  loading.value = false;
+  try {
+    const res = await listQualificationAdmissionCondition(queryParams);
+    qualificationAdmissionConditionList.value = res.rows;
+    total.value = res.total;
+  } catch (error) {
+    console.error('获取准入条件列表失败:', error);
+  } finally {
+    loading.value = false;
+  }
 };
 
 /** 取消按钮 */
@@ -368,19 +298,25 @@ const cancel = () => {
 
 /** 表单重置 */
 const reset = () => {
-  form.value = { ...initFormData };
-  qualificationAdmissionConditionFormRef.value?.resetFields();
+  Object.assign(form, initFormData);
+  formRef.value?.resetFields();
 };
 
 /** 搜索按钮操作 */
 const handleQuery = () => {
-  queryParams.value.pageNum = 1;
+  queryParams.pageNum = 1;
   getList();
 };
 
 /** 重置按钮操作 */
 const resetQuery = () => {
   queryFormRef.value?.resetFields();
+  // 重置查询参数
+  Object.keys(queryParams).forEach(key => {
+    if (key !== 'pageNum' && key !== 'pageSize' && key !== 'params') {
+      (queryParams as any)[key] = undefined;
+    }
+  });
   handleQuery();
 };
 
@@ -395,54 +331,59 @@ const handleSelectionChange = (selection: QualificationAdmissionConditionVO[]) =
 const handleAdd = () => {
   reset();
   dialog.visible = true;
-  dialog.title = '添加资质准入条件';
+  dialog.title = '添加应急演练计划';
 };
 
 /** 修改按钮操作 */
 const handleUpdate = async (row?: QualificationAdmissionConditionVO) => {
   reset();
   const _id = row?.id || ids.value[0];
-  const res = await getQualificationAdmissionCondition(_id);
-  Object.assign(form.value, res.data);
-  dialog.visible = true;
-  dialog.title = '修改资质准入条件';
+  if (_id) {
+    try {
+      const res = await getQualificationAdmissionCondition(_id);
+      Object.assign(form, res.data);
+      dialog.visible = true;
+      dialog.title = '修改应急演练计划';
+    } catch (error) {
+      console.error('获取应急演练计划详情失败:', error);
+      proxy?.$modal.msgError('获取数据失败');
+    }
+  }
 };
 
 /** 提交按钮 */
-const submitForm = () => {
-  qualificationAdmissionConditionFormRef.value?.validate(async (valid: boolean) => {
-    if (valid) {
-      buttonLoading.value = true;
-      if (form.value.id) {
-        await updateQualificationAdmissionCondition(form.value).finally(() => (buttonLoading.value = false));
-      } else {
-        await addQualificationAdmissionCondition(form.value).finally(() => (buttonLoading.value = false));
-      }
-      proxy?.$modal.msgSuccess('操作成功');
-      dialog.visible = false;
-      await getList();
+const submitForm = async () => {
+  try {
+    buttonLoading.value = true;
+    if (form.id) {
+      await updateQualificationAdmissionCondition(form);
+      proxy?.$modal.msgSuccess('修改成功');
+    } else {
+      await addQualificationAdmissionCondition(form);
+      proxy?.$modal.msgSuccess('新增成功');
     }
-  });
+    dialog.visible = false;
+    await getList();
+  } catch (error) {
+    console.error('提交表单失败:', error);
+  } finally {
+    buttonLoading.value = false;
+  }
 };
 
 /** 删除按钮操作 */
 const handleDelete = async (row?: QualificationAdmissionConditionVO) => {
   const _ids = row?.id || ids.value;
-  await proxy?.$modal.confirm('是否确认删除资质准入条件编号为"' + _ids + '"的数据项？').finally(() => (loading.value = false));
-  await delQualificationAdmissionCondition(_ids);
-  proxy?.$modal.msgSuccess('删除成功');
-  await getList();
-};
-
-/** 导入按钮操作 */
-const handleImport = () => {
-  proxy.$modal.upload({
-    url: '/dev-api/qualification/qualificationAdmissionCondition/importData',
-    success: () => {
-      proxy.$modal.msgSuccess('导入成功');
-      getList();
+  try {
+    await proxy?.$modal.confirm('是否确认删除应急演练计划编号为"' + _ids + '"的数据项？');
+    await delQualificationAdmissionCondition(_ids);
+    proxy?.$modal.msgSuccess('删除成功');
+    await getList();
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('删除失败:', error);
     }
-  });
+  }
 };
 
 /** 导出按钮操作 */
@@ -450,15 +391,25 @@ const handleExport = () => {
   proxy?.download(
     'system/qualificationAdmissionCondition/export',
     {
-      ...queryParams.value
+      ...queryParams
     },
     `qualificationAdmissionCondition_${new Date().getTime()}.xlsx`
   );
 };
 
-/** 字段配置按钮操作 */
+/** 搜索配置 */
+const handleSearchConfig = () => {
+  searchConfigVisible.value = true;
+};
+
+/** 字段配置 */
 const handleFieldConfig = () => {
   fieldConfigVisible.value = true;
+};
+
+/** 搜索配置确认 */
+const handleSearchConfigConfirm = () => {
+  searchConfigVisible.value = false;
 };
 
 /** 字段配置确认 */
@@ -466,28 +417,16 @@ const handleFieldConfigConfirm = () => {
   fieldConfigVisible.value = false;
 };
 
-const handleSearchConfig = () => {
-  searchConfigVisible.value = true;
-};
-const handleSearchConfigConfirm = () => {
-  searchConfigVisible.value = false;
-};
-
 onMounted(() => {
   getList();
 });
 </script>
 
-<style lang="scss" scoped>
-// 全局样式
+<style scoped lang="scss">
 .app-container {
   padding: 20px;
-  background-color: #f5f5f5;
-  min-height: 100vh;
-}
 
-// 页面标题区域
-.page-header {
+  .page-header {
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -515,48 +454,87 @@ onMounted(() => {
       font-size: 14px;
     }
   }
-}
 
-// 搜索区域
-.search-container {
-  .search-card {
-    border-radius: 8px;
+  .search-container {
+    margin-bottom: 16px;
 
-    :deep(.el-card__header) {
-      padding: 16px 20px;
-      border-bottom: 1px solid #ebeef5;
-    }
+    .search-card {
+      border-radius: 8px;
+      overflow: hidden;
 
-    .search-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-
-      .search-title {
+      .search-header {
         display: flex;
         align-items: center;
-        font-weight: 600;
-        color: #1d2129;
+        justify-content: space-between;
 
-        .search-icon {
+        .search-title {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-weight: 600;
+          color: #303133;
+
+          .search-icon {
+            margin-right: 6px;
+            font-size: 16px;
+          }
+        }
+
+        .search-actions {
+          .config-btn {
+            padding: 4px 8px;
+
+            .btn-icon {
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+
+      :deep(.el-card__body) {
+        padding: 16px;
+      }
+    }
+  }
+
+  .table-card {
+    border-radius: 8px;
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+
+      .table-title {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+
+        .table-icon {
           margin-right: 8px;
+          font-size: 18px;
           color: #409eff;
         }
       }
 
-      .search-actions {
-        .config-btn {
-          font-size: 12px;
-          padding: 6px 12px;
-          height: auto;
-          border: none;
-          color: #86909c;
+      .table-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
 
-          &:hover {
-            color: #409eff;
-            background-color: #ecf5ff;
-          }
+        .action-btn {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+
+        .config-btn {
+          padding: 8px 12px;
 
           .btn-icon {
             margin-right: 4px;
@@ -565,114 +543,48 @@ onMounted(() => {
       }
     }
 
-    :deep(.el-card__body) {
-      padding: 20px;
-    }
-  }
-}
+    :deep(.el-table) {
+      margin-top: 16px;
 
-// 表格区域
-.table-card {
-  border-radius: 8px;
-
-  :deep(.el-card__header) {
-    padding: 16px 20px;
-    border-bottom: 1px solid #ebeef5;
-  }
-
-  .table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-    .table-title {
-      display: flex;
-      align-items: center;
-      font-weight: 600;
-      color: #1d2129;
-
-      .table-icon {
-        color: #409eff;
-      }
-    }
-
-    .table-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-
-      .config-btn {
-        color: #409eff;
-
-        .btn-icon {
-          margin-right: 4px;
+      .el-table__header {
+        th {
+          background-color: #f5f7fa;
+          color: #606266;
+          font-weight: 600;
         }
       }
     }
   }
-
-  :deep(.el-card__body) {
-    padding: 0;
-  }
 }
 
-// 表格样式
-:deep(.el-table) {
-  .el-table__header {
-    th {
-      background-color: #fafafa;
-      font-weight: 600;
-      color: #1d2129;
-    }
-  }
-
-  .el-table__row {
-    &:hover {
-      background-color: #f5f7fa;
-    }
-  }
-}
-
-// 对话框样式
-:deep(.el-dialog) {
-  .el-dialog__body {
-    padding: 24px;
-  }
-}
-
-.dialog-footer {
-  text-align: right;
-  padding-top: 16px;
-  border-top: 1px solid #ebeef5;
-}
-
-// 响应式设计
+// 响应式布局
 @media (max-width: 768px) {
   .app-container {
     padding: 12px;
-  }
 
-  .page-header {
-    .page-title {
-      font-size: 20px;
+    .page-header {
+      padding: 12px 16px;
+
+      .page-title {
+        font-size: 18px;
+      }
+
+      .page-description {
+        font-size: 12px;
+      }
     }
-  }
 
-  .table-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    .table-card {
+      .table-header {
+        flex-direction: column;
+        align-items: flex-start;
 
-    .table-actions {
-      width: 100%;
-      justify-content: flex-end;
+        .table-actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+      }
     }
-  }
-
-  :deep(.el-dialog) {
-    width: 95% !important;
-    margin: 5vh auto;
   }
 }
 </style>
