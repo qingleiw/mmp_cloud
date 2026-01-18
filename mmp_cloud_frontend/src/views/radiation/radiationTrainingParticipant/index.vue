@@ -260,8 +260,8 @@ const queryParams = reactive<RadiationTrainingParticipantQuery>({
 const form = reactive<RadiationTrainingParticipantForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  planId: [{ required: true, message: '培训计划ID不能为空', trigger: 'blur' }],
+  staffId: [{ required: true, message: '工作人员ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询辐射培训参与人员列表 */

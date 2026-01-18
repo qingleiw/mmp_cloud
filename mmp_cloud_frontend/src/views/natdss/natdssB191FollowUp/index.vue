@@ -272,8 +272,7 @@ const queryParams = reactive<NatdssB191FollowUpQuery>({
 const form = reactive<NatdssB191FollowUpForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询随访信息列表 */

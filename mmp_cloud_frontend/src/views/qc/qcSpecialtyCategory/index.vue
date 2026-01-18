@@ -254,8 +254,8 @@ const queryParams = reactive<QcSpecialtyCategoryQuery>({
 const form = reactive<QcSpecialtyCategoryForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  categoryCode: [{ required: true, message: '专业代码不能为空', trigger: 'blur' }],
+  categoryName: [{ required: true, message: '专业名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询质控专科分类列表 */

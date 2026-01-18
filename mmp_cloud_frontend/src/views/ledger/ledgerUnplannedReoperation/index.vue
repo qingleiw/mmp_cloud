@@ -268,8 +268,9 @@ const queryParams = reactive<LedgerUnplannedReoperationQuery>({
 const form = reactive<LedgerUnplannedReoperationForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
+  patientName: [{ required: true, message: '患者姓名不能为空', trigger: 'blur' }],
+  firstOperationDate: [{ required: true, message: '第一次手术日期不能为空', trigger: 'blur' }]
 };
 
 /** 查询非计划再手术列表 */

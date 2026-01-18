@@ -272,8 +272,8 @@ const queryParams = reactive<NatdssB181RadInfoQuery>({
 const form = reactive<NatdssB181RadInfoForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
+  visitSn: [{ required: true, message: '单次就诊唯一标识号不能为空', trigger: 'blur' }]
 };
 
 /** 查询放射信息列表 */

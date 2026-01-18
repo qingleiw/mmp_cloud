@@ -272,8 +272,9 @@ const queryParams = reactive<QcQualityIndicatorQuery>({
 const form = reactive<QcQualityIndicatorForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  indicatorCode: [{ required: true, message: '指标编码不能为空', trigger: 'blur' }],
+  indicatorName: [{ required: true, message: '指标名称不能为空', trigger: 'blur' }],
+  categoryId: [{ required: true, message: '所属专业ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询质控质量指标列表 */

@@ -266,8 +266,8 @@ const queryParams = reactive<RadiationHealthExamQuery>({
 const form = reactive<RadiationHealthExamForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  workerId: [{ required: true, message: '工作人员ID不能为空', trigger: 'blur' }],
+  examDate: [{ required: true, message: '体检日期不能为空', trigger: 'blur' }]
 };
 
 /** 查询辐射健康体检列表 */
