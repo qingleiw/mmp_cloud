@@ -272,8 +272,8 @@ const queryParams = reactive<ImportantMedicalEventQuery>({
 const form = reactive<ImportantMedicalEventForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  eventCode: [{ required: true, message: '事件编码不能为空', trigger: 'blur' }],
+  eventTitle: [{ required: true, message: '事件标题不能为空', trigger: 'blur' }]
 };
 
 /** 查询重大医疗事件列表 */

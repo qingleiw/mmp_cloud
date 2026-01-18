@@ -266,8 +266,8 @@ const queryParams = reactive<TumorQcInspectionQuery>({
 const form = reactive<TumorQcInspectionForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  inspectionCode: [{ required: true, message: '检查编码不能为空', trigger: 'blur' }],
+  inspectionDate: [{ required: true, message: '检查日期不能为空', trigger: 'blur' }]
 };
 
 /** 查询肿瘤质控检查列表 */

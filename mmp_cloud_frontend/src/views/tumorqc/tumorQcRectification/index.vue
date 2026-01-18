@@ -264,8 +264,7 @@ const queryParams = reactive<TumorQcRectificationQuery>({
 const form = reactive<TumorQcRectificationForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  rectificationCode: [{ required: true, message: '整改编码不能为空', trigger: 'blur' }]
 };
 
 /** 查询肿瘤质控整改列表 */

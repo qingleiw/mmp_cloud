@@ -264,8 +264,7 @@ const queryParams = reactive<TumorQcResultQuery>({
 const form = reactive<TumorQcResultForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  resultCode: [{ required: true, message: '结果编码不能为空', trigger: 'blur' }]
 };
 
 /** 查询肿瘤质控结果列表 */

@@ -264,8 +264,8 @@ const queryParams = reactive<QualificationPermissionAdjustmentQuery>({
 const form = reactive<QualificationPermissionAdjustmentForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  qualificationType: [{ required: true, message: '资质类型不能为空', trigger: 'blur' }],
+  doctorId: [{ required: true, message: '医师ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询权限调整列表 */

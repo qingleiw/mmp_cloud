@@ -260,8 +260,8 @@ const queryParams = reactive<TumorQcIndicatorDetailQuery>({
 const form = reactive<TumorQcIndicatorDetailForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  recordId: [{ required: true, message: '监测记录ID不能为空', trigger: 'blur' }],
+  indicatorId: [{ required: true, message: '指标ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询肿瘤质控指标明细列表 */

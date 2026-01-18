@@ -274,8 +274,9 @@ const queryParams = reactive<QualificationAuthorizationRecordQuery>({
 const form = reactive<QualificationAuthorizationRecordForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  authorizationNo: [{ required: true, message: '授权编号不能为空', trigger: 'blur' }],
+  staffId: [{ required: true, message: '人员ID不能为空', trigger: 'blur' }],
+  qualificationId: [{ required: true, message: '资质ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询授权记录列表 */
