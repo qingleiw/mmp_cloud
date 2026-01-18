@@ -264,8 +264,8 @@ const queryParams = reactive<SurgeryComplicationRecordQuery>({
 const form = reactive<SurgeryComplicationRecordForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  surgeryRecordId: [{ required: true, message: '手术记录ID不能为空', trigger: 'blur' }],
+  doctorId: [{ required: true, message: '医师ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询手术并发症记录列表 */

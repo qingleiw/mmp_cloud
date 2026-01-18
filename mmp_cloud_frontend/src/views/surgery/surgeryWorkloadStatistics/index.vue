@@ -262,8 +262,9 @@ const queryParams = reactive<SurgeryWorkloadStatisticsQuery>({
 const form = reactive<SurgeryWorkloadStatisticsForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  doctorId: [{ required: true, message: '医师ID不能为空', trigger: 'blur' }],
+  surgeryCode: [{ required: true, message: '手术编码不能为空', trigger: 'blur' }],
+  surgeryName: [{ required: true, message: '手术名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询手术工作量统计列表 */

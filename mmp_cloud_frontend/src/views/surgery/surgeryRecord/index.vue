@@ -282,8 +282,8 @@ const queryParams = reactive<SurgeryRecordQuery>({
 const form = reactive<SurgeryRecordForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  surgeryRecordId: [{ required: true, message: '手术记录ID不能为空', trigger: 'blur' }],
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询手术记录列表 */

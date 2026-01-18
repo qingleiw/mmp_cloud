@@ -262,8 +262,10 @@ const queryParams = reactive<SurgeryCatalogQuery>({
 const form = reactive<SurgeryCatalogForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  additionalCode: [{ required: true, message: '附加编码不能为空', trigger: 'blur' }],
+  detailCode: [{ required: true, message: '细目代码不能为空', trigger: 'blur' }],
+  surgeryName: [{ required: true, message: '手术操作名称不能为空', trigger: 'blur' }],
+  category: [{ required: true, message: '类别不能为空', trigger: 'blur' }]
 };
 
 /** 查询手术目录列表 */

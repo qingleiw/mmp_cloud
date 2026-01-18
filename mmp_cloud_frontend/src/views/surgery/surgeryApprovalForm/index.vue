@@ -282,8 +282,10 @@ const queryParams = reactive<SurgeryApprovalFormQuery>({
 const form = reactive<SurgeryApprovalFormForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  deptName: [{ required: true, message: '申报科室不能为空', trigger: 'blur' }],
+  reportDate: [{ required: true, message: '申报日期不能为空', trigger: 'blur' }],
+  patientName: [{ required: true, message: '患者姓名不能为空', trigger: 'blur' }],
+  gender: [{ required: true, message: '性别不能为空', trigger: 'blur' }]
 };
 
 /** 查询手术审批单列表 */
