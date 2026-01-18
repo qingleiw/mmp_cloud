@@ -2,7 +2,7 @@ package org.dromara.cdi.mmp.exam.domain.vo;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamArrangement;
+import org.dromara.cdi.mmp.exam.domain.MmpExamArrangement;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import org.dromara.common.excel.annotation.ExcelDictFormat;
@@ -17,15 +17,15 @@ import java.util.Date;
 
 
 /**
- * 资质考试安排视图对象 mmp_qualification_exam_arrangement
+ * 资质考试安排视图对象 mmp_exam_arrangement
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Data
 @ExcelIgnoreUnannotated
-@AutoMapper(target = MmpQualificationExamArrangement.class)
-public class MmpQualificationExamArrangementVo implements Serializable {
+@AutoMapper(target = MmpExamArrangement.class)
+public class MmpExamArrangementVo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -85,10 +85,10 @@ public class MmpQualificationExamArrangementVo implements Serializable {
     private String examStatus;
 
     /**
-     * 是否删除
+     * 备注
      */
-    @ExcelProperty(value = "是否删除")
-    private Long delFlag;
+    @ExcelProperty(value = "备注")
+    private String remark;
 
 
 }

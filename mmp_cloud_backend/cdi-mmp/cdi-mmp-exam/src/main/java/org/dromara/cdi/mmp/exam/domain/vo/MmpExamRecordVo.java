@@ -2,7 +2,7 @@ package org.dromara.cdi.mmp.exam.domain.vo;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamRecord;
+import org.dromara.cdi.mmp.exam.domain.MmpExamRecord;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import org.dromara.common.excel.annotation.ExcelDictFormat;
@@ -17,15 +17,15 @@ import java.util.Date;
 
 
 /**
- * 资质考试记录视图对象 mmp_qualification_exam_record
+ * 资质考试记录视图对象 mmp_exam_record
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Data
 @ExcelIgnoreUnannotated
-@AutoMapper(target = MmpQualificationExamRecord.class)
-public class MmpQualificationExamRecordVo implements Serializable {
+@AutoMapper(target = MmpExamRecord.class)
+public class MmpExamRecordVo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -119,6 +119,12 @@ public class MmpQualificationExamRecordVo implements Serializable {
      */
     @ExcelProperty(value = "阅卷时间")
     private Date markingTime;
+
+    /**
+     * 备注
+     */
+    @ExcelProperty(value = "备注")
+    private String remark;
 
 
 }

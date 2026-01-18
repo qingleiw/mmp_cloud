@@ -1,6 +1,6 @@
 package org.dromara.cdi.mmp.exam.domain;
 
-import org.dromara.common.mybatis.core.domain.BaseEntity;
+import org.dromara.common.tenant.core.TenantEntity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,15 +10,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serial;
 
 /**
- * 资质考试记录对象 mmp_qualification_exam_record
+ * 资质考试记录对象 mmp_exam_record
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("mmp_qualification_exam_record")
-public class MmpQualificationExamRecord extends BaseEntity {
+@TableName("mmp_exam_record")
+public class MmpExamRecord extends TenantEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -100,27 +100,15 @@ public class MmpQualificationExamRecord extends BaseEntity {
     private Date markingTime;
 
     /**
-     * 创建部门 - 此表不包含此字段
+     * 是否删除
      */
-    @TableField(exist = false)
-    private Long createDept;
+    @TableLogic
+    private String delFlag;
 
     /**
-     * 创建者 - 此表不包含此字段
+     * 备注
      */
-    @TableField(exist = false)
-    private Long createBy;
+    private String remark;
 
-    /**
-     * 更新时间 - 此表不包含此字段
-     */
-    @TableField(exist = false)
-    private Date updateTime;
-
-    /**
-     * 更新者 - 此表不包含此字段
-     */
-    @TableField(exist = false)
-    private Long updateBy;
 
 }

@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.dromara.cdi.mmp.exam.domain.bo.MmpQualificationExamPaperBo;
-import org.dromara.cdi.mmp.exam.domain.vo.MmpQualificationExamPaperVo;
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamPaper;
-import org.dromara.cdi.mmp.exam.mapper.MmpQualificationExamPaperMapper;
-import org.dromara.cdi.mmp.exam.service.IMmpQualificationExamPaperService;
+import org.dromara.cdi.mmp.exam.domain.bo.MmpExamPaperBo;
+import org.dromara.cdi.mmp.exam.domain.vo.MmpExamPaperVo;
+import org.dromara.cdi.mmp.exam.domain.MmpExamPaper;
+import org.dromara.cdi.mmp.exam.mapper.MmpExamPaperMapper;
+import org.dromara.cdi.mmp.exam.service.IMmpExamPaperService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,15 +23,15 @@ import java.util.Collection;
 /**
  * 资质考核试卷Service业务层处理
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class MmpQualificationExamPaperServiceImpl implements IMmpQualificationExamPaperService {
+public class MmpExamPaperServiceImpl implements IMmpExamPaperService {
 
-    private final MmpQualificationExamPaperMapper baseMapper;
+    private final MmpExamPaperMapper baseMapper;
 
     /**
      * 查询资质考核试卷
@@ -40,7 +40,7 @@ public class MmpQualificationExamPaperServiceImpl implements IMmpQualificationEx
      * @return 资质考核试卷
      */
     @Override
-    public MmpQualificationExamPaperVo queryById(Long id){
+    public MmpExamPaperVo queryById(Long id){
         return baseMapper.selectVoById(id);
     }
 
@@ -52,9 +52,9 @@ public class MmpQualificationExamPaperServiceImpl implements IMmpQualificationEx
      * @return 资质考核试卷分页列表
      */
     @Override
-    public TableDataInfo<MmpQualificationExamPaperVo> queryPageList(MmpQualificationExamPaperBo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<MmpQualificationExamPaper> lqw = buildQueryWrapper(bo);
-        Page<MmpQualificationExamPaperVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
+    public TableDataInfo<MmpExamPaperVo> queryPageList(MmpExamPaperBo bo, PageQuery pageQuery) {
+        LambdaQueryWrapper<MmpExamPaper> lqw = buildQueryWrapper(bo);
+        Page<MmpExamPaperVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
 
@@ -65,26 +65,25 @@ public class MmpQualificationExamPaperServiceImpl implements IMmpQualificationEx
      * @return 资质考核试卷列表
      */
     @Override
-    public List<MmpQualificationExamPaperVo> queryList(MmpQualificationExamPaperBo bo) {
-        LambdaQueryWrapper<MmpQualificationExamPaper> lqw = buildQueryWrapper(bo);
+    public List<MmpExamPaperVo> queryList(MmpExamPaperBo bo) {
+        LambdaQueryWrapper<MmpExamPaper> lqw = buildQueryWrapper(bo);
         return baseMapper.selectVoList(lqw);
     }
 
-    private LambdaQueryWrapper<MmpQualificationExamPaper> buildQueryWrapper(MmpQualificationExamPaperBo bo) {
+    private LambdaQueryWrapper<MmpExamPaper> buildQueryWrapper(MmpExamPaperBo bo) {
         Map<String, Object> params = bo.getParams();
-        LambdaQueryWrapper<MmpQualificationExamPaper> lqw = Wrappers.lambdaQuery();
-        lqw.orderByAsc(MmpQualificationExamPaper::getId);
-        lqw.eq(StringUtils.isNotBlank(bo.getPaperCode()), MmpQualificationExamPaper::getPaperCode, bo.getPaperCode());
-        lqw.like(StringUtils.isNotBlank(bo.getPaperName()), MmpQualificationExamPaper::getPaperName, bo.getPaperName());
-        lqw.eq(bo.getQualificationId() != null, MmpQualificationExamPaper::getQualificationId, bo.getQualificationId());
-        lqw.eq(bo.getTotalScore() != null, MmpQualificationExamPaper::getTotalScore, bo.getTotalScore());
-        lqw.eq(bo.getPassScore() != null, MmpQualificationExamPaper::getPassScore, bo.getPassScore());
-        lqw.eq(bo.getExamDuration() != null, MmpQualificationExamPaper::getExamDuration, bo.getExamDuration());
-        lqw.eq(StringUtils.isNotBlank(bo.getQuestionIds()), MmpQualificationExamPaper::getQuestionIds, bo.getQuestionIds());
-        lqw.eq(bo.getIsRandom() != null, MmpQualificationExamPaper::getIsRandom, bo.getIsRandom());
-        lqw.eq(StringUtils.isNotBlank(bo.getRandomRule()), MmpQualificationExamPaper::getRandomRule, bo.getRandomRule());
-        lqw.eq(bo.getIsEnabled() != null, MmpQualificationExamPaper::getIsEnabled, bo.getIsEnabled());
-        lqw.eq(bo.getDelFlag() != null, MmpQualificationExamPaper::getDelFlag, bo.getDelFlag());
+        LambdaQueryWrapper<MmpExamPaper> lqw = Wrappers.lambdaQuery();
+        lqw.orderByAsc(MmpExamPaper::getId);
+        lqw.eq(StringUtils.isNotBlank(bo.getPaperCode()), MmpExamPaper::getPaperCode, bo.getPaperCode());
+        lqw.like(StringUtils.isNotBlank(bo.getPaperName()), MmpExamPaper::getPaperName, bo.getPaperName());
+        lqw.eq(bo.getQualificationId() != null, MmpExamPaper::getQualificationId, bo.getQualificationId());
+        lqw.eq(bo.getTotalScore() != null, MmpExamPaper::getTotalScore, bo.getTotalScore());
+        lqw.eq(bo.getPassScore() != null, MmpExamPaper::getPassScore, bo.getPassScore());
+        lqw.eq(bo.getExamDuration() != null, MmpExamPaper::getExamDuration, bo.getExamDuration());
+        lqw.eq(StringUtils.isNotBlank(bo.getQuestionIds()), MmpExamPaper::getQuestionIds, bo.getQuestionIds());
+        lqw.eq(bo.getIsRandom() != null, MmpExamPaper::getIsRandom, bo.getIsRandom());
+        lqw.eq(StringUtils.isNotBlank(bo.getRandomRule()), MmpExamPaper::getRandomRule, bo.getRandomRule());
+        lqw.eq(bo.getIsEnabled() != null, MmpExamPaper::getIsEnabled, bo.getIsEnabled());
         return lqw;
     }
 
@@ -95,8 +94,8 @@ public class MmpQualificationExamPaperServiceImpl implements IMmpQualificationEx
      * @return 是否新增成功
      */
     @Override
-    public Boolean insertByBo(MmpQualificationExamPaperBo bo) {
-        MmpQualificationExamPaper add = MapstructUtils.convert(bo, MmpQualificationExamPaper.class);
+    public Boolean insertByBo(MmpExamPaperBo bo) {
+        MmpExamPaper add = MapstructUtils.convert(bo, MmpExamPaper.class);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
         if (flag) {
@@ -112,8 +111,8 @@ public class MmpQualificationExamPaperServiceImpl implements IMmpQualificationEx
      * @return 是否修改成功
      */
     @Override
-    public Boolean updateByBo(MmpQualificationExamPaperBo bo) {
-        MmpQualificationExamPaper update = MapstructUtils.convert(bo, MmpQualificationExamPaper.class);
+    public Boolean updateByBo(MmpExamPaperBo bo) {
+        MmpExamPaper update = MapstructUtils.convert(bo, MmpExamPaper.class);
         validEntityBeforeSave(update);
         return baseMapper.updateById(update) > 0;
     }
@@ -121,7 +120,7 @@ public class MmpQualificationExamPaperServiceImpl implements IMmpQualificationEx
     /**
      * 保存前的数据校验
      */
-    private void validEntityBeforeSave(MmpQualificationExamPaper entity){
+    private void validEntityBeforeSave(MmpExamPaper entity){
         //TODO 做一些数据校验,如唯一约束
     }
 

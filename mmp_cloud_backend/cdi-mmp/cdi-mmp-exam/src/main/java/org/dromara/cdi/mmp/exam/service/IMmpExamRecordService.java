@@ -1,7 +1,8 @@
 package org.dromara.cdi.mmp.exam.service;
 
-import org.dromara.cdi.mmp.exam.domain.vo.MmpQualificationExamRecordVo;
-import org.dromara.cdi.mmp.exam.domain.bo.MmpQualificationExamRecordBo;
+import org.dromara.cdi.mmp.exam.domain.MmpExamRecord;
+import org.dromara.cdi.mmp.exam.domain.vo.MmpExamRecordVo;
+import org.dromara.cdi.mmp.exam.domain.bo.MmpExamRecordBo;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 import org.dromara.common.mybatis.core.page.PageQuery;
 
@@ -11,10 +12,10 @@ import java.util.List;
 /**
  * 资质考试记录Service接口
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
-public interface IMmpQualificationExamRecordService {
+public interface IMmpExamRecordService {
 
     /**
      * 查询资质考试记录
@@ -22,7 +23,7 @@ public interface IMmpQualificationExamRecordService {
      * @param id 主键
      * @return 资质考试记录
      */
-    MmpQualificationExamRecordVo queryById(Long id);
+    MmpExamRecordVo queryById(Long id);
 
     /**
      * 分页查询资质考试记录列表
@@ -31,7 +32,7 @@ public interface IMmpQualificationExamRecordService {
      * @param pageQuery 分页参数
      * @return 资质考试记录分页列表
      */
-    TableDataInfo<MmpQualificationExamRecordVo> queryPageList(MmpQualificationExamRecordBo bo, PageQuery pageQuery);
+    TableDataInfo<MmpExamRecordVo> queryPageList(MmpExamRecordBo bo, PageQuery pageQuery);
 
     /**
      * 查询符合条件的资质考试记录列表
@@ -39,7 +40,7 @@ public interface IMmpQualificationExamRecordService {
      * @param bo 查询条件
      * @return 资质考试记录列表
      */
-    List<MmpQualificationExamRecordVo> queryList(MmpQualificationExamRecordBo bo);
+    List<MmpExamRecordVo> queryList(MmpExamRecordBo bo);
 
     /**
      * 新增资质考试记录
@@ -47,7 +48,7 @@ public interface IMmpQualificationExamRecordService {
      * @param bo 资质考试记录
      * @return 是否新增成功
      */
-    Boolean insertByBo(MmpQualificationExamRecordBo bo);
+    Boolean insertByBo(MmpExamRecordBo bo);
 
     /**
      * 修改资质考试记录
@@ -55,7 +56,7 @@ public interface IMmpQualificationExamRecordService {
      * @param bo 资质考试记录
      * @return 是否修改成功
      */
-    Boolean updateByBo(MmpQualificationExamRecordBo bo);
+    Boolean updateByBo(MmpExamRecordBo bo);
 
     /**
      * 校验并批量删除资质考试记录信息

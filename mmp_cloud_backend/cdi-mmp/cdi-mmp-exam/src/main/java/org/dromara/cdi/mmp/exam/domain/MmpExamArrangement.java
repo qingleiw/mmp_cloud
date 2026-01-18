@@ -1,6 +1,6 @@
 package org.dromara.cdi.mmp.exam.domain;
 
-import org.dromara.common.mybatis.core.domain.BaseEntity;
+import org.dromara.common.tenant.core.TenantEntity;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,15 +10,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serial;
 
 /**
- * 资质考试安排对象 mmp_qualification_exam_arrangement
+ * 资质考试安排对象 mmp_exam_arrangement
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("mmp_qualification_exam_arrangement")
-public class MmpQualificationExamArrangement extends BaseEntity {
+@TableName("mmp_exam_arrangement")
+public class MmpExamArrangement extends TenantEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -72,7 +72,13 @@ public class MmpQualificationExamArrangement extends BaseEntity {
     /**
      * 是否删除
      */
-    private Long delFlag;
+    @TableLogic
+    private String delFlag;
+
+    /**
+     * 备注
+     */
+    private String remark;
 
 
 }

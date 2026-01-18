@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.dromara.cdi.mmp.exam.domain.bo.MmpQualificationExamQuestionBo;
-import org.dromara.cdi.mmp.exam.domain.vo.MmpQualificationExamQuestionVo;
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamQuestion;
-import org.dromara.cdi.mmp.exam.mapper.MmpQualificationExamQuestionMapper;
-import org.dromara.cdi.mmp.exam.service.IMmpQualificationExamQuestionService;
+import org.dromara.cdi.mmp.exam.domain.bo.MmpExamQuestionBo;
+import org.dromara.cdi.mmp.exam.domain.vo.MmpExamQuestionVo;
+import org.dromara.cdi.mmp.exam.domain.MmpExamQuestion;
+import org.dromara.cdi.mmp.exam.mapper.MmpExamQuestionMapper;
+import org.dromara.cdi.mmp.exam.service.IMmpExamQuestionService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,15 +23,15 @@ import java.util.Collection;
 /**
  * 资质考核题库Service业务层处理
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class MmpQualificationExamQuestionServiceImpl implements IMmpQualificationExamQuestionService {
+public class MmpExamQuestionServiceImpl implements IMmpExamQuestionService {
 
-    private final MmpQualificationExamQuestionMapper baseMapper;
+    private final MmpExamQuestionMapper baseMapper;
 
     /**
      * 查询资质考核题库
@@ -40,7 +40,7 @@ public class MmpQualificationExamQuestionServiceImpl implements IMmpQualificatio
      * @return 资质考核题库
      */
     @Override
-    public MmpQualificationExamQuestionVo queryById(Long id){
+    public MmpExamQuestionVo queryById(Long id){
         return baseMapper.selectVoById(id);
     }
 
@@ -52,9 +52,9 @@ public class MmpQualificationExamQuestionServiceImpl implements IMmpQualificatio
      * @return 资质考核题库分页列表
      */
     @Override
-    public TableDataInfo<MmpQualificationExamQuestionVo> queryPageList(MmpQualificationExamQuestionBo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<MmpQualificationExamQuestion> lqw = buildQueryWrapper(bo);
-        Page<MmpQualificationExamQuestionVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
+    public TableDataInfo<MmpExamQuestionVo> queryPageList(MmpExamQuestionBo bo, PageQuery pageQuery) {
+        LambdaQueryWrapper<MmpExamQuestion> lqw = buildQueryWrapper(bo);
+        Page<MmpExamQuestionVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
 
@@ -65,30 +65,29 @@ public class MmpQualificationExamQuestionServiceImpl implements IMmpQualificatio
      * @return 资质考核题库列表
      */
     @Override
-    public List<MmpQualificationExamQuestionVo> queryList(MmpQualificationExamQuestionBo bo) {
-        LambdaQueryWrapper<MmpQualificationExamQuestion> lqw = buildQueryWrapper(bo);
+    public List<MmpExamQuestionVo> queryList(MmpExamQuestionBo bo) {
+        LambdaQueryWrapper<MmpExamQuestion> lqw = buildQueryWrapper(bo);
         return baseMapper.selectVoList(lqw);
     }
 
-    private LambdaQueryWrapper<MmpQualificationExamQuestion> buildQueryWrapper(MmpQualificationExamQuestionBo bo) {
+    private LambdaQueryWrapper<MmpExamQuestion> buildQueryWrapper(MmpExamQuestionBo bo) {
         Map<String, Object> params = bo.getParams();
-        LambdaQueryWrapper<MmpQualificationExamQuestion> lqw = Wrappers.lambdaQuery();
-        lqw.orderByAsc(MmpQualificationExamQuestion::getId);
-        lqw.eq(StringUtils.isNotBlank(bo.getQuestionCode()), MmpQualificationExamQuestion::getQuestionCode, bo.getQuestionCode());
-        lqw.eq(bo.getQualificationId() != null, MmpQualificationExamQuestion::getQualificationId, bo.getQualificationId());
-        lqw.eq(StringUtils.isNotBlank(bo.getQuestionType()), MmpQualificationExamQuestion::getQuestionType, bo.getQuestionType());
-        lqw.eq(StringUtils.isNotBlank(bo.getQuestionContent()), MmpQualificationExamQuestion::getQuestionContent, bo.getQuestionContent());
-        lqw.eq(StringUtils.isNotBlank(bo.getOptionA()), MmpQualificationExamQuestion::getOptionA, bo.getOptionA());
-        lqw.eq(StringUtils.isNotBlank(bo.getOptionB()), MmpQualificationExamQuestion::getOptionB, bo.getOptionB());
-        lqw.eq(StringUtils.isNotBlank(bo.getOptionC()), MmpQualificationExamQuestion::getOptionC, bo.getOptionC());
-        lqw.eq(StringUtils.isNotBlank(bo.getOptionD()), MmpQualificationExamQuestion::getOptionD, bo.getOptionD());
-        lqw.eq(StringUtils.isNotBlank(bo.getOptionE()), MmpQualificationExamQuestion::getOptionE, bo.getOptionE());
-        lqw.eq(StringUtils.isNotBlank(bo.getCorrectAnswer()), MmpQualificationExamQuestion::getCorrectAnswer, bo.getCorrectAnswer());
-        lqw.eq(StringUtils.isNotBlank(bo.getAnswerAnalysis()), MmpQualificationExamQuestion::getAnswerAnalysis, bo.getAnswerAnalysis());
-        lqw.eq(bo.getDifficultyLevel() != null, MmpQualificationExamQuestion::getDifficultyLevel, bo.getDifficultyLevel());
-        lqw.eq(bo.getScore() != null, MmpQualificationExamQuestion::getScore, bo.getScore());
-        lqw.eq(bo.getIsEnabled() != null, MmpQualificationExamQuestion::getIsEnabled, bo.getIsEnabled());
-        lqw.eq(bo.getDelFlag() != null, MmpQualificationExamQuestion::getDelFlag, bo.getDelFlag());
+        LambdaQueryWrapper<MmpExamQuestion> lqw = Wrappers.lambdaQuery();
+        lqw.orderByAsc(MmpExamQuestion::getId);
+        lqw.eq(StringUtils.isNotBlank(bo.getQuestionCode()), MmpExamQuestion::getQuestionCode, bo.getQuestionCode());
+        lqw.eq(bo.getQualificationId() != null, MmpExamQuestion::getQualificationId, bo.getQualificationId());
+        lqw.eq(StringUtils.isNotBlank(bo.getQuestionType()), MmpExamQuestion::getQuestionType, bo.getQuestionType());
+        lqw.eq(StringUtils.isNotBlank(bo.getQuestionContent()), MmpExamQuestion::getQuestionContent, bo.getQuestionContent());
+        lqw.eq(StringUtils.isNotBlank(bo.getOptionA()), MmpExamQuestion::getOptionA, bo.getOptionA());
+        lqw.eq(StringUtils.isNotBlank(bo.getOptionB()), MmpExamQuestion::getOptionB, bo.getOptionB());
+        lqw.eq(StringUtils.isNotBlank(bo.getOptionC()), MmpExamQuestion::getOptionC, bo.getOptionC());
+        lqw.eq(StringUtils.isNotBlank(bo.getOptionD()), MmpExamQuestion::getOptionD, bo.getOptionD());
+        lqw.eq(StringUtils.isNotBlank(bo.getOptionE()), MmpExamQuestion::getOptionE, bo.getOptionE());
+        lqw.eq(StringUtils.isNotBlank(bo.getCorrectAnswer()), MmpExamQuestion::getCorrectAnswer, bo.getCorrectAnswer());
+        lqw.eq(StringUtils.isNotBlank(bo.getAnswerAnalysis()), MmpExamQuestion::getAnswerAnalysis, bo.getAnswerAnalysis());
+        lqw.eq(bo.getDifficultyLevel() != null, MmpExamQuestion::getDifficultyLevel, bo.getDifficultyLevel());
+        lqw.eq(bo.getScore() != null, MmpExamQuestion::getScore, bo.getScore());
+        lqw.eq(bo.getIsEnabled() != null, MmpExamQuestion::getIsEnabled, bo.getIsEnabled());
         return lqw;
     }
 
@@ -99,8 +98,8 @@ public class MmpQualificationExamQuestionServiceImpl implements IMmpQualificatio
      * @return 是否新增成功
      */
     @Override
-    public Boolean insertByBo(MmpQualificationExamQuestionBo bo) {
-        MmpQualificationExamQuestion add = MapstructUtils.convert(bo, MmpQualificationExamQuestion.class);
+    public Boolean insertByBo(MmpExamQuestionBo bo) {
+        MmpExamQuestion add = MapstructUtils.convert(bo, MmpExamQuestion.class);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
         if (flag) {
@@ -116,8 +115,8 @@ public class MmpQualificationExamQuestionServiceImpl implements IMmpQualificatio
      * @return 是否修改成功
      */
     @Override
-    public Boolean updateByBo(MmpQualificationExamQuestionBo bo) {
-        MmpQualificationExamQuestion update = MapstructUtils.convert(bo, MmpQualificationExamQuestion.class);
+    public Boolean updateByBo(MmpExamQuestionBo bo) {
+        MmpExamQuestion update = MapstructUtils.convert(bo, MmpExamQuestion.class);
         validEntityBeforeSave(update);
         return baseMapper.updateById(update) > 0;
     }
@@ -125,7 +124,7 @@ public class MmpQualificationExamQuestionServiceImpl implements IMmpQualificatio
     /**
      * 保存前的数据校验
      */
-    private void validEntityBeforeSave(MmpQualificationExamQuestion entity){
+    private void validEntityBeforeSave(MmpExamQuestion entity){
         //TODO 做一些数据校验,如唯一约束
     }
 

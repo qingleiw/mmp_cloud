@@ -1,6 +1,6 @@
 package org.dromara.cdi.mmp.exam.domain.vo;
 
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamPaper;
+import org.dromara.cdi.mmp.exam.domain.MmpExamPaper;
 import cn.idev.excel.annotation.ExcelIgnoreUnannotated;
 import cn.idev.excel.annotation.ExcelProperty;
 import org.dromara.common.excel.annotation.ExcelDictFormat;
@@ -15,15 +15,15 @@ import java.util.Date;
 
 
 /**
- * 资质考核试卷视图对象 mmp_qualification_exam_paper
+ * 资质考核试卷视图对象 mmp_exam_paper
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Data
 @ExcelIgnoreUnannotated
-@AutoMapper(target = MmpQualificationExamPaper.class)
-public class MmpQualificationExamPaperVo implements Serializable {
+@AutoMapper(target = MmpExamPaper.class)
+public class MmpExamPaperVo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -95,10 +95,10 @@ public class MmpQualificationExamPaperVo implements Serializable {
     private Long isEnabled;
 
     /**
-     * 是否删除
+     * 备注
      */
-    @ExcelProperty(value = "是否删除")
-    private Long delFlag;
+    @ExcelProperty(value = "备注")
+    private String remark;
 
 
 }

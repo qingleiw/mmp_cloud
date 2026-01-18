@@ -17,43 +17,44 @@ import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
 import org.dromara.common.log.enums.BusinessType;
 import org.dromara.common.excel.utils.ExcelUtil;
-import org.dromara.cdi.mmp.exam.domain.vo.MmpQualificationExamArrangementVo;
-import org.dromara.cdi.mmp.exam.domain.bo.MmpQualificationExamArrangementBo;
-import org.dromara.cdi.mmp.exam.service.IMmpQualificationExamArrangementService;
+import org.dromara.cdi.mmp.exam.domain.vo.MmpExamArrangementVo;
+import org.dromara.cdi.mmp.exam.domain.bo.MmpExamArrangementBo;
+import org.dromara.cdi.mmp.exam.service.IMmpExamArrangementService;
 import org.dromara.common.mybatis.core.page.TableDataInfo;
 
 /**
  * 资质考试安排
+ * 前端访问路由地址为:/natdss/examArrangement
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/qualificationExamArrangement")
-public class MmpQualificationExamArrangementController extends BaseController {
+@RequestMapping("/examArrangement")
+public class MmpExamArrangementController extends BaseController {
 
-    private final IMmpQualificationExamArrangementService mmpQualificationExamArrangementService;
+    private final IMmpExamArrangementService mmpExamArrangementService;
 
     /**
      * 查询资质考试安排列表
      */
-    @SaCheckPermission("qualification:qualificationExamArrangement:list")
+    @SaCheckPermission("natdss:examArrangement:list")
     @GetMapping("/list")
-    public TableDataInfo<MmpQualificationExamArrangementVo> list(MmpQualificationExamArrangementBo bo, PageQuery pageQuery) {
-        return mmpQualificationExamArrangementService.queryPageList(bo, pageQuery);
+    public TableDataInfo<MmpExamArrangementVo> list(MmpExamArrangementBo bo, PageQuery pageQuery) {
+        return mmpExamArrangementService.queryPageList(bo, pageQuery);
     }
 
     /**
      * 导出资质考试安排列表
      */
-    @SaCheckPermission("qualification:qualificationExamArrangement:export")
+    @SaCheckPermission("natdss:examArrangement:export")
     @Log(title = "资质考试安排", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(MmpQualificationExamArrangementBo bo, HttpServletResponse response) {
-        List<MmpQualificationExamArrangementVo> list = mmpQualificationExamArrangementService.queryList(bo);
-        ExcelUtil.exportExcel(list, "资质考试安排", MmpQualificationExamArrangementVo.class, response);
+    public void export(MmpExamArrangementBo bo, HttpServletResponse response) {
+        List<MmpExamArrangementVo> list = mmpExamArrangementService.queryList(bo);
+        ExcelUtil.exportExcel(list, "资质考试安排", MmpExamArrangementVo.class, response);
     }
 
     /**
@@ -61,33 +62,33 @@ public class MmpQualificationExamArrangementController extends BaseController {
      *
      * @param id 主键
      */
-    @SaCheckPermission("qualification:qualificationExamArrangement:query")
+    @SaCheckPermission("natdss:examArrangement:query")
     @GetMapping("/{id}")
-    public R<MmpQualificationExamArrangementVo> getInfo(@NotNull(message = "主键不能为空")
-                                     @PathVariable Long id) {
-        return R.ok(mmpQualificationExamArrangementService.queryById(id));
+    public R<MmpExamArrangementVo> getInfo(@NotNull(message = "主键不能为空")
+                                     @PathVariable("id") Long id) {
+        return R.ok(mmpExamArrangementService.queryById(id));
     }
 
     /**
      * 新增资质考试安排
      */
-    @SaCheckPermission("qualification:qualificationExamArrangement:add")
+    @SaCheckPermission("natdss:examArrangement:add")
     @Log(title = "资质考试安排", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping()
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody MmpQualificationExamArrangementBo bo) {
-        return toAjax(mmpQualificationExamArrangementService.insertByBo(bo));
+    public R<Void> add(@Validated(AddGroup.class) @RequestBody MmpExamArrangementBo bo) {
+        return toAjax(mmpExamArrangementService.insertByBo(bo));
     }
 
     /**
      * 修改资质考试安排
      */
-    @SaCheckPermission("qualification:qualificationExamArrangement:edit")
+    @SaCheckPermission("natdss:examArrangement:edit")
     @Log(title = "资质考试安排", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping()
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody MmpQualificationExamArrangementBo bo) {
-        return toAjax(mmpQualificationExamArrangementService.updateByBo(bo));
+    public R<Void> edit(@Validated(EditGroup.class) @RequestBody MmpExamArrangementBo bo) {
+        return toAjax(mmpExamArrangementService.updateByBo(bo));
     }
 
     /**
@@ -95,11 +96,11 @@ public class MmpQualificationExamArrangementController extends BaseController {
      *
      * @param ids 主键串
      */
-    @SaCheckPermission("qualification:qualificationExamArrangement:remove")
+    @SaCheckPermission("natdss:examArrangement:remove")
     @Log(title = "资质考试安排", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")
-                          @PathVariable Long[] ids) {
-        return toAjax(mmpQualificationExamArrangementService.deleteWithValidByIds(List.of(ids), true));
+                          @PathVariable("ids") Long[] ids) {
+        return toAjax(mmpExamArrangementService.deleteWithValidByIds(List.of(ids), true));
     }
 }

@@ -10,11 +10,11 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.dromara.cdi.mmp.exam.domain.bo.MmpQualificationExamArrangementBo;
-import org.dromara.cdi.mmp.exam.domain.vo.MmpQualificationExamArrangementVo;
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamArrangement;
-import org.dromara.cdi.mmp.exam.mapper.MmpQualificationExamArrangementMapper;
-import org.dromara.cdi.mmp.exam.service.IMmpQualificationExamArrangementService;
+import org.dromara.cdi.mmp.exam.domain.bo.MmpExamArrangementBo;
+import org.dromara.cdi.mmp.exam.domain.vo.MmpExamArrangementVo;
+import org.dromara.cdi.mmp.exam.domain.MmpExamArrangement;
+import org.dromara.cdi.mmp.exam.mapper.MmpExamArrangementMapper;
+import org.dromara.cdi.mmp.exam.service.IMmpExamArrangementService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,15 +23,15 @@ import java.util.Collection;
 /**
  * 资质考试安排Service业务层处理
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class MmpQualificationExamArrangementServiceImpl implements IMmpQualificationExamArrangementService {
+public class MmpExamArrangementServiceImpl implements IMmpExamArrangementService {
 
-    private final MmpQualificationExamArrangementMapper baseMapper;
+    private final MmpExamArrangementMapper baseMapper;
 
     /**
      * 查询资质考试安排
@@ -40,7 +40,7 @@ public class MmpQualificationExamArrangementServiceImpl implements IMmpQualifica
      * @return 资质考试安排
      */
     @Override
-    public MmpQualificationExamArrangementVo queryById(Long id){
+    public MmpExamArrangementVo queryById(Long id){
         return baseMapper.selectVoById(id);
     }
 
@@ -52,9 +52,9 @@ public class MmpQualificationExamArrangementServiceImpl implements IMmpQualifica
      * @return 资质考试安排分页列表
      */
     @Override
-    public TableDataInfo<MmpQualificationExamArrangementVo> queryPageList(MmpQualificationExamArrangementBo bo, PageQuery pageQuery) {
-        LambdaQueryWrapper<MmpQualificationExamArrangement> lqw = buildQueryWrapper(bo);
-        Page<MmpQualificationExamArrangementVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
+    public TableDataInfo<MmpExamArrangementVo> queryPageList(MmpExamArrangementBo bo, PageQuery pageQuery) {
+        LambdaQueryWrapper<MmpExamArrangement> lqw = buildQueryWrapper(bo);
+        Page<MmpExamArrangementVo> result = baseMapper.selectVoPage(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
     }
 
@@ -65,24 +65,23 @@ public class MmpQualificationExamArrangementServiceImpl implements IMmpQualifica
      * @return 资质考试安排列表
      */
     @Override
-    public List<MmpQualificationExamArrangementVo> queryList(MmpQualificationExamArrangementBo bo) {
-        LambdaQueryWrapper<MmpQualificationExamArrangement> lqw = buildQueryWrapper(bo);
+    public List<MmpExamArrangementVo> queryList(MmpExamArrangementBo bo) {
+        LambdaQueryWrapper<MmpExamArrangement> lqw = buildQueryWrapper(bo);
         return baseMapper.selectVoList(lqw);
     }
 
-    private LambdaQueryWrapper<MmpQualificationExamArrangement> buildQueryWrapper(MmpQualificationExamArrangementBo bo) {
+    private LambdaQueryWrapper<MmpExamArrangement> buildQueryWrapper(MmpExamArrangementBo bo) {
         Map<String, Object> params = bo.getParams();
-        LambdaQueryWrapper<MmpQualificationExamArrangement> lqw = Wrappers.lambdaQuery();
-        lqw.orderByAsc(MmpQualificationExamArrangement::getId);
-        lqw.eq(StringUtils.isNotBlank(bo.getExamCode()), MmpQualificationExamArrangement::getExamCode, bo.getExamCode());
-        lqw.like(StringUtils.isNotBlank(bo.getExamName()), MmpQualificationExamArrangement::getExamName, bo.getExamName());
-        lqw.eq(bo.getPaperId() != null, MmpQualificationExamArrangement::getPaperId, bo.getPaperId());
-        lqw.eq(bo.getQualificationId() != null, MmpQualificationExamArrangement::getQualificationId, bo.getQualificationId());
-        lqw.eq(bo.getExamStartTime() != null, MmpQualificationExamArrangement::getExamStartTime, bo.getExamStartTime());
-        lqw.eq(bo.getExamEndTime() != null, MmpQualificationExamArrangement::getExamEndTime, bo.getExamEndTime());
-        lqw.eq(StringUtils.isNotBlank(bo.getExamineeIds()), MmpQualificationExamArrangement::getExamineeIds, bo.getExamineeIds());
-        lqw.eq(StringUtils.isNotBlank(bo.getExamStatus()), MmpQualificationExamArrangement::getExamStatus, bo.getExamStatus());
-        lqw.eq(bo.getDelFlag() != null, MmpQualificationExamArrangement::getDelFlag, bo.getDelFlag());
+        LambdaQueryWrapper<MmpExamArrangement> lqw = Wrappers.lambdaQuery();
+        lqw.orderByAsc(MmpExamArrangement::getId);
+        lqw.eq(StringUtils.isNotBlank(bo.getExamCode()), MmpExamArrangement::getExamCode, bo.getExamCode());
+        lqw.like(StringUtils.isNotBlank(bo.getExamName()), MmpExamArrangement::getExamName, bo.getExamName());
+        lqw.eq(bo.getPaperId() != null, MmpExamArrangement::getPaperId, bo.getPaperId());
+        lqw.eq(bo.getQualificationId() != null, MmpExamArrangement::getQualificationId, bo.getQualificationId());
+        lqw.eq(bo.getExamStartTime() != null, MmpExamArrangement::getExamStartTime, bo.getExamStartTime());
+        lqw.eq(bo.getExamEndTime() != null, MmpExamArrangement::getExamEndTime, bo.getExamEndTime());
+        lqw.eq(StringUtils.isNotBlank(bo.getExamineeIds()), MmpExamArrangement::getExamineeIds, bo.getExamineeIds());
+        lqw.eq(StringUtils.isNotBlank(bo.getExamStatus()), MmpExamArrangement::getExamStatus, bo.getExamStatus());
         return lqw;
     }
 
@@ -93,8 +92,8 @@ public class MmpQualificationExamArrangementServiceImpl implements IMmpQualifica
      * @return 是否新增成功
      */
     @Override
-    public Boolean insertByBo(MmpQualificationExamArrangementBo bo) {
-        MmpQualificationExamArrangement add = MapstructUtils.convert(bo, MmpQualificationExamArrangement.class);
+    public Boolean insertByBo(MmpExamArrangementBo bo) {
+        MmpExamArrangement add = MapstructUtils.convert(bo, MmpExamArrangement.class);
         validEntityBeforeSave(add);
         boolean flag = baseMapper.insert(add) > 0;
         if (flag) {
@@ -110,8 +109,8 @@ public class MmpQualificationExamArrangementServiceImpl implements IMmpQualifica
      * @return 是否修改成功
      */
     @Override
-    public Boolean updateByBo(MmpQualificationExamArrangementBo bo) {
-        MmpQualificationExamArrangement update = MapstructUtils.convert(bo, MmpQualificationExamArrangement.class);
+    public Boolean updateByBo(MmpExamArrangementBo bo) {
+        MmpExamArrangement update = MapstructUtils.convert(bo, MmpExamArrangement.class);
         validEntityBeforeSave(update);
         return baseMapper.updateById(update) > 0;
     }
@@ -119,7 +118,7 @@ public class MmpQualificationExamArrangementServiceImpl implements IMmpQualifica
     /**
      * 保存前的数据校验
      */
-    private void validEntityBeforeSave(MmpQualificationExamArrangement entity){
+    private void validEntityBeforeSave(MmpExamArrangement entity){
         //TODO 做一些数据校验,如唯一约束
     }
 

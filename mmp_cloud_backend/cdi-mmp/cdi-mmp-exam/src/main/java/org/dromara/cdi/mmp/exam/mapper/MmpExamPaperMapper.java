@@ -1,15 +1,15 @@
 package org.dromara.cdi.mmp.exam.mapper;
 
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamPaper;
-import org.dromara.cdi.mmp.exam.domain.vo.MmpQualificationExamPaperVo;
+import org.dromara.cdi.mmp.exam.domain.MmpExamPaper;
+import org.dromara.cdi.mmp.exam.domain.vo.MmpExamPaperVo;
 import org.dromara.common.mybatis.core.mapper.BaseMapperPlus;
 
 /**
  * 资质考核试卷Mapper接口
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
-public interface MmpQualificationExamPaperMapper extends BaseMapperPlus<MmpQualificationExamPaper, MmpQualificationExamPaperVo> {
+public interface MmpExamPaperMapper extends BaseMapperPlus<MmpExamPaper, MmpExamPaperVo> {
 
 }

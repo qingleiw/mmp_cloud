@@ -1,6 +1,6 @@
 package org.dromara.cdi.mmp.exam.domain.bo;
 
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamArrangement;
+import org.dromara.cdi.mmp.exam.domain.MmpExamArrangement;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
@@ -12,15 +12,15 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * 资质考试安排业务对象 mmp_qualification_exam_arrangement
+ * 资质考试安排业务对象 mmp_exam_arrangement
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@AutoMapper(target = MmpQualificationExamArrangement.class, reverseConvertGenerate = false)
-public class MmpQualificationExamArrangementBo extends BaseEntity {
+@AutoMapper(target = MmpExamArrangement.class, reverseConvertGenerate = false)
+public class MmpExamArrangementBo extends BaseEntity {
 
     /**
      * 主键ID
@@ -70,9 +70,9 @@ public class MmpQualificationExamArrangementBo extends BaseEntity {
     private String examStatus;
 
     /**
-     * 是否删除
+     * 备注
      */
-    private Long delFlag;
+    private String remark;
 
 
 }

@@ -1,6 +1,6 @@
 package org.dromara.cdi.mmp.exam.domain.bo;
 
-import org.dromara.cdi.mmp.exam.domain.MmpQualificationExamQuestion;
+import org.dromara.cdi.mmp.exam.domain.MmpExamQuestion;
 import org.dromara.common.mybatis.core.domain.BaseEntity;
 import org.dromara.common.core.validate.AddGroup;
 import org.dromara.common.core.validate.EditGroup;
@@ -10,15 +10,15 @@ import lombok.EqualsAndHashCode;
 import jakarta.validation.constraints.*;
 
 /**
- * 资质考核题库业务对象 mmp_qualification_exam_question
+ * 资质考核题库业务对象 mmp_exam_question
  *
- * @author Lion Li
- * @date 2025-12-23
+ * @author LionLi
+ * @date 2026-01-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@AutoMapper(target = MmpQualificationExamQuestion.class, reverseConvertGenerate = false)
-public class MmpQualificationExamQuestionBo extends BaseEntity {
+@AutoMapper(target = MmpExamQuestion.class, reverseConvertGenerate = false)
+public class MmpExamQuestionBo extends BaseEntity {
 
     /**
      * 主键ID
@@ -97,9 +97,9 @@ public class MmpQualificationExamQuestionBo extends BaseEntity {
     private Long isEnabled;
 
     /**
-     * 是否删除
+     * 备注
      */
-    private Long delFlag;
+    private String remark;
 
 
 }
