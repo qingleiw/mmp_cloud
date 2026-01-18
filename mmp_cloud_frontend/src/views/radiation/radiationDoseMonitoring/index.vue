@@ -264,8 +264,8 @@ const queryParams = reactive<RadiationDoseMonitoringQuery>({
 const form = reactive<RadiationDoseMonitoringForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  workerId: [{ required: true, message: '工作人员ID不能为空', trigger: 'blur' }],
+  monitoringDate: [{ required: true, message: '监测日期不能为空', trigger: 'blur' }]
 };
 
 /** 查询辐射剂量监测列表 */

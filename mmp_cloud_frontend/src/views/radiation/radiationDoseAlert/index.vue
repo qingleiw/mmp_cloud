@@ -252,8 +252,7 @@ const queryParams = reactive<RadiationDoseAlertQuery>({
 const form = reactive<RadiationDoseAlertForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  thresholdValue: [{ required: true, message: '阈值不能为空', trigger: 'blur' }]
 };
 
 /** 查询辐射剂量预警列表 */

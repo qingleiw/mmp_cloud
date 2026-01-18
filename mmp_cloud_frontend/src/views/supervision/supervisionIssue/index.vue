@@ -258,8 +258,8 @@ const queryParams = reactive<SupervisionIssueQuery>({
 const form = reactive<SupervisionIssueForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  resultId: [{ required: true, message: '结果ID不能为空', trigger: 'blur' }],
+  issueDescription: [{ required: true, message: '问题描述不能为空', trigger: 'blur' }]
 };
 
 /** 查询督导问题列表 */
