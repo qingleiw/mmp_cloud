@@ -260,8 +260,10 @@ const queryParams = reactive<SupervisionFormFieldQuery>({
 const form = reactive<SupervisionFormFieldForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  formId: [{ required: true, message: '表单ID不能为空', trigger: 'blur' }],
+  fieldCode: [{ required: true, message: '字段编码不能为空', trigger: 'blur' }],
+  fieldName: [{ required: true, message: '字段名称不能为空', trigger: 'blur' }],
+  fieldType: [{ required: true, message: '字段类型不能为空', trigger: 'blur' }]
 };
 
 /** 查询督导表单字段列表 */

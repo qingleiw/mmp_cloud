@@ -264,8 +264,8 @@ const queryParams = reactive<EmergencyMedicalSupportQuery>({
 const form = reactive<EmergencyMedicalSupportForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  resourceCode: [{ required: true, message: '资源编码不能为空', trigger: 'blur' }],
+  resourceName: [{ required: true, message: '资源名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询应急医疗保障列表 */

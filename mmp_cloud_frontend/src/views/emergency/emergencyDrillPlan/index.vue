@@ -274,8 +274,8 @@ const queryParams = reactive<EmergencyDrillPlanQuery>({
 const form = reactive<EmergencyDrillPlanForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  planCode: [{ required: true, message: '计划编码不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: '计划名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询应急演练计划列表 */

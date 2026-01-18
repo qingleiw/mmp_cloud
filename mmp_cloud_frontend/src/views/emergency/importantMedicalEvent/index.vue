@@ -231,49 +231,48 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: ImportantMedicalEventForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
-  remark: undefined
+  eventNo: undefined,
+  eventType: undefined,
+  patientId: undefined,
+  patientName: undefined,
+  visitNo: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  responsibleDoctor: undefined,
+  eventTime: undefined,
+  eventDescription: undefined,
+  eventLevel: undefined,
+  notifyUsers: undefined,
+  sourceSystem: undefined,
+  isNotified: undefined,
+  notifyTime: undefined
 };
 
 const queryParams = reactive<ImportantMedicalEventQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  eventNo: undefined,
+  eventType: undefined,
+  patientId: undefined,
+  patientName: undefined,
+  visitNo: undefined,
+  departmentId: undefined,
+  departmentName: undefined,
+  responsibleDoctor: undefined,
+  eventTime: undefined,
+  eventDescription: undefined,
+  eventLevel: undefined,
   params: {}
 });
 
 const form = reactive<ImportantMedicalEventForm>({ ...initFormData });
 
 const rules = {
-  eventCode: [{ required: true, message: '事件编码不能为空', trigger: 'blur' }],
-  eventTitle: [{ required: true, message: '事件标题不能为空', trigger: 'blur' }]
+  eventNo: [{ required: true, message: '事件编号不能为空', trigger: 'blur' }],
+  eventType: [{ required: true, message: '事件类型不能为空', trigger: 'blur' }],
+  patientName: [{ required: true, message: '患者姓名不能为空', trigger: 'blur' }],
+  eventTime: [{ required: true, message: '事件时间不能为空', trigger: 'blur' }],
+  eventDescription: [{ required: true, message: '事件描述不能为空', trigger: 'blur' }]
 };
 
 /** 查询重大医疗事件列表 */

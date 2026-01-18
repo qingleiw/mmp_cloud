@@ -260,8 +260,7 @@ const queryParams = reactive<EmergencyEventTreatmentQuery>({
 const form = reactive<EmergencyEventTreatmentForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  eventId: [{ required: true, message: '事件ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询应急事件处置列表 */

@@ -258,8 +258,8 @@ const queryParams = reactive<TumorQcPlanQuery>({
 const form = reactive<TumorQcPlanForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  planCode: [{ required: true, message: '方案编码不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: '方案名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询肿瘤质控计划列表 */
@@ -361,7 +361,7 @@ const submitForm = async () => {
 const handleDelete = async (row?: TumorQcPlanVO) => {
   const _ids = row?.id || ids.value;
   try {
-    await proxy?.$modal.confirm('是否确认删除应急演练计划编号为"' + _ids + '"的数据项？');
+    await proxy?.$modal.confirm('是否确认删除肿瘤质控计划编号为"' + _ids + '"的数据项？');
     await delTumorQcPlan(_ids);
     proxy?.$modal.msgSuccess('删除成功');
     await getList();

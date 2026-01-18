@@ -231,41 +231,50 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: NatdssB141OutpatientOrderAndPresForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  orderType: undefined,
+  orderCategory: undefined,
+  orderItem: undefined,
+  orderContent: undefined,
+  dosage: undefined,
+  dosageUnit: undefined,
+  frequency: undefined,
+  route: undefined,
+  orderDate: undefined,
+  orderDoctor: undefined,
+  orderDoctorName: undefined,
+  executeDate: undefined,
+  executeNurse: undefined,
+  executeNurseName: undefined,
+  orderStatus: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<NatdssB141OutpatientOrderAndPresQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  orderType: undefined,
+  orderCategory: undefined,
+  orderItem: undefined,
+  orderContent: undefined,
+  dosage: undefined,
+  dosageUnit: undefined,
+  frequency: undefined,
+  route: undefined,
+  orderDate: undefined,
+  orderDoctor: undefined,
+  orderDoctorName: undefined,
+  executeDate: undefined,
+  executeNurse: undefined,
+  executeNurseName: undefined,
+  orderStatus: undefined,
   params: {}
 });
 
@@ -273,7 +282,8 @@ const form = reactive<NatdssB141OutpatientOrderAndPresForm>({ ...initFormData })
 
 const rules = {
   patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
-  visitSn: [{ required: true, message: '单次就诊唯一标识号不能为空', trigger: 'blur' }]
+  visitSn: [{ required: true, message: '单次就诊唯一标识号不能为空', trigger: 'blur' }],
+  orderSn: [{ required: true, message: '医嘱流水号不能为空', trigger: 'blur' }]
 };
 
 /** 查询门诊医嘱和处方列表 */
