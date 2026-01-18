@@ -254,8 +254,7 @@ const queryParams = reactive<SupervisionRectificationProgressQuery>({
 const form = reactive<SupervisionRectificationProgressForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  taskId: [{ required: true, message: '任务ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询督导整改进度列表 */

@@ -231,49 +231,52 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: NatdssB171LabInfoForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  testCategory: undefined,
+  testItem: undefined,
+  testValue: undefined,
+  testUnit: undefined,
+  referenceRange: undefined,
+  testResult: undefined,
+  testDate: undefined,
+  testDoctor: undefined,
+  testDoctorName: undefined,
+  testMethod: undefined,
+  instrumentName: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<NatdssB171LabInfoQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  testCategory: undefined,
+  testItem: undefined,
+  testValue: undefined,
+  testUnit: undefined,
+  referenceRange: undefined,
+  testResult: undefined,
+  testDate: undefined,
+  testDoctor: undefined,
+  testDoctorName: undefined,
+  testMethod: undefined,
+  instrumentName: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
 const form = reactive<NatdssB171LabInfoForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
+  visitSn: [{ required: true, message: '单次就诊唯一标识号不能为空', trigger: 'blur' }]
 };
 
 /** 查询检验信息列表 */

@@ -260,8 +260,7 @@ const queryParams = reactive<QcIndicatorCollectionConfigQuery>({
 const form = reactive<QcIndicatorCollectionConfigForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  indicatorId: [{ required: true, message: '指标ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询质控指标采集配置列表 */

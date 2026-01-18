@@ -231,49 +231,43 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: NatdssB191FollowUpForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  followUpDate: undefined,
+  followUpType: undefined,
+  followUpContent: undefined,
+  followUpResult: undefined,
+  nextFollowUpDate: undefined,
+  followUpDoctor: undefined,
+  followUpDoctorName: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<NatdssB191FollowUpQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  followUpDate: undefined,
+  followUpType: undefined,
+  followUpContent: undefined,
+  followUpResult: undefined,
+  nextFollowUpDate: undefined,
+  followUpDoctor: undefined,
+  followUpDoctorName: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
 const form = reactive<NatdssB191FollowUpForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询随访信息列表 */

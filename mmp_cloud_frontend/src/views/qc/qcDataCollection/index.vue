@@ -274,8 +274,8 @@ const queryParams = reactive<QcDataCollectionQuery>({
 const form = reactive<QcDataCollectionForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  indicatorId: [{ required: true, message: '指标ID不能为空', trigger: 'blur' }],
+  dataType: [{ required: true, message: '数据类型不能为空', trigger: 'blur' }]
 };
 
 /** 查询质控数据采集列表 */

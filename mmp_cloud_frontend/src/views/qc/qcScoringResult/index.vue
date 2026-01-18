@@ -260,8 +260,8 @@ const queryParams = reactive<QcScoringResultQuery>({
 const form = reactive<QcScoringResultForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  collectionId: [{ required: true, message: '采集记录ID不能为空', trigger: 'blur' }],
+  indicatorId: [{ required: true, message: '指标ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询质控评分结果列表 */

@@ -264,8 +264,9 @@ const queryParams = reactive<SupervisionProjectIndicatorQuery>({
 const form = reactive<SupervisionProjectIndicatorForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  projectId: [{ required: true, message: '项目ID不能为空', trigger: 'blur' }],
+  indicatorCode: [{ required: true, message: '指标编码不能为空', trigger: 'blur' }],
+  indicatorName: [{ required: true, message: '指标名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询督导项目指标列表 */

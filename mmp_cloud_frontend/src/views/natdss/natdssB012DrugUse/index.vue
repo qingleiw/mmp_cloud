@@ -231,49 +231,53 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: NatdssB012DrugUseForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  presSn: undefined,
+  hosDrugCode: undefined,
+  genericName: undefined,
+  tradeName: undefined,
+  manufac: undefined,
+  approvalNo: undefined,
+  form: undefined,
+  spec: undefined,
+  packingQuantity: undefined,
+  packingUnit: undefined,
+  presUnitPrice: undefined,
+  presQuantity: undefined,
+  presTotalPrice: undefined,
+  presOrigin: undefined,
+  presDate: undefined,
+  insuranceType: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<NatdssB012DrugUseQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  presSn: undefined,
+  hosDrugCode: undefined,
+  genericName: undefined,
+  tradeName: undefined,
+  manufac: undefined,
+  approvalNo: undefined,
+  form: undefined,
+  spec: undefined,
+  packingQuantity: undefined,
+  packingUnit: undefined,
+  presUnitPrice: undefined,
+  presQuantity: undefined,
+  presTotalPrice: undefined,
+  presOrigin: undefined,
+  presDate: undefined,
+  insuranceType: undefined,
   params: {}
 });
 
 const form = reactive<NatdssB012DrugUseForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  presSn: [{ required: true, message: '药品使用流水号不能为空', trigger: 'blur' }],
+  hosDrugCode: [{ required: true, message: '本院药品编码不能为空', trigger: 'blur' }],
+  genericName: [{ required: true, message: '药品通用名不能为空', trigger: 'blur' }]
 };
 
 /** 查询药品使用信息列表 */

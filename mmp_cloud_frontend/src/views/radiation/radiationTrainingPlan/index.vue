@@ -268,8 +268,8 @@ const queryParams = reactive<RadiationTrainingPlanQuery>({
 const form = reactive<RadiationTrainingPlanForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  planCode: [{ required: true, message: '计划编码不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: '计划名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询辐射培训计划列表 */
@@ -371,7 +371,7 @@ const submitForm = async () => {
 const handleDelete = async (row?: RadiationTrainingPlanVO) => {
   const _ids = row?.id || ids.value;
   try {
-    await proxy?.$modal.confirm('是否确认删除应急演练计划编号为"' + _ids + '"的数据项？');
+    await proxy?.$modal.confirm('是否确认删除辐射培训计划编号为"' + _ids + '"的数据项？');
     await delRadiationTrainingPlan(_ids);
     proxy?.$modal.msgSuccess('删除成功');
     await getList();

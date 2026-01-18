@@ -234,7 +234,6 @@ const initFormData: EmergencyPlanForm = {
   planCode: undefined,
   planName: undefined,
   planType: undefined,
-  version: undefined,
   status: undefined,
   effectiveDate: undefined,
   reviewDate: undefined,
@@ -256,7 +255,6 @@ const queryParams = reactive<EmergencyPlanQuery>({
   planCode: undefined,
   planName: undefined,
   planType: undefined,
-  version: undefined,
   status: undefined,
   effectiveDate: undefined,
   reviewDate: undefined,
@@ -276,8 +274,8 @@ const queryParams = reactive<EmergencyPlanQuery>({
 const form = reactive<EmergencyPlanForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  planCode: [{ required: true, message: '预案编码不能为空', trigger: 'blur' }],
+  planName: [{ required: true, message: '预案名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询应急预案列表 */

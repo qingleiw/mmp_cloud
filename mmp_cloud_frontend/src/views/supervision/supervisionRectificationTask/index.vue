@@ -256,8 +256,8 @@ const queryParams = reactive<SupervisionRectificationTaskQuery>({
 const form = reactive<SupervisionRectificationTaskForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  issueId: [{ required: true, message: '问题ID不能为空', trigger: 'blur' }],
+  taskDescription: [{ required: true, message: '任务描述不能为空', trigger: 'blur' }]
 };
 
 /** 查询督导整改任务列表 */

@@ -250,8 +250,8 @@ const queryParams = reactive<SupervisionPlanFormQuery>({
 const form = reactive<SupervisionPlanFormForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  planId: [{ required: true, message: '计划ID不能为空', trigger: 'blur' }],
+  formId: [{ required: true, message: '表单ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询督导计划表单列表 */

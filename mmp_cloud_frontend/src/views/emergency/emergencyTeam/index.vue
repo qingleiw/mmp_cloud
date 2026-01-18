@@ -260,8 +260,8 @@ const queryParams = reactive<EmergencyTeamQuery>({
 const form = reactive<EmergencyTeamForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  teamCode: [{ required: true, message: '队伍编码不能为空', trigger: 'blur' }],
+  teamName: [{ required: true, message: '队伍名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询应急团队列表 */

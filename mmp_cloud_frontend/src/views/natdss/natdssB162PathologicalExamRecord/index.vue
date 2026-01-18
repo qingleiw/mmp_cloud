@@ -231,49 +231,56 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: NatdssB162PathologicalExamRecordForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  specimenType: undefined,
+  specimenCollectionDate: undefined,
+  specimenCollectionSite: undefined,
+  pathologicalDiagnosis: undefined,
+  histologicalType: undefined,
+  histologicalGrade: undefined,
+  immunohistochemicalResult: undefined,
+  molecularPathologyResult: undefined,
+  pathologicalDoctor: undefined,
+  pathologicalDoctorName: undefined,
+  reportDate: undefined,
+  reviewOpinion: undefined,
+  finalDiagnosis: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<NatdssB162PathologicalExamRecordQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  specimenType: undefined,
+  specimenCollectionDate: undefined,
+  specimenCollectionSite: undefined,
+  pathologicalDiagnosis: undefined,
+  histologicalType: undefined,
+  histologicalGrade: undefined,
+  immunohistochemicalResult: undefined,
+  molecularPathologyResult: undefined,
+  pathologicalDoctor: undefined,
+  pathologicalDoctorName: undefined,
+  reportDate: undefined,
+  reviewOpinion: undefined,
+  finalDiagnosis: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
 const form = reactive<NatdssB162PathologicalExamRecordForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
+  visitSn: [{ required: true, message: '单次就诊唯一标识号不能为空', trigger: 'blur' }]
 };
 
 /** 查询病理检查记录列表 */

@@ -268,8 +268,8 @@ const queryParams = reactive<RadiationDoseAlertRecordQuery>({
 const form = reactive<RadiationDoseAlertRecordForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  staffId: [{ required: true, message: '工作人员ID不能为空', trigger: 'blur' }],
+  alertDate: [{ required: true, message: '预警日期不能为空', trigger: 'blur' }]
 };
 
 /** 查询辐射剂量预警记录列表 */

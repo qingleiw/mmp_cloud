@@ -231,49 +231,54 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: NatdssB172LabMicrobiologicalInfoForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  specimenType: undefined,
+  specimenCollectionDate: undefined,
+  specimenCollectionSite: undefined,
+  testItem: undefined,
+  testResult: undefined,
+  testMethod: undefined,
+  testDate: undefined,
+  testDoctor: undefined,
+  testDoctorName: undefined,
+  resultInterpretation: undefined,
+  clinicalSignificance: undefined,
+  antibioticSensitivity: undefined,
   status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<NatdssB172LabMicrobiologicalInfoQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitType: undefined,
+  visitCardNo: undefined,
+  specimenType: undefined,
+  specimenCollectionDate: undefined,
+  specimenCollectionSite: undefined,
+  testItem: undefined,
+  testResult: undefined,
+  testMethod: undefined,
+  testDate: undefined,
+  testDoctor: undefined,
+  testDoctorName: undefined,
+  resultInterpretation: undefined,
+  clinicalSignificance: undefined,
+  antibioticSensitivity: undefined,
   status: undefined,
-  lessonsLearned: undefined,
   params: {}
 });
 
 const form = reactive<NatdssB172LabMicrobiologicalInfoForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
+  visitSn: [{ required: true, message: '单次就诊唯一标识号不能为空', trigger: 'blur' }]
 };
 
 /** 查询微生物检验信息列表 */

@@ -231,49 +231,47 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: NatdssB061EmrProgressNotesForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  medicalRecordNo: undefined,
+  patientNo: undefined,
+  hospitalizationTimes: undefined,
+  recordSn: undefined,
+  recordDatetime: undefined,
+  recordTitleCode: undefined,
+  recordTitle: undefined,
+  recordContent: undefined,
+  extendData1: undefined,
+  extendData2: undefined,
+  recordStatus: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<NatdssB061EmrProgressNotesQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  medicalRecordNo: undefined,
+  patientNo: undefined,
+  hospitalizationTimes: undefined,
+  recordSn: undefined,
+  recordDatetime: undefined,
+  recordTitleCode: undefined,
+  recordTitle: undefined,
+  recordContent: undefined,
+  extendData1: undefined,
+  extendData2: undefined,
+  recordStatus: undefined,
   params: {}
 });
 
 const form = reactive<NatdssB061EmrProgressNotesForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
+  visitSn: [{ required: true, message: '单次就诊唯一标识号不能为空', trigger: 'blur' }],
+  recordSn: [{ required: true, message: '病程记录流水号不能为空', trigger: 'blur' }]
 };
 
 /** 查询病程记录列表 */

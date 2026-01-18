@@ -231,49 +231,56 @@ const visibleFormFields = computed(() => fieldConfigManager.getVisibleFields());
 
 const initFormData: NatdssB031InpatientInfoForm = {
   id: undefined,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  drillResult: undefined,
-  lessonsLearned: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitCardNo: undefined,
+  medicalRecordNo: undefined,
+  inpatientNo: undefined,
+  hospitalizationTimes: undefined,
+  name: undefined,
+  admissionDatetime: undefined,
+  currentDeptCode: undefined,
+  currentDeptName: undefined,
+  currentWardName: undefined,
+  currentBedName: undefined,
+  visitDoctorNo: undefined,
+  dischargeDatetime: undefined,
+  dischargeDeptCode: undefined,
+  dischargeDeptName: undefined,
+  extendData1: undefined,
+  extendData2: undefined,
+  recordStatus: undefined,
   remark: undefined
 };
 
 const queryParams = reactive<NatdssB031InpatientInfoQuery>({
   pageNum: 1,
   pageSize: 10,
-  planCode: undefined,
-  planName: undefined,
-  drillType: undefined,
-  drillScenario: undefined,
-  plannedDate: undefined,
-  actualDate: undefined,
-  location: undefined,
-  organizer: undefined,
-  participants: undefined,
-  objectives: undefined,
-  procedures: undefined,
-  evaluationCriteria: undefined,
-  status: undefined,
-  lessonsLearned: undefined,
+  patientId: undefined,
+  visitSn: undefined,
+  visitCardNo: undefined,
+  medicalRecordNo: undefined,
+  inpatientNo: undefined,
+  hospitalizationTimes: undefined,
+  name: undefined,
+  admissionDatetime: undefined,
+  currentDeptCode: undefined,
+  currentDeptName: undefined,
+  currentWardName: undefined,
+  currentBedName: undefined,
+  visitDoctorNo: undefined,
+  dischargeDatetime: undefined,
+  dischargeDeptCode: undefined,
+  dischargeDeptName: undefined,
+  recordStatus: undefined,
   params: {}
 });
 
 const form = reactive<NatdssB031InpatientInfoForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  patientId: [{ required: true, message: '患者ID不能为空', trigger: 'blur' }],
+  visitSn: [{ required: true, message: '单次就诊唯一标识号不能为空', trigger: 'blur' }]
 };
 
 /** 查询住院患者信息列表 */

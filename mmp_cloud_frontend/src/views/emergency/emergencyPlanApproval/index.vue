@@ -258,8 +258,7 @@ const queryParams = reactive<EmergencyPlanApprovalQuery>({
 const form = reactive<EmergencyPlanApprovalForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  planId: [{ required: true, message: '预案ID不能为空', trigger: 'blur' }]
 };
 
 /** 查询应急预案审批列表 */

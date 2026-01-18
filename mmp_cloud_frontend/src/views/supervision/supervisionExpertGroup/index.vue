@@ -256,8 +256,8 @@ const queryParams = reactive<SupervisionExpertGroupQuery>({
 const form = reactive<SupervisionExpertGroupForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  groupCode: [{ required: true, message: '专家组编码不能为空', trigger: 'blur' }],
+  groupName: [{ required: true, message: '专家组名称不能为空', trigger: 'blur' }]
 };
 
 /** 查询督导专家组列表 */

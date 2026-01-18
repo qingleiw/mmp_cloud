@@ -264,8 +264,8 @@ const queryParams = reactive<RadiationWorkerQuery>({
 const form = reactive<RadiationWorkerForm>({ ...initFormData });
 
 const rules = {
-  planCode: [{ required: true, message: 'planCode不能为空', trigger: 'blur' }],
-  planName: [{ required: true, message: 'planName不能为空', trigger: 'blur' }]
+  workerCode: [{ required: true, message: '工作人员编码不能为空', trigger: 'blur' }],
+  workerName: [{ required: true, message: '工作人员姓名不能为空', trigger: 'blur' }]
 };
 
 /** 查询辐射工作者列表 */
